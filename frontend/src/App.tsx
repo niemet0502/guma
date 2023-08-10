@@ -53,7 +53,9 @@ function App() {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit" className="submit-button">
+            Submit
+          </Button>
         </form>
       </Form>
     </div>
