@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Card, Flex, Metric, ProgressBar, Text } from "@tremor/react";
 // import "@tremor/react/dist/esm/tremor.css";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -36,15 +35,6 @@ function App() {
   }
   return (
     <div>
-      <Card>
-        <Text>Sales</Text>
-        <Metric>$ 60,465</Metric>
-        <Flex>
-          <Text>52% of annual target</Text>
-          <Text>$ 254,000</Text>
-        </Flex>
-        <ProgressBar value={42} />
-      </Card>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
