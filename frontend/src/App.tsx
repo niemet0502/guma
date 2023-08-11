@@ -1,9 +1,9 @@
 // import "@tremor/react/dist/esm/tremor.css";
 import "./App.css";
-import { Layout } from "./Layout/Layout";
+import { AuthPage } from "./domains/auth/AuthPage";
 
 function App() {
-  return <Layout />;
+  return <AuthPage />;
 }
 
 export default App;
