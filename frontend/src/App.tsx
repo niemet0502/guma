@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 // import "@tremor/react/dist/esm/tremor.css";
+import { ModeToggle } from "@/components/mode-toggle";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import "./App.css";
@@ -35,6 +36,7 @@ function App() {
   }
   return (
     <div>
+      <ModeToggle />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
