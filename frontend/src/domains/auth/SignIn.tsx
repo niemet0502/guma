@@ -13,6 +13,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useForm } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "./providers/auth";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -26,6 +28,11 @@ const formSchema = z.object({
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function SignIn({ className, ...props }: UserAuthFormProps) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { login } = useAuth();
+  const from = location.state?.from?.pathname || "/";
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,9 +41,13 @@ export function SignIn({ className, ...props }: UserAuthFormProps) {
     },
   });
 
+  const handleLogin = () => {
+    login({ email: "marius@seiri.dev", password: "pastme" });
+    // user experience.
+    navigate(from, { replace: true });
+  };
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
   }
 
@@ -76,11 +87,11 @@ export function SignIn({ className, ...props }: UserAuthFormProps) {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full">
-            Submit
-          </Button>
         </form>
       </Form>
+      <Button type="button" onClick={handleLogin} className="w-full">
+        Submit
+      </Button>
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />

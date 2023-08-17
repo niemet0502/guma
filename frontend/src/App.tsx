@@ -1,9 +1,10 @@
 // import "@tremor/react/dist/esm/tremor.css";
+import { RouterProvider } from "react-router-dom";
 import "./App.css";
-import { AuthPage } from "./domains/auth/AuthPage";
+import { router } from "./router/router";
 
 function App() {
-  return <AuthPage />;
+  return <RouterProvider router={router} />;
 }
 
 export default App;
