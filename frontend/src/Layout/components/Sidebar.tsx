@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { GoIssueDraft } from "react-icons/go";
 import { HiOutlineDocumentDuplicate } from "react-icons/hi";
 import { IoIosNotificationsOutline } from "react-icons/io";
+import { Link, NavLink } from "react-router-dom";
 
 export const Sidebar: React.FC = () => {
   return (
@@ -12,21 +13,34 @@ export const Sidebar: React.FC = () => {
             Workspace [logo]
           </h3>
           <div className="space-y-1">
-            <Button
-              variant="secondary"
-              className="w-full justify-start flex gap-1"
-            >
-              <IoIosNotificationsOutline className="text-base" />
-              Notifications
-            </Button>
-            <Button variant="ghost" className="w-full justify-start flex gap-1">
-              <HiOutlineDocumentDuplicate className="text-base" />
-              Documents
-            </Button>
-            <Button variant="ghost" className="w-full justify-start flex gap-1">
-              <GoIssueDraft className="text-base" />
-              Issues
-            </Button>
+            <Link to="/notifications">
+              <Button
+                variant="secondary"
+                className="w-full justify-start flex gap-1"
+              >
+                <IoIosNotificationsOutline className="text-base" />
+                Notifications
+              </Button>
+            </Link>
+
+            <Link to="/documents">
+              <Button
+                variant="ghost"
+                className="w-full justify-start flex gap-1"
+              >
+                <HiOutlineDocumentDuplicate className="text-base" />
+                Documents
+              </Button>
+            </Link>
+            <NavLink to="/issues">
+              <Button
+                variant="ghost"
+                className="w-full justify-start flex gap-1"
+              >
+                <GoIssueDraft className="text-base" />
+                Issues
+              </Button>
+            </NavLink>
           </div>
         </div>
         <div className="">
