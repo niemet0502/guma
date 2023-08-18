@@ -10,6 +10,18 @@ services:
       - neka-db
     ports:
       - "5001:3000"
+
+  data-access: 
+    build: 
+      context: ./backend-services/data-access
+      dockerfile: Dockerfile
+      target: dev
+    image: neka-backend-data-access
+    restart: always
+    depends_on:
+      - neka-db
+    ports:
+      - "5002:3000"
   
   neka-db: 
     image: mysql:5.7.41
