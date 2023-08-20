@@ -11,6 +11,6 @@ export class Organization {
   @Column('text')
   size: string;
 
-  @Column('text')
+  @Column('text', { nullable: true })
   logo: string;
 }
