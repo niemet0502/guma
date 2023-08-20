@@ -10,6 +10,8 @@ services:
       - neka-db
     ports:
       - "5001:3000"
+    volumes:
+      - ./backend-services/organization:/app
 
   data-access: 
     build: 
@@ -22,6 +24,14 @@ services:
       - neka-db
     ports:
       - "5002:3000"
+    environment:
+      DB_HOST: neka-db
+      DB_PORT: 3306
+      DB_USERNAME: marius
+      DB_PASSWORD: root
+      DB_NAME: thot
+    volumes:
+      - ./backend-services/data-access:/app
   
   neka-db: 
     image: mysql:5.7.41
