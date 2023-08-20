@@ -1,9 +1,4 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Activity {
@@ -13,12 +8,12 @@ export class Activity {
   @Column('text')
   title: string;
 
-  @Column('number', { nullable: false })
+  @Column({ nullable: false })
   created_by: number;
 
-  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column('date', { nullable: false })
   created_at: Date;
 
-  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column('date', { nullable: false })
   updated_at: Date;
 }

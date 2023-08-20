@@ -1,5 +1,6 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity()
 export class TaskStatus {
   @PrimaryGeneratedColumn()
   id: number;
@@ -7,6 +8,6 @@ export class TaskStatus {
   @Column('text')
   name: string;
 
-  @Column('number')
+  @Column()
   organization_id: number;
 }

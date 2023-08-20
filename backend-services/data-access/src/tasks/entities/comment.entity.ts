@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity()
 export class Comment {
   @PrimaryGeneratedColumn()
   id: number;
@@ -7,15 +8,15 @@ export class Comment {
   @Column('longtext', { nullable: true })
   content: string;
 
-  @Column('number', { nullable: false })
+  @Column({ nullable: false })
   task_id: string;
 
-  @Column('number', { nullable: false })
+  @Column({ nullable: false })
   created_by: string;
 
-  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column('date', { nullable: false })
   created_at: Date;
 
-  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column('date', { nullable: false })
   updated_at: Date;
 }

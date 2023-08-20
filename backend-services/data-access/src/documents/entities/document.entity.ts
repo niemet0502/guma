@@ -1,9 +1,4 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { DocumentStatus } from '../documents.enum';
 
 @Entity()
@@ -11,10 +6,10 @@ export class Document {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('number', { nullable: false })
+  @Column({ nullable: false })
   folder_id: number;
 
-  @Column('number', { nullable: false })
+  @Column('int', { nullable: false })
   team_id: number;
 
   @Column('longtext', { nullable: true })
@@ -27,12 +22,12 @@ export class Document {
   })
   status: DocumentStatus;
 
-  @Column('number')
+  @Column()
   created_by: number;
 
-  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column('date', { nullable: false })
   created_at: Date;
 
-  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column('date', { nullable: false })
   updated_at: Date;
 }

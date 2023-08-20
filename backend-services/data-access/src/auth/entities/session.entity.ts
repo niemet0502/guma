@@ -1,24 +1,19 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class UserSession {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('number', { nullable: false })
+  @Column({ nullable: false })
   user_id: number;
 
   @Column('text', { nullable: false })
   token: string;
 
-  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column('date', { nullable: false })
   created_at: Date;
 
-  @CreateDateColumn({ type: 'timestamp' })
+  @Column('date', { nullable: false })
   expired_at: Date;
 }

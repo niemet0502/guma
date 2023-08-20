@@ -5,12 +5,12 @@ export class Workflow {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('number', { nullable: false })
+  @Column({ nullable: false })
   team_id: number;
 
-  @Column('number', { nullable: false })
+  @Column({ nullable: false })
   status_id: number;
 
-  @Column('number', { nullable: false })
+  @Column({ nullable: false })
   order_value: number;
 }

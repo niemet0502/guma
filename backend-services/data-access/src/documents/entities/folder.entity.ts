@@ -1,5 +1,6 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity()
 export class Folder {
   @PrimaryGeneratedColumn()
   id: number;
@@ -7,6 +8,6 @@ export class Folder {
   @Column('text', { nullable: false })
   name: string;
 
-  @Column('number', { nullable: false })
+  @Column({ nullable: false })
   team_id: number;
 }

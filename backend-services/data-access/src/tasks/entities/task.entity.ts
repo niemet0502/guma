@@ -19,18 +19,18 @@ export class Task {
   })
   type: TaskType.ISSUE;
 
-  @Column('number', { nullable: true })
+  @Column({ nullable: true })
   priority: number;
 
-  @Column('number', { nullable: false })
+  @Column({ nullable: false })
   created_by: number;
 
-  @Column('number', { nullable: true })
+  @Column({ nullable: true })
   parent_task_id: number;
 
-  @Column('number', { nullable: false })
+  @Column({ nullable: false })
   sprint_id: number;
 
-  @Column('number', { nullable: false })
+  @Column({ nullable: false })
   status_id: number;
 }

@@ -23,9 +23,9 @@ export class User {
   @Column('boolean', { default: true })
   first_signin: boolean;
 
-  @Column('number')
+  @Column()
   organization_id: number;
 
-  @Column('number')
+  @Column()
   profile_id: number;
 }

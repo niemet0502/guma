@@ -1,5 +1,6 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity()
 export class Label {
   @PrimaryGeneratedColumn()
   id: number;
@@ -7,6 +8,6 @@ export class Label {
   @Column('text')
   name: string;
 
-  @Column('number')
+  @Column()
   organization_id: number;
 }
