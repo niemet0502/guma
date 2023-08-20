@@ -9,9 +9,10 @@ import { TeamsModule } from './teams/teams.module';
 import { TasksModule } from './tasks/tasks.module';
 import { DocumentsModule } from './documents/documents.module';
 import { AuthModule } from './auth/auth.module';
+import { SprintsModule } from './sprints/sprints.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(dataSourceOptions), OrganizationsModule, UsersModule, TeamsModule, TasksModule, DocumentsModule, AuthModule],
+  imports: [TypeOrmModule.forRoot(dataSourceOptions), OrganizationsModule, UsersModule, TeamsModule, TasksModule, DocumentsModule, AuthModule, SprintsModule],
   controllers: [AppController],
   providers: [AppService],
 })
