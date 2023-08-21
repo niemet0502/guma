@@ -9,5 +9,5 @@ export class TaskStatus {
   name: string;
 
   @Column()
-  organization_id: number;
+  team_id: number;
 }
