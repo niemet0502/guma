@@ -19,7 +19,7 @@ export class OrganizationsService {
 
     if (orga) {
       const errors = { organization: 'The name is already in use' };
-      return new HttpException({ errors }, 404);
+      throw new HttpException({ errors }, 404);
     }
 
     return await this.organizationRepository.save(createOrganizationDto);
