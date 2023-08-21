@@ -18,7 +18,7 @@ export class OrganizationsService {
     const orga = await this.organizationRepository.findOne({ where: { name } });
 
     if (orga) {
-      const errors = { organization: 'The name is already in use' };
+      const errors = { message: 'The name is already in use' };
       throw new HttpException({ errors }, 404);
     }
 
@@ -47,7 +47,7 @@ export class OrganizationsService {
     const orga = await this.organizationRepository.findOne({ where: { id } });
 
     if (!orga) {
-      const errors = { organization: 'Organization not found' };
+      const errors = { message: 'Organization not found' };
       throw new HttpException({ errors }, 404);
     }
 
