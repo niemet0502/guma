@@ -27,7 +27,7 @@ export class LabelService {
     });
 
     if (label) {
-      const errors = { label: 'The name is already in use' };
+      const errors = { message: 'The name is already in use' };
       throw new HttpException({ errors }, 404);
     }
 
