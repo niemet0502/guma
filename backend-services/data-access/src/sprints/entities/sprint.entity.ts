@@ -8,18 +8,18 @@ export class Sprint {
   @Column('text')
   name: string;
 
-  @Column('text')
-  duration: string;
+  @Column('text', { nullable: true })
+  duration: number;
 
-  @Column('date')
+  @Column('date', { nullable: false })
   start_at: Date;
 
-  @Column('date')
+  @Column('date', { nullable: false })
   end_at: Date;
 
-  @Column('longtext')
+  @Column('longtext', { nullable: true })
   goal: string;
 
-  @Column()
+  @Column({ nullable: false })
   team_id: number;
 }
