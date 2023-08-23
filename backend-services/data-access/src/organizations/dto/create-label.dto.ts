@@ -8,6 +8,7 @@ export class CreateLabelDto {
   @ApiProperty({ required: true })
   public name: string;
 
+  @IsNotEmpty()
   @ApiProperty({ required: true })
   public organization_id: number;
 }
