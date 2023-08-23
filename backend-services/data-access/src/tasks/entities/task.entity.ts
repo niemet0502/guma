@@ -17,7 +17,7 @@ export class Task {
     enum: TaskType,
     default: TaskType.ISSUE,
   })
-  type: TaskType.ISSUE;
+  type: TaskType;
 
   @Column({ nullable: true })
   priority: number;
@@ -28,9 +28,12 @@ export class Task {
   @Column({ nullable: true })
   parent_task_id: number;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   sprint_id: number;
 
   @Column({ nullable: false })
   status_id: number;
+
+  @Column({ nullable: false })
+  team_id: number;
 }
