@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CreateTeamDto } from './dto/create-team.dto';
@@ -21,12 +22,13 @@ export class TeamsController {
   @Post()
   @ApiCreatedResponse({ type: Team })
   create(@Body() createTeamDto: CreateTeamDto) {
+    // TODO get the user_id from the auth token
     return this.teamsService.create(createTeamDto);
   }
 
-  @Get(':organization_id')
+  @Get()
   @ApiOkResponse({ type: Team, isArray: true })
-  findAll(@Param('organization_id') organization_id: string) {
+  findAll(@Query('organization_id') organization_id: string) {
     return this.teamsService.findAllByOrganization(+organization_id);
   }
 

@@ -12,5 +12,6 @@ import { TeamsService } from './teams.service';
   imports: [TypeOrmModule.forFeature([TaskStatus, Team]), OrganizationsModule],
   controllers: [TeamsController, StatusController],
   providers: [TeamsService, StatusService],
+  exports: [TeamsService, StatusService],
 })
 export class TeamsModule {}

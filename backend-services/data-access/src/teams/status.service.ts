@@ -44,6 +44,10 @@ export class StatusService {
     return await this.repo.find({ where: { team_id } });
   }
 
+  async findOne(id: number): Promise<TaskStatus> {
+    return await this.repo.findOne({ where: { id } });
+  }
+
   async update(id: number, updateOrganizationDto: UpdateStatusDto) {
     const toUpdate = await this.repo.findOne({
       where: { id },

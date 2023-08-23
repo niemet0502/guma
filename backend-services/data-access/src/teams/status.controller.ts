@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CreateStatusDto } from './dto/create-status.dto';
@@ -24,9 +25,9 @@ export class StatusController {
     return this.statusService.create(createLabelDto);
   }
 
-  @Get(':team_id')
+  @Get()
   @ApiOkResponse({ type: TaskStatus, isArray: true })
-  async findAll(@Param('team_id') team_id: string): Promise<TaskStatus[]> {
+  async findAll(@Query('team_id') team_id: string): Promise<TaskStatus[]> {
     return await this.statusService.findAll(+team_id);
   }
 
