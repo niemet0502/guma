@@ -9,14 +9,14 @@ export class Comment {
   content: string;
 
   @Column({ nullable: false })
-  task_id: string;
+  task_id: number;
 
   @Column({ nullable: false })
-  created_by: string;
+  created_by: number;
 
   @Column('date', { nullable: false })
-  created_at: Date;
+  created_at: string;
 
   @Column('date', { nullable: false })
-  updated_at: Date;
+  updated_at: string;
 }
