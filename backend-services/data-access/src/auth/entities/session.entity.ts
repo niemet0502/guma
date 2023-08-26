@@ -11,9 +11,9 @@ export class UserSession {
   @Column('text', { nullable: false })
   token: string;
 
-  @Column('date', { nullable: false })
-  created_at: Date;
+  @Column('text', { nullable: false })
+  created_at: string;
 
-  @Column('date', { nullable: false })
-  expired_at: Date;
+  @Column('text', { nullable: false })
+  expired_at: string;
 }
