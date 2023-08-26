@@ -14,9 +14,9 @@ export class Comment {
   @Column({ nullable: false })
   created_by: number;
 
-  @Column('date', { nullable: false })
+  @Column('text', { nullable: false })
   created_at: string;
 
-  @Column('date', { nullable: false })
+  @Column('text', { nullable: false })
   updated_at: string;
 }
