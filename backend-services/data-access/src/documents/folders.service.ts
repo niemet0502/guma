@@ -44,6 +44,10 @@ export class FolderService {
     return await this.folderRepository.find({ where: { team_id } });
   }
 
+  async findOne(id: number): Promise<Folder> {
+    return await this.folderRepository.findOne({ where: { id } });
+  }
+
   async update(id: number, updateFolderDto: UpdateFolderDto) {
     const toUpdate = await this.folderRepository.findOne({
       where: { id },
