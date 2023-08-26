@@ -7,9 +7,12 @@ export class Document {
   id: number;
 
   @Column({ nullable: false })
+  name: string;
+
+  @Column({ nullable: true })
   folder_id: number;
 
-  @Column('int', { nullable: false })
+  @Column('int', { nullable: true })
   team_id: number;
 
   @Column('longtext', { nullable: true })
@@ -25,9 +28,9 @@ export class Document {
   @Column()
   created_by: number;
 
-  @Column('date', { nullable: false })
-  created_at: Date;
+  @Column('text', { nullable: false })
+  created_at: string;
 
-  @Column('date', { nullable: false })
-  updated_at: Date;
+  @Column('text', { nullable: false })
+  updated_at: string;
 }
