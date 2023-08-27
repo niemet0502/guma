@@ -11,6 +11,6 @@ import { OrganizationsService } from './organizations.service';
   imports: [TypeOrmModule.forFeature([Organization, Label])],
   controllers: [OrganizationsController, LabelController],
   providers: [OrganizationsService, LabelService],
-  exports: [OrganizationsService],
+  exports: [OrganizationsService, LabelService],
 })
 export class OrganizationsModule {}

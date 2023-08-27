@@ -44,6 +44,10 @@ export class LabelService {
     return await this.repo.find({ where: { organization_id } });
   }
 
+  async findOne(id: number): Promise<Label> {
+    return await this.repo.findOne({ where: { id } });
+  }
+
   async update(id: number, updateOrganizationDto: UpdateLabelDto) {
     const toUpdate = await this.repo.findOne({
       where: { id },
