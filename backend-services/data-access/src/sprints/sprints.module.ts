@@ -9,5 +9,6 @@ import { SprintsService } from './sprints.service';
   imports: [TypeOrmModule.forFeature([Sprint]), TeamsModule],
   controllers: [SprintsController],
   providers: [SprintsService],
+  exports: [SprintsService],
 })
 export class SprintsModule {}

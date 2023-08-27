@@ -1,19 +1,41 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ActivityAction } from '../tasks.enum';
 
 @Entity()
 export class Activity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('text')
-  title: string;
-
   @Column({ nullable: false })
   created_by: number;
 
-  @Column('date', { nullable: false })
-  created_at: Date;
+  @Column({ nullable: false })
+  task_id: number;
 
-  @Column('date', { nullable: false })
-  updated_at: Date;
+  @Column({
+    nullable: true,
+  })
+  from_status: number;
+
+  @Column({
+    nullable: true,
+  })
+  to_status: number;
+
+  @Column({
+    nullable: true,
+  })
+  sprint_id: number;
+
+  @Column({
+    type: 'enum',
+    enum: ActivityAction,
+  })
+  action: ActivityAction;
+
+  @Column('text', { nullable: false })
+  created_at: string;
+
+  @Column('text', { nullable: false })
+  updated_at: string;
 }
