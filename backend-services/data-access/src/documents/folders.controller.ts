@@ -7,13 +7,14 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CreateFolderDto } from './dto/create-folder.dto';
 import { UpdateFolderDto } from './dto/update-folder.dto';
 import { Folder } from './entities/folder.entity';
 import { FolderService } from './folders.service';
 
 @Controller('folders')
+@ApiTags('folders')
 export class FolderController {
   constructor(private readonly folderService: FolderService) {}
   @Post()
