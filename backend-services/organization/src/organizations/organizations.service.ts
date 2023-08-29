@@ -15,12 +15,9 @@ export class OrganizationsService {
     createOrganizationInput: CreateOrganizationInput,
   ): Promise<Organization> {
     const { data } = await firstValueFrom(
-      this.http.post<Organization>(
-        'http://neka-data-access-1:3000/organizations',
-        createOrganizationInput,
-      ),
+      this.http.post<Organization>(this.url, createOrganizationInput),
     );
-    return { ...createOrganizationInput, id: 1 } as Organization;
+    return data;
   }
 
   async findAll(): Promise<Organization[]> {
