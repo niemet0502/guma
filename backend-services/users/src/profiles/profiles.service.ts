@@ -23,6 +23,13 @@ export class ProfilesService {
     return data;
   }
 
+  async findOne(id: number): Promise<Profile> {
+    const { data } = await firstValueFrom(
+      this.http.get<Profile>(this.url + id),
+    );
+    return data;
+  }
+
   async update(
     id: number,
     updateProfileInput: UpdateProfileInput,
