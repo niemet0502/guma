@@ -9,8 +9,8 @@ export const dataSourceOptions: DataSourceOptions = {
   database: 'thot',
   charset: 'utf8mb4',
   entities: ['dist/**/*entity.js'],
-  // migrations: ['dist/src/database/migrations/*js'],
-  synchronize: true,
+  migrations: ['dist/database/migrations/*js'],
+  synchronize: false,
 };
 
 const dataSource = new DataSource(dataSourceOptions);
