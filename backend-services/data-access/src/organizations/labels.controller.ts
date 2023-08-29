@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CreateLabelDto } from './dto/create-label.dto';
@@ -19,16 +20,15 @@ export class LabelController {
   constructor(private readonly labelService: LabelService) {}
 
   @Post()
-  @Post()
   @ApiCreatedResponse({ type: Label })
   create(@Body() createLabelDto: CreateLabelDto): Promise<Label> {
     return this.labelService.create(createLabelDto);
   }
 
-  @Get(':organization_id')
+  @Get()
   @ApiOkResponse({ type: Label, isArray: true })
   async findAll(
-    @Param('organization_id') organization_id: string,
+    @Query('organization_id') organization_id: string,
   ): Promise<Label[]> {
     return await this.labelService.findAll(+organization_id);
   }
@@ -41,7 +41,7 @@ export class LabelController {
 
   @Delete(':id')
   @ApiOkResponse({ type: Label })
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string): Promise<Label> {
     return this.labelService.remove(+id);
   }
 }
