@@ -4,7 +4,7 @@ import { IsNotEmpty, IsString, MinLength } from 'class-validator';
 export class CreateOrganizationDto {
   @IsString()
   @IsNotEmpty()
-  @MinLength(5)
+  @MinLength(3)
   @ApiProperty({ required: true })
   public name: string;
 
@@ -12,7 +12,6 @@ export class CreateOrganizationDto {
   @ApiProperty()
   public size: string;
 
-  @IsString()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   public logo: string;
 }
