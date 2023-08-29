@@ -6,5 +6,6 @@ import { LabelsService } from './labels.service';
 @Module({
   imports: [HttpModule],
   providers: [LabelsResolver, LabelsService],
+  exports: [LabelsService],
 })
 export class LabelsModule {}

@@ -22,6 +22,9 @@ export class LabelsService {
     const { data } = await firstValueFrom(
       this.http.get<Label[]>(this.url, { params: { organization_id } }),
     );
+
+    console.log(data);
+
     return data;
   }
 
