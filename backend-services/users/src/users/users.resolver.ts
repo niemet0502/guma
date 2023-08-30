@@ -23,8 +23,10 @@ export class UsersResolver {
   }
 
   @Query(() => [User], { name: 'users' })
-  findAll(@Args('team_id', { type: () => Int }) team_id: number) {
-    return this.usersService.findAllByTeam(team_id);
+  findAll(
+    @Args('organization_id', { type: () => Int }) organization_id: number,
+  ) {
+    return this.usersService.findAllByTeam(organization_id);
   }
 
   @Query(() => User, { name: 'user' })

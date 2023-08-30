@@ -6,6 +6,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
 } from '@nestjs/common';
@@ -29,6 +30,12 @@ export class ProfileController {
   @ApiOkResponse({ type: Profile, isArray: true })
   async findAll(): Promise<Profile[]> {
     return await this.profileService.findAll();
+  }
+
+  @Get(':id')
+  @ApiOkResponse({ type: Profile })
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    return await this.profileService.findOne(id);
   }
 
   @Patch(':id')

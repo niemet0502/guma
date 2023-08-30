@@ -25,7 +25,7 @@ export class ProfilesService {
 
   async findOne(id: number): Promise<Profile> {
     const { data } = await firstValueFrom(
-      this.http.get<Profile>(this.url + id),
+      this.http.get<Profile>(`${this.url}${id}`),
     );
     return data;
   }
