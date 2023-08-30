@@ -23,7 +23,6 @@ export class LabelsService {
       this.http.get<Label[]>(this.url, { params: { organization_id } }),
     );
 
-    console.log(data);
 
     return data;
   }
