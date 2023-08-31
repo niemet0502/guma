@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CreateFolderDto } from './dto/create-folder.dto';
@@ -23,9 +24,9 @@ export class FolderController {
     return this.folderService.create(createFolderDto);
   }
 
-  @Get(':team_id')
+  @Get()
   @ApiOkResponse({ type: Folder, isArray: true })
-  async findAll(@Param('team_id') team_id: string): Promise<Folder[]> {
+  async findAll(@Query('team_id') team_id: string): Promise<Folder[]> {
     return await this.folderService.findAll(+team_id);
   }
 

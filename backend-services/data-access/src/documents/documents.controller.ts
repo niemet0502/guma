@@ -28,8 +28,11 @@ export class DocumentsController {
 
   @Get()
   @ApiOkResponse({ type: Document, isArray: true })
-  findAll(@Query('team_id') team_id: string) {
-    return this.documentsService.findAllByTeam(+team_id);
+  findAll(
+    @Query('team_id') team_id: string,
+    @Query('folder_id') folder_id: string,
+  ) {
+    return this.documentsService.findAllByTeam(+team_id, +folder_id);
   }
 
   @Get(':id')

@@ -12,6 +12,20 @@ services:
       - "5001:3000"
     volumes:
       - ./backend-services/organization:/app
+
+  wiki: 
+    build: 
+      context: ./backend-services/wiki
+      dockerfile: Dockerfile
+      target: dev
+    image: neka-backend-wiki
+    restart: always
+    depends_on:
+      - neka-db
+    ports:
+      - "5004:3000"
+    volumes:
+      - ./backend-services/wiki:/app
   
   user: 
     build: 
@@ -50,6 +64,7 @@ services:
   neka-db: 
     image: mysql:5.7.41
     container_name: neka-db
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: thot
