@@ -49,8 +49,18 @@ export class DocumentsService {
     });
   }
 
-  async findAllByTeam(team_id: number): Promise<Document[]> {
-    return await this.docRepository.find({ where: { team_id } });
+  async findAllByTeam(team_id: number, folder_id: number): Promise<Document[]> {
+    let query = this.docRepository.createQueryBuilder('document');
+
+    if (team_id) {
+      query = query.where('document.team_id = :team_id', { team_id });
+    }
+
+    if (folder_id) {
+      query = query.andWhere('document.folder_id = :folder_id', { folder_id });
+    }
+
+    return query.getMany();
   }
 
   async findOne(id: number): Promise<Document> {
