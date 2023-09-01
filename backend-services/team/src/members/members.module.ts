@@ -6,5 +6,6 @@ import { MembersService } from './members.service';
 @Module({
   imports: [HttpModule],
   providers: [MembersResolver, MembersService],
+  exports: [MembersService],
 })
 export class MembersModule {}

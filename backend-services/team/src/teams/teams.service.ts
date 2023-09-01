@@ -1,6 +1,8 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
+import { Member } from 'src/members/entities/member.entity';
+import { MembersService } from 'src/members/members.service';
 import { CreateTeamInput } from './dto/create-team.input';
 import { UpdateTeamInput } from './dto/update-team.input';
 import { Team } from './entities/team.entity';
@@ -9,7 +11,10 @@ import { Team } from './entities/team.entity';
 export class TeamsService {
   private url = 'http://neka-data-access-1:3000/teams/';
 
-  constructor(private readonly http: HttpService) {}
+  constructor(
+    private readonly http: HttpService,
+    private readonly memberService: MembersService,
+  ) {}
 
   async create(createTeamInput: CreateTeamInput): Promise<Team> {
     const { data } = await firstValueFrom(
@@ -40,10 +45,13 @@ export class TeamsService {
   }
 
   async remove(id: number): Promise<Team> {
-    console.log(`${this.url}${id}`);
     const { data } = await firstValueFrom(
       this.http.delete<Team>(`${this.url}${id}`),
     );
     return { ...data, id };
+  }
+
+  async getMembers(team_id: number): Promise<Member[]> {
+    return await this.memberService.findAllByTeam(team_id);
   }
 }

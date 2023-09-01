@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Member } from '../../members/entities/member.entity';
 import { TeamVisibility } from '../teams.enum';
 
 @ObjectType()
@@ -20,4 +21,7 @@ export class Team {
 
   @Field({ nullable: true })
   visibility: TeamVisibility;
+
+  @Field((type) => [Member])
+  members: Member[];
 }

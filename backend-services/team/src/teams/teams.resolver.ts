@@ -1,4 +1,12 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { CreateTeamInput } from './dto/create-team.input';
 import { UpdateTeamInput } from './dto/update-team.input';
 import { Team } from './entities/team.entity';
@@ -33,5 +41,12 @@ export class TeamsResolver {
   @Mutation(() => Team)
   removeTeam(@Args('id', { type: () => Int }) id: number) {
     return this.teamsService.remove(id);
+  }
+
+  @ResolveField()
+  async members(@Parent() team: Team) {
+    const { id } = team;
+
+    return await this.teamsService.getMembers(id);
   }
 }
