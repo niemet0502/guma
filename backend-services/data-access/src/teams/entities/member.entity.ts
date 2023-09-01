@@ -11,6 +11,6 @@ export class Member {
   @Column({ nullable: false })
   user_id: number;
 
-  @Column('date', { nullable: false })
-  created_at: Date;
+  @Column('text', { nullable: false })
+  created_at: string;
 }
