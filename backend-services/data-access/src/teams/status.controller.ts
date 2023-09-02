@@ -31,6 +31,12 @@ export class StatusController {
     return await this.statusService.findAll(+team_id);
   }
 
+  @Get(':id')
+  @ApiOkResponse({ type: TaskStatus })
+  findOne(@Param('id') id: string) {
+    return this.statusService.findOne(+id);
+  }
+
   @Patch(':id')
   @ApiOkResponse({ type: TaskStatus })
   update(@Param('id') id: string, @Body() updateLabelDto: UpdateStatusDto) {

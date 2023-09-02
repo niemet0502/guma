@@ -26,6 +26,20 @@ services:
       - "5004:3000"
     volumes:
       - ./backend-services/wiki:/app
+
+  team: 
+    build: 
+      context: ./backend-services/team
+      dockerfile: Dockerfile
+      target: dev
+    image: neka-backend-team
+    restart: always
+    depends_on:
+      - neka-db
+    ports:
+      - "5005:3000"
+    volumes:
+      - ./backend-services/team:/app
   
   user: 
     build: 
