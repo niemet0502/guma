@@ -6,5 +6,6 @@ import { StatusService } from './status.service';
 @Module({
   imports: [HttpModule],
   providers: [StatusResolver, StatusService],
+  exports: [StatusService],
 })
 export class StatusModule {}

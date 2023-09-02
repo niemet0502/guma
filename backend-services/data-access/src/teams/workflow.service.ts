@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateWorkflowDto } from './dto/create-workflow.dto';
@@ -31,6 +35,14 @@ export class WorkflowService {
       throw new NotFoundException('Status not found');
     }
 
+    const workflow = await this.workflowRepository.findOne({
+      where: { team_id, status_id },
+    });
+
+    if (workflow) {
+      throw new BadRequestException({ message: 'The workflow already exists' });
+    }
+
     return await this.workflowRepository.save(createWorkflowDto);
   }
 
@@ -59,5 +71,9 @@ export class WorkflowService {
     }
 
     return await this.workflowRepository.remove(workflow);
+  }
+
+  async removeMulti(status_id: number) {
+    return await this.workflowRepository.delete({ status_id });
   }
 }

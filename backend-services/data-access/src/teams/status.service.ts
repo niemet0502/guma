@@ -65,6 +65,8 @@ export class StatusService {
       throw new NotFoundException('TaskStatus not found');
     }
 
+    // remove all workflow related to the
+
     return await this.repo.remove(orga);
   }
 }
