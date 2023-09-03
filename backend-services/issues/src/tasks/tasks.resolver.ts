@@ -23,8 +23,14 @@ export class TasksResolver {
   }
 
   @Query(() => [Task], { name: 'tasks' })
-  findAll() {
-    return this.tasksService.findAll();
+  findAll(
+    @Args('team_id', { type: () => Int }) team_id: number,
+    @Args('type', { type: () => Int, nullable: true }) type: number,
+    @Args('status_id', { type: () => Int, nullable: true }) status_id: number,
+    @Args('parent_task_id', { type: () => Int, nullable: true })
+    parent_task_id: number,
+  ) {
+    return this.tasksService.findAll(team_id, type, status_id, parent_task_id);
   }
 
   @Query(() => Task, { name: 'task' })
@@ -44,8 +50,8 @@ export class TasksResolver {
 
   @ResolveField()
   subtasks(@Parent() task: Task) {
-    const { id } = task;
+    const { id, team_id } = task;
 
-    return this.tasksService.getSubtasks(id);
+    return this.tasksService.getSubtasks(id, team_id);
   }
 }

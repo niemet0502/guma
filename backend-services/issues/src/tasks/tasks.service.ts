@@ -24,8 +24,18 @@ export class TasksService {
     return data;
   }
 
-  async findAll() {
-    return `This action returns all tasks`;
+  async findAll(
+    team_id: number,
+    type: number,
+    status_id: number,
+    parent_task_id: number,
+  ): Promise<Task[]> {
+    const { data } = await firstValueFrom(
+      this.http.get<Task[]>(this.url, {
+        params: { team_id, type, status_id, parent_task_id },
+      }),
+    );
+    return data;
   }
 
   async findOne(id: number) {
@@ -47,9 +57,9 @@ export class TasksService {
     return { id, ...data };
   }
 
-  async getSubtasks(parent_task_id: number) {
+  async getSubtasks(parent_task_id: number, team_id: number) {
     const { data } = await firstValueFrom(
-      this.http.get<Task[]>(this.url, { params: { parent_task_id } }),
+      this.http.get<Task[]>(this.url, { params: { team_id, parent_task_id } }),
     );
     return data;
   }
