@@ -1,6 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
+import { CommentsService } from 'src/comments/comments.service';
 import { removeSpacesAndSpecialChars } from 'src/utils/Helper';
 import { CreateTaskInput } from './dto/create-task.input';
 import { UpdateTaskInput } from './dto/update-task.input';
@@ -10,7 +11,10 @@ import { Task } from './entities/task.entity';
 export class TasksService {
   private url = 'http://neka-data-access-1:3000/tasks/';
 
-  constructor(private readonly http: HttpService) {}
+  constructor(
+    private readonly http: HttpService,
+    private readonly commentService: CommentsService,
+  ) {}
 
   async create(createTaskInput: CreateTaskInput) {
     const { name } = createTaskInput;
@@ -62,5 +66,9 @@ export class TasksService {
       this.http.get<Task[]>(this.url, { params: { team_id, parent_task_id } }),
     );
     return data;
+  }
+
+  async getComments(task_id: number) {
+    return await this.commentService.findAllByTask(task_id);
   }
 }

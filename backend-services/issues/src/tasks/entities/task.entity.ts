@@ -1,5 +1,6 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { TaskType } from 'src/shared/tasks.enum';
+import { Comment } from '../../comments/entities/comment.entity';
 
 @ObjectType()
 export class Task {
@@ -38,4 +39,7 @@ export class Task {
 
   @Field((type) => [Task])
   subtasks: Task[];
+
+  @Field((type) => [Comment])
+  comments: Comment[];
 }

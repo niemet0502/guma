@@ -54,4 +54,11 @@ export class TasksResolver {
 
     return this.tasksService.getSubtasks(id, team_id);
   }
+
+  @ResolveField()
+  comments(@Parent() task: Task) {
+    const { id } = task;
+
+    return this.tasksService.getComments(id);
+  }
 }

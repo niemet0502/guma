@@ -6,5 +6,6 @@ import { CommentsService } from './comments.service';
 @Module({
   imports: [HttpModule],
   providers: [CommentsResolver, CommentsService],
+  exports: [CommentsService],
 })
 export class CommentsModule {}
