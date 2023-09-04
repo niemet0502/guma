@@ -9,6 +9,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CommentsModule } from './comments/comments.module';
 import { TasksModule } from './tasks/tasks.module';
+import { SprintsModule } from './sprints/sprints.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { TasksModule } from './tasks/tasks.module';
     TasksModule,
     CommentsModule,
     ActivitiesModule,
+    SprintsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -8,5 +8,6 @@ import { TasksService } from './tasks.service';
 @Module({
   imports: [HttpModule, CommentsModule, ActivitiesModule],
   providers: [TasksResolver, TasksService],
+  exports: [TasksService],
 })
 export class TasksModule {}
