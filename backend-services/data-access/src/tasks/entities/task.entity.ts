@@ -12,6 +12,9 @@ export class Task {
   @Column('text', { nullable: false })
   name: string;
 
+  @Column('text', { nullable: false })
+  description: string;
+
   @Column({
     type: 'enum',
     enum: TaskType,
@@ -24,6 +27,9 @@ export class Task {
 
   @Column({ nullable: false })
   created_by: number;
+
+  @Column({ nullable: false })
+  assignee_to: number;
 
   @Column({ nullable: true })
   parent_task_id: number;

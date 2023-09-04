@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from './entities/task.entity';
+import { TaskType } from './tasks.enum';
 
 @Injectable()
 export class TasksService {
@@ -46,9 +47,40 @@ export class TasksService {
     return await this.taskRepository.save(createTaskDto);
   }
 
-  async findAll(team_id: number): Promise<Task[]> {
-    // TODO add search params
-    return await this.taskRepository.find({ where: { team_id } });
+  async findAll(
+    team_id: number,
+    type: TaskType,
+    status_id: number,
+    parent_task_id: number,
+    sprint_id: number,
+  ): Promise<Task[]> {
+    const query = this.taskRepository.createQueryBuilder('task');
+
+    if (team_id) {
+      query.andWhere('task.team_id = :team_id', { team_id });
+    }
+
+    if (status_id) {
+      query.andWhere('task.status_id = :status_id', { status_id });
+    }
+
+    if (type) {
+      query.andWhere('task.type = :type', { type });
+    }
+
+    if (parent_task_id) {
+      query.andWhere('task.parent_task_id = :parent_task_id', {
+        parent_task_id,
+      });
+    }
+
+    if (sprint_id) {
+      query.andWhere('task.sprint_id = :sprint_id', {
+        sprint_id,
+      });
+    }
+
+    return await query.getMany();
   }
 
   async findOne(id: number): Promise<Task> {

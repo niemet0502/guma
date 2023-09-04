@@ -11,11 +11,11 @@ export class Sprint {
   @Column('text', { nullable: true })
   duration: number;
 
-  @Column('date', { nullable: false })
-  start_at: Date;
+  @Column('text', { nullable: false })
+  start_at: string;
 
-  @Column('date', { nullable: false })
-  end_at: Date;
+  @Column('text', { nullable: false })
+  end_at: string;
 
   @Column('longtext', { nullable: true })
   goal: string;

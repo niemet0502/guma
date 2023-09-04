@@ -27,9 +27,22 @@ export class TasksController {
 
   @Get()
   @ApiOkResponse({ type: Task, isArray: true })
-  findAll(@Query('team_id') team_id: string): Promise<Task[]> {
+  findAll(
+    @Query('team_id') team_id?: string,
+    @Query('type') type?: string,
+    @Query('status_id') status_id?: string,
+    @Query('parent_task_id') parent_task_id?: string,
+    @Query('sprint_id') sprint_id?: string,
+  ): Promise<Task[]> {
     // TODO add search params
-    return this.tasksService.findAll(+team_id);
+
+    return this.tasksService.findAll(
+      +team_id,
+      +type,
+      +status_id,
+      +parent_task_id,
+      +sprint_id,
+    );
   }
 
   @Get(':id')

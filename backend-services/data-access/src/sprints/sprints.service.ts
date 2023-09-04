@@ -38,8 +38,8 @@ export class SprintsService {
 
     return await this.sprintRepository.save({
       ...createSprintDto,
-      end_at: date_end_at,
-      start_at: date_start_at,
+      end_at: date_end_at.toLocaleString(),
+      start_at: date_start_at.toLocaleString(),
     });
   }
 

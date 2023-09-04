@@ -54,6 +54,20 @@ services:
       - "5003:3000"
     volumes:
       - ./backend-services/users:/app
+  
+  issues: 
+    build: 
+      context: ./backend-services/issues
+      dockerfile: Dockerfile
+      target: dev
+    image: neka-backend-issues
+    restart: always
+    depends_on:
+      - neka-db
+    ports:
+      - "5006:3000"
+    volumes:
+      - ./backend-services/issues:/app
 
   data-access: 
     build: 
