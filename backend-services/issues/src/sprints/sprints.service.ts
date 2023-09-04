@@ -45,4 +45,14 @@ export class SprintsService {
     );
     return data;
   }
+
+  async getTasks(sprintId: number) {
+    return await this.taskServie.findAll(
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      sprintId,
+    );
+  }
 }

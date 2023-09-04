@@ -29,8 +29,15 @@ export class TasksResolver {
     @Args('status_id', { type: () => Int, nullable: true }) status_id: number,
     @Args('parent_task_id', { type: () => Int, nullable: true })
     parent_task_id: number,
+    @Args('sprint_id', { type: () => Int, nullable: true }) sprint_id: number,
   ) {
-    return this.tasksService.findAll(team_id, type, status_id, parent_task_id);
+    return this.tasksService.findAll(
+      team_id,
+      type,
+      status_id,
+      parent_task_id,
+      sprint_id,
+    );
   }
 
   @Query(() => Task, { name: 'task' })

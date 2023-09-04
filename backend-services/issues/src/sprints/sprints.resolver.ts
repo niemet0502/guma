@@ -1,4 +1,12 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { CreateSprintInput } from './dto/create-sprint.input';
 import { UpdateSprintInput } from './dto/update-sprint.input';
 import { Sprint } from './entities/sprint.entity';
@@ -30,5 +38,12 @@ export class SprintsResolver {
     @Args('updateSprintInput') updateSprintInput: UpdateSprintInput,
   ) {
     return this.sprintsService.update(updateSprintInput.id, updateSprintInput);
+  }
+
+  @ResolveField()
+  tasks(@Parent() sprint: Sprint) {
+    const { id } = sprint;
+
+    return this.sprintsService.getTasks(id);
   }
 }

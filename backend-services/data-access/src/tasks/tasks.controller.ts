@@ -32,6 +32,7 @@ export class TasksController {
     @Query('type') type?: string,
     @Query('status_id') status_id?: string,
     @Query('parent_task_id') parent_task_id?: string,
+    @Query('sprint_id') sprint_id?: string,
   ): Promise<Task[]> {
     // TODO add search params
 
@@ -40,6 +41,7 @@ export class TasksController {
       +type,
       +status_id,
       +parent_task_id,
+      +sprint_id,
     );
   }
 

@@ -52,6 +52,7 @@ export class TasksService {
     type: TaskType,
     status_id: number,
     parent_task_id: number,
+    sprint_id: number,
   ): Promise<Task[]> {
     const query = this.taskRepository.createQueryBuilder('task');
 
@@ -70,6 +71,12 @@ export class TasksService {
     if (parent_task_id) {
       query.andWhere('task.parent_task_id = :parent_task_id', {
         parent_task_id,
+      });
+    }
+
+    if (sprint_id) {
+      query.andWhere('task.sprint_id = :sprint_id', {
+        sprint_id,
       });
     }
 
