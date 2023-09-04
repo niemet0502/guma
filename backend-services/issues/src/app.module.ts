@@ -8,6 +8,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TasksModule } from './tasks/tasks.module';
 import { CommentsModule } from './comments/comments.module';
+import { ActivitiesModule } from './activities/activities.module';
+import { AssigneesModule } from './assignees/assignees.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { CommentsModule } from './comments/comments.module';
     }),
     TasksModule,
     CommentsModule,
+    ActivitiesModule,
+    AssigneesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
