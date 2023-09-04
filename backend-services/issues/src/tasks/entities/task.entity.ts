@@ -1,5 +1,6 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { TaskType } from 'src/shared/tasks.enum';
+import { Activity } from '../../activities/entities/activity.entity';
 import { Comment } from '../../comments/entities/comment.entity';
 
 @ObjectType()
@@ -13,6 +14,9 @@ export class Task {
   @Field({ nullable: false })
   name: string;
 
+  @Field({ nullable: false })
+  description: string;
+
   @Field({ nullable: true })
   number: string;
 
@@ -24,6 +28,9 @@ export class Task {
 
   @Field({ nullable: false })
   created_by: number;
+
+  @Field({ nullable: true })
+  assignee_to: number;
 
   @Field({ nullable: true })
   parent_task_id: number;
@@ -42,4 +49,7 @@ export class Task {
 
   @Field((type) => [Comment])
   comments: Comment[];
+
+  @Field((type) => [Activity])
+  activities: Activity[];
 }

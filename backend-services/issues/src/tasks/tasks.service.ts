@@ -1,6 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
+import { ActivitiesService } from 'src/activities/activities.service';
 import { CommentsService } from 'src/comments/comments.service';
 import { removeSpacesAndSpecialChars } from 'src/utils/Helper';
 import { CreateTaskInput } from './dto/create-task.input';
@@ -14,6 +15,7 @@ export class TasksService {
   constructor(
     private readonly http: HttpService,
     private readonly commentService: CommentsService,
+    private readonly activityService: ActivitiesService,
   ) {}
 
   async create(createTaskInput: CreateTaskInput) {
@@ -70,5 +72,9 @@ export class TasksService {
 
   async getComments(task_id: number) {
     return await this.commentService.findAllByTask(task_id);
+  }
+
+  async getActivities(task_id: number) {
+    return await this.activityService.findAll(task_id);
   }
 }

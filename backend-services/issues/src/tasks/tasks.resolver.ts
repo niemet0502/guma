@@ -58,7 +58,12 @@ export class TasksResolver {
   @ResolveField()
   comments(@Parent() task: Task) {
     const { id } = task;
-
     return this.tasksService.getComments(id);
+  }
+
+  @ResolveField()
+  activities(@Parent() task: Task) {
+    const { id } = task;
+    return this.tasksService.getActivities(id);
   }
 }

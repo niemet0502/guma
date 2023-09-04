@@ -6,5 +6,6 @@ import { ActivitiesService } from './activities.service';
 @Module({
   imports: [HttpModule],
   providers: [ActivitiesResolver, ActivitiesService],
+  exports: [ActivitiesService],
 })
 export class ActivitiesModule {}
