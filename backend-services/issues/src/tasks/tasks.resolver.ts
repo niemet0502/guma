@@ -93,7 +93,7 @@ export class TasksResolver {
   }
 
   @ResolveField((of) => Status)
-  user(@Parent() task: Task): any {
-    return { __typename: 'User', id: task.status_id };
+  status(@Parent() task: Task): any {
+    return { __typename: 'Status', id: task.status_id };
   }
 }

@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { TasksService } from 'src/tasks/tasks.service';
 import { CreateSprintInput } from './dto/create-sprint.input';
@@ -12,6 +12,7 @@ export class SprintsService {
 
   constructor(
     private readonly http: HttpService,
+    @Inject(forwardRef(() => TasksService))
     private readonly taskServie: TasksService,
   ) {}
 

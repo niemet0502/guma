@@ -40,10 +40,10 @@ export class StatusResolver {
   }
 
   @ResolveReference()
-  resolveReference(reference: {
+  async resolveReference(reference: {
     __typename: string;
     id: number;
   }): Promise<Status> {
-    return this.statusService.findOne(reference.id);
+    return await this.statusService.findOne(reference.id);
   }
 }
