@@ -2,6 +2,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { TaskType } from 'src/shared/tasks.enum';
 import { Activity } from '../../activities/entities/activity.entity';
 import { Comment } from '../../comments/entities/comment.entity';
+import { Team } from '../../shared/team.entity';
 import { User } from '../../shared/user.entity';
 
 @ObjectType()
@@ -50,6 +51,9 @@ export class Task {
 
   @Field({ nullable: false })
   team_id: number;
+
+  @Field((type) => Team)
+  team?: Team;
 
   @Field((type) => [Task])
   subtasks: Task[];
