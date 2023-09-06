@@ -9,6 +9,7 @@ import {
 } from '@nestjs/graphql';
 import { Team } from 'src/shared/team.entity';
 import { User } from 'src/shared/user.entity';
+import { Status } from '../shared/status.entity';
 import { CreateTaskInput } from './dto/create-task.input';
 import { UpdateTaskInput } from './dto/update-task.input';
 import { Task } from './entities/task.entity';
@@ -89,5 +90,10 @@ export class TasksResolver {
   @ResolveField(() => Team)
   team(@Parent() task: Task): any {
     return { __typename: 'Team', id: task.team_id };
+  }
+
+  @ResolveField((of) => Status)
+  user(@Parent() task: Task): any {
+    return { __typename: 'User', id: task.status_id };
   }
 }
