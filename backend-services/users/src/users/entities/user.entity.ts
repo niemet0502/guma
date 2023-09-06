@@ -1,16 +1,18 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
+import { Member } from 'src/shared/member.entity';
 import { Profile } from '../../profiles/entities/profile.entity';
 
 @ObjectType()
+@Directive('@key(fields: "id")')
 export class User {
-  @Field(() => Int)
+  @Field(() => ID)
   id: number;
 
-  @Field()
-  lastname: string;
+  @Field({ nullable: true })
+  lastname?: string;
 
-  @Field()
-  firstname: string;
+  @Field({ nullable: true })
+  firstname?: string;
 
   @Field()
   email: string;
@@ -31,4 +33,7 @@ export class User {
 
   @Field((type) => Profile)
   profile: Profile;
+
+  @Field((type) => [Member])
+  members?: Member[];
 }

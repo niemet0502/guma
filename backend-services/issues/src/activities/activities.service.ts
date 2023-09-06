@@ -1,6 +1,8 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
+import { SprintsService } from 'src/sprints/sprints.service';
+import { Sprint } from '../sprints/entities/sprint.entity';
 import { CreateActivityInput } from './dto/create-activity.input';
 import { Activity } from './entities/activity.entity';
 
@@ -8,7 +10,11 @@ import { Activity } from './entities/activity.entity';
 export class ActivitiesService {
   private url = 'http://neka-data-access-1:3000/activities/';
 
-  constructor(private readonly http: HttpService) {}
+  constructor(
+    private readonly http: HttpService,
+    @Inject(forwardRef(() => SprintsService))
+    private readonly sprintService: SprintsService,
+  ) {}
 
   async create(createActivityInput: CreateActivityInput): Promise<Activity> {
     const { data } = await firstValueFrom(
@@ -31,5 +37,9 @@ export class ActivitiesService {
       this.http.get<Activity>(this.url + id),
     );
     return data;
+  }
+
+  async getSprint(sprint_id: number): Promise<Sprint> {
+    return await this.sprintService.findOne(sprint_id);
   }
 }

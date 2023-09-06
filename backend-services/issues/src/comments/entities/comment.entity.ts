@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { User } from '../../shared/user.entity';
 
 @ObjectType()
 export class Comment {
@@ -19,4 +20,7 @@ export class Comment {
 
   @Field()
   updated_at: string;
+
+  @Field(() => User)
+  author?: User;
 }

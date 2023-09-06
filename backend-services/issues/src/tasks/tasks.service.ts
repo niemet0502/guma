@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { ActivitiesService } from 'src/activities/activities.service';
 import { CommentsService } from 'src/comments/comments.service';
@@ -15,6 +15,7 @@ export class TasksService {
   constructor(
     private readonly http: HttpService,
     private readonly commentService: CommentsService,
+    @Inject(forwardRef(() => ActivitiesService))
     private readonly activityService: ActivitiesService,
   ) {}
 

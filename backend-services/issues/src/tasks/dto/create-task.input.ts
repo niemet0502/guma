@@ -13,9 +13,11 @@ export class CreateTaskInput {
   priority: number;
 
   // TODO remove the created by
-
   @Field({ nullable: false })
   created_by: number;
+
+  @Field({ nullable: true })
+  assignee_to: number;
 
   @Field({ nullable: true })
   parent_task_id: number;

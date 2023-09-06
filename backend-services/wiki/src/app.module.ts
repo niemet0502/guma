@@ -8,6 +8,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DocumentsModule } from './documents/documents.module';
 import { FoldersModule } from './folders/folders.module';
+import { Team } from './shared/team.entity';
+import { User } from './shared/user.entity';
 
 @Module({
   imports: [
@@ -15,6 +17,9 @@ import { FoldersModule } from './folders/folders.module';
       driver: ApolloFederationDriver,
       autoSchemaFile: {
         federation: 2,
+      },
+      buildSchemaOptions: {
+        orphanedTypes: [User, Team],
       },
     }),
     DocumentsModule,

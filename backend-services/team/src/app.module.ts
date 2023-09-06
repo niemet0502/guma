@@ -6,9 +6,10 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TeamsModule } from './teams/teams.module';
-import { StatusModule } from './status/status.module';
 import { MembersModule } from './members/members.module';
+import { User } from './shared/user.entity';
+import { StatusModule } from './status/status.module';
+import { TeamsModule } from './teams/teams.module';
 import { WorkflowsModule } from './workflows/workflows.module';
 
 @Module({
@@ -17,6 +18,9 @@ import { WorkflowsModule } from './workflows/workflows.module';
       driver: ApolloFederationDriver,
       autoSchemaFile: {
         federation: 2,
+      },
+      buildSchemaOptions: {
+        orphanedTypes: [User],
       },
     }),
     TeamsModule,

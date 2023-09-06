@@ -1,11 +1,14 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { TaskType } from 'src/shared/tasks.enum';
 import { Activity } from '../../activities/entities/activity.entity';
 import { Comment } from '../../comments/entities/comment.entity';
+import { Status } from '../../shared/status.entity';
+import { Team } from '../../shared/team.entity';
+import { User } from '../../shared/user.entity';
 
 @ObjectType()
 export class Task {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
+  @Field(() => ID)
   id: number;
 
   @Field({ nullable: false })
@@ -29,8 +32,14 @@ export class Task {
   @Field({ nullable: false })
   created_by: number;
 
+  @Field(() => User)
+  author?: User;
+
   @Field({ nullable: true })
   assignee_to: number;
+
+  @Field(() => User)
+  assignee?: User;
 
   @Field({ nullable: true })
   parent_task_id: number;
@@ -41,8 +50,14 @@ export class Task {
   @Field({ nullable: false })
   status_id: number;
 
+  @Field((type) => Status)
+  status?: Status;
+
   @Field({ nullable: false })
   team_id: number;
+
+  @Field((type) => Team)
+  team?: Team;
 
   @Field((type) => [Task])
   subtasks: Task[];

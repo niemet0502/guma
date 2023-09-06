@@ -1,5 +1,7 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { ActivityAction } from 'src/shared/tasks.enum';
+import { User } from '../../shared/user.entity';
+import { Sprint } from '../../sprints/entities/sprint.entity';
 
 @ObjectType()
 export class Activity {
@@ -8,6 +10,9 @@ export class Activity {
 
   @Field({ nullable: false })
   created_by: number;
+
+  @Field(() => User)
+  author?: User;
 
   @Field({ nullable: false })
   task_id: number;
@@ -26,6 +31,9 @@ export class Activity {
     nullable: true,
   })
   sprint_id: number;
+
+  @Field((type) => Sprint)
+  sprint?: Sprint;
 
   @Field()
   action: ActivityAction;

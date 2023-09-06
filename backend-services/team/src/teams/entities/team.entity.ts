@@ -1,16 +1,17 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
 import { Member } from '../../members/entities/member.entity';
 import { TeamVisibility } from '../teams.enum';
 
 @ObjectType()
+@Directive('@key(fields: "id")')
 export class Team {
-  @Field(() => Int)
+  @Field(() => ID)
   id: number;
 
   @Field({ nullable: false })
   organization_id: number;
 
-  @Field({ nullable: false })
+  @Field({ nullable: true })
   name: string;
 
   @Field({ nullable: true })

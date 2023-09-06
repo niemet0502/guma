@@ -54,6 +54,20 @@ services:
       - "5003:3000"
     volumes:
       - ./backend-services/users:/app
+
+  gateway: 
+    build: 
+      context: ./gateway
+      dockerfile: Dockerfile
+      target: dev
+    image: neka-backend-gateway
+    restart: always
+    depends_on:
+      - neka-db
+    ports:
+      - "5007:3000"
+    volumes:
+      - ./gateway:/app
   
   issues: 
     build: 

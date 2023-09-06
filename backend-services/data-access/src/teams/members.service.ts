@@ -35,8 +35,18 @@ export class MembersService {
     });
   }
 
-  async findAllByTeam(team_id: number): Promise<Member[]> {
-    return await this.memberRepository.find({ where: { team_id } });
+  async findAllByTeam(team_id: number, user_id: number): Promise<Member[]> {
+    const query = this.memberRepository.createQueryBuilder('member');
+
+    if (team_id) {
+      query.andWhere('member.team_id = :team_id', { team_id });
+    }
+
+    if (user_id) {
+      query.andWhere('member.user_id = :user_id', { user_id });
+    }
+
+    return await query.getMany();
   }
 
   async findOne(id: number): Promise<Member> {

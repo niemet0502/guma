@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { Member } from 'src/members/entities/member.entity';
 import { MembersService } from 'src/members/members.service';
@@ -13,6 +13,7 @@ export class TeamsService {
 
   constructor(
     private readonly http: HttpService,
+    @Inject(forwardRef(() => MembersService))
     private readonly memberService: MembersService,
   ) {}
 
@@ -52,6 +53,6 @@ export class TeamsService {
   }
 
   async getMembers(team_id: number): Promise<Member[]> {
-    return await this.memberService.findAllByTeam(team_id);
+    return await this.memberService.findAllByTeam(team_id, undefined);
   }
 }

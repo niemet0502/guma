@@ -7,6 +7,9 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { Team } from 'src/shared/team.entity';
+import { User } from 'src/shared/user.entity';
+import { Status } from '../shared/status.entity';
 import { CreateTaskInput } from './dto/create-task.input';
 import { UpdateTaskInput } from './dto/update-task.input';
 import { Task } from './entities/task.entity';
@@ -72,5 +75,25 @@ export class TasksResolver {
   activities(@Parent() task: Task) {
     const { id } = task;
     return this.tasksService.getActivities(id);
+  }
+
+  @ResolveField(() => User)
+  author(@Parent() task: Task): any {
+    return { __typename: 'User', id: task.created_by };
+  }
+
+  @ResolveField(() => User)
+  assignee(@Parent() task: Task): any {
+    return { __typename: 'User', id: task.assignee_to };
+  }
+
+  @ResolveField(() => Team)
+  team(@Parent() task: Task): any {
+    return { __typename: 'Team', id: task.team_id };
+  }
+
+  @ResolveField((of) => Status)
+  status(@Parent() task: Task): any {
+    return { __typename: 'Status', id: task.status_id };
   }
 }
