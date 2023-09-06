@@ -5,6 +5,7 @@ import {
   Parent,
   Query,
   ResolveField,
+  ResolveReference,
   Resolver,
 } from '@nestjs/graphql';
 import { Profile } from '../profiles/entities/profile.entity';
@@ -48,5 +49,13 @@ export class UsersResolver {
   async profile(@Parent() user: User): Promise<Profile> {
     const userProfile = await this.usersService.getUserProfile(user);
     return userProfile;
+  }
+
+  @ResolveReference()
+  resolveReference(reference: {
+    __typename: string;
+    id: number;
+  }): Promise<User> {
+    return this.usersService.findOne(reference.id);
   }
 }
