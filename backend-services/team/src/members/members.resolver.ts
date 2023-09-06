@@ -1,4 +1,13 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
+import { User } from '../shared/user.entity';
 import { CreateMemberInput } from './dto/create-member.input';
 import { UpdateMemberInput } from './dto/update-member.input';
 import { Member } from './entities/member.entity';
@@ -35,5 +44,10 @@ export class MembersResolver {
   @Mutation(() => Member)
   removeMember(@Args('id', { type: () => Int }) id: number) {
     return this.membersService.remove(id);
+  }
+
+  @ResolveField(() => User)
+  user(@Parent() member: Member): any {
+    return { __typename: 'User', id: member.user_id };
   }
 }
