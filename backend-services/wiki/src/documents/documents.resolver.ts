@@ -51,7 +51,7 @@ export class DocumentsResolver {
   }
 
   @ResolveField(() => User)
-  assignee(@Parent() doc: Document): any {
+  author(@Parent() doc: Document): any {
     return { __typename: 'User', id: doc.created_by };
   }
 }
