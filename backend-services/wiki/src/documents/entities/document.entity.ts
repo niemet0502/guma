@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { User } from '../../shared/user.entity';
 import { DocumentStatus } from '../documents.enum';
 
 @ObjectType()
@@ -23,6 +24,9 @@ export class Document {
 
   @Field()
   created_by: number;
+
+  @Field(() => User)
+  author?: User;
 
   @Field()
   created_at: string;

@@ -1,4 +1,13 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
+import { User } from 'src/shared/user.entity';
 import { DocumentsService } from './documents.service';
 import { CreateDocumentInput } from './dto/create-document.input';
 import { UpdateDocumentInput } from './dto/update-document.input';
@@ -39,5 +48,10 @@ export class DocumentsResolver {
   @Mutation(() => Document)
   removeDocument(@Args('id', { type: () => Int }) id: number) {
     return this.documentsService.remove(id);
+  }
+
+  @ResolveField(() => User)
+  assignee(@Parent() doc: Document): any {
+    return { __typename: 'User', id: doc.created_by };
   }
 }
