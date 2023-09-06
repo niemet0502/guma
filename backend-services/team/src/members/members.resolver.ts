@@ -8,6 +8,7 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { User } from '../shared/user.entity';
+import { Team } from '../teams/entities/team.entity';
 import { CreateMemberInput } from './dto/create-member.input';
 import { UpdateMemberInput } from './dto/update-member.input';
 import { Member } from './entities/member.entity';
@@ -49,5 +50,12 @@ export class MembersResolver {
   @ResolveField(() => User)
   user(@Parent() member: Member): any {
     return { __typename: 'User', id: member.user_id };
+  }
+
+  @ResolveField(() => Team)
+  async team(@Parent() member: Member): Promise<Team> {
+    const { team_id } = member;
+
+    return await this.membersService.getTeam(team_id);
   }
 }
