@@ -8,6 +8,7 @@ import { ActivitiesModule } from './activities/activities.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CommentsModule } from './comments/comments.module';
+import { Team } from './shared/team.entity';
 import { User } from './shared/user.entity';
 import { SprintsModule } from './sprints/sprints.module';
 import { TasksModule } from './tasks/tasks.module';
@@ -20,7 +21,7 @@ import { TasksModule } from './tasks/tasks.module';
         federation: 2,
       },
       buildSchemaOptions: {
-        orphanedTypes: [User],
+        orphanedTypes: [User, Team],
       },
     }),
     TasksModule,

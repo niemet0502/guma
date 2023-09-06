@@ -5,6 +5,7 @@ import {
   Parent,
   Query,
   ResolveField,
+  ResolveReference,
   Resolver,
 } from '@nestjs/graphql';
 import { CreateTeamInput } from './dto/create-team.input';
@@ -48,5 +49,13 @@ export class TeamsResolver {
     const { id } = team;
 
     return await this.teamsService.getMembers(id);
+  }
+
+  @ResolveReference()
+  resolveReference(reference: {
+    __typename: string;
+    id: number;
+  }): Promise<Team> {
+    return this.teamsService.findOne(reference.id);
   }
 }

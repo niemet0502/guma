@@ -11,7 +11,7 @@ export class Team {
   @Field({ nullable: false })
   organization_id: number;
 
-  @Field({ nullable: false })
+  @Field({ nullable: true })
   name: string;
 
   @Field({ nullable: true })
