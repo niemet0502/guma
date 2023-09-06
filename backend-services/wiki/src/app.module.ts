@@ -8,6 +8,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DocumentsModule } from './documents/documents.module';
 import { FoldersModule } from './folders/folders.module';
+import { Team } from './shared/team.entity';
 import { User } from './shared/user.entity';
 
 @Module({
@@ -18,7 +19,7 @@ import { User } from './shared/user.entity';
         federation: 2,
       },
       buildSchemaOptions: {
-        orphanedTypes: [User],
+        orphanedTypes: [User, Team],
       },
     }),
     DocumentsModule,

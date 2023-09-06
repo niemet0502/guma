@@ -8,6 +8,7 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { User } from 'src/shared/user.entity';
+import { Team } from '../shared/team.entity';
 import { DocumentsService } from './documents.service';
 import { CreateDocumentInput } from './dto/create-document.input';
 import { UpdateDocumentInput } from './dto/update-document.input';
@@ -53,5 +54,10 @@ export class DocumentsResolver {
   @ResolveField(() => User)
   author(@Parent() doc: Document): any {
     return { __typename: 'User', id: doc.created_by };
+  }
+
+  @ResolveField(() => Team)
+  team(@Parent() doc: Document): any {
+    return { __typename: 'Team', id: doc.team_id };
   }
 }

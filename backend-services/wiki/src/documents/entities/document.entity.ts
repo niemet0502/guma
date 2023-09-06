@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Team } from '../../shared/team.entity';
 import { User } from '../../shared/user.entity';
 import { DocumentStatus } from '../documents.enum';
 
@@ -15,6 +16,9 @@ export class Document {
 
   @Field({ nullable: true })
   team_id?: number;
+
+  @Field((type) => Team)
+  team?: Team;
 
   @Field({ nullable: true })
   content?: string;

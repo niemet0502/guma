@@ -7,6 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { Team } from '../shared/team.entity';
 import { CreateFolderInput } from './dto/create-folder.input';
 import { UpdateFolderInput } from './dto/update-folder.input';
 import { Folder } from './entities/folder.entity';
@@ -48,5 +49,10 @@ export class FoldersResolver {
   @ResolveField()
   async documents(@Parent() folder: Folder): Promise<Document[]> {
     return await this.foldersService.getDocuments(folder);
+  }
+
+  @ResolveField(() => Team)
+  team(@Parent() folder: Folder): any {
+    return { __typename: 'Team', id: folder.team_id };
   }
 }
