@@ -7,5 +7,6 @@ import { SprintsService } from './sprints.service';
 @Module({
   imports: [HttpModule, TasksModule],
   providers: [SprintsResolver, SprintsService],
+  exports: [SprintsService],
 })
 export class SprintsModule {}
