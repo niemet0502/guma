@@ -7,6 +7,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProfilesModule } from './profiles/profiles.module';
+import { Member } from './shared/member.entity';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -15,6 +16,9 @@ import { UsersModule } from './users/users.module';
       driver: ApolloFederationDriver,
       autoSchemaFile: {
         federation: 2,
+      },
+      buildSchemaOptions: {
+        orphanedTypes: [Member],
       },
     }),
     UsersModule,

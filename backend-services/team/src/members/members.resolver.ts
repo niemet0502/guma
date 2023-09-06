@@ -5,6 +5,7 @@ import {
   Parent,
   Query,
   ResolveField,
+  ResolveReference,
   Resolver,
 } from '@nestjs/graphql';
 import { User } from '../shared/user.entity';
@@ -26,8 +27,11 @@ export class MembersResolver {
   }
 
   @Query(() => [Member], { name: 'members' })
-  findAll(@Args('team_id', { type: () => Int }) team_id: number) {
-    return this.membersService.findAllByTeam(team_id);
+  findAll(
+    @Args('team_id', { type: () => Int }) team_id: number,
+    @Args('user_id', { type: () => Int }) user_id: number,
+  ) {
+    return this.membersService.findAllByTeam(team_id, user_id);
   }
 
   @Query(() => Member, { name: 'member' })
@@ -55,7 +59,14 @@ export class MembersResolver {
   @ResolveField(() => Team)
   async team(@Parent() member: Member): Promise<Team> {
     const { team_id } = member;
-
     return await this.membersService.getTeam(team_id);
+  }
+
+  @ResolveReference()
+  resolveReference(reference: {
+    __typename: string;
+    id: number;
+  }): Promise<Member[]> {
+    return this.membersService.findAllByTeam(undefined, reference.id);
   }
 }

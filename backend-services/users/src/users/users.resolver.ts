@@ -8,6 +8,7 @@ import {
   ResolveReference,
   Resolver,
 } from '@nestjs/graphql';
+import { Member } from 'src/shared/member.entity';
 import { Profile } from '../profiles/entities/profile.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
@@ -57,5 +58,10 @@ export class UsersResolver {
     id: number;
   }): Promise<User> {
     return this.usersService.findOne(reference.id);
+  }
+
+  @ResolveField((of) => [Member])
+  members(@Parent() user: User): any {
+    return { __typename: 'Member', id: user.id };
   }
 }

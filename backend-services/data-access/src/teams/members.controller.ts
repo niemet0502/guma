@@ -25,8 +25,11 @@ export class MembersController {
 
   @Get()
   @ApiOkResponse({ type: Member, isArray: true })
-  async findAll(@Query('team_id') team_id: string): Promise<Member[]> {
-    return await this.memberService.findAllByTeam(+team_id);
+  async findAll(
+    @Query('team_id') team_id: string,
+    @Query('user_id') user_id: string,
+  ): Promise<Member[]> {
+    return await this.memberService.findAllByTeam(+team_id, +user_id);
   }
 
   @Delete(':id')

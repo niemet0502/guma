@@ -1,4 +1,5 @@
 import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
+import { Member } from 'src/shared/member.entity';
 import { Profile } from '../../profiles/entities/profile.entity';
 
 @ObjectType()
@@ -32,4 +33,7 @@ export class User {
 
   @Field((type) => Profile)
   profile: Profile;
+
+  @Field((type) => [Member])
+  members?: Member[];
 }

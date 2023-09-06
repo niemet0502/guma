@@ -24,9 +24,9 @@ export class MembersService {
     return data;
   }
 
-  async findAllByTeam(team_id: number): Promise<Member[]> {
+  async findAllByTeam(team_id: number, user_id: number): Promise<Member[]> {
     const { data } = await firstValueFrom(
-      this.http.get<Member[]>(this.url, { params: { team_id } }),
+      this.http.get<Member[]>(this.url, { params: { team_id, user_id } }),
     );
     return data;
   }
