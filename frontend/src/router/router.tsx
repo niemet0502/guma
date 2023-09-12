@@ -1,93 +1,53 @@
+import { AuthPage } from "@/domains/auth/AuthPage";
+import { SignIn } from "@/domains/auth/SignIn";
+import { SignUp } from "@/domains/auth/SignUp";
 import { NotificationsList } from "@/domains/notifications/NotificationsList";
-import {
-  createBrowserRouter,
-  isRouteErrorResponse,
-  Outlet,
-  useRouteError,
-} from "react-router-dom";
-import { Documents } from "../domains/documents/Documents";
+import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "../Layout/Layout";
+import { Documents } from "../domains/documents/Documents";
 
-// const routes = createRoutesFromElements(
-//   <Route path="/">
-//     <Route
-//       path="/seiri"
-//       element={<Layout />}
-//       errorElement={<div>Page not found</div>}
-//     >
-//       <Route errorElement={<ErrorPage />}>
-//         <Route path="documents" element={<Documents />} />
-//         <Route path="notifications" element={<NotificationsList />} />
-//       </Route>
-
-//       <Route />
-//     </Route>
-//     {/* <Route element={<AuthenticationGuard />}>
-//     </Route> */}
-
-//     {/* <Route element={<UnAuthenticationGuard />}>
-//       <Route path="/auth" element={<AuthPage />}>
-//         <Route index element={<SignIn />}></Route>
-//         <Route path="signup" element={<SignUp />}></Route>
-//       </Route>
-//     </Route> */}
-//   </Route>
-// );
-
-export function RootErrorBoundary() {
-  let error = useRouteError() as Error;
-  return (
-    <div>
-      <h1>Uh oh, something went terribly wrong 😩</h1>
-      <pre>{error.message || JSON.stringify(error)}</pre>
-      <button onClick={() => (window.location.href = "/")}>
-        Click here to reload the app
-      </button>
-    </div>
-  );
-}
-
-export function ProjectErrorBoundary() {
-  let error = useRouteError();
-
-  // We only care to handle 401's at this level, so if this is not a 401
-  // ErrorResponse, re-throw to let the RootErrorBoundary handle it
-  if (!isRouteErrorResponse(error) || error.status !== 401) {
-    throw error;
-  }
-
-  return (
-    <>
-      <h1>This page doens't exist</h1>
-      <p>Please reach out to to obtain access.</p>
-    </>
-  );
-}
+const NotFoundPage = () => {
+  return <div>Not found</div>;
+};
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/org",
     element: <Layout />,
+    // children: [
+    //   {
+    //     path: "",
+    //     element: <Outlet />,
     children: [
       {
-        path: "",
-        element: <Outlet />,
-        errorElement: <RootErrorBoundary />,
-        children: [
-          {
-            path: "documents",
-            element: <Documents />,
-            errorElement: <ProjectErrorBoundary />,
-          },
-          {
-            path: "notifications",
-            element: <NotificationsList />,
-            errorElement: <ProjectErrorBoundary />,
-          },
-        ],
+        index: true,
+        path: "documents",
+        element: <Documents />,
+      },
+      {
+        path: "notifications",
+        element: <NotificationsList />,
+      },
+      {
+        path: "*", // Matches any path not covered by previous routes
+        element: <NotFoundPage />, // Display a "Not Found" page or error message
+      },
+    ],
+    //   },
+    // ],
+  },
+  {
+    path: "/auth",
+    element: <AuthPage />,
+    children: [
+      {
+        path: "signin",
+        element: <SignIn />,
+      },
+      {
+        path: "signup",
+        element: <SignUp />,
       },
     ],
   },
 ]);
-
-// export const router = createBrowserRouter(routes);
