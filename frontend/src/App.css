@@ -73,6 +73,15 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* custom-styles.css */
+  .active {
+    @apply h-9 px-4 py-2 text-sm bg-secondary rounded items-center text-secondary-foreground shadow-sm hover:bg-secondary/80 w-full justify-start flex gap-1;
+  }
+
+  .default {
+    @apply h-9 px-4 py-2 text-sm flex flex-wrap rounded  items-center hover:bg-accent hover:text-accent-foreground w-full justify-start  gap-1;
+  }
 }
 
 ::-webkit-scrollbar {
