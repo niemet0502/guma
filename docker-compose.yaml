@@ -1,0 +1,121 @@
+services:
+  organization: 
+    build: 
+      context: ./backend-services/organization
+      dockerfile: Dockerfile
+      target: dev
+    image: neka-backend-organization
+    restart: always
+    depends_on:
+      - neka-db
+    ports:
+      - "5001:3000"
+    volumes:
+      - ./backend-services/organization:/app
+
+  wiki: 
+    build: 
+      context: ./backend-services/wiki
+      dockerfile: Dockerfile
+      target: dev
+    image: neka-backend-wiki
+    restart: always
+    depends_on:
+      - neka-db
+    ports:
+      - "5004:3000"
+    volumes:
+      - ./backend-services/wiki:/app
+
+  team: 
+    build: 
+      context: ./backend-services/team
+      dockerfile: Dockerfile
+      target: dev
+    image: neka-backend-team
+    restart: always
+    depends_on:
+      - neka-db
+    ports:
+      - "5005:3000"
+    volumes:
+      - ./backend-services/team:/app
+  
+  user: 
+    build: 
+      context: ./backend-services/users
+      dockerfile: Dockerfile
+      target: dev
+    image: neka-backend-users
+    restart: always
+    depends_on:
+      - neka-db
+    ports:
+      - "5003:3000"
+    volumes:
+      - ./backend-services/users:/app
+
+  gateway: 
+    build: 
+      context: ./gateway
+      dockerfile: Dockerfile
+      target: dev
+    image: neka-backend-gateway
+    restart: always
+    depends_on:
+      - neka-db
+    ports:
+      - "5007:3000"
+    volumes:
+      - ./gateway:/app
+  
+  issues: 
+    build: 
+      context: ./backend-services/issues
+      dockerfile: Dockerfile
+      target: dev
+    image: neka-backend-issues
+    restart: always
+    depends_on:
+      - neka-db
+    ports:
+      - "5006:3000"
+    volumes:
+      - ./backend-services/issues:/app
+
+  data-access: 
+    build: 
+      context: ./backend-services/data-access
+      dockerfile: Dockerfile
+      target: dev
+    image: neka-backend-data-access
+    restart: always
+    depends_on:
+      - neka-db
+    ports:
+      - "5002:3000"
+    environment:
+      DB_HOST: neka-db
+      DB_PORT: 3306
+      DB_USERNAME: marius
+      DB_PASSWORD: root
+      DB_NAME: thot
+    volumes:
+      - ./backend-services/data-access:/app
+  
+  neka-db: 
+    image: mysql:5.7.41
+    container_name: neka-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: thot
+      MYSQL_USER: marius
+      MYSQL_PASSWORD: root
+    ports:
+      - "5000:3306" 
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
