@@ -14,10 +14,6 @@ export const router = createBrowserRouter([
   {
     path: "/org",
     element: <Layout />,
-    // children: [
-    //   {
-    //     path: "",
-    //     element: <Outlet />,
     children: [
       {
         index: true,
@@ -33,8 +29,6 @@ export const router = createBrowserRouter([
         element: <NotFoundPage />, // Display a "Not Found" page or error message
       },
     ],
-    //   },
-    // ],
   },
   {
     path: "/auth",
