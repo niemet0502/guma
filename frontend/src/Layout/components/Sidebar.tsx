@@ -2,44 +2,44 @@ import { Button } from "@/components/ui/button";
 import { GoIssueDraft } from "react-icons/go";
 import { HiOutlineDocumentDuplicate } from "react-icons/hi";
 import { IoIosNotificationsOutline } from "react-icons/io";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export const Sidebar: React.FC = () => {
   return (
-    <div className="pb-12 h-full w-[270px] flex flex-none sticky top-0">
+    <div className="pb-12 h-full w-[250px] flex flex-none sticky top-0">
       <div className="space-y-4 py-4">
         <div className="px-3 py-2">
           <h3 className="mb-3 px-4 text-lg font-semibold tracking-tight">
             Workspace [logo]
           </h3>
           <div className="space-y-1">
-            <Link to="/notifications">
-              <Button
-                variant="secondary"
-                className="w-full justify-start flex gap-1"
-              >
-                <IoIosNotificationsOutline className="text-base" />
-                Notifications
-              </Button>
-            </Link>
+            <NavLink
+              to="/org/notifications"
+              className={({ isActive, isPending }) =>
+                isActive ? "active" : isPending ? "default" : "default"
+              }
+            >
+              <IoIosNotificationsOutline className="text-base" />
+              Notifications
+            </NavLink>
 
-            <Link to="/documents">
-              <Button
-                variant="ghost"
-                className="w-full justify-start flex gap-1"
-              >
-                <HiOutlineDocumentDuplicate className="text-base" />
-                Documents
-              </Button>
-            </Link>
-            <NavLink to="/issues">
-              <Button
-                variant="ghost"
-                className="w-full justify-start flex gap-1"
-              >
-                <GoIssueDraft className="text-base" />
-                Issues
-              </Button>
+            <NavLink
+              to="/org/documents"
+              className={({ isActive, isPending }) =>
+                isActive ? "active" : isPending ? "default" : "default"
+              }
+            >
+              <HiOutlineDocumentDuplicate className="text-base" />
+              Documents
+            </NavLink>
+            <NavLink
+              to="/org/issues"
+              className={({ isActive, isPending }) =>
+                isActive ? "active" : isPending ? "default" : "default"
+              }
+            >
+              <GoIssueDraft className="text-base" />
+              Issues
             </NavLink>
           </div>
         </div>
