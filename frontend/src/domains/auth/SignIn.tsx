@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "./providers/auth";
 
 const formSchema = z.object({
@@ -56,7 +56,10 @@ export function SignIn({ className, ...props }: UserAuthFormProps) {
       <div className="flex flex-col space-y-2 ">
         <h1 className="text-2xl font-semibold tracking-tight">Sign In</h1>
         <p className="text-sm text-muted-foreground">
-          Enter your information below to sign in
+          New here ?{" "}
+          <NavLink to="/auth/signup" className="text-primary">
+            Sign Up for an account
+          </NavLink>
         </p>
       </div>
       <Form {...form}>
@@ -91,19 +94,6 @@ export function SignIn({ className, ...props }: UserAuthFormProps) {
       </Form>
       <Button type="button" onClick={handleLogin} className="w-full">
         Submit
-      </Button>
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
-          </span>
-        </div>
-      </div>
-      <Button variant="outline" type="button">
-        Github
       </Button>
     </div>
   );

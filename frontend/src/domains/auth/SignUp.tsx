@@ -13,6 +13,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useForm } from "react-hook-form";
+import { NavLink } from "react-router-dom";
+import useCreateUser from "./hooks/useCreateUser";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -29,6 +31,8 @@ const formSchema = z.object({
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function SignUp({ className, ...props }: UserAuthFormProps) {
+  const { createUser } = useCreateUser();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,9 +43,10 @@ export function SignUp({ className, ...props }: UserAuthFormProps) {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    const { email, password } = values;
+    const createUserInput = { email, password };
+
+    createUser(createUserInput);
   }
 
   return (
@@ -49,7 +54,10 @@ export function SignUp({ className, ...props }: UserAuthFormProps) {
       <div className="flex flex-col space-y-2 ">
         <h1 className="text-2xl font-semibold tracking-tight">Sign Up</h1>
         <p className="text-sm text-muted-foreground">
-          Enter your information below to create your account
+          Already have an account?{" "}
+          <NavLink to="/auth/signin" className="text-primary">
+            Sign in
+          </NavLink>
         </p>
       </div>
       <Form {...form}>
@@ -98,19 +106,6 @@ export function SignUp({ className, ...props }: UserAuthFormProps) {
           </Button>
         </form>
       </Form>
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
-          </span>
-        </div>
-      </div>
-      <Button variant="outline" type="button">
-        Github
-      </Button>
     </div>
   );
 }
