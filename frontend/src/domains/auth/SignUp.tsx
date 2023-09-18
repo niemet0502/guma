@@ -11,10 +11,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
+import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { NavLink } from "react-router-dom";
-import useCreateUser from "./hooks/useCreateUser";
+import { CREATE_USER } from "./services/queries";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -31,7 +33,8 @@ const formSchema = z.object({
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function SignUp({ className, ...props }: UserAuthFormProps) {
-  const { createUser } = useCreateUser();
+  const [createUserMutation, { error }] = useMutation(CREATE_USER);
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -42,11 +45,36 @@ export function SignUp({ className, ...props }: UserAuthFormProps) {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     const { email, password } = values;
     const createUserInput = { email, password };
 
-    createUser(createUserInput);
+    try {
+      const response = await createUserMutation({
+        variables: { createUserInput },
+      });
+
+      // Check the response for success and handle accordingly
+      if (response.data && response.data.createUser) {
+        // User creation succeeded, show success toast
+        toast({
+          title: "Registration",
+          description: "Your account has been successfully created",
+        });
+
+        form.reset();
+      } else {
+        // Handle unexpected response or error
+        response.errors?.map((error: any) => console.log(error?.message));
+      }
+    } catch (e) {
+      // Handle GraphQL errors or HTTP errors here
+
+      toast({
+        variant: "destructive",
+        description: error?.message,
+      });
+    }
   }
 
   return (
