@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcryptjs';
 import { OrganizationsService } from 'src/organizations/organizations.service';
 import { Repository } from 'typeorm';
+import { LoginDto } from '../auth/dto/login.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -40,6 +41,21 @@ export class UsersService {
 
   async findOne(id: number): Promise<User> {
     return await this.userRepo.findOne({ where: { id } });
+  }
+
+  async find({ email, password }: LoginDto): Promise<User | null> {
+    const user = await this.userRepo.findOne({ where: { email } });
+
+    if (!user) {
+      return null;
+    }
+
+    if (await bcrypt.compare(password, user.password)) {
+      delete user.password;
+      return user;
+    }
+
+    return null;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
