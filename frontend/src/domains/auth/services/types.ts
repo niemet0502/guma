@@ -12,3 +12,11 @@ export interface CreateUserInput {
   email: string;
   password: string;
 }
+
+export interface UserSession {
+  id: string;
+  user_id: number;
+  token: string;
+  created_at: string;
+  expired_at: string;
+}

@@ -12,9 +12,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "./providers/auth";
+import { USER_ACCOUNT_AUTH } from "./services/queries";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -31,7 +33,10 @@ export function SignIn({ className, ...props }: UserAuthFormProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useAuth();
-  const from = location.state?.from?.pathname || "/";
+
+  const [userAccountAuth, { error }] = useMutation(USER_ACCOUNT_AUTH);
+
+  const from = location.state?.from?.pathname || "/org/documents";
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -41,14 +46,16 @@ export function SignIn({ className, ...props }: UserAuthFormProps) {
     },
   });
 
-  const handleLogin = () => {
-    login({ email: "marius@seiri.dev", password: "pastme" });
-    // user experience.
-    navigate(from, { replace: true });
-  };
+  async function onSubmit(createAuthInput: z.infer<typeof formSchema>) {
+    const response = await userAccountAuth({
+      variables: { createAuthInput },
+    });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    if (response && response.data.userAccountAuth) {
+      const { user, session } = response.data.userAccountAuth;
+      login(user, session);
+      navigate(from, { replace: true });
+    }
   }
 
   return (
@@ -90,11 +97,13 @@ export function SignIn({ className, ...props }: UserAuthFormProps) {
               </FormItem>
             )}
           />
+
+          {error && <div className="text-red-600">{error.message}</div>}
+          <Button type="submit" className="w-full">
+            Submit
+          </Button>
         </form>
       </Form>
-      <Button type="button" onClick={handleLogin} className="w-full">
-        Submit
-      </Button>
     </div>
   );
 }

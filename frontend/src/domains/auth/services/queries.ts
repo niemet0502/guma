@@ -10,3 +10,21 @@ export const CREATE_USER = gql`
     }
   }
 `;
+
+export const USER_ACCOUNT_AUTH = gql`
+  mutation userAccountAuth($createAuthInput: CreateAuthInput!) {
+    userAccountAuth(createAuthInput: $createAuthInput) {
+      user {
+        id
+        email
+        lastname
+        firstname
+      }
+
+      session {
+        id
+        token
+      }
+    }
+  }
+`;
