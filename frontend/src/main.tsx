@@ -3,6 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import { Toaster } from "./components/ui/toaster.tsx";
+import { AuthProvider } from "./domains/auth/providers/auth.tsx";
 import "./index.css";
 import { ThemeProvider } from "./providers/theme-provider.tsx";
 
@@ -15,8 +16,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <App />
-        <Toaster />
+        <AuthProvider>
+          <App />
+          <Toaster />
+        </AuthProvider>
       </ThemeProvider>
     </ApolloProvider>
   </React.StrictMode>

@@ -1,26 +1,29 @@
 import { useAuth } from "@/domains/auth/providers/auth";
-import type { FC, ReactElement } from "react";
 import { ProtectedRoute } from "./ProtectedRoute";
 
 export type AuthenticationGuardProps = {
-  children?: ReactElement;
+  children?: React.ReactElement;
   redirectPath?: string;
-  guardType?: "authenticated" | "unauthenticated";
 };
 
-export const AuthenticationGuard: FC<AuthenticationGuardProps> = ({
-  redirectPath = "/login",
-  guardType = "authenticated",
+export const AuthenticationGuard: React.FC<AuthenticationGuardProps> = ({
+  redirectPath = "/auth/signin",
   ...props
 }) => {
   const { user } = useAuth();
-  const isAllowed = guardType === "authenticated" ? !!user : !user;
 
   return (
-    <ProtectedRoute
-      redirectPath={redirectPath}
-      isAllowed={isAllowed}
-      {...props}
-    />
+    <ProtectedRoute redirectPath={redirectPath} isAllowed={!!user} {...props} />
+  );
+};
+
+export const UnAuthenticationGuard: React.FC<AuthenticationGuardProps> = ({
+  redirectPath = "/org/documents",
+  ...props
+}) => {
+  const { user } = useAuth();
+
+  return (
+    <ProtectedRoute redirectPath={redirectPath} isAllowed={!user} {...props} />
   );
 };
