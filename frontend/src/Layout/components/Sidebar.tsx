@@ -33,7 +33,7 @@ export const Sidebar: React.FC = () => {
               Documents
             </NavLink>
             <NavLink
-              to="/org/issues"
+              to="/"
               className={({ isActive, isPending }) =>
                 isActive ? "active" : isPending ? "default" : "default"
               }
