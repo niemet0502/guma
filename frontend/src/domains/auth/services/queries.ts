@@ -19,6 +19,11 @@ export const USER_ACCOUNT_AUTH = gql`
         email
         lastname
         firstname
+        organization_id
+        organization {
+          id
+          name
+        }
       }
 
       session {
