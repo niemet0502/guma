@@ -1,9 +1,10 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
 import { Label } from 'src/labels/entities/label.entity';
 
 @ObjectType()
+@Directive('@key(fields: "id")')
 export class Organization {
-  @Field(() => Int)
+  @Field(() => ID)
   id: number;
 
   @Field()

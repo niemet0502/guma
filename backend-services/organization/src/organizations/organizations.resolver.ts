@@ -5,6 +5,7 @@ import {
   Parent,
   Query,
   ResolveField,
+  ResolveReference,
   Resolver,
 } from '@nestjs/graphql';
 import { LabelsService } from 'src/labels/labels.service';
@@ -58,5 +59,13 @@ export class OrganizationsResolver {
   async labels(@Parent() organization: Organization) {
     const { id } = organization;
     return this.labelsService.findAll(id);
+  }
+
+  @ResolveReference()
+  resolveReference(reference: {
+    __typename: string;
+    id: number;
+  }): Promise<Organization> {
+    return this.organizationsService.findOne(reference.id);
   }
 }
