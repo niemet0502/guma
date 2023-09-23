@@ -9,7 +9,7 @@ export type ProtectedRouteProps = { children?: ReactElement } & {
 export const ProtectedRoute: FC<ProtectedRouteProps> = ({
   isAllowed,
   children,
-  redirectPath = "/org/documents",
+  redirectPath = "/auth/signin",
 }) => {
   const location = useLocation();
 

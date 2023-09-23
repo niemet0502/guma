@@ -1,8 +1,32 @@
-import { Field, InputType, Int, OmitType } from '@nestjs/graphql';
-import { CreateUserInput } from './create-user.input';
+import { Field, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
-export class UpdateUserInput extends OmitType(CreateUserInput, ['password']) {
+export class UpdateUserInput {
   @Field(() => Int)
   id: number;
+
+  
+  @Field({ nullable: true })
+  lastname?: string;
+
+  @Field({ nullable: true })
+  firstname?: string;
+
+  @Field({ nullable: true})
+  email?: string;
+
+  @Field({ nullable: true})
+  password?: string;
+
+  @Field({ nullable: true})
+  is_suspended?: boolean;
+
+  @Field({ nullable: true})
+  first_signin?: boolean;
+
+  @Field({ nullable: true })
+  organization_id?: number;
+
+  @Field({ nullable: true})
+  profile_id?: number;
 }
