@@ -2,6 +2,7 @@ import { AuthPage } from "@/domains/auth/AuthPage";
 import { SignIn } from "@/domains/auth/SignIn";
 import { SignUp } from "@/domains/auth/SignUp";
 import { NotificationsList } from "@/domains/notifications/NotificationsList";
+import { OrganizationForm } from "@/domains/organization/OrganizationForm";
 import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "../Layout/Layout";
 import { Documents } from "../domains/documents/Documents";
@@ -19,7 +20,7 @@ export const router = createBrowserRouter([
     element: <AuthenticationGuard />,
     children: [
       {
-        path: "/org",
+        path: "/:orgaId",
         element: <Layout />,
         children: [
           {
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
             element: <NotFoundPage />, // Display a "Not Found" page or error message
           },
         ],
+      },
+      {
+        path: "/create-workspace",
+        element: <OrganizationForm />,
       },
     ],
   },
