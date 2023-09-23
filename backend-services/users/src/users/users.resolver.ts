@@ -10,6 +10,7 @@ import {
 } from '@nestjs/graphql';
 import { Member } from 'src/shared/member.entity';
 import { Profile } from '../profiles/entities/profile.entity';
+import { Organization } from '../shared/organization.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
@@ -63,5 +64,11 @@ export class UsersResolver {
   @ResolveField((of) => [Member])
   members(@Parent() user: User): any {
     return { __typename: 'Member', id: user.id };
+  }
+
+  @ResolveField((of) => Organization)
+  organization(@Parent() user: User): any {
+    if (!user.organization_id) return null;
+    return { __typename: 'Organization', id: user.organization_id };
   }
 }
