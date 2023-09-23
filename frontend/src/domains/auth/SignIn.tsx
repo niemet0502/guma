@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "./providers/auth";
 import { USER_ACCOUNT_AUTH } from "./services/queries";
 
@@ -31,18 +31,15 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function SignIn({ className, ...props }: UserAuthFormProps) {
   const navigate = useNavigate();
-  const location = useLocation();
   const { login } = useAuth();
 
   const [userAccountAuth, { error }] = useMutation(USER_ACCOUNT_AUTH);
 
-  const from = location.state?.from?.pathname || "/org/documents";
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "ttesting@gmail.com",
+      password: "passer",
     },
   });
 
@@ -53,8 +50,18 @@ export function SignIn({ className, ...props }: UserAuthFormProps) {
 
     if (response && response.data.userAccountAuth) {
       const { user, session } = response.data.userAccountAuth;
-      login(user, session);
-      navigate(from, { replace: true });
+
+      const { organization_id, organization } = user;
+
+      login(user, session, organization);
+
+      if (organization && organization_id) {
+        navigate(`/${organization.name.toLowerCase()}/documents`, {
+          replace: true,
+        });
+      } else {
+        navigate("/create-workspace");
+      }
     }
   }
 
