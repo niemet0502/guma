@@ -53,7 +53,9 @@ export class MembersResolver {
 
   @ResolveField(() => User)
   user(@Parent() member: Member): any {
-    return { __typename: 'User', id: member.user_id };
+    const { user_id } = member;
+    if (!user_id) return null;
+    return { __typename: 'User', id: user_id };
   }
 
   @ResolveField(() => Team)
