@@ -58,7 +58,7 @@ export const OrganizationForm: React.FC = () => {
 
       updateOrganization(createOrganization);
 
-      navigate(`/${createOrganization.name}/documents`);
+      navigate(`/${createOrganization.name.toLowerCase()}/documents`);
     }
   }
   return (

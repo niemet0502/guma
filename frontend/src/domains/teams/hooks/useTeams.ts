@@ -6,6 +6,11 @@ const GET_TEAMS_BY_ORGANIZATION_ID = gql`
     teams(organization_id: $organization_id) {
       id
       name
+      visibility
+      members {
+        id
+        user_id
+      }
     }
   }
 `;
