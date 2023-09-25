@@ -1,3 +1,4 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/domains/auth/providers/auth";
 import { TeamCard } from "@/domains/teams/components/TeamCard";
 import { useTeams } from "@/domains/teams/hooks/useTeams";
@@ -55,6 +56,21 @@ export const Sidebar: React.FC = () => {
               Teams
             </h6>
           </div>
+          {isLoading && (
+            <>
+              <div className="my-2 px-4">
+                <Skeleton className="h-4  w-full" />
+              </div>
+              <div className="space-y-2 pl-4 pr-4">
+                {Array(4)
+                  .fill(null)
+                  .map((i) => (
+                    <Skeleton className="ml-6 h-4" key={i} />
+                  ))}
+              </div>
+            </>
+          )}
+
           {data?.map((team) => (
             <TeamCard team={team} />
           ))}
