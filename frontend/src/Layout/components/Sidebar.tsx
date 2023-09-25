@@ -62,7 +62,7 @@ export const Sidebar: React.FC = () => {
                 <Skeleton className="h-4  w-full" />
               </div>
               <div className="space-y-2 pl-4 pr-4">
-                {Array(4)
+                {Array(3)
                   .fill(null)
                   .map((i) => (
                     <Skeleton className="ml-6 h-4" key={i} />
