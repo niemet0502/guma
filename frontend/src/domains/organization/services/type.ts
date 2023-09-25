@@ -5,7 +5,7 @@ export interface CreateOrganizationInput {
 }
 
 export interface Organization {
-  id: string;
+  id: number;
   name: string;
   size: string;
   logo?: string;
