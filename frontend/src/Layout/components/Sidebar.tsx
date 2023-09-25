@@ -1,4 +1,6 @@
+import { useAuth } from "@/domains/auth/providers/auth";
 import { TeamCard } from "@/domains/teams/components/TeamCard";
+import { useTeams } from "@/domains/teams/hooks/useTeams";
 import { GoIssueDraft } from "react-icons/go";
 import { HiOutlineDocumentDuplicate } from "react-icons/hi";
 import { IoIosNotificationsOutline } from "react-icons/io";
@@ -6,6 +8,8 @@ import { NavLink, useParams } from "react-router-dom";
 
 export const Sidebar: React.FC = () => {
   let { orgaId } = useParams<{ orgaId: string }>();
+  const { organization } = useAuth();
+  const { data, isLoading } = useTeams(organization?.id as number);
 
   return (
     <div className="pb-12 h-full w-[250px] flex flex-none sticky top-0">
@@ -51,7 +55,9 @@ export const Sidebar: React.FC = () => {
               Teams
             </h6>
           </div>
-          <TeamCard />
+          {data?.map((team) => (
+            <TeamCard team={team} />
+          ))}
         </div>
       </div>
     </div>

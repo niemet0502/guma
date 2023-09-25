@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
+import { TeamApi } from "../type";
 
-export const TeamCard: React.FC = () => {
+export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
   return (
     <div className="w-full border-b pb-1">
       <h5 className="my-2 px-4 text-base  font-semibold tracking-tight">
-        Backend
+        {team.name}
       </h5>
 
       <div className="space-y-1 pl-4 pr-3">
