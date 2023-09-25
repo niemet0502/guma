@@ -5,6 +5,7 @@ import { Member } from 'src/members/entities/member.entity';
 import { MembersService } from 'src/members/members.service';
 import { StatusService } from 'src/status/status.service';
 import { DEFAULT_TEAM_STATUS } from 'src/utils/constant';
+import { User } from '../shared/user.entity';
 import { CreateTeamInput } from './dto/create-team.input';
 import { UpdateTeamInput } from './dto/update-team.input';
 import { Team } from './entities/team.entity';
@@ -20,7 +21,7 @@ export class TeamsService {
     private readonly statusService: StatusService,
   ) {}
 
-  async create(createTeamInput: CreateTeamInput): Promise<Team> {
+  async create(createTeamInput: CreateTeamInput, user: User): Promise<Team> {
     // create team
     const { data } = await firstValueFrom(
       this.http.post<Team>(this.url, createTeamInput),
@@ -29,6 +30,7 @@ export class TeamsService {
     const { name, id: team_id } = data;
 
     // create a new member
+    await this.memberService.create({ team_id, user_id: +user.id });
 
     // create default status
     DEFAULT_TEAM_STATUS.map(async (name) => {

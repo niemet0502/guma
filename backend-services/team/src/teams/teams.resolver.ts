@@ -8,6 +8,8 @@ import {
   ResolveReference,
   Resolver,
 } from '@nestjs/graphql';
+import { CurrentUser } from 'src/shared/current-user.decorator';
+import { User } from 'src/shared/user.entity';
 import { CreateTeamInput } from './dto/create-team.input';
 import { UpdateTeamInput } from './dto/update-team.input';
 import { Team } from './entities/team.entity';
@@ -18,8 +20,11 @@ export class TeamsResolver {
   constructor(private readonly teamsService: TeamsService) {}
 
   @Mutation(() => Team)
-  createTeam(@Args('createTeamInput') createTeamInput: CreateTeamInput) {
-    return this.teamsService.create(createTeamInput);
+  createTeam(
+    @Args('createTeamInput') createTeamInput: CreateTeamInput,
+    @CurrentUser() user: User,
+  ) {
+    return this.teamsService.create(createTeamInput, user);
   }
 
   @Query(() => [Team], { name: 'teams' })
