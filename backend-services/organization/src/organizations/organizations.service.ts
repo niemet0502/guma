@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { GraphQLClient } from 'graphql-request';
 import { firstValueFrom } from 'rxjs';
 import { LabelsService } from 'src/labels/labels.service';
+import { User } from 'src/shared/user.entity';
 import { DEFAULT_ORGANIZATION_LABEL } from 'src/utils/Constant';
 import { CreateOrganizationInput } from './dto/create-organization.input';
 import { UpdateOrganizationInput } from './dto/update-organization.input';
@@ -11,17 +12,20 @@ import { Organization } from './entities/organization.entity';
 @Injectable()
 export class OrganizationsService {
   private url = 'http://localhost:5002/organizations/';
-  private readonly graphQLClient: GraphQLClient;
+  private readonly teamGraphQLClient: GraphQLClient;
+  private readonly userGraphQLClient: GraphQLClient;
 
   constructor(
     private readonly http: HttpService,
     private readonly labelService: LabelsService,
   ) {
-    this.graphQLClient = new GraphQLClient('http://localhost:5005/graphql');
+    this.teamGraphQLClient = new GraphQLClient('http://localhost:5005/graphql');
+    this.userGraphQLClient = new GraphQLClient('http://localhost:5003/graphql');
   }
 
   async create(
     createOrganizationInput: CreateOrganizationInput,
+    user: User,
   ): Promise<Organization> {
     // create the organization
     const { data } = await firstValueFrom(
@@ -31,7 +35,7 @@ export class OrganizationsService {
     const { name, id: organization_id } = data;
 
     // create a team with the organization's name
-    await this.createTeam(name, organization_id);
+    await this.createTeam(name, organization_id, user);
 
     // create organization's labels
     DEFAULT_ORGANIZATION_LABEL.map(async (name) => {
@@ -39,6 +43,7 @@ export class OrganizationsService {
     });
 
     // update the user by setting the organization_id
+    await this.updateUser(user.id, organization_id);
 
     return data;
   }
@@ -77,7 +82,7 @@ export class OrganizationsService {
     return data;
   }
 
-  async createTeam(name: string, organization_id: number) {
+  async createTeam(name: string, organization_id: number, user: User) {
     const mutation = `
     mutation CreateTeam($createTeamInput: CreateTeamInput!) {
       createTeam(
@@ -98,8 +103,44 @@ export class OrganizationsService {
       },
     };
 
+    const headers = {
+      user: JSON.stringify(user),
+    };
+
     try {
-      const data: any = await this.graphQLClient.request(mutation, variables);
+      const data: any = await this.teamGraphQLClient.request(
+        mutation,
+        variables,
+        headers,
+      );
+      return data.createTeam;
+    } catch (error) {
+      console.error('GraphQL mutation error:', error);
+      throw error;
+    }
+  }
+
+  async updateUser(id: number, organization_id: number) {
+    const mutation = `
+      mutation UpdateUser($updateUserInput: UpdateUserInput!){
+        updateUser(updateUserInput: $updateUserInput){
+          id 
+        }
+      }
+    `;
+
+    const variables = {
+      updateUserInput: {
+        id,
+        organization_id,
+      },
+    };
+
+    try {
+      const data: any = await this.userGraphQLClient.request(
+        mutation,
+        variables,
+      );
       return data.createTeam;
     } catch (error) {
       console.error('GraphQL mutation error:', error);

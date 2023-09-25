@@ -9,6 +9,8 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { LabelsService } from 'src/labels/labels.service';
+import { CurrentUser } from 'src/utils/current-user.decorator';
+import { User } from '../shared/user.entity';
 import { CreateOrganizationInput } from './dto/create-organization.input';
 import { UpdateOrganizationInput } from './dto/update-organization.input';
 import { Organization } from './entities/organization.entity';
@@ -25,8 +27,9 @@ export class OrganizationsResolver {
   createOrganization(
     @Args('createOrganizationInput')
     createOrganizationInput: CreateOrganizationInput,
+    @CurrentUser() user: User,
   ) {
-    return this.organizationsService.create(createOrganizationInput);
+    return this.organizationsService.create(createOrganizationInput, user);
   }
 
   @Query(() => [Organization], { name: 'organizations' })
