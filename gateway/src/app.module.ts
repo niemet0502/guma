@@ -4,28 +4,33 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { authContext } from './auth.context';
+import { AuthenticatedDataSource } from './authenticated-datasource';
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloGatewayDriverConfig>({
       driver: ApolloGatewayDriver,
-      // server: {
-      //   // ... Apollo server options
-      //   cors: true,
-      // },
+      server: {
+        // ... Apollo server options
+        context: authContext,
+      },
       gateway: {
         supergraphSdl: new IntrospectAndCompose({
           subgraphs: [
             {
               name: 'organization',
-              url: 'http://neka-organization-1:3000/graphql',
+              url: 'http://localhost:5001/graphql',
             },
-            { name: 'user', url: 'http://neka-user-1:3000/graphql' },
-            { name: 'wiki', url: 'http://neka-wiki-1:3000/graphql' },
-            { name: 'team', url: 'http://neka-team-1:3000/graphql' },
-            { name: 'issue', url: 'http://neka-issues-1:3000/graphql' },
+            { name: 'user', url: 'http://localhost:5003/graphql' },
+            { name: 'wiki', url: 'http://localhost:5004/graphql' },
+            { name: 'team', url: 'http://localhost:5005/graphql' },
+            { name: 'issue', url: 'http://localhost:5006/graphql' },
           ],
         }),
+        buildService({ url }) {
+          return new AuthenticatedDataSource({ url }); // Use your custom AuthenticatedDataSource here
+        },
       },
     }),
   ],
