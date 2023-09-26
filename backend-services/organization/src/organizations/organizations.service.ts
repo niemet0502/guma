@@ -133,6 +133,7 @@ export class OrganizationsService {
       updateUserInput: {
         id,
         organization_id,
+        profile_id: 1,
       },
     };
 
