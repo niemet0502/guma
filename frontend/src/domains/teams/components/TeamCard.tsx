@@ -1,17 +1,28 @@
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/domains/auth/providers/auth";
 import { AiOutlinePlayCircle } from "react-icons/ai";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { GoIssueDraft } from "react-icons/go";
 import { HiOutlineDocumentDuplicate } from "react-icons/hi";
-import { TeamApi } from "../type";
+import { NavLink, useParams } from "react-router-dom";
+import { TeamApi, TeamVisibility } from "../type";
 
 export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
+  let { orgaId } = useParams<{ orgaId: string }>();
+  const { user } = useAuth();
+
+  if (
+    team.visibility === TeamVisibility.PRIVATE &&
+    !(user?.id && team.members.some(({ user_id }) => user_id === +user?.id))
+  ) {
+    return null;
+  }
+
   return (
     <div className="w-full border-b pb-1">
       <div className="px-4 flex items-center justify-between">
@@ -32,18 +43,34 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
       </div>
 
       <div className="space-y-1 pl-4 pr-3">
-        <Button variant="ghost" className="w-full gap-2 justify-start">
+        <NavLink
+          to={`/${orgaId}/team/${team.name}/issues`}
+          className={({ isActive, isPending }) =>
+            isActive ? "active" : isPending ? "default" : "default"
+          }
+        >
           <GoIssueDraft className="text-base" />
           Issues
-        </Button>
-        <Button variant="ghost" className="w-full gap-2 justify-start">
+        </NavLink>
+        <NavLink
+          to={`/${orgaId}/team/${team.name}/documents`}
+          className={({ isActive, isPending }) =>
+            isActive ? "active" : isPending ? "default" : "default"
+          }
+        >
           <HiOutlineDocumentDuplicate className="text-base" />
           Documents
-        </Button>
-        <Button variant="ghost" className="w-full gap-2 justify-start">
+        </NavLink>
+
+        <NavLink
+          to={`/${orgaId}/team/${team.name}/sprints`}
+          className={({ isActive, isPending }) =>
+            isActive ? "active" : isPending ? "default" : "default"
+          }
+        >
           <AiOutlinePlayCircle />
           Sprints
-        </Button>
+        </NavLink>
       </div>
     </div>
   );

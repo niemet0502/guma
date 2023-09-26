@@ -14,7 +14,7 @@ export const Sidebar: React.FC = () => {
 
   return (
     <div className="pb-12 h-full w-[250px] flex flex-none sticky top-0">
-      <div className="space-y-4 py-4">
+      <div className="w-full space-y-4 py-4">
         <div className="px-3 py-2">
           <h3 className="mb-3 px-4 text-lg font-semibold tracking-tight">
             Workspace [logo]
@@ -70,7 +70,6 @@ export const Sidebar: React.FC = () => {
               </div>
             </>
           )}
-
           {data?.map((team) => (
             <TeamCard team={team} />
           ))}
