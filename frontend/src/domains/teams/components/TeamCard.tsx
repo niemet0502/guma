@@ -12,9 +12,18 @@ import { HiOutlineDocumentDuplicate } from "react-icons/hi";
 import { NavLink, useParams } from "react-router-dom";
 import { TeamApi, TeamVisibility } from "../type";
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
 export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
   let { orgaId } = useParams<{ orgaId: string }>();
   const { user } = useAuth();
+
+  const isPublic = team.visibility === TeamVisibility.PUBLIC;
 
   if (
     team.visibility === TeamVisibility.PRIVATE &&
@@ -24,8 +33,66 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
   }
 
   return (
-    <div className="w-full border-b pb-1">
-      <div className="px-4 flex items-center justify-between">
+    <div className="w-full">
+      <div className="">
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="hover:no-underline">
+              <div className="pl-4 pr-1 flex flex-1 justify-between">
+                <h5 className="my-2 text-base font-semibold tracking-tight ">
+                  {team.name}
+                </h5>
+
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <BiDotsHorizontalRounded />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem>Team settings</DropdownMenuItem>
+                    <DropdownMenuItem>Copy the link</DropdownMenuItem>
+                    <DropdownMenuItem disabled={isPublic}>
+                      Leave the team
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="space-y-1 pl-4 pr-3">
+                <NavLink
+                  to={`/${orgaId}/team/${team.name}/issues`}
+                  className={({ isActive, isPending }) =>
+                    isActive ? "active" : isPending ? "default" : "default"
+                  }
+                >
+                  <GoIssueDraft className="text-base" />
+                  Issues
+                </NavLink>
+                <NavLink
+                  to={`/${orgaId}/team/${team.name}/documents`}
+                  className={({ isActive, isPending }) =>
+                    isActive ? "active" : isPending ? "default" : "default"
+                  }
+                >
+                  <HiOutlineDocumentDuplicate className="text-base" />
+                  Documents
+                </NavLink>
+
+                <NavLink
+                  to={`/${orgaId}/team/${team.name}/sprints`}
+                  className={({ isActive, isPending }) =>
+                    isActive ? "active" : isPending ? "default" : "default"
+                  }
+                >
+                  <AiOutlinePlayCircle />
+                  Sprints
+                </NavLink>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </div>
+      {/* <div className="px-4 flex items-center justify-between">
         <h5 className="my-2  text-base  font-semibold tracking-tight">
           {team.name}
         </h5>
@@ -37,7 +104,9 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
           <DropdownMenuContent>
             <DropdownMenuItem>Team settings</DropdownMenuItem>
             <DropdownMenuItem>Copy the link</DropdownMenuItem>
-            <DropdownMenuItem>Leave the team</DropdownMenuItem>
+            <DropdownMenuItem disabled={isPublic}>
+              Leave the team
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -71,7 +140,7 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
           <AiOutlinePlayCircle />
           Sprints
         </NavLink>
-      </div>
+      </div> */}
     </div>
   );
 };

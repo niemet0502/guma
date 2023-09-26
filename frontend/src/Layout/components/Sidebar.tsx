@@ -1,3 +1,9 @@
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/domains/auth/providers/auth";
 import { TeamCard } from "@/domains/teams/components/TeamCard";
@@ -51,28 +57,36 @@ export const Sidebar: React.FC = () => {
           </div>
         </div>
         <div className="">
-          <div className="w-full border-y">
-            <h6 className="my-2 px-4 text-lg font-semibold tracking-tight">
-              Teams
-            </h6>
-          </div>
-          {isLoading && (
-            <>
-              <div className="my-2 px-4">
-                <Skeleton className="h-4  w-full" />
-              </div>
-              <div className="space-y-2 pl-4 pr-4">
-                {Array(3)
-                  .fill(null)
-                  .map((i) => (
-                    <Skeleton className="ml-6 h-4" key={i} />
+          <Accordion type="single" collapsible>
+            <AccordionItem value="item-1 border-b-0">
+              <AccordionTrigger className="hover:no-underline">
+                <h6 className="my-2 px-4 text-lg font-semibold tracking-tight">
+                  Teams
+                </h6>
+              </AccordionTrigger>
+              <AccordionContent className="">
+                <div>
+                  {isLoading && (
+                    <>
+                      <div className="my-2 px-4">
+                        <Skeleton className="h-4  w-full" />
+                      </div>
+                      <div className="space-y-2 pl-4 pr-4">
+                        {Array(3)
+                          .fill(null)
+                          .map((i) => (
+                            <Skeleton className="ml-6 h-4" key={i} />
+                          ))}
+                      </div>
+                    </>
+                  )}
+                  {data?.map((team) => (
+                    <TeamCard team={team} />
                   ))}
-              </div>
-            </>
-          )}
-          {data?.map((team) => (
-            <TeamCard team={team} />
-          ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </div>
     </div>
