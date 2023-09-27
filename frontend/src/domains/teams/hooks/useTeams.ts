@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { TeamApi } from "../type";
 
-const GET_TEAMS_BY_ORGANIZATION_ID = gql`
+export const GET_TEAMS_BY_ORGANIZATION_ID = gql`
   query GetTeamsByOrganizaionId($organization_id: Int!) {
     teams(organization_id: $organization_id) {
       id
