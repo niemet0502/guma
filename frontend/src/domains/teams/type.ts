@@ -23,3 +23,11 @@ export interface MemberApi {
   user: User;
   created_at: Date;
 }
+
+export interface CreateTeamInput {
+  organization_id?: number;
+  name: string;
+  identifier: string;
+  visibility: number;
+  icon?: string;
+}
