@@ -1,11 +1,12 @@
 export interface User {
-  id: string;
-  lastname: string;
-  firstname: string;
-  email: string;
-  password: string;
-  is_suspended: boolean;
-  first_signin: boolean;
+  id: string | number;
+  lastname?: string;
+  firstname?: string;
+  email?: string;
+  password?: string;
+  is_suspended?: boolean;
+  first_signin?: boolean;
+  profile_id?: number;
 }
 
 export interface CreateUserInput {
@@ -19,4 +20,9 @@ export interface UserSession {
   token: string;
   created_at: string;
   expired_at: string;
+}
+
+export enum UserProfileEnum {
+  ADMIN = 1,
+  USER = 2,
 }

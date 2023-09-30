@@ -12,6 +12,7 @@ interface AuthContextValue {
   logout: () => void;
   organization: Organization | null;
   updateOrganization: (organization: Organization) => void;
+  updateUser: (user: User) => void;
 }
 
 export const AuthContext = React.createContext<AuthContextValue>({
@@ -20,6 +21,7 @@ export const AuthContext = React.createContext<AuthContextValue>({
   logout: () => {},
   organization: null,
   updateOrganization: () => {},
+  updateUser: () => {},
 } as AuthContextValue);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -67,9 +69,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setOrganization(organization);
   };
 
+  const updateUser = (user: User) => {
+    localStorage.setItem("user", JSON.stringify(user));
+    setUser(user);
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, organization, updateOrganization }}
+      value={{
+        user,
+        login,
+        logout,
+        organization,
+        updateOrganization,
+        updateUser,
+      }}
     >
       {children}
     </AuthContext.Provider>
