@@ -23,6 +23,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as z from "zod";
 import { useAuth } from "../auth/providers/auth";
+import { UserProfileEnum } from "../auth/services/types";
 import { CREATE_ORGANIZATION } from "./services/queries";
 
 const FormSchema = z.object({
@@ -35,7 +36,7 @@ const FormSchema = z.object({
 });
 
 export const OrganizationForm: React.FC = () => {
-  const { updateOrganization, user } = useAuth();
+  const { updateOrganization, user, updateUser } = useAuth();
   const navigate = useNavigate();
 
   const [createOrganization, { error }] = useMutation(CREATE_ORGANIZATION);
@@ -57,8 +58,13 @@ export const OrganizationForm: React.FC = () => {
       const { createOrganization } = response.data;
 
       updateOrganization(createOrganization);
+      updateUser({
+        ...user,
+        id: user?.id as string,
+        profile_id: UserProfileEnum.ADMIN,
+      });
 
-      navigate(`/${createOrganization.name}/documents`);
+      navigate(`/${createOrganization.name.toLowerCase()}/documents`);
     }
   }
   return (

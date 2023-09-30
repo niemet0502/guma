@@ -12,8 +12,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/domains/auth/providers/auth";
+import { useApolloClient } from "@apollo/client";
 
 export const Topbar: React.FC = () => {
+  const client = useApolloClient();
   const { logout } = useAuth();
   return (
     <div className="border-b p-4 flex gap-2 justify-end">
@@ -57,7 +59,12 @@ export const Topbar: React.FC = () => {
             <DropdownMenuItem>New Team</DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={logout}>
+          <DropdownMenuItem
+            onClick={() => {
+              async () => client.resetStore();
+              logout();
+            }}
+          >
             Log out
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
           </DropdownMenuItem>
