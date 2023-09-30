@@ -1,23 +1,16 @@
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useAuth } from "@/domains/auth/providers/auth";
-import { AiOutlinePlayCircle } from "react-icons/ai";
-import { BiDotsHorizontalRounded } from "react-icons/bi";
-import { GoIssueDraft } from "react-icons/go";
-import { HiOutlineDocumentDuplicate } from "react-icons/hi";
-import { NavLink, useParams } from "react-router-dom";
-import { TeamApi, TeamVisibility } from "../type";
-
-import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useAuth } from "@/domains/auth/providers/auth";
+import { AiOutlinePlayCircle } from "react-icons/ai";
+import { GoIssueDraft } from "react-icons/go";
+import { HiOutlineDocumentDuplicate } from "react-icons/hi";
+import { NavLink, useParams } from "react-router-dom";
+import { TeamApi, TeamVisibility } from "../type";
+import { DetailsDialog } from "./DetailsDialog";
 
 export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
   let { orgaId } = useParams<{ orgaId: string }>();
@@ -39,22 +32,10 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
           <AccordionItem value="item-1">
             <AccordionTrigger className="hover:no-underline">
               <div className="pl-4 pr-1 flex flex-1 justify-between">
-                <h5 className="my-2 text-base font-semibold tracking-tight ">
+                <h5 className="my-2 text-sm font-semibold tracking-tight ">
                   {team.name}
                 </h5>
-
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <BiDotsHorizontalRounded />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem>Team settings</DropdownMenuItem>
-                    <DropdownMenuItem>Copy the link</DropdownMenuItem>
-                    <DropdownMenuItem disabled={isPublic}>
-                      Leave the team
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <DetailsDialog />
               </div>
             </AccordionTrigger>
             <AccordionContent>
