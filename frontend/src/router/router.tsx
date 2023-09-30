@@ -2,9 +2,14 @@ import { AuthPage } from "@/domains/auth/AuthPage";
 import { SignIn } from "@/domains/auth/SignIn";
 import { SignUp } from "@/domains/auth/SignUp";
 import { NotificationsList } from "@/domains/notifications/NotificationsList";
+import { OrganizationForm } from "@/domains/organization/OrganizationForm";
 import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "../Layout/Layout";
 import { Documents } from "../domains/documents/Documents";
+import {
+  AuthenticationGuard,
+  UnAuthenticationGuard,
+} from "./components/AuthenticationGuard";
 
 const NotFoundPage = () => {
   return <div>Not found</div>;
@@ -12,35 +17,49 @@ const NotFoundPage = () => {
 
 export const router = createBrowserRouter([
   {
-    path: "/org",
-    element: <Layout />,
+    element: <AuthenticationGuard />,
     children: [
       {
-        index: true,
-        path: "documents",
-        element: <Documents />,
+        path: "/:orgaId",
+        element: <Layout />,
+        children: [
+          {
+            index: true,
+            path: "documents",
+            element: <Documents />,
+          },
+          {
+            path: "notifications",
+            element: <NotificationsList />,
+          },
+          {
+            path: "*", // Matches any path not covered by previous routes
+            element: <NotFoundPage />, // Display a "Not Found" page or error message
+          },
+        ],
       },
       {
-        path: "notifications",
-        element: <NotificationsList />,
-      },
-      {
-        path: "*", // Matches any path not covered by previous routes
-        element: <NotFoundPage />, // Display a "Not Found" page or error message
+        path: "/create-workspace",
+        element: <OrganizationForm />,
       },
     ],
   },
   {
-    path: "/auth",
-    element: <AuthPage />,
+    element: <UnAuthenticationGuard />,
     children: [
       {
-        path: "signin",
-        element: <SignIn />,
-      },
-      {
-        path: "signup",
-        element: <SignUp />,
+        path: "/auth",
+        element: <AuthPage />,
+        children: [
+          {
+            path: "signin",
+            element: <SignIn />,
+          },
+          {
+            path: "signup",
+            element: <SignUp />,
+          },
+        ],
       },
     ],
   },

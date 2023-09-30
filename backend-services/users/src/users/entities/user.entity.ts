@@ -1,5 +1,6 @@
 import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
 import { Member } from 'src/shared/member.entity';
+import { Organization } from 'src/shared/organization.entity';
 import { Profile } from '../../profiles/entities/profile.entity';
 
 @ObjectType()
@@ -19,14 +20,18 @@ export class User {
 
   @Field()
   password: string;
+
   @Field()
   is_suspended: boolean;
 
   @Field()
   first_signin: boolean;
 
-  @Field()
-  organization_id: number;
+  @Field({ nullable: true })
+  organization_id?: number;
+
+  @Field({ nullable: true })
+  organization?: Organization;
 
   @Field()
   profile_id: number;

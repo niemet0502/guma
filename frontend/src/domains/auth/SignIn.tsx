@@ -12,9 +12,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "./providers/auth";
+import { USER_ACCOUNT_AUTH } from "./services/queries";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -29,26 +31,38 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function SignIn({ className, ...props }: UserAuthFormProps) {
   const navigate = useNavigate();
-  const location = useLocation();
   const { login } = useAuth();
-  const from = location.state?.from?.pathname || "/";
+
+  const [userAccountAuth, { error }] = useMutation(USER_ACCOUNT_AUTH);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "mariusniemet@gmail.com",
+      password: "passer",
     },
   });
 
-  const handleLogin = () => {
-    login({ email: "marius@seiri.dev", password: "pastme" });
-    // user experience.
-    navigate(from, { replace: true });
-  };
+  async function onSubmit(createAuthInput: z.infer<typeof formSchema>) {
+    const response = await userAccountAuth({
+      variables: { createAuthInput },
+    });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    if (response && response.data.userAccountAuth) {
+      const { user, session } = response.data.userAccountAuth;
+
+      const { organization_id, organization } = user;
+
+      login(user, session, organization);
+
+      if (organization && organization_id) {
+        navigate(`/${organization.name.toLowerCase()}/documents`, {
+          replace: true,
+        });
+      } else {
+        navigate("/create-workspace");
+      }
+    }
   }
 
   return (
@@ -56,7 +70,10 @@ export function SignIn({ className, ...props }: UserAuthFormProps) {
       <div className="flex flex-col space-y-2 ">
         <h1 className="text-2xl font-semibold tracking-tight">Sign In</h1>
         <p className="text-sm text-muted-foreground">
-          Enter your information below to sign in
+          New here ?{" "}
+          <NavLink to="/auth/signup" className="text-primary">
+            Sign Up for an account
+          </NavLink>
         </p>
       </div>
       <Form {...form}>
@@ -87,24 +104,13 @@ export function SignIn({ className, ...props }: UserAuthFormProps) {
               </FormItem>
             )}
           />
+
+          {error && <div className="text-red-600">{error.message}</div>}
+          <Button type="submit" className="w-full">
+            Submit
+          </Button>
         </form>
       </Form>
-      <Button type="button" onClick={handleLogin} className="w-full">
-        Submit
-      </Button>
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
-          </span>
-        </div>
-      </div>
-      <Button variant="outline" type="button">
-        Github
-      </Button>
     </div>
   );
 }

@@ -4,8 +4,10 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as bcrypt from 'bcryptjs';
 import { OrganizationsService } from 'src/organizations/organizations.service';
 import { Repository } from 'typeorm';
+import { LoginDto } from '../auth/dto/login.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -20,27 +22,15 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const { organization_id, profile_id, email } = createUserDto;
+    const { email, password } = createUserDto;
 
-    const team = organization_id
-      ? await this.orgaService.findOne(organization_id)
-      : undefined;
-
-    if (team && !team) {
-      throw new NotFoundException('Organization not found');
-    }
-
-    const profile = await this.profileService.findOne(profile_id);
-
-    if (!profile) {
-      throw new NotFoundException('Profile not found');
-    }
-
-    const user = this.userRepo.findOne({ where: { email } });
+    const user = await this.userRepo.findOne({ where: { email } });
 
     if (user) {
       throw new BadRequestException({ message: 'The email is already in use' });
     }
+
+    createUserDto.password = await bcrypt.hash(password, 10);
 
     return await this.userRepo.save(createUserDto);
   }
@@ -51,6 +41,21 @@ export class UsersService {
 
   async findOne(id: number): Promise<User> {
     return await this.userRepo.findOne({ where: { id } });
+  }
+
+  async find({ email, password }: LoginDto): Promise<User | null> {
+    const user = await this.userRepo.findOne({ where: { email } });
+
+    if (!user) {
+      return null;
+    }
+
+    if (await bcrypt.compare(password, user.password)) {
+      delete user.password;
+      return user;
+    }
+
+    return null;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {

@@ -14,7 +14,7 @@ export class User {
   @Column('text', { nullable: false })
   email: string;
 
-  @Column('text', { nullable: false })
+  @Column('text', { nullable: true })
   password: string;
 
   @Column('boolean', { default: false })
@@ -23,9 +23,9 @@ export class User {
   @Column('boolean', { default: true })
   first_signin: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   organization_id: number;
 
-  @Column()
+  @Column({ nullable: true })
   profile_id: number;
 }

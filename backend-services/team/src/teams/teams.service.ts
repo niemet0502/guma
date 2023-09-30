@@ -3,24 +3,39 @@ import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { Member } from 'src/members/entities/member.entity';
 import { MembersService } from 'src/members/members.service';
+import { StatusService } from 'src/status/status.service';
+import { DEFAULT_TEAM_STATUS } from 'src/utils/constant';
+import { User } from '../shared/user.entity';
 import { CreateTeamInput } from './dto/create-team.input';
 import { UpdateTeamInput } from './dto/update-team.input';
 import { Team } from './entities/team.entity';
 
 @Injectable()
 export class TeamsService {
-  private url = 'http://neka-data-access-1:3000/teams/';
+  private url = 'http://localhost:5002/teams/';
 
   constructor(
     private readonly http: HttpService,
     @Inject(forwardRef(() => MembersService))
     private readonly memberService: MembersService,
+    private readonly statusService: StatusService,
   ) {}
 
-  async create(createTeamInput: CreateTeamInput): Promise<Team> {
+  async create(createTeamInput: CreateTeamInput, user: User): Promise<Team> {
+    // create team
     const { data } = await firstValueFrom(
       this.http.post<Team>(this.url, createTeamInput),
     );
+
+    const { name, id: team_id } = data;
+
+    // create a new member
+    await this.memberService.create({ team_id, user_id: +user.id });
+
+    // create default status
+    DEFAULT_TEAM_STATUS.map(async (name) => {
+      await this.statusService.create({ name, team_id });
+    });
     return data;
   }
 

@@ -11,8 +11,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
+import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
+import { NavLink } from "react-router-dom";
+import { CREATE_USER } from "./services/queries";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -29,6 +33,9 @@ const formSchema = z.object({
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function SignUp({ className, ...props }: UserAuthFormProps) {
+  const [createUserMutation, { error }] = useMutation(CREATE_USER);
+  const { toast } = useToast();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,10 +45,36 @@ export function SignUp({ className, ...props }: UserAuthFormProps) {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const { email, password } = values;
+    const createUserInput = { email, password };
+
+    try {
+      const response = await createUserMutation({
+        variables: { createUserInput },
+      });
+
+      // Check the response for success and handle accordingly
+      if (response.data && response.data.createUser) {
+        // User creation succeeded, show success toast
+        toast({
+          title: "Registration",
+          description: "Your account has been successfully created",
+        });
+
+        form.reset();
+      } else {
+        // Handle unexpected response or error
+        response.errors?.map((error: any) => console.log(error?.message));
+      }
+    } catch (e) {
+      // Handle GraphQL errors or HTTP errors here
+
+      toast({
+        variant: "destructive",
+        description: error?.message,
+      });
+    }
   }
 
   return (
@@ -49,7 +82,10 @@ export function SignUp({ className, ...props }: UserAuthFormProps) {
       <div className="flex flex-col space-y-2 ">
         <h1 className="text-2xl font-semibold tracking-tight">Sign Up</h1>
         <p className="text-sm text-muted-foreground">
-          Enter your information below to create your account
+          Already have an account?{" "}
+          <NavLink to="/auth/signin" className="text-primary">
+            Sign in
+          </NavLink>
         </p>
       </div>
       <Form {...form}>
@@ -98,19 +134,6 @@ export function SignUp({ className, ...props }: UserAuthFormProps) {
           </Button>
         </form>
       </Form>
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
-          </span>
-        </div>
-      </div>
-      <Button variant="outline" type="button">
-        Github
-      </Button>
     </div>
   );
 }
