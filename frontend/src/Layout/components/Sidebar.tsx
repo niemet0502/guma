@@ -1,5 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/domains/auth/providers/auth";
+import { UserProfileEnum } from "@/domains/auth/services/types";
 import { CreateDialog } from "@/domains/teams/components/CreateDialog";
 import { TeamCard } from "@/domains/teams/components/TeamCard";
 import { useTeams } from "@/domains/teams/hooks/useTeams";
@@ -10,7 +11,7 @@ import { NavLink, useParams } from "react-router-dom";
 
 export const Sidebar: React.FC = () => {
   let { orgaId } = useParams<{ orgaId: string }>();
-  const { organization } = useAuth();
+  const { organization, user } = useAuth();
   const { data, isLoading } = useTeams(organization?.id as number);
 
   return (
@@ -57,7 +58,7 @@ export const Sidebar: React.FC = () => {
               Teams
             </h6>
 
-            <CreateDialog />
+            {user?.profile_id === UserProfileEnum.ADMIN && <CreateDialog />}
           </div>
           <div>
             {isLoading && (
