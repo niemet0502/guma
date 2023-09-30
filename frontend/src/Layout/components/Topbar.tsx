@@ -1,3 +1,4 @@
+import { ModeToggle } from "@/components/mode-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,6 +20,7 @@ export const Topbar: React.FC = () => {
   const { logout } = useAuth();
   return (
     <div className="border-b p-4 flex gap-2 justify-end">
+      <ModeToggle />
       <Input
         type="search"
         placeholder="Search..."
