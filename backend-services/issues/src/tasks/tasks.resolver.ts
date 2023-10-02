@@ -84,7 +84,9 @@ export class TasksResolver {
 
   @ResolveField(() => User)
   assignee(@Parent() task: Task): any {
-    return { __typename: 'User', id: task.assignee_to };
+    const { assignee_to } = task;
+    if (!assignee_to) return;
+    return { __typename: 'User', id: assignee_to };
   }
 
   @ResolveField(() => Team)

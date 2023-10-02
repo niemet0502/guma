@@ -17,6 +17,9 @@ export class Task {
   @Field({ nullable: false })
   name: string;
 
+  @Field({ nullable: true })
+  identifier?: string;
+
   @Field({ nullable: false })
   description: string;
 
@@ -29,6 +32,9 @@ export class Task {
   @Field({ nullable: true })
   priority: number;
 
+  @Field({ nullable: true })
+  created_at?: string;
+
   @Field({ nullable: false })
   created_by: number;
 
@@ -38,7 +44,7 @@ export class Task {
   @Field({ nullable: true })
   assignee_to: number;
 
-  @Field(() => User)
+  @Field(() => User, { nullable: true })
   assignee?: User;
 
   @Field({ nullable: true })

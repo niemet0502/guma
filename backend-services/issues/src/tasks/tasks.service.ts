@@ -10,7 +10,7 @@ import { Task } from './entities/task.entity';
 
 @Injectable()
 export class TasksService {
-  private url = 'http://neka-data-access-1:3000/tasks/';
+  private url = 'http://localhost:5002/tasks/';
 
   constructor(
     private readonly http: HttpService,
@@ -25,7 +25,7 @@ export class TasksService {
     const { data } = await firstValueFrom(
       this.http.post<Task>(this.url, {
         ...createTaskInput,
-        slug: removeSpacesAndSpecialChars(name),
+        slug: removeSpacesAndSpecialChars(name).toLowerCase(),
       }),
     );
     return data;

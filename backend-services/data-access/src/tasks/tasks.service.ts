@@ -44,7 +44,13 @@ export class TasksService {
       }
     }
 
-    return await this.taskRepository.save(createTaskDto);
+    const maxId = await this.findMaxId();
+
+    return await this.taskRepository.save({
+      ...createTaskDto,
+      identifier: `${team.identifier}-${maxId}`,
+      created_at: new Date().toLocaleString(),
+    });
   }
 
   async findAll(
@@ -105,5 +111,15 @@ export class TasksService {
     }
 
     return await this.taskRepository.remove(task);
+  }
+
+  async findMaxId(): Promise<number> {
+    const queryBuilder = this.taskRepository.createQueryBuilder('task');
+    queryBuilder.select('MAX(task.id)', 'maxId');
+
+    const result = await queryBuilder.getRawOne();
+    const maxId = result?.maxId;
+
+    return maxId ? parseInt(maxId) : 1;
   }
 }
