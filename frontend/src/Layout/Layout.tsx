@@ -9,7 +9,7 @@ export const Layout: React.FC = () => {
       <div className="col-span-3 flex flex-1 flex-col lg:border-l">
         <Topbar />
         <div className="overflow-auto">
-          <div className="h-[1200px]">
+          <div className="h-[1200px] p-0">
             <Outlet />
           </div>
         </div>
