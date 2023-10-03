@@ -98,4 +98,10 @@ export class TasksResolver {
   status(@Parent() task: Task): any {
     return { __typename: 'Status', id: task.status_id };
   }
+
+  @ResolveField()
+  labels(@Parent() task: Task) {
+    const { id } = task;
+    return this.tasksService.getLabels(id);
+  }
 }

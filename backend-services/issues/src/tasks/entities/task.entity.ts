@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { TaskLabel } from 'src/labels/entities/label.entity';
 import { TaskType } from 'src/shared/tasks.enum';
 import { Activity } from '../../activities/entities/activity.entity';
 import { Comment } from '../../comments/entities/comment.entity';
@@ -73,4 +74,7 @@ export class Task {
 
   @Field((type) => [Activity])
   activities: Activity[];
+
+  @Field((type) => [TaskLabel])
+  labels: TaskLabel[];
 }

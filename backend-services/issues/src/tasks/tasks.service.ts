@@ -3,6 +3,7 @@ import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { ActivitiesService } from 'src/activities/activities.service';
 import { CommentsService } from 'src/comments/comments.service';
+import { LabelsService } from 'src/labels/labels.service';
 import { removeSpacesAndSpecialChars } from 'src/utils/Helper';
 import { CreateTaskInput } from './dto/create-task.input';
 import { UpdateTaskInput } from './dto/update-task.input';
@@ -17,6 +18,7 @@ export class TasksService {
     private readonly commentService: CommentsService,
     @Inject(forwardRef(() => ActivitiesService))
     private readonly activityService: ActivitiesService,
+    private readonly labelService: LabelsService,
   ) {}
 
   async create(createTaskInput: CreateTaskInput) {
@@ -78,5 +80,9 @@ export class TasksService {
 
   async getActivities(task_id: number) {
     return await this.activityService.findAll(task_id);
+  }
+
+  async getLabels(task_id: number) {
+    return await this.labelService.findAllByTask(task_id);
   }
 }
