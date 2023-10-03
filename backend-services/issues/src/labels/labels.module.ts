@@ -1,8 +1,11 @@
+import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
-import { LabelsService } from './labels.service';
 import { LabelsResolver } from './labels.resolver';
+import { LabelsService } from './labels.service';
 
 @Module({
-  providers: [LabelsResolver, LabelsService]
+  imports: [HttpModule],
+  providers: [LabelsResolver, LabelsService],
+  exports: [LabelsService],
 })
-export class LabelsModule {}
+export class TaskLabelsModule {}

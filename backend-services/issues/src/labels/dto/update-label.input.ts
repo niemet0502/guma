@@ -1,8 +1,8 @@
-import { CreateLabelInput } from './create-label.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
+import { Field, InputType, Int, PartialType } from '@nestjs/graphql';
+import { CreateTaskLabelInput } from './create-label.input';
 
 @InputType()
-export class UpdateLabelInput extends PartialType(CreateLabelInput) {
+export class UpdateTaskLabelInput extends PartialType(CreateTaskLabelInput) {
   @Field(() => Int)
   id: number;
 }

@@ -1,35 +1,51 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
+import { Label } from 'src/shared/label.entity';
+import { CreateTaskLabelInput } from './dto/create-label.input';
+import { TaskLabel } from './entities/label.entity';
 import { LabelsService } from './labels.service';
-import { Label } from './entities/label.entity';
-import { CreateLabelInput } from './dto/create-label.input';
-import { UpdateLabelInput } from './dto/update-label.input';
 
-@Resolver(() => Label)
+@Resolver(() => TaskLabel)
 export class LabelsResolver {
   constructor(private readonly labelsService: LabelsService) {}
 
-  @Mutation(() => Label)
-  createLabel(@Args('createLabelInput') createLabelInput: CreateLabelInput) {
+  @Mutation(() => TaskLabel, { name: 'createTasklabel' })
+  createLabel(
+    @Args('createLabelInput') createLabelInput: CreateTaskLabelInput,
+  ) {
     return this.labelsService.create(createLabelInput);
   }
 
-  @Query(() => [Label], { name: 'labels' })
-  findAll() {
-    return this.labelsService.findAll();
+  @Query(() => [TaskLabel], { name: 'tasklabels' })
+  findAll(@Args('task_id', { type: () => Int }) task_id: number) {
+    return this.labelsService.findAllByTask(task_id);
   }
 
-  @Query(() => Label, { name: 'label' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.labelsService.findOne(id);
-  }
+  // @Query(() => TaskLabel, { name: 'label' })
+  // findOne(@Args('id', { type: () => Int }) id: number) {
+  //   return this.labelsService.findOne(id);
+  // }
 
-  @Mutation(() => Label)
-  updateLabel(@Args('updateLabelInput') updateLabelInput: UpdateLabelInput) {
-    return this.labelsService.update(updateLabelInput.id, updateLabelInput);
-  }
+  // @Mutation(() => TaskLabel)
+  // removeLabel(@Args('id', { type: () => Int }) id: number) {
+  //   return this.labelsService.remove(id);
+  // }
 
-  @Mutation(() => Label)
-  removeLabel(@Args('id', { type: () => Int }) id: number) {
-    return this.labelsService.remove(id);
+  // @ResolveField()
+  // task(@Parent() task: TaskLabel) {
+  //   const { task_id } = task;
+  //   return this.labelsService.getTask(task_id);
+  // }
+
+  @ResolveField(() => Label)
+  label(@Parent() task: TaskLabel): any {
+    return { __typename: 'Label', id: task.label_id };
   }
 }

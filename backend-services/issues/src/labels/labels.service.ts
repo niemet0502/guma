@@ -1,26 +1,41 @@
+import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { CreateLabelInput } from './dto/create-label.input';
-import { UpdateLabelInput } from './dto/update-label.input';
+import { firstValueFrom } from 'rxjs';
+import { CreateTaskLabelInput } from './dto/create-label.input';
+import { TaskLabel } from './entities/label.entity';
 
 @Injectable()
 export class LabelsService {
-  create(createLabelInput: CreateLabelInput) {
-    return 'This action adds a new label';
+  private url = 'http://localhost:5002/tasklabels/';
+
+  constructor(private http: HttpService) {}
+  //private taskService: TasksService,
+
+  async create(createLabelInput: CreateTaskLabelInput): Promise<TaskLabel> {
+    const { data } = await firstValueFrom(
+      this.http.post<TaskLabel>(this.url, createLabelInput),
+    );
+    return data;
   }
 
-  findAll() {
-    return `This action returns all labels`;
+  async findAllByTask(task_id: number): Promise<TaskLabel[]> {
+    const { data } = await firstValueFrom(
+      this.http.get<TaskLabel[]>(this.url, {
+        params: { task_id },
+      }),
+    );
+    return data;
   }
 
   findOne(id: number) {
     return `This action returns a #${id} label`;
   }
 
-  update(id: number, updateLabelInput: UpdateLabelInput) {
-    return `This action updates a #${id} label`;
-  }
-
   remove(id: number) {
     return `This action removes a #${id} label`;
   }
+
+  // async getTask(id: number): Promise<Task> {
+  //   return await this.taskService.findOne(id);
+  // }
 }
