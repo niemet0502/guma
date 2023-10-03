@@ -10,3 +10,9 @@ export interface Organization {
   size: string;
   logo?: string;
 }
+
+export interface LabelApi {
+  id: string;
+  name: string;
+  organization_id: number;
+}

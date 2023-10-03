@@ -1,4 +1,5 @@
 import { User } from "../auth/services/types";
+import { LabelApi } from "../organization/services/type";
 import { TeamApi } from "../teams/type";
 
 export interface Activity {
@@ -13,6 +14,14 @@ export interface Activity {
   // action: String;
   created_at: String;
   updated_at: String;
+}
+
+export interface TaskLabelApi {
+  id: string;
+  task_id: number;
+  label_id: number;
+
+  label: LabelApi;
 }
 
 export interface TaskApi {
@@ -38,4 +47,5 @@ export interface TaskApi {
   subtasks: [TaskApi];
   comments: [Comment];
   activities: [Activity];
+  labels: [TaskLabelApi];
 }
