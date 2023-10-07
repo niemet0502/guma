@@ -16,11 +16,24 @@ export interface Activity {
   updated_at: String;
 }
 
+export interface CreateTaskApi {
+  name: string;
+  description?: string;
+  type?: number;
+  priority?: number;
+  labels?: number[];
+  created_by?: number;
+  assignee_to?: number;
+  parent_task_id?: number;
+  sprint_id?: number;
+  status_id?: number;
+  team_id?: number;
+}
+
 export interface TaskLabelApi {
   id: string;
   task_id: number;
   label_id: number;
-
   label: LabelApi;
 }
 
