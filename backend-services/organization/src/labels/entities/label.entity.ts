@@ -1,8 +1,9 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
+@Directive('@key(fields: "id")')
 export class Label {
-  @Field(() => Int)
+  @Field(() => ID)
   id: number;
 
   @Field({ nullable: false })
