@@ -1,6 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Inject, Injectable, forwardRef } from '@nestjs/common';
-import { firstValueFrom } from 'rxjs';
+import { AxiosError } from 'axios';
+import { catchError, firstValueFrom } from 'rxjs';
 import { Member } from 'src/members/entities/member.entity';
 import { MembersService } from 'src/members/members.service';
 import { StatusService } from 'src/status/status.service';
@@ -49,6 +50,18 @@ export class TeamsService {
   async findOne(id: number): Promise<Team> {
     const { data } = await firstValueFrom(
       this.http.get<Team>(`${this.url}${id}`),
+    );
+    return data;
+  }
+
+  async findBy(name: string): Promise<Team> {
+    const { data } = await firstValueFrom(
+      this.http.get<Team>(`${this.url}byName/${name}`).pipe(
+        catchError((error: AxiosError) => {
+          console.log(error.response.data);
+          throw 'An error happened!';
+        }),
+      ),
     );
     return data;
   }

@@ -39,6 +39,11 @@ export class TeamsResolver {
     return this.teamsService.findOne(id);
   }
 
+  @Query(() => Team, { name: 'getTeamByName' })
+  findBy(@Args('name', { type: () => String }) name: string) {
+    return this.teamsService.findBy(name);
+  }
+
   @Mutation(() => Team)
   updateTeam(@Args('updateTeamInput') updateTeamInput: UpdateTeamInput) {
     return this.teamsService.update(updateTeamInput.id, updateTeamInput);
