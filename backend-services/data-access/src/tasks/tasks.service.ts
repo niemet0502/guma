@@ -26,7 +26,11 @@ export class TasksService {
     }
 
     // check if the status exists
-    const status = await this.statusService.findOne(status_id);
+    const status = status_id
+      ? await this.statusService.findOne(status_id)
+      : await this.statusService.findBy({
+          where: { name: 'Backlog', team_id },
+        });
 
     if (!status) {
       throw new NotFoundException("The status doesn't exist ");
@@ -48,6 +52,7 @@ export class TasksService {
 
     return await this.taskRepository.save({
       ...createTaskDto,
+      status_id: status.id,
       identifier: `${team.identifier}-${maxId}`,
       created_at: new Date().toLocaleString(),
     });
@@ -85,6 +90,8 @@ export class TasksService {
         sprint_id,
       });
     }
+
+    query.orderBy('task.id', 'DESC');
 
     return await query.getMany();
   }
