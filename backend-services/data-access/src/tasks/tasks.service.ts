@@ -54,7 +54,7 @@ export class TasksService {
       ...createTaskDto,
       status_id: status.id,
       identifier: `${team.identifier}-${maxId}`,
-      created_at: new Date().toLocaleString(),
+      created_at: new Date().toString(),
     });
   }
 

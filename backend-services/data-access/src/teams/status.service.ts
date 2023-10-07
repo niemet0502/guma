@@ -69,4 +69,8 @@ export class StatusService {
 
     return await this.repo.remove(orga);
   }
+
+  async findBy(option: any): Promise<TaskStatus> {
+    return await this.repo.findOne(option);
+  }
 }

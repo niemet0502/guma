@@ -25,7 +25,7 @@ export class Task {
   })
   type: TaskType;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: 0 })
   priority: number;
 
   @Column('text', { nullable: true })

@@ -9,6 +9,9 @@ export class CreateTaskDto {
   @ApiProperty({ required: true })
   public name: string;
 
+  @ApiProperty({ required: false })
+  public description: string;
+
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
@@ -21,7 +24,6 @@ export class CreateTaskDto {
   @ApiProperty({ required: false })
   public parent_task_id: number;
 
-  @IsNotEmpty()
   @ApiProperty({ required: false })
   public status_id: number;
 
