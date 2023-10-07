@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { TaskApi } from "../type";
 
-const GET_TASKS_BY_TEAM = gql`
+export const GET_TASKS_BY_TEAM = gql`
   query GetTasksByTeam(
     # $team_id: Int!
     $type: Int
@@ -20,6 +20,7 @@ const GET_TASKS_BY_TEAM = gql`
       name
       identifier
       created_at
+      priority
 
       assignee_to
       assignee {
@@ -29,6 +30,7 @@ const GET_TASKS_BY_TEAM = gql`
 
       team {
         id
+        visibility
         members {
           id
           user {
