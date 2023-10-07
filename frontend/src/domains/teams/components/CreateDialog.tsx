@@ -22,7 +22,7 @@ export const CreateDialog: React.FC = () => {
       </DialogTrigger>
       <DialogContent className="lg:w-[800px] sm:max-w-[625px]">
         <DialogHeader>
-          <DialogTitle>Create a new Team</DialogTitle>
+          <DialogTitle>Create a new team</DialogTitle>
           <DialogDescription>
             Create a new team to manage seperate sprints, issues and documents
           </DialogDescription>
