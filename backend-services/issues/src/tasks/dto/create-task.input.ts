@@ -1,4 +1,4 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, InputType, Int } from '@nestjs/graphql';
 import { TaskType } from 'src/shared/tasks.enum';
 
 @InputType()
@@ -7,14 +7,19 @@ export class CreateTaskInput {
   name: string;
 
   @Field({ nullable: true })
+  description: string;
+
+  @Field({ nullable: true })
   type: TaskType;
 
   @Field({ nullable: true })
   priority: number;
 
-  // TODO remove the created by
-  @Field({ nullable: false })
-  created_by: number;
+  @Field(() => [Int], { nullable: true })
+  labels: number[];
+
+  @Field({ nullable: true })
+  created_by?: number;
 
   @Field({ nullable: true })
   assignee_to: number;
@@ -25,8 +30,8 @@ export class CreateTaskInput {
   @Field({ nullable: true })
   sprint_id: number;
 
-  @Field({ nullable: false })
-  status_id: number;
+  @Field({ nullable: true })
+  status_id?: number;
 
   @Field({ nullable: false })
   team_id: number;

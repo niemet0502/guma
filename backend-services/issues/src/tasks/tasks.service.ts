@@ -1,6 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Inject, Injectable, forwardRef } from '@nestjs/common';
-import { firstValueFrom } from 'rxjs';
+import { AxiosError } from 'axios';
+import { catchError, firstValueFrom } from 'rxjs';
 import { ActivitiesService } from 'src/activities/activities.service';
 import { CommentsService } from 'src/comments/comments.service';
 import { LabelsService } from 'src/labels/labels.service';
@@ -22,14 +23,29 @@ export class TasksService {
   ) {}
 
   async create(createTaskInput: CreateTaskInput) {
-    const { name } = createTaskInput;
+    const { name, labels } = createTaskInput;
 
     const { data } = await firstValueFrom(
-      this.http.post<Task>(this.url, {
-        ...createTaskInput,
-        slug: removeSpacesAndSpecialChars(name).toLowerCase(),
-      }),
+      this.http
+        .post<Task>(this.url, {
+          ...createTaskInput,
+          slug: removeSpacesAndSpecialChars(name).toLowerCase(),
+        })
+        .pipe(
+          catchError((error: AxiosError) => {
+            console.log(error.response.data);
+            throw 'An error happened!';
+          }),
+        ),
     );
+
+    // if labels exist created them
+    if (labels && labels.length > 0) {
+      labels.forEach(
+        async (label) =>
+          await this.labelService.create({ task_id: data.id, label_id: label }),
+      );
+    }
     return data;
   }
 

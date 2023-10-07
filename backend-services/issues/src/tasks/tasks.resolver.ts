@@ -7,6 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { CurrentUser } from 'src/shared/current-user.decator';
 import { Team } from 'src/shared/team.entity';
 import { User } from 'src/shared/user.entity';
 import { Status } from '../shared/status.entity';
@@ -20,9 +21,14 @@ export class TasksResolver {
   constructor(private readonly tasksService: TasksService) {}
 
   @Mutation(() => Task)
-  createTask(@Args('createTaskInput') createTaskInput: CreateTaskInput) {
-    // TODO get the user.id from the header
-    return this.tasksService.create(createTaskInput);
+  createTask(
+    @Args('createTaskInput') createTaskInput: CreateTaskInput,
+    @CurrentUser() user: User,
+  ) {
+    return this.tasksService.create({
+      ...createTaskInput,
+      created_by: +user.id,
+    });
   }
 
   @Query(() => [Task], { name: 'tasks' })
