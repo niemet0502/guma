@@ -18,6 +18,11 @@ import { useApolloClient } from "@apollo/client";
 export const Topbar: React.FC = () => {
   const client = useApolloClient();
   const { logout } = useAuth();
+
+  const signOut = async () => {
+    client.resetStore();
+    logout();
+  };
   return (
     <div className="border-b p-4 flex gap-2 justify-end">
       <ModeToggle />
@@ -61,12 +66,7 @@ export const Topbar: React.FC = () => {
             <DropdownMenuItem>New Team</DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={() => {
-              async () => client.resetStore();
-              logout();
-            }}
-          >
+          <DropdownMenuItem onClick={signOut}>
             Log out
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
           </DropdownMenuItem>
