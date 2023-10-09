@@ -8,6 +8,6 @@ export class TaskStatus {
   @Column('text')
   name: string;
 
-  @Column()
-  team_id: number;
+  @Column({ nullable: true })
+  team_id?: number;
 }

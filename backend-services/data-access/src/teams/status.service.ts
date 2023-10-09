@@ -1,6 +1,6 @@
 import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import { CreateStatusDto } from './dto/create-status.dto';
 import { UpdateStatusDto } from './dto/update-status.dto';
 import { TaskStatus } from './entities/status.entity';
@@ -16,17 +16,17 @@ export class StatusService {
   async create(createTaskStatusDto: CreateStatusDto): Promise<TaskStatus> {
     const { name, team_id } = createTaskStatusDto;
 
-    const team = await this.teamService.findOne(+team_id);
+    const team = team_id ? await this.teamService.findOne(+team_id) : undefined;
 
-    if (!team) {
-      throw new NotFoundException('Organization not found');
+    if (!team && team_id) {
+      throw new NotFoundException('Team not found');
     }
 
-    const TaskStatus = await this.repo.findOne({
-      where: { name: name, team_id: team_id },
+    const taskStatus = await this.repo.findOne({
+      where: { name: name },
     });
 
-    if (TaskStatus) {
+    if (taskStatus && taskStatus.team_id) {
       const errors = { message: 'The name is already in use' };
       throw new HttpException({ errors }, 404);
     }
@@ -34,14 +34,16 @@ export class StatusService {
     return await this.repo.save(createTaskStatusDto);
   }
 
-  async findAll(team_id: number): Promise<TaskStatus[]> {
-    const team = await this.teamService.findOne(team_id);
+  async findAll(team_id?: string): Promise<TaskStatus[]> {
+    const team = team_id ? await this.teamService.findOne(+team_id) : undefined;
 
-    if (!team) {
+    if (!team && team_id) {
       throw new NotFoundException('Organization not found');
     }
 
-    return await this.repo.find({ where: { team_id } });
+    return await this.repo.find({
+      where: [team_id && { team_id: +team_id }, { team_id: IsNull() }],
+    });
   }
 
   async findOne(id: number): Promise<TaskStatus> {

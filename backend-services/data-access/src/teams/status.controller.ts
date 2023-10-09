@@ -28,7 +28,7 @@ export class StatusController {
   @Get()
   @ApiOkResponse({ type: TaskStatus, isArray: true })
   async findAll(@Query('team_id') team_id: string): Promise<TaskStatus[]> {
-    return await this.statusService.findAll(+team_id);
+    return await this.statusService.findAll(team_id);
   }
 
   @Get(':id')

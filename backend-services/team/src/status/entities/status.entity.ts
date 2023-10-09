@@ -9,6 +9,6 @@ export class Status {
   @Field()
   name: string;
 
-  @Field()
-  team_id: number;
+  @Field({ nullable: true })
+  team_id?: number;
 }

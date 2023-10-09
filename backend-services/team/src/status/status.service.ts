@@ -1,19 +1,25 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { firstValueFrom } from 'rxjs';
+import { AxiosError } from 'axios';
+import { catchError, firstValueFrom } from 'rxjs';
 import { CreateStatusInput } from './dto/create-status.input';
 import { UpdateStatusInput } from './dto/update-status.input';
 import { Status } from './entities/status.entity';
 
 @Injectable()
 export class StatusService {
-  private url = 'http://neka-data-access-1:3000/status/';
+  private url = 'http://localhost:5002/status/';
 
   constructor(private readonly http: HttpService) {}
 
   async create(createStatusInput: CreateStatusInput): Promise<Status> {
     const { data } = await firstValueFrom(
-      this.http.post<Status>(this.url, createStatusInput),
+      this.http.post<Status>(this.url, createStatusInput).pipe(
+        catchError((error: AxiosError) => {
+          console.log(error.response);
+          throw 'An error happened!';
+        }),
+      ),
     );
     return data;
   }
