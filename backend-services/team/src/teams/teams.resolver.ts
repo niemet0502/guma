@@ -40,8 +40,11 @@ export class TeamsResolver {
   }
 
   @Query(() => Team, { name: 'getTeamByName' })
-  findBy(@Args('name', { type: () => String }) name: string) {
-    return this.teamsService.findBy(name);
+  findBy(
+    @Args('name', { type: () => String }) name: string,
+    @Args('organization_id', { type: () => Int }) organization_id: number,
+  ) {
+    return this.teamsService.findBy(name, organization_id);
   }
 
   @Mutation(() => Team)

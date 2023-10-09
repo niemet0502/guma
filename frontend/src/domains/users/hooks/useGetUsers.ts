@@ -19,7 +19,7 @@ export const useGetUsers = (organization_id: number) => {
     loading: isLoading,
     error,
   } = useQuery<{ users: User[] }>(GET_USERS_BY_ORGANIZATION, {
-    variables: { organization_id },
+    variables: { organization_id: +organization_id },
   });
   return { data: data?.users, isLoading, error };
 };

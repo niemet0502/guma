@@ -38,10 +38,13 @@ export class TeamsController {
     return this.teamsService.findOne(+id);
   }
 
-  @Get('/byName/:name')
+  @Get('/byName/:name/:organization_id')
   @ApiOkResponse({ type: Team })
-  findByName(@Param('name') name: string) {
-    return this.teamsService.findByName(name);
+  findByName(
+    @Param('name') name: string,
+    @Param('organization_id') organization_id: string,
+  ) {
+    return this.teamsService.findByName(name, +organization_id);
   }
 
   @Patch(':id')
