@@ -22,5 +22,5 @@ export class CreateActivityDto {
 
   @IsNotEmpty()
   @ApiProperty({ required: true })
-  action: ActivityAction;
+  public action: ActivityAction;
 }
