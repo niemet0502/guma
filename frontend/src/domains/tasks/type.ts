@@ -16,6 +16,14 @@ export interface Activity {
   updated_at: String;
 }
 
+export interface GetTasksFilter {
+  team_id: number;
+  type?: number;
+  status_name?: string;
+  parent_task_id?: number;
+  sprint_id?: number;
+}
+
 export interface CreateTaskApi {
   name: string;
   description?: string;

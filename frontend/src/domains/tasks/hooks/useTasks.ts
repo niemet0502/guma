@@ -1,18 +1,18 @@
-import { gql, useQuery } from "@apollo/client";
-import { TaskApi } from "../type";
+import { gql, useLazyQuery } from "@apollo/client";
+import { GetTasksFilter, TaskApi } from "../type";
 
 export const GET_TASKS_BY_TEAM = gql`
   query GetTasksByTeam(
-    # $team_id: Int!
+    $team_id: Int!
     $type: Int
-    $status_id: Int
+    $status_name: String
     $parent_task_id: Int
     $sprint_id: Int
   ) {
     tasks(
-      team_id: 20
+      team_id: $team_id
       type: $type
-      status_id: $status_id
+      status_name: $status_name
       parent_task_id: $parent_task_id
       sprint_id: $sprint_id
     ) {
@@ -52,13 +52,23 @@ export const GET_TASKS_BY_TEAM = gql`
 `;
 
 export const useTasks = () => {
-  const {
-    data,
-    loading: isLoading,
-    error,
-  } = useQuery<{
+  const [getTasks, { data, loading: isLoading, error }] = useLazyQuery<{
     tasks: TaskApi[];
   }>(GET_TASKS_BY_TEAM);
 
-  return { data: data?.tasks, isLoading, error };
+  const fetchTasks = (filter: GetTasksFilter) => {
+    const {
+      team_id = undefined,
+      type = undefined,
+      status_name = undefined,
+      sprint_id = undefined,
+      parent_task_id,
+    } = filter;
+
+    getTasks({
+      variables: { team_id, type, status_name, sprint_id, parent_task_id },
+    });
+  };
+
+  return { fetchTasks, data: data?.tasks, isLoading, error };
 };
