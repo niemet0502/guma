@@ -3,10 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { StatusService } from 'src/teams/status.service';
 import { TeamsService } from 'src/teams/teams.service';
 import { Repository } from 'typeorm';
+import { ActivitiesService } from './activities.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from './entities/task.entity';
-import { TaskType } from './tasks.enum';
+import { ActivityAction, TaskType } from './tasks.enum';
 
 @Injectable()
 export class TasksService {
@@ -14,9 +15,10 @@ export class TasksService {
     @InjectRepository(Task) private taskRepository: Repository<Task>,
     private readonly statusService: StatusService,
     private readonly teamService: TeamsService,
+    private readonly activityService: ActivitiesService,
   ) {}
   async create(createTaskDto: CreateTaskDto) {
-    const { team_id, status_id, parent_task_id } = createTaskDto;
+    const { team_id, status_id, parent_task_id, created_by } = createTaskDto;
 
     // check if the team exists
     const team = await this.teamService.findOne(team_id);
@@ -29,7 +31,7 @@ export class TasksService {
     const status = status_id
       ? await this.statusService.findOne(status_id)
       : await this.statusService.findBy({
-          where: { name: 'Backlog', team_id },
+          where: { name: 'Backlog' },
         });
 
     if (!status) {
@@ -50,29 +52,45 @@ export class TasksService {
 
     const maxId = await this.findMaxId();
 
-    return await this.taskRepository.save({
+    const task = await this.taskRepository.save({
       ...createTaskDto,
       status_id: status.id,
       identifier: `${team.identifier}-${maxId}`,
       created_at: new Date().toString(),
     });
+
+    // create the activity
+    await this.activityService.create({
+      task_id: task.id,
+      created_by,
+      action: ActivityAction.CREATE_ISSUE,
+      from_status: undefined,
+      to_status: undefined,
+      sprint_id: undefined,
+    });
+
+    return task;
   }
 
   async findAll(
     team_id: number,
     type: TaskType,
-    status_id: number,
+    status_name: string,
     parent_task_id: number,
     sprint_id: number,
   ): Promise<Task[]> {
     const query = this.taskRepository.createQueryBuilder('task');
 
+    const status = status_name
+      ? await this.statusService.findBy({ where: { name: status_name } })
+      : undefined;
+
     if (team_id) {
       query.andWhere('task.team_id = :team_id', { team_id });
     }
 
-    if (status_id) {
-      query.andWhere('task.status_id = :status_id', { status_id });
+    if (status && status_name) {
+      query.andWhere('task.status_id = :status_id', { status_id: status.id });
     }
 
     if (type) {

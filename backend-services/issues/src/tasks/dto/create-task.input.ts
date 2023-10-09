@@ -31,7 +31,7 @@ export class CreateTaskInput {
   sprint_id: number;
 
   @Field({ nullable: true })
-  status_id?: number;
+  status_name?: string;
 
   @Field({ nullable: false })
   team_id: number;

@@ -30,7 +30,7 @@ export class TasksController {
   findAll(
     @Query('team_id') team_id?: string,
     @Query('type') type?: string,
-    @Query('status_id') status_id?: string,
+    @Query('status_name') status_name?: string,
     @Query('parent_task_id') parent_task_id?: string,
     @Query('sprint_id') sprint_id?: string,
   ): Promise<Task[]> {
@@ -39,7 +39,7 @@ export class TasksController {
     return this.tasksService.findAll(
       +team_id,
       +type,
-      +status_id,
+      status_name,
       +parent_task_id,
       +sprint_id,
     );
