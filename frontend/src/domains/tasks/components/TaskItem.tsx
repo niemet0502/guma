@@ -21,19 +21,15 @@ import {
 import { User } from "@/domains/auth/services/types";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { taskPriority } from "../constantes";
+import { useUpdateTask } from "../hooks/useUpdateTask";
 
 export const TaskItem: React.FC<{ task: TaskApi; members?: User[] }> = ({
   task,
   members,
 }) => {
+  const { updateTask } = useUpdateTask();
   const [open, setOpen] = useState(false);
   const [openPriorityPopover, setOpenPriorityPopover] = useState(false);
-
-  const [value, setValue] = useState(
-    task.assignee ? task.assignee.username : ""
-  );
-
-  const [priority, setPriority] = useState<number | null>(task.priority);
 
   return (
     // <NavLink to="/">
@@ -53,7 +49,7 @@ export const TaskItem: React.FC<{ task: TaskApi; members?: User[] }> = ({
                   onSelect={(currentValue) => {
                     const value = currentValue[currentValue.length - 1];
 
-                    setPriority(+value === priority ? null : +value);
+                    updateTask({ priority: +value, id: +task.id });
                     setOpenPriorityPopover(false);
                   }}
                 >
@@ -63,7 +59,7 @@ export const TaskItem: React.FC<{ task: TaskApi; members?: User[] }> = ({
                     <CheckIcon
                       className={cn(
                         "ml-auto h-4 w-4 mt-0.5",
-                        priority === value ? "opacity-100" : "opacity-0"
+                        task.priority === value ? "opacity-100" : "opacity-0"
                       )}
                     />
                     <span className="text-muted-foreground">{value}</span>
@@ -89,20 +85,26 @@ export const TaskItem: React.FC<{ task: TaskApi; members?: User[] }> = ({
           <Avatar className="h-7 w-7 bg-transparent hover:cursor-pointer">
             {/* <AvatarImage src="/avatars/01.png" alt="@shadcn" /> */}
             <AvatarFallback className="bg-transparent border-2 ">
-              <AiOutlineUser />
+              {task.assignee ? (
+                <span className="text-muted-foreground text-sm">
+                  {task.assignee.username.slice(0, 2).toUpperCase()}
+                </span>
+              ) : (
+                <AiOutlineUser />
+              )}
             </AvatarFallback>
           </Avatar>
         </PopoverTrigger>
         <PopoverContent className="w-[180px] p-0 mr-7">
           <Command>
             <CommandInput placeholder="Assignee to..." className="h-9" />
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandEmpty>No user found.</CommandEmpty>
             <CommandGroup>
               {members?.map((member) => (
                 <CommandItem
                   key={member.id}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
+                  onSelect={() => {
+                    updateTask({ id: +task.id, assignee_to: +member.id });
                     setOpen(false);
                   }}
                 >
@@ -110,7 +112,9 @@ export const TaskItem: React.FC<{ task: TaskApi; members?: User[] }> = ({
                   <CheckIcon
                     className={cn(
                       "ml-auto h-4 w-4",
-                      value === member.username ? "opacity-100" : "opacity-0"
+                      task.assignee_to === member.id
+                        ? "opacity-100"
+                        : "opacity-0"
                     )}
                   />
                 </CommandItem>

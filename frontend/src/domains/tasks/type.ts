@@ -38,6 +38,18 @@ export interface CreateTaskApi {
   team_id?: number;
 }
 
+export interface UpdateTaskApi {
+  id: number;
+  name?: string;
+  description?: string;
+  type?: number;
+  priority?: number;
+  assignee_to?: number;
+  parent_task_id?: number;
+  sprint_id?: number;
+  status_id?: number;
+}
+
 export interface TaskLabelApi {
   id: string;
   task_id: number;
@@ -46,7 +58,7 @@ export interface TaskLabelApi {
 }
 
 export interface TaskApi {
-  id: string;
+  id: number;
   slug: string;
   name: string;
   description: string;
