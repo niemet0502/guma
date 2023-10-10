@@ -21,6 +21,7 @@ export const GET_TASKS_BY_TEAM = gql`
       identifier
       created_at
       priority
+      slug
 
       assignee_to
       assignee {

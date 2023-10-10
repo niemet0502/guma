@@ -3,6 +3,7 @@ import { SignIn } from "@/domains/auth/SignIn";
 import { SignUp } from "@/domains/auth/SignUp";
 import { NotificationsList } from "@/domains/notifications/NotificationsList";
 import { OrganizationForm } from "@/domains/organization/OrganizationForm";
+import { TaskDetails } from "@/domains/tasks/pages/Details";
 import { TaskList } from "@/domains/tasks/pages/List";
 import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "../Layout/Layout";
@@ -36,12 +37,12 @@ export const router = createBrowserRouter([
           {
             path: "team/:teamId/issues",
             element: <TaskList />,
-            // children: [
-            //   {
-            //     path: "/:issueId",
-            //     element: <TaskDetails />,
-            //   },
-            // ],
+            children: [
+              {
+                path: "/:orgaId/team/:teamId/issues/:issueId",
+                element: <TaskDetails />,
+              },
+            ],
           },
           {
             path: "*", // Matches any path not covered by previous routes

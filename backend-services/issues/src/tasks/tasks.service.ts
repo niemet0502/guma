@@ -29,7 +29,7 @@ export class TasksService {
       this.http
         .post<Task>(this.url, {
           ...createTaskInput,
-          slug: removeSpacesAndSpecialChars(name).toLowerCase(),
+          slug: removeSpacesAndSpecialChars(name.trim()).toLowerCase(),
         })
         .pipe(
           catchError((error: AxiosError) => {
