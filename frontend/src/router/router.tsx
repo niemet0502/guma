@@ -36,8 +36,11 @@ export const router = createBrowserRouter([
           },
           {
             path: "team/:teamId/issues",
-            element: <TaskList />,
             children: [
+              {
+                index: true,
+                element: <TaskList />,
+              },
               {
                 path: "/:orgaId/team/:teamId/issues/:issueId",
                 element: <TaskDetails />,
