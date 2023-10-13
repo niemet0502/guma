@@ -7,7 +7,7 @@ export class CreateTaskInput {
   name: string;
 
   @Field({ nullable: true })
-  description: string;
+  description?: string;
 
   @Field({ nullable: true })
   type: TaskType;

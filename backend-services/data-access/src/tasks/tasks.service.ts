@@ -18,7 +18,8 @@ export class TasksService {
     private readonly activityService: ActivitiesService,
   ) {}
   async create(createTaskDto: CreateTaskDto) {
-    const { team_id, status_id, parent_task_id, created_by } = createTaskDto;
+    const { team_id, status_id, parent_task_id, created_by, slug } =
+      createTaskDto;
 
     // check if the team exists
     const team = await this.teamService.findOne(team_id);
@@ -51,12 +52,14 @@ export class TasksService {
     }
 
     const maxId = await this.findMaxId();
+    const id = `${team.identifier}-${maxId}`;
 
     const task = await this.taskRepository.save({
       ...createTaskDto,
       status_id: status.id,
-      identifier: `${team.identifier}-${maxId}`,
+      identifier: id,
       created_at: new Date().toString(),
+      slug: `${id.toLowerCase()}-${slug}`,
     });
 
     // create the activity
@@ -116,6 +119,10 @@ export class TasksService {
 
   async findOne(id: number): Promise<Task> {
     return await this.taskRepository.findOne({ where: { id } });
+  }
+
+  async findBy(option: any): Promise<Task> {
+    return await this.taskRepository.findOne(option);
   }
 
   async update(id: number, updateTaskDto: UpdateTaskDto): Promise<Task> {

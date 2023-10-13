@@ -65,7 +65,26 @@ export class TasksService {
   }
 
   async findOne(id: number) {
-    const { data } = await firstValueFrom(this.http.get<Task>(this.url + id));
+    const { data } = await firstValueFrom(
+      this.http.get<Task>(this.url + id).pipe(
+        catchError((error: AxiosError) => {
+          console.log(error.response);
+          throw 'An error happened!';
+        }),
+      ),
+    );
+    return data;
+  }
+
+  async taskBySlugAndTeam(slug: string) {
+    const { data } = await firstValueFrom(
+      this.http.get<Task>(`${this.url}bySlug/${slug}`).pipe(
+        catchError((error: AxiosError) => {
+          console.log(error.response.data);
+          throw 'An error happened!';
+        }),
+      ),
+    );
     return data;
   }
 
@@ -87,6 +106,7 @@ export class TasksService {
     const { data } = await firstValueFrom(
       this.http.get<Task[]>(this.url, { params: { team_id, parent_task_id } }),
     );
+
     return data;
   }
 

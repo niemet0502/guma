@@ -21,8 +21,8 @@ export class Task {
   @Field({ nullable: true })
   identifier?: string;
 
-  @Field({ nullable: false })
-  description: string;
+  @Field({ nullable: true })
+  description?: string;
 
   @Field({ nullable: true })
   number: string;

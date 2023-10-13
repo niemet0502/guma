@@ -35,6 +35,7 @@ export class TasksController {
     @Query('sprint_id') sprint_id?: string,
   ): Promise<Task[]> {
     // TODO add search params
+    console.log('called');
 
     return this.tasksService.findAll(
       +team_id,
@@ -49,6 +50,14 @@ export class TasksController {
   @ApiOkResponse({ type: Task })
   findOne(@Param('id') id: string) {
     return this.tasksService.findOne(+id);
+  }
+
+  @Get('/bySlug/:slug')
+  @ApiOkResponse({ type: Task })
+  findBySlug(@Param('slug') slug: string) {
+    return this.tasksService.findBy({
+      where: { slug },
+    });
   }
 
   @Patch(':id')
