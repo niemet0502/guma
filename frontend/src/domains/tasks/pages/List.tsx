@@ -31,8 +31,6 @@ export const TaskList: React.FC = () => {
         ? users
         : team?.members.map(({ user }) => user);
     setMembers(m);
-
-    console.log(team);
   }, [team]);
 
   return (
@@ -55,9 +53,11 @@ export const TaskList: React.FC = () => {
 
       {!isLoading && (
         <div>
-          {tasks?.map((task) => (
-            <TaskItem task={task} key={task.id} members={members} />
-          ))}
+          {tasks
+            ?.filter(({ parent_task_id }) => !parent_task_id)
+            .map((task) => (
+              <TaskItem task={task} key={task.id} members={members} />
+            ))}
         </div>
       )}
     </div>
