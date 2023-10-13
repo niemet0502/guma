@@ -7,6 +7,8 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { CurrentUser } from 'src/shared/current-user.decator';
+import { Status } from 'src/shared/status.entity';
 import { User } from '../shared/user.entity';
 import { Sprint } from '../sprints/entities/sprint.entity';
 import { ActivitiesService } from './activities.service';
@@ -20,8 +22,12 @@ export class ActivitiesResolver {
   @Mutation(() => Activity)
   createActivity(
     @Args('createActivityInput') createActivityInput: CreateActivityInput,
+    @CurrentUser() user: User,
   ) {
-    return this.activitiesService.create(createActivityInput);
+    return this.activitiesService.create({
+      ...createActivityInput,
+      created_by: +user.id,
+    });
   }
 
   @Query(() => [Activity], { name: 'activities' })
@@ -42,6 +48,19 @@ export class ActivitiesResolver {
   @ResolveField((type) => Sprint)
   async sprint(@Parent() activity: Activity) {
     const { sprint_id } = activity;
+    if (!sprint_id) return;
     return await this.activitiesService.getSprint(sprint_id);
+  }
+
+  @ResolveField((of) => Status)
+  from(@Parent() activity: Activity): any {
+    if (!activity.from_status) return;
+    return { __typename: 'Status', id: activity.from_status };
+  }
+
+  @ResolveField((of) => Status)
+  to(@Parent() activity: Activity): any {
+    if (!activity.to_status) return;
+    return { __typename: 'Status', id: activity.to_status };
   }
 }

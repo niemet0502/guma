@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Status } from 'src/shared/status.entity';
 import { ActivityAction } from 'src/shared/tasks.enum';
 import { User } from '../../shared/user.entity';
 import { Sprint } from '../../sprints/entities/sprint.entity';
@@ -32,7 +33,7 @@ export class Activity {
   })
   sprint_id: number;
 
-  @Field((type) => Sprint)
+  @Field((type) => Sprint, { nullable: true })
   sprint?: Sprint;
 
   @Field()
@@ -43,4 +44,10 @@ export class Activity {
 
   @Field()
   updated_at: string;
+
+  @Field((type) => Status, { nullable: true })
+  from?: Status;
+
+  @Field((type) => Status, { nullable: true })
+  to?: Status;
 }

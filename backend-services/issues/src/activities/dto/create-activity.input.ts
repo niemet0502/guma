@@ -3,8 +3,8 @@ import { ActivityAction } from '../../shared/tasks.enum';
 
 @InputType()
 export class CreateActivityInput {
-  @Field({ nullable: false })
-  created_by: number;
+  @Field({ nullable: true })
+  created_by?: number;
 
   @Field({ nullable: false })
   task_id: number;
