@@ -34,7 +34,7 @@ export const TaskItem: React.FC<{ task: TaskApi; members?: User[] }> = ({
   const [openPriorityPopover, setOpenPriorityPopover] = useState(false);
 
   return (
-    <NavLink to={`/${orgaId}/team/${teamId}/issue/${task.slug}`}>
+    <NavLink to={`/${orgaId}/team/${teamId}/issues/${task.slug}`}>
       <div className="py-3 px-5 border-b flex gap-2 items-center">
         <Popover
           open={openPriorityPopover}

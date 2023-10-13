@@ -2,6 +2,29 @@ import { User } from "../auth/services/types";
 import { LabelApi } from "../organization/services/type";
 import { TeamApi } from "../teams/type";
 
+export enum ActivityAction {
+  CREATE_ISSUE = "created the issue",
+  CHANGED_STATUS = "changed status from",
+  CHANGED_TITLE = "changed the title",
+  UPDATED_DESCRIPTION = "updated the description of the issue",
+  REMOVED_SPRINT = "removed issue from",
+  ADDED_SPRINT = "add issue to",
+  ADDED_PROJECT = "added to project",
+  UPDATED_SPRINT = "moved issue from",
+  ADDED_LABEL = "added labels",
+}
+
+export interface TaskStatusApi {
+  id: number;
+  name: string;
+  team_id?: number;
+}
+
+export interface SprintApi {
+  id: number;
+  name: string;
+}
+
 export interface Activity {
   id: number;
   created_by: number;
@@ -10,10 +33,13 @@ export interface Activity {
   from_status: number;
   to_status: number;
   sprint_id: number;
-  // sprint: Sprint;
-  // action: String;
-  created_at: String;
-  updated_at: String;
+  action: ActivityAction;
+  created_at: string;
+  updated_at: string;
+
+  sprint?: SprintApi;
+  to?: TaskStatusApi;
+  from?: TaskStatusApi;
 }
 
 export interface GetTasksFilter {
