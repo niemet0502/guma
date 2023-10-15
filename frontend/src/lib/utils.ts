@@ -114,7 +114,7 @@ export const transformDateToMonthDay = (dateString: string): string => {
   }
 };
 
-function parseDate(inputDate: string) {
+export function parseDate(inputDate: string) {
   const [datePart, timePart] = inputDate.split(" ");
   const [day, month, year] = datePart.split("/").map(Number);
   const [hours, minutes, seconds] = timePart.split(":").map(Number);
