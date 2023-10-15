@@ -23,6 +23,9 @@ export interface TaskStatusApi {
 export interface SprintApi {
   id: number;
   name: string;
+  goal?: string;
+  end_at: string;
+  start_at: string;
 }
 
 export interface Activity {
@@ -99,8 +102,9 @@ export interface TaskApi {
   assignee: User;
   parent_task_id: number;
   sprint_id: number;
+  sprint: SprintApi;
   status_id: number;
-  // status: Status;
+  status: TaskStatusApi;
   team_id: number;
   team: TeamApi;
   subtasks: [TaskApi];
