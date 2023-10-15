@@ -14,7 +14,7 @@ export const useGetLabels = (organization_id: number) => {
   const { data, loading: isLoading } = useQuery<{ labels: LabelApi[] }>(
     GET_LABELS,
     {
-      variables: { organization_id },
+      variables: { organization_id: +organization_id },
     }
   );
   return { data: data?.labels, isLoading };

@@ -29,7 +29,7 @@ export class WorkflowService {
       throw new NotFoundException('Team not found');
     }
 
-    const status = await this.statusService.findOne(team_id);
+    const status = await this.statusService.findOne(status_id);
 
     if (!status) {
       throw new NotFoundException('Status not found');
@@ -47,7 +47,10 @@ export class WorkflowService {
   }
 
   async findAllByTeam(team_id: number): Promise<Workflow[]> {
-    return await this.workflowRepository.find({ where: { team_id } });
+    return await this.workflowRepository.find({
+      where: { team_id },
+      order: { order_value: 'ASC' },
+    });
   }
 
   async update(
