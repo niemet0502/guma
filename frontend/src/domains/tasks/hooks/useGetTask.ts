@@ -23,6 +23,7 @@ const GET_TASK_BY_SLUG_AND_TEAM = gql`
       }
       parent_task_id
       sprint_id
+
       status_id
       status {
         id

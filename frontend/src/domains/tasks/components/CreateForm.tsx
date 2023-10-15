@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/domains/auth/providers/auth";
 import { User } from "@/domains/auth/services/types";
 import { useGetLabels } from "@/domains/organization/hooks/useGetLabels";
 import { cn } from "@/lib/utils";
@@ -56,9 +57,9 @@ export const CreateTaskForm: React.FC<{
   members?: User[];
   teamId?: number;
 }> = ({ onOpenChange, members, teamId }) => {
-  // const [value, setValue] = useState([]);
+  const { organization } = useAuth();
+  const { data: labels } = useGetLabels(organization?.id as number);
   const { toast } = useToast();
-  const { data: labels } = useGetLabels(25);
 
   const [open, setOpen] = useState(false);
   const [openPriority, setOpenPriority] = useState(false);
