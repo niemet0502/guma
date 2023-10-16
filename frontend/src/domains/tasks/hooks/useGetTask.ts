@@ -53,6 +53,7 @@ const GET_TASK_BY_SLUG_AND_TEAM = gql`
       comments {
         id
         content
+        created_at
         author {
           id
           username

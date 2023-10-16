@@ -86,6 +86,14 @@ export interface TaskLabelApi {
   label: LabelApi;
 }
 
+export interface CommentApi {
+  id: number;
+  content: string;
+  created_at: string;
+  updated_at: string;
+  author: User;
+}
+
 export interface TaskApi {
   id: number;
   slug: string;
@@ -108,7 +116,7 @@ export interface TaskApi {
   team_id: number;
   team: TeamApi;
   subtasks: [TaskApi];
-  comments: [Comment];
+  comments: [CommentApi];
   activities: [Activity];
   labels: [TaskLabelApi];
 }
