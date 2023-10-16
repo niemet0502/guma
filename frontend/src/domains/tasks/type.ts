@@ -92,6 +92,7 @@ export interface CommentApi {
   created_at: string;
   updated_at: string;
   author: User;
+  replies?: CommentApi[];
 }
 
 export interface TaskApi {

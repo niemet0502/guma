@@ -58,6 +58,16 @@ const GET_TASK_BY_SLUG_AND_TEAM = gql`
           id
           username
         }
+
+        replies {
+          id
+          content
+          created_at
+          author {
+            id
+            username
+          }
+        }
       }
       activities {
         id
