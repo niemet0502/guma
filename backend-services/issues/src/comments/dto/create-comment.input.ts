@@ -8,6 +8,6 @@ export class CreateCommentInput {
   @Field()
   task_id: number;
 
-  @Field()
-  created_by: number;
+  @Field({ nullable: true })
+  created_by?: number;
 }

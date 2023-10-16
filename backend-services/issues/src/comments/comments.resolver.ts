@@ -7,6 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { CurrentUser } from 'src/shared/current-user.decator';
 import { User } from '../shared/user.entity';
 import { CommentsService } from './comments.service';
 import { CreateCommentInput } from './dto/create-comment.input';
@@ -20,8 +21,12 @@ export class CommentsResolver {
   @Mutation(() => Comment)
   createComment(
     @Args('createCommentInput') createCommentInput: CreateCommentInput,
+    @CurrentUser() user: User,
   ) {
-    return this.commentsService.create(createCommentInput);
+    return this.commentsService.create({
+      ...createCommentInput,
+      created_by: +user.id,
+    });
   }
 
   @Query(() => [Comment], { name: 'comments' })
