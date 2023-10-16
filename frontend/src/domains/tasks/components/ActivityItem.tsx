@@ -23,7 +23,7 @@ export const ActivityItem: React.FC<{ activity: Activity }> = ({
 
     case ActivityAction.CHANGED_STATUS:
       icon = (
-        <div className="h-5 w-5 border-4 border-amber-600 rounded-full ml-0.5"></div>
+        <div className="h-4 w-4 border-2 border-amber-600 rounded-full ml-0.5"></div>
       );
       break;
 

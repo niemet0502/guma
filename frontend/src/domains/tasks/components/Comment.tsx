@@ -31,7 +31,7 @@ export const Comment: React.FC<{ comment: CommentApi; isReply?: boolean }> = ({
         }`}
       >
         <div className="flex justify-between items-center">
-          <h6 className="text-sm">
+          <h6 className="text-sm flex gap-2">
             {comment.author.username}
             <span className="text-muted-foreground">
               {getTimeAgoString(comment.created_at)}
