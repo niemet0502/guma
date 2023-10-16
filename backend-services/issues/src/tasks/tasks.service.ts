@@ -111,7 +111,7 @@ export class TasksService {
   }
 
   async getComments(task_id: number) {
-    return await this.commentService.findAllByTask(task_id);
+    return await this.commentService.findAll(task_id, undefined);
   }
 
   async getActivities(task_id: number) {

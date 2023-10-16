@@ -23,14 +23,16 @@ export class CommentsController {
   @Post()
   @ApiCreatedResponse({ type: Comment })
   async create(@Body() createCommentDto: CreateCommentDto): Promise<Comment> {
-    // TODO get the user id from the header
     return await this.commentsService.create(createCommentDto);
   }
 
   @Get()
   @ApiOkResponse({ type: Comment, isArray: true })
-  async findAll(@Query('task_id') task_id: string): Promise<Comment[]> {
-    return await this.commentsService.findAllByTask(+task_id);
+  async findAll(
+    @Query('task_id') task_id: string,
+    @Query('parent_id') parent_id: string,
+  ): Promise<Comment[]> {
+    return await this.commentsService.findAll(+task_id, +parent_id);
   }
 
   @Get(':id')

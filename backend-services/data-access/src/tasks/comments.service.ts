@@ -14,7 +14,7 @@ export class CommentsService {
   ) {}
 
   async create(createCommentDto: CreateCommentDto): Promise<Comment> {
-    const { task_id, content, created_by } = createCommentDto;
+    const { task_id, content, created_by, parent_id } = createCommentDto;
 
     const task = await this.taskService.findOne(task_id);
 
@@ -26,19 +26,30 @@ export class CommentsService {
     newComment.content = content;
     newComment.created_by = created_by;
     newComment.task_id = task_id;
+    newComment.parent_id = parent_id;
     newComment.created_at = new Date().toLocaleString();
     newComment.updated_at = new Date().toLocaleString();
     return await this.commentRepository.save(newComment);
   }
 
-  async findAllByTask(task_id: number): Promise<Comment[]> {
-    const task = await this.taskService.findOne(task_id);
+  async findAll(task_id: number, parent_id: number): Promise<Comment[]> {
+    const query = this.commentRepository.createQueryBuilder('comment');
 
-    if (!task) {
+    const task = task_id ? await this.taskService.findOne(task_id) : undefined;
+
+    if (!task && task_id) {
       throw new NotFoundException('task not found');
     }
 
-    return await this.commentRepository.find({ where: { task_id } });
+    if (task_id) {
+      query.andWhere('comment.task_id = :task_id', { task_id });
+    }
+
+    if (parent_id) {
+      query.andWhere('comment.parent_id = :parent_id', { parent_id });
+    }
+
+    return await query.getMany();
   }
 
   async findOne(id: number): Promise<Comment> {

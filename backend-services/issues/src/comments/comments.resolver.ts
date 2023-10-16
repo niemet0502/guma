@@ -30,8 +30,11 @@ export class CommentsResolver {
   }
 
   @Query(() => [Comment], { name: 'comments' })
-  findAll(@Args('task_id', { type: () => Int }) task_id: number) {
-    return this.commentsService.findAllByTask(task_id);
+  findAll(
+    @Args('task_id', { type: () => Int, nullable: true }) task_id: number,
+    @Args('parent_id', { type: () => Int, nullable: true }) parent_id: number,
+  ) {
+    return this.commentsService.findAll(task_id, parent_id);
   }
 
   @Query(() => Comment, { name: 'comment' })
@@ -57,5 +60,11 @@ export class CommentsResolver {
   @ResolveField(() => User)
   author(@Parent() comment: Comment): any {
     return { __typename: 'User', id: comment.created_by };
+  }
+
+  @ResolveField()
+  replies(@Parent() comment: Comment) {
+    const { id } = comment;
+    return this.commentsService.findAll(undefined, id);
   }
 }
