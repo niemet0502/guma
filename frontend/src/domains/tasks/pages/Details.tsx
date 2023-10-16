@@ -63,7 +63,7 @@ export const TaskDetails: React.FC = () => {
       : task?.team?.members.map(({ user }) => user);
 
   return (
-    <div className="h-full border-t">
+    <div className="h-full border-t overflow-hidden">
       {/* <div className="bg-secondary py-3 px-5 flex items-center gap-1">
         <span>Backlog</span>
         <SlArrowRight className="mt-1 text-xs" />
@@ -71,7 +71,7 @@ export const TaskDetails: React.FC = () => {
       </div> */}
 
       <div className="h-full w-full flex">
-        <div className="flex flex-1 flex-col px-8 py-6 items-center">
+        <div className="flex flex-1 flex-col px-8 py-6 items-center overflow-auto">
           <div className="w-full max-w-[1000px]">
             <div className="w-full">
               <Textarea
