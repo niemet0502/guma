@@ -9,8 +9,11 @@ export class Comment {
   @Field({ nullable: true })
   content: string;
 
-  @Field({ nullable: false })
-  task_id: number;
+  @Field({ nullable: true })
+  task_id?: number;
+
+  @Field({ nullable: true })
+  parent_id?: number;
 
   @Field({ nullable: false })
   created_by: number;
@@ -23,4 +26,7 @@ export class Comment {
 
   @Field(() => User)
   author?: User;
+
+  @Field(() => [Comment])
+  replies?: Comment[];
 }

@@ -8,8 +8,11 @@ export class Comment {
   @Column('longtext', { nullable: true })
   content: string;
 
-  @Column({ nullable: false })
-  task_id: number;
+  @Column({ nullable: true })
+  task_id?: number;
+
+  @Column({ nullable: true })
+  parent_id?: number;
 
   @Column({ nullable: false })
   created_by: number;
