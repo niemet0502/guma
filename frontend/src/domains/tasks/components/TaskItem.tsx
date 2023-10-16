@@ -23,6 +23,7 @@ import { CheckIcon } from "@radix-ui/react-icons";
 import { NavLink, useParams } from "react-router-dom";
 import { taskPriority } from "../constantes";
 import { useUpdateTask } from "../hooks/useUpdateTask";
+import { TaskStatusIcon } from "./TaskStatusIcon";
 
 export const TaskItem: React.FC<{ task: TaskApi; members?: User[] }> = ({
   task,
@@ -76,6 +77,7 @@ export const TaskItem: React.FC<{ task: TaskApi; members?: User[] }> = ({
           </PopoverContent>
         </Popover>
         <span className="text-muted-foreground">{task.identifier}</span>
+        <TaskStatusIcon status={task?.status?.name as string} />
         <span className="flex-1">{task.name}</span>
 
         {task.labels.map(({ label, id }) => (

@@ -24,6 +24,11 @@ export const GET_TASKS_BY_TEAM = gql`
       slug
       parent_task_id
 
+      status {
+        id
+        name
+      }
+
       assignee_to
       assignee {
         id

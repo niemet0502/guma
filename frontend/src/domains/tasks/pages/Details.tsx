@@ -39,6 +39,7 @@ import { useParams } from "react-router-dom";
 import { ActivityItem } from "../components/ActivityItem";
 import { Comment } from "../components/Comment";
 import { SubTaskItem } from "../components/SubTaskItem";
+import { TaskStatusIcon } from "../components/TaskStatusIcon";
 import { taskPriority } from "../constantes";
 import { useGetStatus } from "../hooks/useGetStatus";
 import { useGetTask } from "../hooks/useGetTask";
@@ -146,13 +147,14 @@ export const TaskDetails: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="w-[320px] h-full flex flex-col gap-8 border-l px-4 py-8 text-muted-foreground">
+        <div className="w-[320px] h-full flex flex-col gap-5 border-l px-4 py-8 text-muted-foreground">
           <div className="flex">
             <div className="w-[100px] flex items-center">Status</div>
             <div className="flex-1">
               <Popover>
                 <PopoverTrigger>
                   <div className="hover:cursor-pointer hover:bg-secondary p-2 rounded flex gap-2 items-center mr-10">
+                    <TaskStatusIcon status={task?.status?.name as string} />
                     <span className="text-muted-foreground text-sm">
                       {task?.status?.name}
                     </span>
@@ -168,7 +170,8 @@ export const TaskDetails: React.FC = () => {
                     <CommandGroup>
                       {status?.map(({ id, name }) => (
                         <CommandItem key={id}>
-                          <div className="w-full flex justify-between">
+                          <div className="w-full flex justify-between gap-2 items-center">
+                            <TaskStatusIcon status={name} />
                             <span>{name}</span>
 
                             <CheckIcon

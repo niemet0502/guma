@@ -17,6 +17,7 @@ import { CheckIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { TaskApi } from "../type";
+import { TaskStatusIcon } from "./TaskStatusIcon";
 
 export const SubTaskItem: React.FC<{ task: TaskApi; members?: User[] }> = ({
   task,
@@ -26,6 +27,7 @@ export const SubTaskItem: React.FC<{ task: TaskApi; members?: User[] }> = ({
 
   return (
     <div className="p-1 gap-2 flex items-center text-sm">
+      <TaskStatusIcon status={task.status.name} />
       <span className="text-muted-foreground">{task.identifier}</span>
       <span className="flex-1">{task.name}</span>
       <Popover open={open} onOpenChange={setOpen}>

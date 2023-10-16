@@ -49,6 +49,11 @@ const GET_TASK_BY_SLUG_AND_TEAM = gql`
         name
         slug
         identifier
+
+        status {
+          id
+          name
+        }
       }
       comments {
         id
