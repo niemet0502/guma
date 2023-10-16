@@ -19,7 +19,12 @@ export class SprintsService {
 
   async create(createSprintInput: CreateSprintInput): Promise<Sprint> {
     const { data } = await firstValueFrom(
-      this.http.post<Sprint>(this.url, createSprintInput),
+      this.http.post<Sprint>(this.url, createSprintInput).pipe(
+        catchError((error: AxiosError) => {
+          console.log(error.response.data);
+          throw 'An error happened!';
+        }),
+      ),
     );
     return data;
   }

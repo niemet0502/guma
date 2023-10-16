@@ -55,6 +55,13 @@ export class TasksResolver {
     return this.tasksService.findOne(id);
   }
 
+  @Query(() => Task, { name: 'taskBySlug' })
+  findBy(
+    @Args('slug', { type: () => String }) slug: string,
+  ) {
+    return this.tasksService.taskBySlugAndTeam(slug);
+  }
+
   @Mutation(() => Task)
   updateTask(@Args('updateTaskInput') updateTaskInput: UpdateTaskInput) {
     return this.tasksService.update(updateTaskInput.id, updateTaskInput);

@@ -4,7 +4,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -35,13 +37,14 @@ import {
 } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 import { ActivityItem } from "../components/ActivityItem";
+import { Comment } from "../components/Comment";
 import { SubTaskItem } from "../components/SubTaskItem";
 import { taskPriority } from "../constantes";
 import { useGetStatus } from "../hooks/useGetStatus";
 import { useGetTask } from "../hooks/useGetTask";
 
 export const TaskDetails: React.FC = () => {
-  const { organization } = useAuth();
+  const { organization, user } = useAuth();
   const { issueId } = useParams<{ issueId: string }>();
 
   const { data: users } = useGetUsers(organization?.id as number);
@@ -73,13 +76,13 @@ export const TaskDetails: React.FC = () => {
             <div className="w-full">
               <Textarea
                 value={task?.name}
-                className="border-none font-bold text-xl"
+                className="border-none font-bold text-xl resize-none"
               />
             </div>
 
             <div className="w-full">
               <Textarea
-                className="h-[100px] border-none"
+                className="h-[100px] border-none resize-none"
                 placeholder="Add description "
               />
             </div>
@@ -110,15 +113,40 @@ export const TaskDetails: React.FC = () => {
               </Accordion>
             </div>
 
-            <div className="w-full px-3 ">
+            <div className="w-full px-3">
               <h5 className="mb-4">Activities</h5>
               {task?.activities.map((activity) => (
                 <ActivityItem activity={activity} />
               ))}
             </div>
+            <div className="w-full px-3 pt-4 flex flex-col gap-3 mb-12">
+              <h5>Comments</h5>
+
+              {task?.comments.map((comment) => (
+                <Comment comment={comment} />
+              ))}
+
+              <div className="w-full flex gap-4">
+                <Avatar className="h-6 w-6 bg-transparent border-2 items-center justify-center mt-0.5">
+                  <span className="text-muted-foreground text-[9px]">
+                    {user?.username?.slice(0, 2).toUpperCase()}
+                  </span>
+                </Avatar>
+                <div className="flex flex-1 border rounded flex-col">
+                  <Textarea
+                    className="resize-none border-none"
+                    placeholder="Leave a comment"
+                  />
+
+                  <Button className="self-end m-2" size="sm">
+                    Comment
+                  </Button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div className=" w-[320px] flex flex-col gap-8 border-l px-4 py-8 text-muted-foreground">
+        <div className="w-[320px] h-full flex flex-col gap-8 border-l px-4 py-8 text-muted-foreground">
           <div className="flex">
             <div className="w-[100px] flex items-center">Status</div>
             <div className="flex-1">
