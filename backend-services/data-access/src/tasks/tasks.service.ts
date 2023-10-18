@@ -81,6 +81,7 @@ export class TasksService {
     status_name: string,
     parent_task_id: number,
     sprint_id: number,
+    sort: 'DESC' | 'ASC',
   ): Promise<Task[]> {
     const query = this.taskRepository.createQueryBuilder('task');
 
@@ -112,7 +113,7 @@ export class TasksService {
       });
     }
 
-    query.orderBy('task.id', 'DESC');
+    query.orderBy('task.id', sort);
 
     return await query.getMany();
   }

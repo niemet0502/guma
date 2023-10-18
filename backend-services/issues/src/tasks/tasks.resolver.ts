@@ -56,9 +56,7 @@ export class TasksResolver {
   }
 
   @Query(() => Task, { name: 'taskBySlug' })
-  findBy(
-    @Args('slug', { type: () => String }) slug: string,
-  ) {
+  findBy(@Args('slug', { type: () => String }) slug: string) {
     return this.tasksService.taskBySlugAndTeam(slug);
   }
 

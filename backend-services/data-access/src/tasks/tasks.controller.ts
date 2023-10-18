@@ -33,6 +33,7 @@ export class TasksController {
     @Query('status_name') status_name?: string,
     @Query('parent_task_id') parent_task_id?: string,
     @Query('sprint_id') sprint_id?: string,
+    @Query('sortAsc') sortAsc?: boolean,
   ): Promise<Task[]> {
     // TODO add search params
 
@@ -42,6 +43,7 @@ export class TasksController {
       status_name,
       +parent_task_id,
       +sprint_id,
+      sortAsc ? 'ASC' : 'DESC',
     );
   }
 

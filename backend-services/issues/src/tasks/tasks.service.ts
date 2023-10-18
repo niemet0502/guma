@@ -58,7 +58,13 @@ export class TasksService {
   ): Promise<Task[]> {
     const { data } = await firstValueFrom(
       this.http.get<Task[]>(this.url, {
-        params: { team_id, type, status_name, parent_task_id, sprint_id },
+        params: {
+          team_id,
+          type,
+          status_name,
+          parent_task_id,
+          sprint_id,
+        },
       }),
     );
     return data;
@@ -104,7 +110,9 @@ export class TasksService {
 
   async getSubtasks(parent_task_id: number, team_id: number) {
     const { data } = await firstValueFrom(
-      this.http.get<Task[]>(this.url, { params: { team_id, parent_task_id } }),
+      this.http.get<Task[]>(this.url, {
+        params: { team_id, parent_task_id, sortAsc: true },
+      }),
     );
 
     return data;

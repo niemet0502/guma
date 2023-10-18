@@ -9,6 +9,9 @@ export class UpdateTaskInput {
   sprint_id?: number;
 
   @Field({ nullable: true })
+  status_id?: number;
+
+  @Field({ nullable: true })
   assignee_to?: number;
 
   @Field({ nullable: true })
