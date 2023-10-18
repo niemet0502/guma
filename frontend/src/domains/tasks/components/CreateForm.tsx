@@ -36,7 +36,7 @@ import * as z from "zod";
 import { taskPriority } from "../constantes";
 import { useCreateTask } from "../hooks/useCreateTask";
 
-const formSchema = z.object({
+export const formSchema = z.object({
   name: z.string().min(4).max(50),
   priority: z.number().optional(),
   labels: z.number().array().optional(),

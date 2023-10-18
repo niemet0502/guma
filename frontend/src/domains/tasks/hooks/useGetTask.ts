@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { TaskApi } from "../type";
 
-const GET_TASK_BY_SLUG_AND_TEAM = gql`
+export const GET_TASK_BY_SLUG_AND_TEAM = gql`
   query GetTaskBySlugAndTeam($slug: String!) {
     taskBySlug(slug: $slug) {
       id
@@ -50,9 +50,23 @@ const GET_TASK_BY_SLUG_AND_TEAM = gql`
         slug
         identifier
 
+        assignee_to
+        assignee {
+          id
+          username
+        }
+
         status {
           id
           name
+        }
+
+        labels {
+          id
+          label {
+            id
+            name
+          }
         }
       }
       comments {

@@ -1,5 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
 import { UpdateTaskApi } from "../type";
+import { GET_TASK_BY_SLUG_AND_TEAM } from "./useGetTask";
 import { GET_TASKS_BY_TEAM } from "./useTasks";
 
 const UPDATE_TASK = gql`
@@ -13,7 +14,7 @@ const UPDATE_TASK = gql`
 
 export const useUpdateTask = () => {
   const [updateTaskMutation, { error }] = useMutation(UPDATE_TASK, {
-    refetchQueries: [GET_TASKS_BY_TEAM],
+    refetchQueries: [GET_TASKS_BY_TEAM, GET_TASK_BY_SLUG_AND_TEAM],
   });
 
   const updateTask = async (updateTaskInput: UpdateTaskApi) => {

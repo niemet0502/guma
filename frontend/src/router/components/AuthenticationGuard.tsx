@@ -1,4 +1,5 @@
 import { useAuth } from "@/domains/auth/providers/auth";
+import { useLocation } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
 
 export type AuthenticationGuardProps = {
@@ -21,9 +22,18 @@ export const UnAuthenticationGuard: React.FC<AuthenticationGuardProps> = ({
   redirectPath = "/org/documents",
   ...props
 }) => {
-  const { user } = useAuth();
+  const { user, organization } = useAuth();
+  let location = useLocation();
 
   return (
-    <ProtectedRoute redirectPath={redirectPath} isAllowed={!user} {...props} />
+    <ProtectedRoute
+      redirectPath={
+        location.state?.from?.pathname || organization
+          ? `${organization?.name.toLowerCase()}/documents`
+          : redirectPath
+      }
+      isAllowed={!user}
+      {...props}
+    />
   );
 };

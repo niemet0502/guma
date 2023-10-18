@@ -1,5 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
 import { CreateTaskApi } from "../type";
+import { GET_TASK_BY_SLUG_AND_TEAM } from "./useGetTask";
 import { GET_TASKS_BY_TEAM } from "./useTasks";
 
 const CREATE_TASK = gql`
@@ -13,7 +14,7 @@ const CREATE_TASK = gql`
 
 export const useCreateTask = (onSuccessCallback: () => void) => {
   const [createTaskMutation, { error }] = useMutation(CREATE_TASK, {
-    refetchQueries: [GET_TASKS_BY_TEAM],
+    refetchQueries: [GET_TASKS_BY_TEAM, GET_TASK_BY_SLUG_AND_TEAM],
   });
 
   const createTask = async (createTaskInput: CreateTaskApi) => {
