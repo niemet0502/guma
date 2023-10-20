@@ -14,6 +14,12 @@ export enum ActivityAction {
   ADDED_LABEL = "added labels",
 }
 
+export interface CreateCommentInput {
+  content: string;
+  task_id?: number;
+  parent_id?: number;
+}
+
 export interface TaskStatusApi {
   id: number;
   name: string;
