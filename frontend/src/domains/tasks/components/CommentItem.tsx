@@ -1,12 +1,6 @@
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -18,11 +12,12 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/domains/auth/providers/auth";
 import { getTimeAgoString } from "@/lib/utils";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BiTrashAlt } from "react-icons/bi";
-import { BsReply, BsThreeDots } from "react-icons/bs";
+import { BsReply } from "react-icons/bs";
 import { useCreateComment } from "../hooks/useCreateComment";
+import { useUpdateComment } from "../hooks/useUpdateComment";
 import { CommentApi } from "../type";
 import { CommentRemoveDialog } from "./CommentRemoveDialog";
 
@@ -33,16 +28,28 @@ export const CommentItem: React.FC<{
   const { user } = useAuth();
   const { toast } = useToast();
   const { addComment } = useCreateComment();
+  const { updateComment, isLoading } = useUpdateComment();
 
   const [hasFocus, setHasFocus] = useState(false);
+  const [editing, setEditing] = useState(false);
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const editInputRef = useRef<HTMLTextAreaElement>(null);
 
   const handleButtonClick = () => {
     if (inputRef.current) {
       inputRef.current.focus(); // Set focus on the textarea
     }
   };
+
+  useEffect(() => {
+    if (!editing) return;
+    if (editInputRef.current) {
+      editInputRef.current.focus();
+      const length = editInputRef.current.value.length;
+      editInputRef.current.setSelectionRange(length, length);
+    }
+  }, [editing]);
 
   // useEffect(() => {
   //   const checkFocus = () => {
@@ -75,6 +82,27 @@ export const CommentItem: React.FC<{
       }
     }
   };
+
+  const handleSubmitEdit = () => {
+    if (editInputRef.current) {
+      const content = editInputRef.current.value;
+
+      if (content === "") {
+        toast({
+          title: "Comment required",
+          description: "Please add a comment before submitting",
+        });
+      } else {
+        updateComment({
+          id: comment.id,
+          content: content as string,
+        });
+        editInputRef.current.value = "";
+        setEditing(false);
+        5;
+      }
+    }
+  };
   return (
     <div className="w-full flex gap-4">
       {!isReply && (
@@ -89,7 +117,7 @@ export const CommentItem: React.FC<{
           !isReply && "border rounded"
         }`}
       >
-        <div className="flex justify-between items-center px-4">
+        <div className="group hover:cursor-pointer relative flex justify-between items-center px-4">
           <h6 className="text-sm flex gap-2">
             {comment.author.username}
             <span className="text-muted-foreground">
@@ -97,7 +125,7 @@ export const CommentItem: React.FC<{
             </span>
           </h6>
 
-          <div className="flex items-center gap-2">
+          <div className="flex opacity-0 group-hover:opacity-100 transition-opacity duration-300flex items-center gap-2">
             {!isReply && (
               <TooltipProvider>
                 <Tooltip>
@@ -112,33 +140,49 @@ export const CommentItem: React.FC<{
             )}
 
             {user?.id === comment.author.id && (
-              <CommentRemoveDialog commentId={comment.id}>
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <Button variant="ghost" size="sm">
-                      <BsThreeDots />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-[100px] mr-28">
-                    <DropdownMenuItem>
-                      <div className="flex gap-1 items-center">
-                        <AiOutlineEdit className="mt-0.5" /> Edit
-                      </div>
-                    </DropdownMenuItem>
-                    <DialogTrigger className="w-full">
-                      <DropdownMenuItem>
-                        <div className="flex gap-1 items-center w-full">
-                          <BiTrashAlt className="mt-0.5" /> Delete
-                        </div>
-                      </DropdownMenuItem>
-                    </DialogTrigger>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </CommentRemoveDialog>
+              <>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <AiOutlineEdit onClick={() => setEditing(true)} />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Edit the comment</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                <CommentRemoveDialog commentId={comment.id}>
+                  <DialogTrigger className="w-full">
+                    <BiTrashAlt />
+                  </DialogTrigger>
+                </CommentRemoveDialog>
+              </>
             )}
           </div>
         </div>
-        <p className="px-4">{comment.content}</p>
+        {isLoading}
+        {!editing && !isLoading && <p className="px-4">{comment.content}</p>}
+
+        {editing && (
+          <div className="flex flex-col">
+            <Textarea
+              ref={editInputRef}
+              defaultValue={comment.content}
+              className="border-0 px-4 text-base"
+            />
+
+            <Button
+              className={`self-end m-2 ${
+                hasFocus ? "animate-accordion-down" : "animate-accordion-up"
+              }`}
+              size="sm"
+              onClick={handleSubmitEdit}
+            >
+              Reply
+            </Button>
+          </div>
+        )}
+
         {comment.replies && comment.replies.length > 0 && (
           <Separator className="my-2" />
         )}

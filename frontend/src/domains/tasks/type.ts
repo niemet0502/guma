@@ -20,6 +20,10 @@ export interface CreateCommentInput {
   parent_id?: number;
 }
 
+export interface UpdateCommentInput extends CreateCommentInput {
+  id: number;
+}
+
 export interface TaskStatusApi {
   id: number;
   name: string;
