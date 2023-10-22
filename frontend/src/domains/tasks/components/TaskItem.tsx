@@ -3,7 +3,7 @@ import { cn, transformDateToMonthDay } from "@/lib/utils";
 import * as React from "react";
 import { useState } from "react";
 import { AiOutlineDash, AiOutlineUser } from "react-icons/ai";
-import { TaskApi } from "../type";
+import { ActivityAction, TaskApi } from "../type";
 
 import { Badge } from "@/components/ui/badge";
 import {
@@ -55,7 +55,11 @@ export const TaskItem: React.FC<{ task: TaskApi; members?: User[] }> = ({
                     onSelect={(currentValue) => {
                       const value = currentValue[currentValue.length - 1];
 
-                      updateTask({ priority: +value, id: +task.id });
+                      updateTask({
+                        priority: +value,
+                        id: +task.id,
+                        action: ActivityAction.SET_PRIORITY,
+                      });
                       setOpenPriorityPopover(false);
                     }}
                   >
@@ -111,7 +115,11 @@ export const TaskItem: React.FC<{ task: TaskApi; members?: User[] }> = ({
                   <CommandItem
                     key={member.id}
                     onSelect={() => {
-                      updateTask({ id: +task.id, assignee_to: +member.id });
+                      updateTask({
+                        id: +task.id,
+                        assignee_to: +member.id,
+                        action: ActivityAction.ASSIGNED,
+                      });
                       setOpen(false);
                     }}
                   >
