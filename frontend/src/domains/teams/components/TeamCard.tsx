@@ -60,7 +60,7 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
             <AccordionContent>
               <div className="space-y-1 pl-4 pr-3">
                 <NavLink
-                  to={`/${orgaId}/team/${team.name}/issues`}
+                  to={`/${orgaId}/team/${team.name.toLowerCase()}/issues`}
                   className={({ isActive, isPending }) =>
                     isActive ? "active" : isPending ? "default" : "default"
                   }
@@ -69,7 +69,7 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
                   Issues
                 </NavLink>
                 <NavLink
-                  to={`/${orgaId}/team/${team.name}/documents`}
+                  to={`/${orgaId}/team/${team.name.toLowerCase()}/documents`}
                   className={({ isActive, isPending }) =>
                     isActive ? "active" : isPending ? "default" : "default"
                   }
@@ -79,7 +79,7 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
                 </NavLink>
 
                 <NavLink
-                  to={`/${orgaId}/team/${team.name}/sprints`}
+                  to={`/${orgaId}/team/${team.name.toLowerCase()}/sprints`}
                   className={({ isActive, isPending }) =>
                     isActive ? "active" : isPending ? "default" : "default"
                   }

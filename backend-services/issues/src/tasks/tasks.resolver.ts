@@ -7,6 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { CurrentUser } from 'src/shared/current-user.decator';
 import { Team } from 'src/shared/team.entity';
 import { User } from 'src/shared/user.entity';
 import { Status } from '../shared/status.entity';
@@ -20,16 +21,22 @@ export class TasksResolver {
   constructor(private readonly tasksService: TasksService) {}
 
   @Mutation(() => Task)
-  createTask(@Args('createTaskInput') createTaskInput: CreateTaskInput) {
-    // TODO get the user.id from the header
-    return this.tasksService.create(createTaskInput);
+  createTask(
+    @Args('createTaskInput') createTaskInput: CreateTaskInput,
+    @CurrentUser() user: User,
+  ) {
+    return this.tasksService.create({
+      ...createTaskInput,
+      created_by: +user.id,
+    });
   }
 
   @Query(() => [Task], { name: 'tasks' })
   findAll(
     @Args('team_id', { type: () => Int }) team_id: number,
     @Args('type', { type: () => Int, nullable: true }) type: number,
-    @Args('status_id', { type: () => Int, nullable: true }) status_id: number,
+    @Args('status_name', { type: () => String, nullable: true })
+    status_name: string,
     @Args('parent_task_id', { type: () => Int, nullable: true })
     parent_task_id: number,
     @Args('sprint_id', { type: () => Int, nullable: true }) sprint_id: number,
@@ -37,7 +44,7 @@ export class TasksResolver {
     return this.tasksService.findAll(
       team_id,
       type,
-      status_id,
+      status_name,
       parent_task_id,
       sprint_id,
     );
@@ -48,9 +55,20 @@ export class TasksResolver {
     return this.tasksService.findOne(id);
   }
 
+  @Query(() => Task, { name: 'taskBySlug' })
+  findBy(@Args('slug', { type: () => String }) slug: string) {
+    return this.tasksService.taskBySlugAndTeam(slug);
+  }
+
   @Mutation(() => Task)
-  updateTask(@Args('updateTaskInput') updateTaskInput: UpdateTaskInput) {
-    return this.tasksService.update(updateTaskInput.id, updateTaskInput);
+  updateTask(
+    @Args('updateTaskInput') updateTaskInput: UpdateTaskInput,
+    @CurrentUser() user: User,
+  ) {
+    return this.tasksService.update(updateTaskInput.id, {
+      ...updateTaskInput,
+      created_by: +user.id,
+    });
   }
 
   @Mutation(() => Task)
@@ -84,7 +102,9 @@ export class TasksResolver {
 
   @ResolveField(() => User)
   assignee(@Parent() task: Task): any {
-    return { __typename: 'User', id: task.assignee_to };
+    const { assignee_to } = task;
+    if (!assignee_to) return;
+    return { __typename: 'User', id: assignee_to };
   }
 
   @ResolveField(() => Team)
@@ -95,5 +115,11 @@ export class TasksResolver {
   @ResolveField((of) => Status)
   status(@Parent() task: Task): any {
     return { __typename: 'Status', id: task.status_id };
+  }
+
+  @ResolveField()
+  labels(@Parent() task: Task) {
+    const { id } = task;
+    return this.tasksService.getLabels(id);
   }
 }

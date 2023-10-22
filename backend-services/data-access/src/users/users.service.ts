@@ -31,8 +31,9 @@ export class UsersService {
     }
 
     createUserDto.password = await bcrypt.hash(password, 10);
+    const username = email.split('@')[0];
 
-    return await this.userRepo.save(createUserDto);
+    return await this.userRepo.save({ ...createUserDto, username });
   }
 
   async findAllByTeam(organization_id: number): Promise<User[]> {

@@ -25,6 +25,16 @@ export class Activity {
   @Column({
     nullable: true,
   })
+  priority?: number;
+
+  @Column({
+    nullable: true,
+  })
+  assignee_to?: number;
+
+  @Column({
+    nullable: true,
+  })
   sprint_id: number;
 
   @Column({

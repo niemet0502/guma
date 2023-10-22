@@ -8,7 +8,6 @@ export class CreateStatusDto {
   @ApiProperty({ required: true })
   public name: string;
 
-  @IsNotEmpty()
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: false })
   public team_id: number;
 }

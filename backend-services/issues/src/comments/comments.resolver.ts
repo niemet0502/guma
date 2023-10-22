@@ -7,6 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { CurrentUser } from 'src/shared/current-user.decator';
 import { User } from '../shared/user.entity';
 import { CommentsService } from './comments.service';
 import { CreateCommentInput } from './dto/create-comment.input';
@@ -20,13 +21,20 @@ export class CommentsResolver {
   @Mutation(() => Comment)
   createComment(
     @Args('createCommentInput') createCommentInput: CreateCommentInput,
+    @CurrentUser() user: User,
   ) {
-    return this.commentsService.create(createCommentInput);
+    return this.commentsService.create({
+      ...createCommentInput,
+      created_by: +user.id,
+    });
   }
 
   @Query(() => [Comment], { name: 'comments' })
-  findAll(@Args('task_id', { type: () => Int }) task_id: number) {
-    return this.commentsService.findAllByTask(task_id);
+  findAll(
+    @Args('task_id', { type: () => Int, nullable: true }) task_id: number,
+    @Args('parent_id', { type: () => Int, nullable: true }) parent_id: number,
+  ) {
+    return this.commentsService.findAll(task_id, parent_id);
   }
 
   @Query(() => Comment, { name: 'comment' })
@@ -52,5 +60,11 @@ export class CommentsResolver {
   @ResolveField(() => User)
   author(@Parent() comment: Comment): any {
     return { __typename: 'User', id: comment.created_by };
+  }
+
+  @ResolveField()
+  replies(@Parent() comment: Comment) {
+    const { id } = comment;
+    return this.commentsService.findAll(undefined, id);
   }
 }

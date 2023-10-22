@@ -7,6 +7,7 @@ export const CREATE_USER = gql`
       lastname
       firstname
       email
+      username
     }
   }
 `;
@@ -19,6 +20,7 @@ export const USER_ACCOUNT_AUTH = gql`
         email
         lastname
         firstname
+        username
         profile_id
         organization_id
         organization {

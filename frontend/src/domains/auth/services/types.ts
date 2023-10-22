@@ -2,6 +2,7 @@ export interface User {
   id: string | number;
   lastname?: string;
   firstname?: string;
+  username: string;
   email?: string;
   password?: string;
   is_suspended?: boolean;

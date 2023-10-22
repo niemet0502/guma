@@ -12,6 +12,9 @@ export class UpdateUserInput {
   firstname?: string;
 
   @Field({ nullable: true })
+  username?: string;
+
+  @Field({ nullable: true })
   email?: string;
 
   @Field({ nullable: true })

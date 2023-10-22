@@ -16,7 +16,7 @@ export interface TeamApi {
 }
 
 export interface MemberApi {
-  id: number;
+  id: string;
   team_id: number;
   team: TeamApi;
   user_id: number;

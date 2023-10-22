@@ -5,13 +5,12 @@ import { StatusService } from 'src/teams/status.service';
 import { Repository } from 'typeorm';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { Activity } from './entities/activity.entity';
-import { TasksService } from './tasks.service';
 
 @Injectable()
 export class ActivitiesService {
   constructor(
     @InjectRepository(Activity) private activitiesService: Repository<Activity>,
-    private readonly taskService: TasksService,
+    // private readonly taskService: TasksService,
     private readonly statusService: StatusService,
     private readonly sprintService: SprintsService,
   ) {}
@@ -19,11 +18,11 @@ export class ActivitiesService {
   async create(createActivityDto: CreateActivityDto): Promise<Activity> {
     const { from_status, to_status, task_id, sprint_id } = createActivityDto;
 
-    const task = await this.taskService.findOne(task_id);
+    // const task = await this.taskService.findOne(task_id);
 
-    if (!task) {
-      throw new NotFoundException('Task not found');
-    }
+    // if (!task) {
+    //   throw new NotFoundException('Task not found');
+    // }
 
     const fStatus = from_status
       ? await this.statusService.findOne(from_status)

@@ -23,7 +23,9 @@ export class StatusResolver {
   }
 
   @Query(() => [Status], { name: 'status' })
-  findAll(@Args('team_id', { type: () => Int }) team_id: number) {
+  findAll(
+    @Args('team_id', { type: () => Int, nullable: true }) team_id?: number,
+  ) {
     return this.statusService.findAllByTeam(team_id);
   }
 

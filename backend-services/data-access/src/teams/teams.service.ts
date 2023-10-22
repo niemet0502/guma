@@ -47,6 +47,10 @@ export class TeamsService {
     return await this.repo.findOne({ where: { id } });
   }
 
+  async findByName(name: string, organization_id: number): Promise<Team> {
+    return await this.repo.findOne({ where: { name, organization_id } });
+  }
+
   async update(id: number, updateTeamDto: UpdateTeamDto): Promise<Team> {
     const toUpdate = await this.repo.findOne({
       where: { id },

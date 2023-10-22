@@ -30,18 +30,20 @@ export class TasksController {
   findAll(
     @Query('team_id') team_id?: string,
     @Query('type') type?: string,
-    @Query('status_id') status_id?: string,
+    @Query('status_name') status_name?: string,
     @Query('parent_task_id') parent_task_id?: string,
     @Query('sprint_id') sprint_id?: string,
+    @Query('sortAsc') sortAsc?: boolean,
   ): Promise<Task[]> {
     // TODO add search params
 
     return this.tasksService.findAll(
       +team_id,
       +type,
-      +status_id,
+      status_name,
       +parent_task_id,
       +sprint_id,
+      sortAsc ? 'ASC' : 'DESC',
     );
   }
 
@@ -49,6 +51,14 @@ export class TasksController {
   @ApiOkResponse({ type: Task })
   findOne(@Param('id') id: string) {
     return this.tasksService.findOne(+id);
+  }
+
+  @Get('/bySlug/:slug')
+  @ApiOkResponse({ type: Task })
+  findBySlug(@Param('slug') slug: string) {
+    return this.tasksService.findBy({
+      where: { slug },
+    });
   }
 
   @Patch(':id')

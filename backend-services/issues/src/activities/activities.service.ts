@@ -8,7 +8,7 @@ import { Activity } from './entities/activity.entity';
 
 @Injectable()
 export class ActivitiesService {
-  private url = 'http://neka-data-access-1:3000/activities/';
+  private url = 'http://localhost:5002/activities/';
 
   constructor(
     private readonly http: HttpService,

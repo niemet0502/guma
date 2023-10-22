@@ -15,6 +15,9 @@ export class User {
   @Field({ nullable: true })
   firstname?: string;
 
+  @Field({ nullable: true })
+  username?: string;
+
   @Field()
   email: string;
 
@@ -33,8 +36,8 @@ export class User {
   @Field({ nullable: true })
   organization?: Organization;
 
-  @Field()
-  profile_id: number;
+  @Field({ nullable: true })
+  profile_id?: number;
 
   @Field((type) => Profile)
   profile: Profile;

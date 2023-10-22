@@ -8,10 +8,8 @@ export const Layout: React.FC = () => {
       <Sidebar />
       <div className="col-span-3 flex flex-1 flex-col lg:border-l">
         <Topbar />
-        <div className="overflow-auto">
-          <div className="h-[1200px]">
-            <Outlet />
-          </div>
+        <div className="overflow-auto flex-1  p-0">
+          <Outlet />
         </div>
       </div>
     </div>

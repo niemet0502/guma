@@ -15,6 +15,9 @@ export class Task {
   @Column('text', { nullable: false })
   description: string;
 
+  @Column('text', { nullable: true })
+  identifier: string;
+
   @Column({
     type: 'enum',
     enum: TaskType,
@@ -22,8 +25,11 @@ export class Task {
   })
   type: TaskType;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: 0 })
   priority: number;
+
+  @Column('text', { nullable: true })
+  created_at: string;
 
   @Column({ nullable: false })
   created_by: number;

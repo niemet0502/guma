@@ -1,10 +1,10 @@
 import { HttpService } from '@nestjs/axios';
 import { Inject, Injectable, forwardRef } from '@nestjs/common';
-import { firstValueFrom } from 'rxjs';
+import { AxiosError } from 'axios';
+import { catchError, firstValueFrom } from 'rxjs';
 import { Member } from 'src/members/entities/member.entity';
 import { MembersService } from 'src/members/members.service';
 import { StatusService } from 'src/status/status.service';
-import { DEFAULT_TEAM_STATUS } from 'src/utils/constant';
 import { User } from '../shared/user.entity';
 import { CreateTeamInput } from './dto/create-team.input';
 import { UpdateTeamInput } from './dto/update-team.input';
@@ -32,10 +32,6 @@ export class TeamsService {
     // create a new member
     await this.memberService.create({ team_id, user_id: +user.id });
 
-    // create default status
-    DEFAULT_TEAM_STATUS.map(async (name) => {
-      await this.statusService.create({ name, team_id });
-    });
     return data;
   }
 
@@ -49,6 +45,18 @@ export class TeamsService {
   async findOne(id: number): Promise<Team> {
     const { data } = await firstValueFrom(
       this.http.get<Team>(`${this.url}${id}`),
+    );
+    return data;
+  }
+
+  async findBy(name: string, organization_id: number): Promise<Team> {
+    const { data } = await firstValueFrom(
+      this.http.get<Team>(`${this.url}byName/${name}/${organization_id}`).pipe(
+        catchError((error: AxiosError) => {
+          console.log(error.response.data);
+          throw 'An error happened!';
+        }),
+      ),
     );
     return data;
   }

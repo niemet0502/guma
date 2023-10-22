@@ -12,15 +12,15 @@ export class CreateActivityDto {
   public task_id: number;
 
   @ApiProperty({ required: false })
-  public from_status: number;
+  public from_status?: number;
 
   @ApiProperty({ required: false })
-  public to_status: number;
+  public to_status?: number;
 
   @ApiProperty({ required: false })
-  public sprint_id: number;
+  public sprint_id?: number;
 
   @IsNotEmpty()
   @ApiProperty({ required: true })
-  action: ActivityAction;
+  public action: ActivityAction;
 }

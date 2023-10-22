@@ -8,7 +8,12 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CreateLabelDto } from './dto/create-label.dto';
 import { UpdateLabelDto } from './dto/update-label.dto';
 import { Label } from './entities/label.entity';
@@ -31,6 +36,12 @@ export class LabelController {
     @Query('organization_id') organization_id: string,
   ): Promise<Label[]> {
     return await this.labelService.findAll(+organization_id);
+  }
+
+  @Get(':id')
+  @ApiResponse({ type: Label })
+  async findOne(@Param('id') id: string) {
+    return await this.labelService.findOne(+id);
   }
 
   @Patch(':id')

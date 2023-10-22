@@ -1,9 +1,9 @@
 export function removeSpacesAndSpecialChars(inputString: string): string {
-  // Use a regular expression to match spaces and special characters
-  const regex = /[\s!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/g;
+  // Remove special characters using a regular expression
+  const stringWithoutSpecialChars = inputString.replace(/[^\w\s-]/g, '');
 
-  // Replace matched characters with an empty string
-  const cleanedString = inputString.replace(regex, '');
+  // Replace spaces with hyphens
+  const stringWithHyphens = stringWithoutSpecialChars.replace(/\s+/g, '-');
 
-  return cleanedString;
+  return stringWithHyphens;
 }

@@ -5,9 +5,12 @@ export class CreateCommentInput {
   @Field({ nullable: true })
   content: string;
 
-  @Field()
-  task_id: number;
+  @Field({ nullable: true })
+  task_id?: number;
 
-  @Field()
-  created_by: number;
+  @Field({ nullable: true })
+  parent_id?: number;
+
+  @Field({ nullable: true })
+  created_by?: number;
 }

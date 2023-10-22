@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { TaskLabel } from 'src/labels/entities/label.entity';
 import { TaskType } from 'src/shared/tasks.enum';
 import { Activity } from '../../activities/entities/activity.entity';
 import { Comment } from '../../comments/entities/comment.entity';
@@ -17,8 +18,11 @@ export class Task {
   @Field({ nullable: false })
   name: string;
 
-  @Field({ nullable: false })
-  description: string;
+  @Field({ nullable: true })
+  identifier?: string;
+
+  @Field({ nullable: true })
+  description?: string;
 
   @Field({ nullable: true })
   number: string;
@@ -29,6 +33,9 @@ export class Task {
   @Field({ nullable: true })
   priority: number;
 
+  @Field({ nullable: true })
+  created_at?: string;
+
   @Field({ nullable: false })
   created_by: number;
 
@@ -38,7 +45,7 @@ export class Task {
   @Field({ nullable: true })
   assignee_to: number;
 
-  @Field(() => User)
+  @Field(() => User, { nullable: true })
   assignee?: User;
 
   @Field({ nullable: true })
@@ -67,4 +74,7 @@ export class Task {
 
   @Field((type) => [Activity])
   activities: Activity[];
+
+  @Field((type) => [TaskLabel])
+  labels: TaskLabel[];
 }

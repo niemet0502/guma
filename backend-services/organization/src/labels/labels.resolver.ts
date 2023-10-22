@@ -1,4 +1,11 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Query,
+  ResolveReference,
+  Resolver,
+} from '@nestjs/graphql';
 import { CreateLabelInput } from './dto/create-label.input';
 import { UpdateLabelInput } from './dto/update-label.input';
 import { Label } from './entities/label.entity';
@@ -33,5 +40,13 @@ export class LabelsResolver {
   @Mutation(() => Label)
   removeLabel(@Args('id', { type: () => Int }) id: number) {
     return this.labelsService.remove(id);
+  }
+
+  @ResolveReference()
+  resolveReference(reference: {
+    __typename: string;
+    id: number;
+  }): Promise<Label> {
+    return this.labelsService.findOne(reference.id);
   }
 }

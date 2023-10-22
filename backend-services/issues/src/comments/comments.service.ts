@@ -7,7 +7,7 @@ import { Comment } from './entities/comment.entity';
 
 @Injectable()
 export class CommentsService {
-  private url = 'http://neka-data-access-1:3000/comments/';
+  private url = 'http://localhost:5002/comments/';
 
   constructor(private readonly http: HttpService) {}
 
@@ -18,10 +18,10 @@ export class CommentsService {
     return data;
   }
 
-  async findAllByTask(task_id: number): Promise<Comment[]> {
+  async findAll(task_id: number, parent_id: number): Promise<Comment[]> {
     const { data } = await firstValueFrom(
       this.http.get<Comment[]>(this.url, {
-        params: { task_id },
+        params: { task_id, parent_id },
       }),
     );
     return data;
