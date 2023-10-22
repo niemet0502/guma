@@ -44,7 +44,10 @@ export class SprintsService {
   }
 
   async findAll(team_id: number): Promise<Sprint[]> {
-    return await this.sprintRepository.find({ where: { team_id } });
+    return await this.sprintRepository.find({
+      where: { team_id },
+      order: { id: 'DESC' },
+    });
   }
 
   async findOne(id: number): Promise<Sprint> {

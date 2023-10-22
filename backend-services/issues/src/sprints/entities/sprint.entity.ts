@@ -24,6 +24,9 @@ export class Sprint {
   @Field({ nullable: false })
   team_id: number;
 
+  @Field({ nullable: true })
+  isCompleted: boolean;
+
   @Field((type) => [Task])
   tasks: Task[];
 }

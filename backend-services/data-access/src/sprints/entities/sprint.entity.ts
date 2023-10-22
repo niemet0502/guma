@@ -8,6 +8,9 @@ export class Sprint {
   @Column('text')
   name: string;
 
+  @Column('boolean', { default: false })
+  isCompleted: boolean;
+
   @Column('text', { nullable: true })
   duration: number;
 
