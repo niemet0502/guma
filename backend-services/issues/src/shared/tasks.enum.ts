@@ -13,4 +13,6 @@ export enum ActivityAction {
   ADDED_PROJECT = 'added to project',
   UPDATED_SPRINT = 'moved issue from',
   ADDED_LABEL = 'added labels',
+  SET_PRIORITY = 'set priority to',
+  ASSIGNED = 'assigned to',
 }
