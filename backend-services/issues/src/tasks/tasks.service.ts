@@ -96,7 +96,12 @@ export class TasksService {
 
   async update(id: number, updateTaskInput: UpdateTaskInput) {
     const { data } = await firstValueFrom(
-      this.http.patch<Task>(`${this.url}${id}`, updateTaskInput),
+      this.http.patch<Task>(`${this.url}${id}`, updateTaskInput).pipe(
+        catchError((error: AxiosError) => {
+          console.log(error.response.data);
+          throw 'An error happened!';
+        }),
+      ),
     );
     return data;
   }

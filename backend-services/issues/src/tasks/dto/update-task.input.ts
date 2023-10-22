@@ -1,4 +1,5 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
+import { ActivityAction } from 'src/shared/tasks.enum';
 
 @InputType()
 export class UpdateTaskInput {
@@ -7,6 +8,9 @@ export class UpdateTaskInput {
 
   @Field({ nullable: true })
   sprint_id?: number;
+
+  @Field({ nullable: true })
+  created_by?: number;
 
   @Field({ nullable: true })
   status_id?: number;
@@ -25,4 +29,7 @@ export class UpdateTaskInput {
 
   @Field({ nullable: true })
   description?: string;
+
+  @Field({ nullable: true })
+  action?: ActivityAction;
 }

@@ -63,4 +63,10 @@ export class ActivitiesResolver {
     if (!activity.to_status) return;
     return { __typename: 'Status', id: activity.to_status };
   }
+
+  @ResolveField((of) => Status)
+  assignee(@Parent() activity: Activity): any {
+    if (!activity.assignee_to) return;
+    return { __typename: 'User', id: activity.assignee_to };
+  }
 }

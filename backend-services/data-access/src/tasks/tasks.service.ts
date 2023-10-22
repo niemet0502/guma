@@ -114,7 +114,6 @@ export class TasksService {
     }
 
     query.orderBy('task.id', sort);
-
     return await query.getMany();
   }
 
@@ -127,11 +126,39 @@ export class TasksService {
   }
 
   async update(id: number, updateTaskDto: UpdateTaskDto): Promise<Task> {
+    const {
+      action,
+      created_by,
+      status_id: to_status,
+      priority,
+      assignee_to,
+    } = updateTaskDto;
+
     const toUpdate = await this.taskRepository.findOne({
       where: { id },
     });
+    const { status_id: from_status } = toUpdate;
 
     const updated = Object.assign(toUpdate, updateTaskDto);
+
+    // create the activity
+    const activity = { created_by, action, task_id: id };
+    let value = undefined;
+
+    if (action === ActivityAction.CHANGED_STATUS) {
+      value = {
+        from_status,
+        to_status,
+      };
+    } else if (action === ActivityAction.ADDED_SPRINT) {
+      value = { sprint_id: updateTaskDto.sprint_id };
+    } else if (action === ActivityAction.SET_PRIORITY) {
+      value = { priority };
+    } else if (action === ActivityAction.ASSIGNED) {
+      value = { assignee_to };
+    }
+
+    await this.activityService.create({ ...activity, ...value });
 
     return await this.taskRepository.save(updated);
   }

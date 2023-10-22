@@ -61,8 +61,14 @@ export class TasksResolver {
   }
 
   @Mutation(() => Task)
-  updateTask(@Args('updateTaskInput') updateTaskInput: UpdateTaskInput) {
-    return this.tasksService.update(updateTaskInput.id, updateTaskInput);
+  updateTask(
+    @Args('updateTaskInput') updateTaskInput: UpdateTaskInput,
+    @CurrentUser() user: User,
+  ) {
+    return this.tasksService.update(updateTaskInput.id, {
+      ...updateTaskInput,
+      created_by: +user.id,
+    });
   }
 
   @Mutation(() => Task)

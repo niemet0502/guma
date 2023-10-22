@@ -45,9 +45,22 @@ export class Activity {
   @Field()
   updated_at: string;
 
+  @Field({
+    nullable: true,
+  })
+  priority?: number;
+
+  @Field({
+    nullable: true,
+  })
+  assignee_to?: number;
+
   @Field((type) => Status, { nullable: true })
   from?: Status;
 
   @Field((type) => Status, { nullable: true })
   to?: Status;
+
+  @Field((type) => User, { nullable: true })
+  assignee?: User;
 }
