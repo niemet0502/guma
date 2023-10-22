@@ -90,6 +90,7 @@ export const GET_TASK_BY_SLUG_AND_TEAM = gql`
       }
       activities {
         id
+        priority
         author {
           id
           username
@@ -108,6 +109,13 @@ export const GET_TASK_BY_SLUG_AND_TEAM = gql`
         sprint {
           id
           name
+        }
+
+        assignee_to
+
+        assignee {
+          id
+          username
         }
 
         action

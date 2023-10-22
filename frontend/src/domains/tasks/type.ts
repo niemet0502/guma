@@ -12,6 +12,8 @@ export enum ActivityAction {
   ADDED_PROJECT = "added to project",
   UPDATED_SPRINT = "moved issue from",
   ADDED_LABEL = "added labels",
+  SET_PRIORITY = "set priority to",
+  ASSIGNED = "assigned to",
 }
 
 export interface CreateCommentInput {
@@ -49,10 +51,13 @@ export interface Activity {
   action: ActivityAction;
   created_at: string;
   updated_at: string;
+  priority?: number;
+  assignee_to?: number;
 
   sprint?: SprintApi;
   to?: TaskStatusApi;
   from?: TaskStatusApi;
+  assignee?: User;
 }
 
 export interface GetTasksFilter {
@@ -87,6 +92,7 @@ export interface UpdateTaskApi {
   parent_task_id?: number;
   sprint_id?: number;
   status_id?: number;
+  action?: ActivityAction;
 }
 
 export interface TaskLabelApi {

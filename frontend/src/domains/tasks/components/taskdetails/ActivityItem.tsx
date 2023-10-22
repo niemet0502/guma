@@ -1,9 +1,10 @@
 import { Avatar } from "@/components/ui/avatar";
 import { getTimeAgoString } from "@/lib/utils";
-import { AiOutlinePlayCircle } from "react-icons/ai";
+import { AiOutlineDash, AiOutlinePlayCircle } from "react-icons/ai";
 import { BsDot, BsPen } from "react-icons/bs";
 import { MdLabelOutline } from "react-icons/md";
-import { Activity, ActivityAction } from "../type";
+import { taskPriority } from "../../constantes";
+import { Activity, ActivityAction } from "../../type";
 
 export const ActivityItem: React.FC<{ activity: Activity }> = ({
   activity,
@@ -12,8 +13,9 @@ export const ActivityItem: React.FC<{ activity: Activity }> = ({
 
   switch (activity.action) {
     case ActivityAction.CREATE_ISSUE:
+    case ActivityAction.ASSIGNED:
       icon = (
-        <Avatar className="h-6 w-6 bg-transparent border-2 items-center justify-center mt-0.5">
+        <Avatar className="h-5 w-5 bg-transparent border-2 items-center justify-center mt-0.5">
           <span className="text-muted-foreground text-[9px]">
             {activity.author.username.slice(0, 2).toUpperCase()}
           </span>
@@ -39,6 +41,9 @@ export const ActivityItem: React.FC<{ activity: Activity }> = ({
     case ActivityAction.ADDED_SPRINT:
       icon = <AiOutlinePlayCircle className="ml-1" />;
       break;
+    case ActivityAction.SET_PRIORITY:
+      icon = <AiOutlineDash className="ml-1" />;
+      break;
 
     default:
       break;
@@ -60,6 +65,16 @@ export const ActivityItem: React.FC<{ activity: Activity }> = ({
 
       {activity.action === ActivityAction.ADDED_SPRINT && (
         <span>{activity.sprint?.name}</span>
+      )}
+
+      {activity.action === ActivityAction.SET_PRIORITY && (
+        <span>
+          {taskPriority.find(({ value }) => value == activity.priority)?.label}
+        </span>
+      )}
+
+      {activity.action === ActivityAction.ASSIGNED && (
+        <span>{activity.assignee?.username}</span>
       )}
       <span className="text-muted-foreground flex gap-1 items-center">
         <BsDot />

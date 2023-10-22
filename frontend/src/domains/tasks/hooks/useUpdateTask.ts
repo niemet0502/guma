@@ -19,13 +19,9 @@ export const useUpdateTask = () => {
 
   const updateTask = async (updateTaskInput: UpdateTaskApi) => {
     try {
-      const response = await updateTaskMutation({
+      await updateTaskMutation({
         variables: { updateTaskInput },
       });
-
-      if (response.data && response.data.updateTask) {
-        console.log("response");
-      }
     } catch (e) {
       // Handle GraphQL errors or HTTP errors here
       console.error("Error creating user:", e);
