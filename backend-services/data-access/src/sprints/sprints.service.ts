@@ -38,8 +38,8 @@ export class SprintsService {
 
     return await this.sprintRepository.save({
       ...createSprintDto,
-      end_at: date_end_at.toLocaleString(),
-      start_at: date_start_at.toLocaleString(),
+      end_at: date_end_at.toString(),
+      start_at: date_start_at.toString(),
     });
   }
 
@@ -55,13 +55,22 @@ export class SprintsService {
   }
 
   async update(id: number, updateSprintDto: UpdateSprintDto): Promise<Sprint> {
+    const { start_at, end_at } = updateSprintDto;
+
     const toUpdate = await this.sprintRepository.findOne({
       where: { id },
     });
 
     const updated = Object.assign(toUpdate, updateSprintDto);
 
-    return await this.sprintRepository.save(updated);
+    const date_start_at = new Date(start_at);
+    const date_end_at = new Date(end_at);
+
+    return await this.sprintRepository.save({
+      ...updated,
+      end_at: start_at ? date_end_at.toString() : toUpdate.end_at,
+      start_at: start_at ? date_start_at.toString() : updated.start_at,
+    });
   }
 
   async remove(id: number): Promise<Sprint> {

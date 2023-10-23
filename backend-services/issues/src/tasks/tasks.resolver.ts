@@ -122,4 +122,12 @@ export class TasksResolver {
     const { id } = task;
     return this.tasksService.getLabels(id);
   }
+
+  @ResolveField()
+  sprint(@Parent() task: Task) {
+    const { sprint_id } = task;
+    if (!sprint_id) return;
+
+    return this.tasksService.getSprint(sprint_id);
+  }
 }

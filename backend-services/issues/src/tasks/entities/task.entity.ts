@@ -1,6 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { TaskLabel } from 'src/labels/entities/label.entity';
 import { TaskType } from 'src/shared/tasks.enum';
+import { Sprint } from 'src/sprints/entities/sprint.entity';
 import { Activity } from '../../activities/entities/activity.entity';
 import { Comment } from '../../comments/entities/comment.entity';
 import { Status } from '../../shared/status.entity';
@@ -77,4 +78,7 @@ export class Task {
 
   @Field((type) => [TaskLabel])
   labels: TaskLabel[];
+
+  @Field((type) => Sprint, { nullable: true })
+  sprint?: Sprint;
 }
