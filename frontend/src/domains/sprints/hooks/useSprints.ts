@@ -1,5 +1,5 @@
 import { SprintApi } from "@/domains/tasks/type";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useLazyQuery } from "@apollo/client";
 
 const GET_SPRINTS_BY_TEAM = gql`
   query GetSprintsByTeam($team_id: Int!) {
@@ -25,11 +25,12 @@ const GET_SPRINTS_BY_TEAM = gql`
 `;
 
 export const useSprints = () => {
-  const { data, error } = useQuery<{ sprints: SprintApi[] }>(
-    GET_SPRINTS_BY_TEAM,
-    {
-      variables: { team_id: 20 },
-    }
+  const [getSprints, { data, error }] = useLazyQuery<{ sprints: SprintApi[] }>(
+    GET_SPRINTS_BY_TEAM
   );
-  return { data: data?.sprints, error };
+
+  const fetchSprints = (team_id: number) => {
+    getSprints({ variables: { team_id } });
+  };
+  return { fetchSprints, data: data?.sprints, error };
 };

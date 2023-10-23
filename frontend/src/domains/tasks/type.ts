@@ -38,6 +38,9 @@ export interface SprintApi {
   goal?: string;
   end_at: string;
   start_at: string;
+  isCompleted: boolean;
+
+  tasks?: TaskApi[];
 }
 
 export interface Activity {
