@@ -9,6 +9,17 @@ const GET_SPRINTS_BY_TEAM = gql`
       goal
       end_at
       start_at
+      isCompleted
+
+      tasks {
+        id
+        name
+
+        status {
+          id
+          name
+        }
+      }
     }
   }
 `;

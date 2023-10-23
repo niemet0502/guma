@@ -49,7 +49,7 @@ export const GET_TASK_BY_SLUG_AND_TEAM = gql`
         name
         slug
         identifier
-
+        sprint_id
         assignee_to
         assignee {
           id
