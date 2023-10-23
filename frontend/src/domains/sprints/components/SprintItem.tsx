@@ -52,7 +52,7 @@ export const SprintItem: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
         <div className="flex items-center gap-2">
           <Progress value={completionPercentage} className="w-[100px]" />
           <span className="flex gap-2 items-center">
-            {completionPercentage}
+            {completionPercentage ? completionPercentage : 0} %
             <span className="text-muted-foreground text-xs">Success</span>
           </span>
         </div>

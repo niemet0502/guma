@@ -1,7 +1,7 @@
 import { SprintApi } from "@/domains/tasks/type";
 import { gql, useLazyQuery } from "@apollo/client";
 
-const GET_SPRINTS_BY_TEAM = gql`
+export const GET_SPRINTS_BY_TEAM = gql`
   query GetSprintsByTeam($team_id: Int!) {
     sprints(team_id: $team_id) {
       id
