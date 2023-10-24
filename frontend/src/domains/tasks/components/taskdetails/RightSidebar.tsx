@@ -19,7 +19,7 @@ import { useSprints } from "@/domains/sprints/hooks/useSprints";
 import { TeamVisibility } from "@/domains/teams/type";
 import { cn, transformDateToMonthDay } from "@/lib/utils";
 import { CheckIcon } from "@radix-ui/react-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AiOutlineDash,
   AiOutlinePlayCircle,
@@ -40,7 +40,7 @@ export const RightSidebar: React.FC<{
 
   const { data: labels } = useGetLabels(organization?.id as number);
   const { data: status } = useGetStatus(task?.team_id as number);
-  const { data: sprints } = useSprints();
+  const { fetchSprints, data: sprints } = useSprints();
 
   const [open, setOpen] = useState(false);
   const [openStatus, setOpenStatus] = useState(false);
@@ -52,6 +52,10 @@ export const RightSidebar: React.FC<{
     task?.team?.visibility === TeamVisibility.PUBLIC
       ? users
       : task?.team?.members.map(({ user }) => user);
+
+  useEffect(() => {
+    fetchSprints(task.team_id);
+  }, [task]);
 
   return (
     <div className="w-[320px] h-full flex flex-col gap-5 border-l px-4 py-8 text-muted-foreground">

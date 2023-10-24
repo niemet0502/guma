@@ -54,6 +54,12 @@ export const GET_TASKS_BY_TEAM = gql`
           name
         }
       }
+
+      sprint_id
+      sprint {
+        id
+        name
+      }
     }
   }
 `;
