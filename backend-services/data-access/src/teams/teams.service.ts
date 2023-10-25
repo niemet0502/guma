@@ -1,10 +1,13 @@
 import {
   BadRequestException,
+  Inject,
   Injectable,
   NotFoundException,
+  forwardRef,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { OrganizationsService } from 'src/organizations/organizations.service';
+import { WorkflowService } from 'src/workflow/workflow.service';
 import { Repository } from 'typeorm';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
@@ -15,6 +18,8 @@ export class TeamsService {
   constructor(
     @InjectRepository(Team) private repo: Repository<Team>,
     private readonly organizationService: OrganizationsService,
+    @Inject(forwardRef(() => WorkflowService))
+    private readonly workflowService: WorkflowService,
   ) {}
   async create(createTeamDto: CreateTeamDto): Promise<Team> {
     const { name, organization_id } = createTeamDto;
