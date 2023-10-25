@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SprintsService } from 'src/sprints/sprints.service';
-import { StatusService } from 'src/teams/status.service';
+import { StatusService } from 'src/status/status.service';
 import { Repository } from 'typeorm';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { Activity } from './entities/activity.entity';

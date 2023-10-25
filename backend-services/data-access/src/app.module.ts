@@ -11,9 +11,10 @@ import { DocumentsModule } from './documents/documents.module';
 import { AuthModule } from './auth/auth.module';
 import { SprintsModule } from './sprints/sprints.module';
 import { WorkflowModule } from './workflow/workflow.module';
+import { StatusModule } from './status/status.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(dataSourceOptions), OrganizationsModule, UsersModule, TeamsModule, TasksModule, DocumentsModule, AuthModule, SprintsModule, WorkflowModule],
+  imports: [TypeOrmModule.forRoot(dataSourceOptions), OrganizationsModule, UsersModule, TeamsModule, TasksModule, DocumentsModule, AuthModule, SprintsModule, WorkflowModule, StatusModule],
   controllers: [AppController],
   providers: [AppService],
 })

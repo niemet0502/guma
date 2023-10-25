@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { StatusService } from 'src/teams/status.service';
+import { StatusService } from 'src/status/status.service';
 import { TeamsService } from 'src/teams/teams.service';
 import { Repository } from 'typeorm';
 import { ActivitiesService } from './activities.service';

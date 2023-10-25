@@ -7,7 +7,6 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { StatusService } from '../teams/status.service';
 import { TeamsService } from '../teams/teams.service';
 import { CreateWorkflowDto } from './dto/create-workflow.dto';
 import { UpdateWorkflowDto } from './dto/update-workflow.dto';
@@ -20,8 +19,8 @@ export class WorkflowService {
     private workflowRepository: Repository<Workflow>,
     @Inject(forwardRef(() => TeamsService))
     private readonly teamService: TeamsService,
-    private readonly statusService: StatusService,
-  ) {}
+  ) // private readonly statusService: StatusService,
+  {}
 
   async create(createWorkflowDto: CreateWorkflowDto): Promise<Workflow> {
     const { team_id, status_id } = createWorkflowDto;
@@ -32,11 +31,11 @@ export class WorkflowService {
       throw new NotFoundException('Team not found');
     }
 
-    const status = await this.statusService.findOne(status_id);
+    // const status = await this.statusService.findOne(status_id);
 
-    if (!status) {
-      throw new NotFoundException('Status not found');
-    }
+    // if (!status) {
+    //   throw new NotFoundException('Status not found');
+    // }
 
     const workflow = await this.workflowRepository.findOne({
       where: { team_id, status_id },

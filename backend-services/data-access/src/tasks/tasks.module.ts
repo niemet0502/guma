@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrganizationsModule } from 'src/organizations/organizations.module';
 import { SprintsModule } from 'src/sprints/sprints.module';
+import { StatusModule } from 'src/status/status.module';
 import { TeamsModule } from '../teams/teams.module';
 import { ActivitiesController } from './activities.controller';
 import { ActivitiesService } from './activities.service';
@@ -22,6 +23,7 @@ import { TasksService } from './tasks.service';
     TeamsModule,
     OrganizationsModule,
     SprintsModule,
+    StatusModule,
   ],
   controllers: [
     TasksController,
