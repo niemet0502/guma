@@ -10,9 +10,10 @@ import { TasksModule } from './tasks/tasks.module';
 import { DocumentsModule } from './documents/documents.module';
 import { AuthModule } from './auth/auth.module';
 import { SprintsModule } from './sprints/sprints.module';
+import { WorkflowModule } from './workflow/workflow.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(dataSourceOptions), OrganizationsModule, UsersModule, TeamsModule, TasksModule, DocumentsModule, AuthModule, SprintsModule],
+  imports: [TypeOrmModule.forRoot(dataSourceOptions), OrganizationsModule, UsersModule, TeamsModule, TasksModule, DocumentsModule, AuthModule, SprintsModule, WorkflowModule],
   controllers: [AppController],
   providers: [AppService],
 })
