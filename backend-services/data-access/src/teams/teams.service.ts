@@ -38,7 +38,24 @@ export class TeamsService {
     if (team) {
       throw new BadRequestException('The name is already in use');
     }
-    return await this.repo.save(createTeamDto);
+
+    const createdTeam = await this.repo.save(createTeamDto);
+
+    // created the default workflow for the team
+    const statuses = await this.statusService.findAll(
+      createdTeam.id.toString(),
+    );
+
+    statuses.map(
+      async (status, i) =>
+        await this.workflowService.create({
+          team_id: createdTeam.id,
+          status_id: status.id,
+          order_value: i++,
+        }),
+    );
+
+    return createdTeam;
   }
 
   async findAllByOrganization(organization_id: number): Promise<Team[]> {

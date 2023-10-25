@@ -1,8 +1,17 @@
 import { User } from "../auth/services/types";
+import { TaskStatusApi } from "../tasks/type";
 
 export enum TeamVisibility {
   PRIVATE = 1,
   PUBLIC = 0,
+}
+
+export interface WorkflowApi {
+  id: number;
+  team_id: number;
+  status_id: number;
+  order_value: number;
+  status: TaskStatusApi;
 }
 
 export interface TeamApi {
