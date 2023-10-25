@@ -39,6 +39,7 @@ export interface SprintApi {
   end_at: string;
   start_at: string;
   isCompleted: boolean;
+  team_id: number;
 
   tasks?: TaskApi[];
 }
