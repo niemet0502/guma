@@ -10,4 +10,7 @@ export class Folder {
 
   @Column({ nullable: false })
   team_id: number;
+
+  @Column({ nullable: true })
+  created_by?: number;
 }
