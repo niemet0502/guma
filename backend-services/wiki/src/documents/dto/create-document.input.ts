@@ -12,8 +12,8 @@ export class CreateDocumentInput {
   @Field({ nullable: true })
   team_id: number;
 
-  @Field()
-  created_by: number;
+  @Field({ nullable: true })
+  created_by?: number;
 
   @Field({ nullable: true })
   content: string;
