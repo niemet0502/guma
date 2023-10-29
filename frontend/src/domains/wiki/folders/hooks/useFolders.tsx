@@ -1,7 +1,7 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql, useLazyQuery } from "@apollo/client";
 import { FolderApi } from "../type";
 
-const GET_FOLDERS_BY_TEAM = gql`
+export const GET_FOLDERS_BY_TEAM = gql`
   query GetFoldersByTeam($team_id: Int!) {
     folders(team_id: $team_id) {
       id
@@ -22,11 +22,14 @@ const GET_FOLDERS_BY_TEAM = gql`
 `;
 
 export const useFolders = () => {
-  const { data, error, loading } = useQuery<{ folders: FolderApi[] }>(
-    GET_FOLDERS_BY_TEAM,
-    {
-      variables: { team_id: 20 },
-    }
-  );
-  return { data: data?.folders, error, isLoading: loading };
+  const [getFolders, { data, error, loading }] = useLazyQuery<{
+    folders: FolderApi[];
+  }>(GET_FOLDERS_BY_TEAM);
+
+  const fetchFolders = (team_id: number) => {
+    getFolders({
+      variables: { team_id },
+    });
+  };
+  return { fetchFolders, data: data?.folders, error, isLoading: loading };
 };
