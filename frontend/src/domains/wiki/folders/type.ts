@@ -9,3 +9,8 @@ export interface FolderApi {
   author?: User;
   documents?: DocumentApi[];
 }
+
+export interface CreateFolderInputApi {
+  name: string;
+  team_id: number;
+}
