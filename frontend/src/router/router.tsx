@@ -5,9 +5,10 @@ import { NotificationsList } from "@/domains/notifications/NotificationsList";
 import { OrganizationForm } from "@/domains/organization/OrganizationForm";
 import { TaskDetails } from "@/domains/tasks/pages/Details";
 import { TaskList } from "@/domains/tasks/pages/List";
+import { Documents } from "@/domains/wiki/documents/Documents";
+import { Wiki } from "@/domains/wiki/pages/List";
 import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "../Layout/Layout";
-import { Documents } from "../domains/documents/Documents";
 import {
   AuthenticationGuard,
   UnAuthenticationGuard,
@@ -44,6 +45,15 @@ export const router = createBrowserRouter([
               {
                 path: "/:orgaId/team/:teamId/issues/:issueId",
                 element: <TaskDetails />,
+              },
+            ],
+          },
+          {
+            path: "team/:teamId/documents",
+            children: [
+              {
+                index: true,
+                element: <Wiki />,
               },
             ],
           },
