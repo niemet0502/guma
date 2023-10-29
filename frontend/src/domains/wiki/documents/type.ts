@@ -14,3 +14,9 @@ export interface DocumentApi {
   created_at: string;
   updated_at: string;
 }
+
+export interface CreateDocumentInputApi {
+  name: string;
+  folder_id?: number;
+  team_id: number;
+}
