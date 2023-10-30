@@ -6,6 +6,8 @@ import { OrganizationForm } from "@/domains/organization/OrganizationForm";
 import { TaskDetails } from "@/domains/tasks/pages/Details";
 import { TaskList } from "@/domains/tasks/pages/List";
 import { Documents } from "@/domains/wiki/documents/Documents";
+import { DocumentDetails } from "@/domains/wiki/documents/pages/Details";
+import { FolderDetails } from "@/domains/wiki/folders/pages/Details";
 import { Wiki } from "@/domains/wiki/pages/List";
 import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "../Layout/Layout";
@@ -49,11 +51,19 @@ export const router = createBrowserRouter([
             ],
           },
           {
-            path: "team/:teamId/documents",
+            path: "team/:teamId/wiki",
             children: [
               {
                 index: true,
                 element: <Wiki />,
+              },
+              {
+                path: "/:orgaId/team/:teamId/wiki/folder/:folderId",
+                element: <FolderDetails />,
+              },
+              {
+                path: "/:orgaId/team/:teamId/wiki/doc/:docId",
+                element: <DocumentDetails />,
               },
             ],
           },
