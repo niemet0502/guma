@@ -9,6 +9,7 @@ import { AppService } from './app.service';
 import { ProfilesModule } from './profiles/profiles.module';
 import { Member } from './shared/member.entity';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { UsersModule } from './users/users.module';
     }),
     UsersModule,
     ProfilesModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

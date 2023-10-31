@@ -26,8 +26,14 @@ export class FolderController {
 
   @Get()
   @ApiOkResponse({ type: Folder, isArray: true })
-  async findAll(@Query('team_id') team_id: string): Promise<Folder[]> {
+  async findOne(@Query('team_id') team_id: string): Promise<Folder[]> {
     return await this.folderService.findAll(+team_id);
+  }
+
+  @Get(':id')
+  @ApiOkResponse({ type: Folder })
+  async findAll(@Param('id') id: string): Promise<Folder> {
+    return await this.folderService.findOne(+id);
   }
 
   @Patch(':id')

@@ -14,6 +14,7 @@ export class AuthService {
     const { data } = await firstValueFrom(
       this.http.post<Auth>(this.url + 'login', createAuthInput),
     );
+
     return data;
   }
 

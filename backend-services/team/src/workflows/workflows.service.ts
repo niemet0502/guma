@@ -1,6 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { firstValueFrom } from 'rxjs';
+import { AxiosError } from 'axios';
+import { catchError, firstValueFrom } from 'rxjs';
 import { StatusService } from 'src/status/status.service';
 import { Status } from '../status/entities/status.entity';
 import { CreateWorkflowInput } from './dto/create-workflow.input';
@@ -9,7 +10,7 @@ import { Workflow } from './entities/workflow.entity';
 
 @Injectable()
 export class WorkflowsService {
-  private url = 'http://neka-data-access-1:3000/workflow/';
+  private url = 'http://localhost:5002/workflow/';
 
   constructor(
     private readonly http: HttpService,
@@ -18,7 +19,12 @@ export class WorkflowsService {
 
   async create(createWorkflowInput: CreateWorkflowInput) {
     const { data } = await firstValueFrom(
-      this.http.post<Workflow>(this.url, createWorkflowInput),
+      this.http.post<Workflow>(this.url, createWorkflowInput).pipe(
+        catchError((error: AxiosError) => {
+          console.log(error.response.data);
+          throw 'An error happened!';
+        }),
+      ),
     );
     return data;
   }

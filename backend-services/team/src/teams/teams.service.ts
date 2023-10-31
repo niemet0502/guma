@@ -24,13 +24,20 @@ export class TeamsService {
   async create(createTeamInput: CreateTeamInput, user: User): Promise<Team> {
     // create team
     const { data } = await firstValueFrom(
-      this.http.post<Team>(this.url, createTeamInput),
+      this.http.post<Team>(this.url, createTeamInput).pipe(
+        catchError((error: AxiosError) => {
+          console.log(error.response.data);
+          throw 'An error happened!';
+        }),
+      ),
     );
 
     const { name, id: team_id } = data;
 
     // create a new member
     await this.memberService.create({ team_id, user_id: +user.id });
+
+    // create default workflow
 
     return data;
   }

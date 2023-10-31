@@ -64,6 +64,7 @@ export class FoldersResolver {
 
   @ResolveField(() => User)
   author(@Parent() folder: Folder): any {
+    if (!folder.created_by) return;
     return { __typename: 'User', id: folder.created_by };
   }
 }

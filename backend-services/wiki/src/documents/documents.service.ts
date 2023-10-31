@@ -6,7 +6,7 @@ import { UpdateDocumentInput } from './dto/update-document.input';
 
 @Injectable()
 export class DocumentsService {
-  private url = 'http://neka-data-access-1:3000/documents/';
+  private url = 'http://localhost:5002/documents/';
 
   constructor(private readonly http: HttpService) {}
 

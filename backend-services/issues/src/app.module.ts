@@ -8,6 +8,7 @@ import { ActivitiesModule } from './activities/activities.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CommentsModule } from './comments/comments.module';
+import { TaskLabelsModule } from './labels/labels.module';
 import { Status } from './shared/status.entity';
 import { Team } from './shared/team.entity';
 import { User } from './shared/user.entity';
@@ -29,6 +30,7 @@ import { TasksModule } from './tasks/tasks.module';
     CommentsModule,
     ActivitiesModule,
     SprintsModule,
+    TaskLabelsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
