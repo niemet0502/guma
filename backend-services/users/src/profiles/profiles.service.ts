@@ -7,7 +7,7 @@ import { Profile } from './entities/profile.entity';
 
 @Injectable()
 export class ProfilesService {
-  private url = 'http://neka-data-access-1:3000/profiles/';
+  private url = 'http://localhost:5002/profiles/';
 
   constructor(private readonly http: HttpService) {}
 

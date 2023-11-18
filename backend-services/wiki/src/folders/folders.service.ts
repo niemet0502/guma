@@ -8,7 +8,7 @@ import { Folder } from './entities/folder.entity';
 
 @Injectable()
 export class FoldersService {
-  private url = 'http://neka-data-access-1:3000/folders/';
+  private url = 'http://localhost:5002/folders/';
 
   constructor(
     private readonly http: HttpService,
