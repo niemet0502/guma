@@ -45,7 +45,7 @@ export const Wiki: React.FC = () => {
 
   return (
     <div className="w-full">
-      <div className="bg-secondary py-3 px-5 flex items-center justify-between">
+      <div className="bg-secondary py-3 px-5 flex items-center justify-between sticky top-0 z-40">
         <p>Wiki</p>
         <Dialog open={open} onOpenChange={setOpen} modal={false}>
           <DialogTrigger asChild>

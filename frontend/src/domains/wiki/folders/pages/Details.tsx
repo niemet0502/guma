@@ -24,7 +24,10 @@ import { useGetFolder } from "../hooks/useGetFolder";
 import { useRemoveFolder } from "../hooks/useRemoveFolder";
 
 export const FolderDetails: React.FC = () => {
-  const { folderId } = useParams<{ folderId: string }>();
+  const { orgaId, folderId } = useParams<{
+    orgaId: string;
+    folderId: string;
+  }>();
   const { data } = useGetFolder(folderId as string);
 
   const [open, setOpen] = useState(false);
@@ -33,10 +36,13 @@ export const FolderDetails: React.FC = () => {
 
   const handleDelete = () => {};
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       <div className="bg-secondary py-3 px-5 flex items-center justify-between">
         <div className="flex items-center gap-1">
-          <NavLink to={"/"} className="hover:text-muted-foreground">
+          <NavLink
+            to={`/${orgaId}/team/${data?.team?.name.toLowerCase()}/wiki`}
+            className="hover:text-muted-foreground w-auto p-0"
+          >
             Wiki
           </NavLink>
           <p className="flex gap-1 items-center">
@@ -85,9 +91,10 @@ export const FolderDetails: React.FC = () => {
         </Dialog>
       </div>
       <div>
-        {data?.documents?.map((document) => (
-          <DocumentItem document={document} />
-        ))}
+        {data?.documents &&
+          data.documents.map((document) => (
+            <DocumentItem document={document} />
+          ))}
       </div>
     </div>
   );
