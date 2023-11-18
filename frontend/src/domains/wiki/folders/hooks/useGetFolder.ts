@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { FolderApi } from "../type";
 
-const GET_FOLDER_BY_ID = gql`
+export const GET_FOLDER_BY_ID = gql`
   query GetFolderById($id: Int!) {
     folder(id: $id) {
       id
@@ -11,6 +11,11 @@ const GET_FOLDER_BY_ID = gql`
       author {
         id
         username
+      }
+
+      team {
+        id
+        name
       }
 
       documents {

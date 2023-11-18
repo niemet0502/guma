@@ -22,77 +22,82 @@ const NotFoundPage = () => {
 
 export const router = createBrowserRouter([
   {
-    element: <AuthenticationGuard />,
+    path: "/",
     children: [
       {
-        path: "/:orgaId",
-        element: <Layout />,
+        element: <AuthenticationGuard />,
         children: [
           {
-            index: true,
-            path: "documents",
-            element: <Documents />,
-          },
-          {
-            path: "notifications",
-            element: <NotificationsList />,
-          },
-          {
-            path: "team/:teamId/issues",
+            path: "/:orgaId",
+            element: <Layout />,
             children: [
               {
                 index: true,
-                element: <TaskList />,
+                path: "documents",
+                element: <Documents />,
               },
               {
-                path: "/:orgaId/team/:teamId/issues/:issueId",
-                element: <TaskDetails />,
+                path: "notifications",
+                element: <NotificationsList />,
+              },
+              {
+                path: "team/:teamId/issues",
+                children: [
+                  {
+                    index: true,
+                    element: <TaskList />,
+                  },
+                  {
+                    path: "/:orgaId/team/:teamId/issues/:issueId",
+                    element: <TaskDetails />,
+                  },
+                ],
+              },
+              {
+                path: "team/:teamId/wiki",
+                children: [
+                  {
+                    index: true,
+                    element: <Wiki />,
+                  },
+                  {
+                    path: "/:orgaId/team/:teamId/wiki/folder/:folderId",
+                    element: <FolderDetails />,
+                  },
+                  {
+                    path: "/:orgaId/team/:teamId/wiki/doc/:docId",
+                    element: <DocumentDetails />,
+                  },
+                ],
+              },
+              {
+                path: "*", // Matches any path not covered by previous routes
+                element: <NotFoundPage />, // Display a "Not Found" page or error message
               },
             ],
           },
           {
-            path: "team/:teamId/wiki",
-            children: [
-              {
-                index: true,
-                element: <Wiki />,
-              },
-              {
-                path: "/:orgaId/team/:teamId/wiki/folder/:folderId",
-                element: <FolderDetails />,
-              },
-              {
-                path: "/:orgaId/team/:teamId/wiki/doc/:docId",
-                element: <DocumentDetails />,
-              },
-            ],
-          },
-          {
-            path: "*", // Matches any path not covered by previous routes
-            element: <NotFoundPage />, // Display a "Not Found" page or error message
+            path: "/create-workspace",
+            element: <OrganizationForm />,
           },
         ],
       },
       {
-        path: "/create-workspace",
-        element: <OrganizationForm />,
-      },
-    ],
-  },
-  {
-    element: <UnAuthenticationGuard />,
-    children: [
-      {
-        path: "/auth",
-        element: <AuthPage />,
+        element: <UnAuthenticationGuard />,
         children: [
           {
-            path: "signin",
-            element: <SignIn />,
-          },
-          {
-            path: "signup",
-            element: <SignUp />,
+            path: "/auth",
+            element: <AuthPage />,
+            children: [
+              {
+                path: "signin",
+                element: <SignIn />,
+              },
+              {
+                path: "signup",
+                element: <SignUp />,
+              },
+            ],
           },
         ],
       },
