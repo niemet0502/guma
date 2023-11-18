@@ -1,23 +1,34 @@
 import { Button } from "@/components/ui/button";
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useState } from "react";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import { BiDotsHorizontalRounded, BiLink } from "react-icons/bi";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { NavLink, useParams } from "react-router-dom";
 import { DocumentItem } from "../../documents/components/DocumentItem";
+import { CreateWikiForm } from "../components/CreateWiki";
 import { useGetFolder } from "../hooks/useGetFolder";
 import { useRemoveFolder } from "../hooks/useRemoveFolder";
 
 export const FolderDetails: React.FC = () => {
   const { folderId } = useParams<{ folderId: string }>();
-
   const { data } = useGetFolder(folderId as string);
+
+  const [open, setOpen] = useState(false);
+
   const { removeFolder } = useRemoveFolder();
 
   const handleDelete = () => {};
@@ -52,13 +63,26 @@ export const FolderDetails: React.FC = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <Button
-          variant="outline"
-          size="sm"
-          className="pr-0 hover:cursor-pointer text-muted-foreground"
-        >
-          <AiOutlinePlus />
-        </Button>
+        <Dialog open={open} onOpenChange={setOpen} modal={false}>
+          <DialogTrigger asChild>
+            <Button
+              variant="outline"
+              size="sm"
+              className="pr-0 hover:cursor-pointer text-muted-foreground"
+            >
+              <AiOutlinePlus />
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="lg:w-[800px] sm:max-w-[550px]">
+            <DialogHeader>
+              <DialogTitle>New wiki</DialogTitle>
+            </DialogHeader>
+            <CreateWikiForm
+              onOpenChange={setOpen}
+              folder_id={+data?.id! as number}
+            />
+          </DialogContent>
+        </Dialog>
       </div>
       <div>
         {data?.documents?.map((document) => (

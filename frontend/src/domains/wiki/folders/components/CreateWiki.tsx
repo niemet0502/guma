@@ -31,8 +31,9 @@ const formSchema = z.object({
 
 export const CreateWikiForm: React.FC<{
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
-  team_id: number;
-}> = ({ onOpenChange, team_id }) => {
+  team_id?: number;
+  folder_id?: number;
+}> = ({ onOpenChange, team_id, folder_id }) => {
   const { toast } = useToast();
 
   const { createFolder } = useCreateFolder();
@@ -53,7 +54,7 @@ export const CreateWikiForm: React.FC<{
     const { type, name } = data;
 
     if (type === "1") {
-      createDocument({ name, team_id }, () => {
+      createDocument({ name, team_id, folder_id }, () => {
         toast({
           title: "Success !",
           description: "Document successfully created",
@@ -62,7 +63,7 @@ export const CreateWikiForm: React.FC<{
         onOpenChange(false);
       });
     } else {
-      createFolder({ name, team_id }, () => {
+      createFolder({ name, team_id: team_id! }, () => {
         toast({
           title: "Success !",
           description: "Folder successfully created",
@@ -88,6 +89,7 @@ export const CreateWikiForm: React.FC<{
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
+                  disabled={folder_id !== undefined}
                 >
                   <FormControl>
                     <SelectTrigger>
