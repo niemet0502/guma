@@ -16,6 +16,14 @@ const GET_SPRINT_BY_ID = gql`
       tasks {
         id
         name
+        identifier
+        priority
+        assignee_to
+
+        assignee {
+          id
+          username
+        }
 
         status_id
         status {

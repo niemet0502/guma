@@ -31,7 +31,7 @@ export const SprintList: React.FC = () => {
 
   return (
     <div className="w-full">
-      <div className="mb-3 bg-secondary py-3 px-5 flex items-center justify-between">
+      <div className="mb-3 bg-secondary py-3 px-5 flex items-center justify-between sticky top-0">
         <p>
           Sprints
           <span className="text-muted-foreground ml-2">{sprints?.length}</span>
