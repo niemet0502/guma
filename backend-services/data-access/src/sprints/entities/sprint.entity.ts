@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { SprintStatusEnum } from '../sprint.enum';
 
 @Entity()
 export class Sprint {
@@ -10,6 +11,19 @@ export class Sprint {
 
   @Column('boolean', { default: false })
   isCompleted: boolean;
+
+  @Column({
+    type: 'enum',
+    enum: SprintStatusEnum,
+    default: SprintStatusEnum.Pending,
+  })
+  status: SprintStatusEnum;
+
+  @Column({ nullable: true })
+  unCompletedTasksUponClose: number;
+
+  @Column({ nullable: true })
+  totalTasksUponClose: number;
 
   @Column('text', { nullable: true })
   duration: number;

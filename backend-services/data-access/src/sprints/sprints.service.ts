@@ -15,6 +15,7 @@ import { CompleteSprintDto } from './dto/complete-sprint.dto';
 import { CreateSprintDto } from './dto/create-sprint.dto';
 import { UpdateSprintDto } from './dto/update-sprint.dto';
 import { Sprint } from './entities/sprint.entity';
+import { SprintStatusEnum } from './sprint.enum';
 
 @Injectable()
 export class SprintsService {
@@ -96,7 +97,9 @@ export class SprintsService {
     id: number,
     completeSprintDto: CompleteSprintDto,
   ): Promise<Sprint> {
-    const { isCompleted, destination, unCompletedTasksIds } = completeSprintDto;
+    const { isCompleted, destination, unCompletedTasksIds, totalTasksCounter } =
+      completeSprintDto;
+
     const sprint = await this.sprintRepository.findOne({ where: { id } });
     const status = await this.statusService.findBy({
       where: { name: 'Backlog' },
@@ -116,6 +119,12 @@ export class SprintsService {
       await this.taskService.save(tasks);
     }
 
-    return await this.sprintRepository.save({ ...sprint, isCompleted: true });
+    return await this.sprintRepository.save({
+      ...sprint,
+      isCompleted: true,
+      status: SprintStatusEnum.Done,
+      totalTasksUponClose: totalTasksCounter,
+      unCompletedTasksUponClose: totalTasksCounter - unCompletedTasksIds.length,
+    });
   }
 }

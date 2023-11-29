@@ -10,4 +10,7 @@ export class CompleteSprintDto {
 
   @ApiProperty({ required: false })
   public unCompletedTasksIds?: number[];
+
+  @ApiProperty({ required: false })
+  public totalTasksCounter?: number;
 }
