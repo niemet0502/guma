@@ -57,7 +57,7 @@ export const SprintList: React.FC = () => {
       </div>
       <div className="w-full flex flex-col gap-4">
         {sprints?.map((sprint) => (
-          <SprintItem sprint={sprint} />
+          <SprintItem sprint={sprint} key={sprint.id} />
         ))}
       </div>
     </div>

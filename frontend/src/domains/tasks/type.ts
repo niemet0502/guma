@@ -41,7 +41,7 @@ export interface SprintApi {
   isCompleted: boolean;
   team_id: number;
 
-  tasks?: TaskApi[];
+  tasks: TaskApi[];
 }
 
 export interface Activity {
@@ -92,6 +92,7 @@ export interface UpdateTaskApi {
   description?: string;
   type?: number;
   priority?: number;
+  position?: number;
   assignee_to?: number;
   parent_task_id?: number;
   sprint_id?: number;
@@ -128,6 +129,7 @@ export interface TaskApi {
   created_at: string;
   author: User;
   assignee_to: number;
+  position: number;
   assignee: User;
   parent_task_id: number;
   sprint_id: number;

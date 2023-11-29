@@ -32,6 +32,9 @@ export class Task {
   type: TaskType;
 
   @Field({ nullable: true })
+  position?: number;
+
+  @Field({ nullable: true })
   priority: number;
 
   @Field({ nullable: true })

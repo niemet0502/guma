@@ -1,7 +1,7 @@
 import { SprintApi } from "@/domains/tasks/type";
 import { gql, useQuery } from "@apollo/client";
 
-const GET_SPRINT_BY_ID = gql`
+export const GET_SPRINT_BY_ID = gql`
   query GetSprintById($id: Int!) {
     sprint(id: $id) {
       id
@@ -19,6 +19,7 @@ const GET_SPRINT_BY_ID = gql`
         identifier
         priority
         assignee_to
+        position
 
         assignee {
           id
