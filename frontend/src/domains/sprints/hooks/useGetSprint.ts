@@ -12,6 +12,9 @@ export const GET_SPRINT_BY_ID = gql`
       goal
       team_id
       isCompleted
+      status
+      totalTasksUponClose
+      unCompletedTasksUponClose
 
       tasks {
         id

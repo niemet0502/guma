@@ -10,6 +10,9 @@ export const GET_SPRINTS_BY_TEAM = gql`
       end_at
       start_at
       isCompleted
+      status
+      totalTasksUponClose
+      unCompletedTasksUponClose
 
       tasks {
         id
