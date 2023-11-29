@@ -2,25 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { SprintApi } from "@/domains/tasks/type";
 import { NavLink, useParams } from "react-router-dom";
-import { SprintStateEnum } from "../type";
-
-const getSprintStatus = (sprint: SprintApi) => {
-  const currentDate = new Date();
-  const startAt = new Date(sprint.start_at);
-  const endAt = new Date(sprint.end_at);
-
-  if (currentDate >= startAt && currentDate <= endAt) {
-    return SprintStateEnum.CURRENT;
-  }
-
-  if (currentDate > endAt) {
-    return SprintStateEnum.PAST;
-  }
-
-  if (currentDate < startAt) {
-    return SprintStateEnum.NEXT;
-  }
-};
+import { SprintStatusEnum } from "../type";
 
 export const SprintItem: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
   const { orgaId, teamId } = useParams<{ orgaId: string; teamId: string }>();
@@ -29,12 +11,10 @@ export const SprintItem: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
     ({ status }) => status.name === "Done"
   ).length;
 
-  const status = getSprintStatus(sprint);
-
   const style =
-    status === SprintStateEnum.CURRENT
+    sprint.status === SprintStatusEnum.Ongoing
       ? "border border-blue-950"
-      : status === SprintStateEnum.NEXT
+      : sprint.status === SprintStatusEnum.Pending
       ? "border-dashed"
       : "";
 
@@ -42,7 +22,10 @@ export const SprintItem: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
     sprint.tasks?.filter((task) => task.status.name === "Done").length || 0;
   const totalTasks = sprint.tasks?.length || 0;
 
-  const completionPercentage = (completedTasks / totalTasks) * 100;
+  const completionPercentage =
+    (sprint.isCompleted
+      ? sprint.unCompletedTasksUponClose / sprint.totalTasksUponClose
+      : completedTasks / totalTasks) * 100;
 
   return (
     <NavLink to={`/${orgaId}/team/${teamId}/sprints/${sprint.id}`}>
@@ -56,7 +39,7 @@ export const SprintItem: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
           <div className="flex items-center gap-2">
             <Progress value={completionPercentage} className="w-[100px]" />
             <span className="flex gap-2 items-center">
-              {completionPercentage ? completionPercentage : 0} %
+              {completionPercentage ? completionPercentage | 0 : 0} %
               <span className="text-muted-foreground text-xs">Success</span>
             </span>
           </div>
@@ -67,7 +50,9 @@ export const SprintItem: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
           </span>
 
           <span className="flex gap-2 items-center">
-            {sprint.tasks?.length}
+            {sprint.isCompleted
+              ? sprint.totalTasksUponClose
+              : sprint.tasks?.length}
             <span className="text-muted-foreground text-xs">Scopes</span>
           </span>
         </div>
