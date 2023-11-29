@@ -3,6 +3,7 @@ import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
 import { TasksService } from 'src/tasks/tasks.service';
+import { CompleteSprintInput } from './dto/complete-sprint.input';
 import { CreateSprintInput } from './dto/create-sprint.input';
 import { UpdateSprintInput } from './dto/update-sprint.input';
 import { Sprint } from './entities/sprint.entity';
@@ -56,6 +57,18 @@ export class SprintsService {
   ): Promise<Sprint> {
     const { data } = await firstValueFrom(
       this.http.patch<Sprint>(`${this.url}${id}`, updateSprintInput),
+    );
+    return data;
+  }
+
+  async complete(
+    id: number,
+    completeSprintInput: CompleteSprintInput,
+  ): Promise<Sprint> {
+    delete completeSprintInput.id;
+
+    const { data } = await firstValueFrom(
+      this.http.post<Sprint>(`${this.url}complete/${id}`, completeSprintInput),
     );
     return data;
   }

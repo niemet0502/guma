@@ -1,5 +1,6 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Task } from '../../tasks/entities/task.entity';
+import { SprintStatusEnum } from '../sprint.enum';
 
 @ObjectType()
 export class Sprint {
@@ -15,6 +16,9 @@ export class Sprint {
   @Field({ nullable: false })
   start_at: string;
 
+  @Field()
+  status: SprintStatusEnum;
+
   @Field({ nullable: false })
   end_at: string;
 
@@ -26,6 +30,12 @@ export class Sprint {
 
   @Field({ nullable: true })
   isCompleted: boolean;
+
+  @Field({ nullable: true })
+  unCompletedTasksUponClose: number;
+
+  @Field({ nullable: true })
+  totalTasksUponClose: number;
 
   @Field((type) => [Task])
   tasks: Task[];
