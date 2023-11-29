@@ -53,9 +53,11 @@ export class TasksService {
 
     const maxId = await this.findMaxId();
     const id = `${team.identifier}-${maxId}`;
+    const position = await this.calculatePosition(team.id, status_id);
 
     const task = await this.taskRepository.save({
       ...createTaskDto,
+      position,
       status_id: status.id,
       identifier: id,
       created_at: new Date().toString(),
@@ -125,6 +127,10 @@ export class TasksService {
     return await this.taskRepository.findOne(option);
   }
 
+  async findAllBy(option: any): Promise<Task[]> {
+    return await this.taskRepository.find(option);
+  }
+
   async update(id: number, updateTaskDto: UpdateTaskDto): Promise<Task> {
     const {
       action,
@@ -139,7 +145,7 @@ export class TasksService {
     });
     const { status_id: from_status } = toUpdate;
 
-    const updated = Object.assign(toUpdate, updateTaskDto);
+    let updated = Object.assign(toUpdate, updateTaskDto);
 
     // create the activity
     const activity = { created_by, action, task_id: id };
@@ -152,6 +158,12 @@ export class TasksService {
       };
     } else if (action === ActivityAction.ADDED_SPRINT) {
       value = { sprint_id: updateTaskDto.sprint_id };
+
+      const newStatus = await this.statusService.findBy({
+        where: { name: 'Todo' },
+      });
+
+      updated = { ...updated, status_id: newStatus.id };
     } else if (action === ActivityAction.SET_PRIORITY) {
       value = { priority };
     } else if (action === ActivityAction.ASSIGNED) {
@@ -181,5 +193,22 @@ export class TasksService {
     const maxId = result?.maxId;
 
     return maxId ? parseInt(maxId) : 1;
+  }
+
+  async calculatePosition(team_id: number, status_id: number) {
+    const tasks = await this.taskRepository.find({
+      where: { team_id, status_id },
+    });
+
+    const listPositions = tasks.map(({ position }) => position);
+
+    if (listPositions.length > 0) {
+      return Math.min(...listPositions) - 1;
+    }
+    return 1;
+  }
+
+  async save(entities: any) {
+    return await this.taskRepository.save(entities);
   }
 }

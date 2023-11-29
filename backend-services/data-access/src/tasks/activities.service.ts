@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  NotFoundException,
+  forwardRef,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SprintsService } from 'src/sprints/sprints.service';
 import { StatusService } from 'src/status/status.service';
@@ -12,6 +17,7 @@ export class ActivitiesService {
     @InjectRepository(Activity) private activitiesService: Repository<Activity>,
     // private readonly taskService: TasksService,
     private readonly statusService: StatusService,
+    @Inject(forwardRef(() => SprintsService))
     private readonly sprintService: SprintsService,
   ) {}
 

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrganizationsModule } from 'src/organizations/organizations.module';
 import { SprintsModule } from 'src/sprints/sprints.module';
@@ -22,7 +22,7 @@ import { TasksService } from './tasks.service';
     TypeOrmModule.forFeature([Task, Comment, TaskLabel, Activity]),
     TeamsModule,
     OrganizationsModule,
-    SprintsModule,
+    forwardRef(() => SprintsModule),
     StatusModule,
   ],
   controllers: [
@@ -37,5 +37,6 @@ import { TasksService } from './tasks.service';
     TaskLabelService,
     ActivitiesService,
   ],
+  exports: [TasksService],
 })
 export class TasksModule {}

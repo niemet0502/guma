@@ -1,11 +1,17 @@
 import {
   BadRequestException,
+  Inject,
   Injectable,
   NotFoundException,
+  forwardRef,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { StatusService } from 'src/status/status.service';
+import { Task } from 'src/tasks/entities/task.entity';
+import { TasksService } from 'src/tasks/tasks.service';
+import { In, Repository } from 'typeorm';
 import { TeamsService } from '../teams/teams.service';
+import { CompleteSprintDto } from './dto/complete-sprint.dto';
 import { CreateSprintDto } from './dto/create-sprint.dto';
 import { UpdateSprintDto } from './dto/update-sprint.dto';
 import { Sprint } from './entities/sprint.entity';
@@ -15,6 +21,9 @@ export class SprintsService {
   constructor(
     @InjectRepository(Sprint) private sprintRepository: Repository<Sprint>,
     private readonly teamService: TeamsService,
+    @Inject(forwardRef(() => TasksService))
+    private taskService: TasksService,
+    private statusService: StatusService,
   ) {}
   async create(createSprintDto: CreateSprintDto): Promise<Sprint> {
     const { team_id, start_at, end_at } = createSprintDto;
@@ -81,5 +90,32 @@ export class SprintsService {
     }
 
     return await this.sprintRepository.remove(sprint);
+  }
+
+  async complete(
+    id: number,
+    completeSprintDto: CompleteSprintDto,
+  ): Promise<Sprint> {
+    const { isCompleted, destination, unCompletedTasksIds } = completeSprintDto;
+    const sprint = await this.sprintRepository.findOne({ where: { id } });
+    const status = await this.statusService.findBy({
+      where: { name: 'Backlog' },
+    });
+
+    if (!isCompleted) {
+      // move the remaining task
+      const tasks = await this.taskService.findAllBy({
+        where: { id: In(unCompletedTasksIds) },
+      });
+
+      tasks.forEach((task: Task) => {
+        task.sprint_id = null;
+        (task.sprint_history = sprint.id), (task.status_id = status.id);
+      });
+
+      await this.taskService.save(tasks);
+    }
+
+    return await this.sprintRepository.save({ ...sprint, isCompleted: true });
   }
 }
