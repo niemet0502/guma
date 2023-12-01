@@ -39,4 +39,7 @@ export class Sprint {
 
   @Field((type) => [Task])
   tasks: Task[];
+
+  @Field((type) => [Task], { nullable: true })
+  unClosedTasks?: Task[];
 }

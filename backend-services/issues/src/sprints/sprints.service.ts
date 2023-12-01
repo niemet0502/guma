@@ -80,6 +80,20 @@ export class SprintsService {
       undefined,
       undefined,
       sprintId,
+      undefined,
+    );
+  }
+
+  async getUncompletedTasks(sprintId: number) {
+    console.log(sprintId);
+
+    return await this.taskServie.findAll(
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      sprintId,
     );
   }
 }

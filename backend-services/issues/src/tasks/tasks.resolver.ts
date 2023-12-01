@@ -40,6 +40,8 @@ export class TasksResolver {
     @Args('parent_task_id', { type: () => Int, nullable: true })
     parent_task_id: number,
     @Args('sprint_id', { type: () => Int, nullable: true }) sprint_id: number,
+    @Args('sprint_id', { type: () => Int, nullable: true })
+    sprint_history: number,
   ) {
     return this.tasksService.findAll(
       team_id,
@@ -47,6 +49,7 @@ export class TasksResolver {
       status_name,
       parent_task_id,
       sprint_id,
+      sprint_history,
     );
   }
 

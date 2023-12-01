@@ -57,6 +57,7 @@ export class TasksService {
     status_name: string,
     parent_task_id: number,
     sprint_id: number,
+    sprint_history: number
   ): Promise<Task[]> {
     const { data } = await firstValueFrom(
       this.http.get<Task[]>(this.url, {
@@ -66,6 +67,7 @@ export class TasksService {
           status_name,
           parent_task_id,
           sprint_id,
+          sprint_history
         },
       }),
     );

@@ -55,4 +55,11 @@ export class SprintsResolver {
 
     return this.sprintsService.getTasks(id);
   }
+
+  @ResolveField()
+  unClosedTasks(@Parent() sprint: Sprint) {
+    const { id } = sprint;
+
+    return this.sprintsService.getUncompletedTasks(id);
+  }
 }
