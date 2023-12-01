@@ -83,6 +83,7 @@ export class TasksService {
     status_name: string,
     parent_task_id: number,
     sprint_id: number,
+    sprint_history: number,
     sort: 'DESC' | 'ASC',
   ): Promise<Task[]> {
     const query = this.taskRepository.createQueryBuilder('task');
@@ -112,6 +113,12 @@ export class TasksService {
     if (sprint_id) {
       query.andWhere('task.sprint_id = :sprint_id', {
         sprint_id,
+      });
+    }
+
+    if (sprint_history) {
+      query.andWhere('task.sprint_history = :sprint_history', {
+        sprint_history,
       });
     }
 
