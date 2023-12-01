@@ -45,6 +45,36 @@ export const GET_SPRINT_BY_ID = gql`
           name
         }
       }
+
+      unClosedTasks {
+        id
+        name
+        identifier
+        priority
+        assignee_to
+        position
+        slug
+        created_at
+
+        assignee {
+          id
+          username
+        }
+
+        labels {
+          id
+          label {
+            id
+            name
+          }
+        }
+
+        status_id
+        status {
+          id
+          name
+        }
+      }
     }
   }
 `;

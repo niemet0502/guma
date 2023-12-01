@@ -75,6 +75,19 @@ export const SprintDetails: React.FC = () => {
               <TaskItem task={task} key={task.id} members={[]} />
             ))}
           </div>
+
+          <div className="bg-secondary py-3 px-5 flex items-center gap-2">
+            <p>Not Completed During the sprint</p>
+            <span className="text-muted-foreground ">
+              {sprint.unClosedTasks?.length}
+            </span>
+          </div>
+
+          <div>
+            {sprint.unClosedTasks.map((task) => (
+              <TaskItem task={task} key={task.id} members={[]} />
+            ))}
+          </div>
         </>
       )}
     </div>

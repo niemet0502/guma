@@ -46,6 +46,7 @@ export interface SprintApi {
   unCompletedTasksUponClose: number;
 
   tasks: TaskApi[];
+  unClosedTasks: TaskApi[];
 }
 
 export interface Activity {
