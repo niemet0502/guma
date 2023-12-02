@@ -10,7 +10,12 @@ import { ActivityAction, SprintApi } from "@/domains/tasks/type";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
-import { calculateIssueListPosition, isPositionChanged } from "../helper";
+import {
+  calculateIssueListPosition,
+  isPositionChanged,
+  remainingWorkingDays,
+} from "../helper";
+import { SprintStatusEnum } from "../type";
 import { CompleteSprintDialog } from "./CompleteSprintDialog";
 
 export const OngoingSprint: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
@@ -52,15 +57,20 @@ export const OngoingSprint: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
             {sprint?.name}
           </p>
         </div>
-        <div>
-          <CompleteSprintDialog sprint={sprint}>
-            <DialogTrigger className="w-full">
-              <Button size="sm" variant="secondary">
-                Complete sprint
-              </Button>
-            </DialogTrigger>
-          </CompleteSprintDialog>
-        </div>
+        {sprint.status === SprintStatusEnum.Ongoing && (
+          <div className="flex gap-2 items-center">
+            <span className="text-muted-foreground">
+              {remainingWorkingDays(sprint.end_at)} work days
+            </span>
+            <CompleteSprintDialog sprint={sprint}>
+              <DialogTrigger className="w-full">
+                <Button size="sm" variant="secondary">
+                  Complete sprint
+                </Button>
+              </DialogTrigger>
+            </CompleteSprintDialog>
+          </div>
+        )}
       </div>
 
       <DragDropContext onDragEnd={handleDragEnd}>

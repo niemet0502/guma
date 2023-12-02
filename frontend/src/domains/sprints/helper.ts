@@ -97,3 +97,30 @@ export const insertItemIntoArray = (
   arrClone.splice(index, 0, item);
   return arrClone;
 };
+
+export function remainingWorkingDays(endDateString: string) {
+  // Convert input string to Date object for the end date
+  const endDate = new Date(endDateString);
+
+  // Define a function to check if a given date is a weekend (Saturday or Sunday)
+  function isWeekend(date: Date) {
+    const day = date.getDay();
+    return day === 0 || day === 6; // 0 is Sunday, 6 is Saturday
+  }
+
+  // Get the current date
+  const currentDate = new Date();
+
+  // Calculate the remaining working days
+  let remainingDays = 0;
+  let currentDay = new Date(currentDate);
+
+  while (currentDay <= endDate) {
+    if (!isWeekend(currentDay)) {
+      remainingDays++;
+    }
+    currentDay.setDate(currentDay.getDate() + 1);
+  }
+
+  return remainingDays;
+}
