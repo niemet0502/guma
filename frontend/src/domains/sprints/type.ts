@@ -20,3 +20,14 @@ export enum SprintStatusEnum {
   Ongoing = 2,
   Done = 3,
 }
+
+export interface UpdateSprintApi {
+  id: number;
+  name?: string;
+  duration?: number;
+  start_at?: Date;
+  end_at?: Date;
+  goal?: String;
+  isCompleted?: boolean;
+  status?: SprintStatusEnum;
+}

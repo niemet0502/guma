@@ -14,6 +14,7 @@ import { useParams } from "react-router-dom";
 import { CreateSprintForm } from "../components/CreateForm";
 import { SprintItem } from "../components/SprintItem";
 import { useSprints } from "../hooks/useSprints";
+import { SprintStatusEnum } from "../type";
 
 export const SprintList: React.FC = () => {
   const { organization } = useAuth();
@@ -28,6 +29,10 @@ export const SprintList: React.FC = () => {
     if (!team) return;
     fetchSprints(+team.id);
   }, [team]);
+
+  const hasOngoingSprint = sprints?.some(
+    ({ status }) => status === SprintStatusEnum.Ongoing
+  );
 
   return (
     <div className="w-full">
@@ -57,7 +62,11 @@ export const SprintList: React.FC = () => {
       </div>
       <div className="w-full flex flex-col gap-4">
         {sprints?.map((sprint) => (
-          <SprintItem sprint={sprint} key={sprint.id} />
+          <SprintItem
+            sprint={sprint}
+            key={sprint.id}
+            hasOngoingSprint={hasOngoingSprint}
+          />
         ))}
       </div>
     </div>
