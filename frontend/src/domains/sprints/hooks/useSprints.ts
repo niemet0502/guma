@@ -22,6 +22,14 @@ export const GET_SPRINTS_BY_TEAM = gql`
           id
           name
         }
+
+        labels {
+          id
+          label {
+            id
+            name
+          }
+        }
       }
     }
   }

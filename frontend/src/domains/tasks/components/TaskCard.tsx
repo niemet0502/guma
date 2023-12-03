@@ -1,4 +1,5 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -17,10 +18,12 @@ import { cn } from "@/lib/utils";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { AiOutlineDash, AiOutlineUser } from "react-icons/ai";
-import { TaskApi } from "../type";
+import { useUpdateTask } from "../hooks/useUpdateTask";
+import { ActivityAction, TaskApi } from "../type";
 
 export const TaskCard: React.FC<{ task: TaskApi }> = ({ task }) => {
   const [openPriorityPopover, setOpenPriorityPopover] = useState(false);
+  const { updateTask } = useUpdateTask();
 
   return (
     <div className="border shadow-lg rounded-sm h-[116px] hover:cursor-pointer p-3 flex flex-col gap-1">
@@ -40,14 +43,22 @@ export const TaskCard: React.FC<{ task: TaskApi }> = ({ task }) => {
         </Avatar>
       </div>
       <div className="text-ellipsis overflow-hidden ...">{task.name}</div>
-      <div className="">
+      <div className="flex items-center gap-2 overflow-hidden">
         <Popover
           open={openPriorityPopover}
           onOpenChange={setOpenPriorityPopover}
         >
           <PopoverTrigger>
-            <Button size="sm" className="px-1 py-2 h-3" variant="outline">
-              <AiOutlineDash className="text-muted-foreground hover:cursor-pointer" />
+            <Button
+              size="sm"
+              className="px-1 py-2 h-3 hover:cursor-pointer"
+              variant="outline"
+            >
+              {task.priority ? (
+                taskPriority.find(({ value }) => value === task.priority)?.label
+              ) : (
+                <AiOutlineDash className="text-muted-foreground " />
+              )}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-[150px]  p-0">
@@ -61,11 +72,11 @@ export const TaskCard: React.FC<{ task: TaskApi }> = ({ task }) => {
                     onSelect={(currentValue) => {
                       const value = currentValue[currentValue.length - 1];
 
-                      // updateTask({
-                      //   priority: +value,
-                      //   id: +task.id,
-                      //   action: ActivityAction.SET_PRIORITY,
-                      // });
+                      updateTask({
+                        priority: +value,
+                        id: +task.id,
+                        action: ActivityAction.SET_PRIORITY,
+                      });
                       setOpenPriorityPopover(false);
                     }}
                   >
@@ -86,6 +97,12 @@ export const TaskCard: React.FC<{ task: TaskApi }> = ({ task }) => {
             </Command>
           </PopoverContent>
         </Popover>
+
+        {task.labels.map(({ label, id }) => (
+          <Badge variant="outline" key={id}>
+            {label.name}
+          </Badge>
+        ))}
       </div>
     </div>
   );
