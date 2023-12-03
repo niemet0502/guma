@@ -37,7 +37,7 @@ export class Task {
   @Column({ nullable: false })
   assignee_to: number;
 
-  @Column({ nullable: true })
+  @Column('double precision', { nullable: true })
   position: number;
 
   @Column({ nullable: true })
