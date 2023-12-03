@@ -21,9 +21,6 @@ export const calculateIssueListPosition = (
   );
   let position;
 
-  // console.log(prevIssue);
-  // console.log(nextIssue);
-
   if (!prevIssue && !nextIssue) {
     position = 1;
   } else if (!prevIssue) {
