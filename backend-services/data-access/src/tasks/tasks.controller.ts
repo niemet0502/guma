@@ -35,6 +35,7 @@ export class TasksController {
     @Query('sprint_id') sprint_id?: string,
     @Query('sprint_history') sprint_history?: string,
     @Query('sortAsc') sortAsc?: boolean,
+    @Query('sortBy') sortBy?: string,
   ): Promise<Task[]> {
     // TODO add search params
 
@@ -46,6 +47,7 @@ export class TasksController {
       +sprint_id,
       +sprint_history,
       sortAsc ? 'ASC' : 'DESC',
+      sortBy ? sortBy : undefined,
     );
   }
 

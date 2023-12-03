@@ -85,6 +85,7 @@ export class TasksService {
     sprint_id: number,
     sprint_history: number,
     sort: 'DESC' | 'ASC',
+    sortBy?: string,
   ): Promise<Task[]> {
     const query = this.taskRepository.createQueryBuilder('task');
 
@@ -122,7 +123,7 @@ export class TasksService {
       });
     }
 
-    query.orderBy('task.id', sort);
+    query.orderBy(`task.${sortBy || 'id'}`, sort);
     return await query.getMany();
   }
 
@@ -150,6 +151,7 @@ export class TasksService {
     const toUpdate = await this.taskRepository.findOne({
       where: { id },
     });
+
     const { status_id: from_status } = toUpdate;
 
     let updated = Object.assign(toUpdate, updateTaskDto);
