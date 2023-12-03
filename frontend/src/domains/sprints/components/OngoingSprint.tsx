@@ -43,7 +43,6 @@ export const OngoingSprint: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
       action: ActivityAction.CHANGED_STATUS,
     });
   };
-  console.log(sprint.tasks);
 
   return (
     <div className="w-full h-full flex flex-col">

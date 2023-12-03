@@ -6,6 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useToast } from "@/components/ui/use-toast";
 import { SprintApi } from "@/domains/tasks/type";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useCompleteSprint } from "../hooks/useCompleteSprint";
@@ -16,6 +17,7 @@ export const CompleteSprintDialog: React.FC<{
   sprint: SprintApi;
 }> = ({ children, sprint }) => {
   const { completeSprint } = useCompleteSprint();
+  const { toast } = useToast();
 
   const onConfirm = () => {
     const input = {
@@ -26,6 +28,11 @@ export const CompleteSprintDialog: React.FC<{
       totalTasksCounter: sprint.tasks?.length,
     } as CompleteSprintInput;
     completeSprint(input);
+
+    toast({
+      title: "Success",
+      description: "Your sprint has been completed successfully",
+    });
   };
 
   const openIssues = sprint.tasks?.filter(
