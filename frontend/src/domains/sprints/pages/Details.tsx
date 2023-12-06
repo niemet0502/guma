@@ -1,17 +1,29 @@
 import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { TaskItem } from "@/domains/tasks/components/TaskItem";
 import { TaskStatusIcon } from "@/domains/tasks/components/TaskStatusIcon";
 import { transformDateToMonthDay } from "@/lib/utils";
+import { useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { MdOutlineEdit } from "react-icons/md";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { useParams } from "react-router-dom";
+import { CreateSprintForm } from "../components/CreateForm";
 import { OngoingSprint } from "../components/OngoingSprint";
 import { useGetSprint } from "../hooks/useGetSprint";
 
 export const SprintDetails: React.FC = () => {
   const { sprintId } = useParams<{ sprintId: string }>();
-
   const { data: sprint } = useGetSprint(sprintId as string);
+
+  const [open, setOpen] = useState(false);
 
   if (sprint && !sprint.isCompleted) {
     return <OngoingSprint sprint={sprint} />;
@@ -26,6 +38,26 @@ export const SprintDetails: React.FC = () => {
               <p>Sprints</p>
               <RiArrowRightSLine className="mt-0.5" />
               {sprint?.name}
+              <Dialog open={open} onOpenChange={setOpen} modal={false}>
+                <DialogTrigger asChild>
+                  <span className="mr-2 hover:cursor-pointer">
+                    <MdOutlineEdit />
+                  </span>
+                </DialogTrigger>
+                <DialogContent className="lg:w-[800px] sm:max-w-[625px] top-[45%]">
+                  <DialogHeader>
+                    <DialogTitle>Create a new sprint</DialogTitle>
+                    <DialogDescription>
+                      Create a new team to manage seperate sprints, issues and
+                      documents
+                    </DialogDescription>
+                  </DialogHeader>
+                  <CreateSprintForm
+                    onOpenChange={setOpen}
+                    sprintToEdit={sprint}
+                  />
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
 

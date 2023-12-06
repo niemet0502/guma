@@ -12,16 +12,24 @@ const UPDATE_SPRINT = gql`
   }
 `;
 
-export const useUpdateSprint = () => {
+export const useUpdateSprint = (onSuccessCallback?: () => void) => {
   const [updateSprintMutation, { error }] = useMutation(UPDATE_SPRINT, {
     refetchQueries: [GET_SPRINTS_BY_TEAM, GET_SPRINT_BY_ID],
   });
 
   const updateSprint = async (updateSprintInput: UpdateSprintApi) => {
     try {
-      await updateSprintMutation({
+      const response = await updateSprintMutation({
         variables: { updateSprintInput },
       });
+
+      // Check the response for success and handle accordingly
+      if (response.data && response.data.updateSprint) {
+        onSuccessCallback && onSuccessCallback();
+      } else {
+        // Handle unexpected response or error
+        console.error("Unexpected response:", response);
+      }
     } catch (e) {
       // Handle GraphQL errors or HTTP errors here
       console.error("Error creating user:", e);

@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import { SprintApi } from "@/domains/tasks/type";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon } from "@radix-ui/react-icons";
@@ -31,6 +32,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useCreateSprint } from "../hooks/useCreateSprint";
+import { useUpdateSprint } from "../hooks/useUpdateSprint";
+import { SprintStatusEnum } from "../type";
 
 const formSchema = z.object({
   name: z.string().min(4).max(50),
@@ -42,17 +45,24 @@ const formSchema = z.object({
 export const CreateSprintForm: React.FC<{
   teamId?: number;
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ onOpenChange, teamId }) => {
+  sprintToEdit?: SprintApi;
+}> = ({ onOpenChange, teamId, sprintToEdit }) => {
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      start_at: new Date(),
-      end_at: addDays(new Date(), 7),
-      name: "",
-      goal: "",
-    },
+    defaultValues: sprintToEdit
+      ? {
+          ...sprintToEdit,
+          start_at: new Date(sprintToEdit.start_at),
+          end_at: new Date(sprintToEdit.end_at),
+        }
+      : {
+          start_at: new Date(),
+          end_at: addDays(new Date(), 7),
+          name: "",
+          goal: "",
+        },
   });
 
   const [open, setOpen] = useState(false);
@@ -61,17 +71,25 @@ export const CreateSprintForm: React.FC<{
   const onSuccess = () => {
     toast({
       title: "Success !",
-      description: "Sprint successfully created",
+      description: `Sprint successfully ${
+        sprintToEdit ? "updated" : "created"
+      }`,
     });
     onOpenChange(false);
   };
   const { createSprint, error } = useCreateSprint(onSuccess);
+  const { updateSprint } = useUpdateSprint();
 
   const startAt = form.watch("start_at");
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    createSprint({ ...data, team_id: teamId && +teamId });
+    sprintToEdit
+      ? updateSprint({ id: sprintToEdit.id, ...data })
+      : createSprint({ ...data, team_id: teamId && +teamId });
   };
+
+  const isDisabled =
+    sprintToEdit && sprintToEdit.status === SprintStatusEnum.Done;
   return (
     <div>
       <Form {...form}>
@@ -100,7 +118,7 @@ export const CreateSprintForm: React.FC<{
               <FormItem className="flex flex-col w-full ">
                 <FormLabel>Start date</FormLabel>
                 <Popover open={open} onOpenChange={setOpen}>
-                  <PopoverTrigger>
+                  <PopoverTrigger asChild>
                     <FormControl>
                       <Button
                         variant={"outline"}
@@ -108,6 +126,7 @@ export const CreateSprintForm: React.FC<{
                           "w-full pl-3 text-left font-normal",
                           !field.value && "text-muted-foreground"
                         )}
+                        disabled={isDisabled}
                       >
                         {field.value ? (
                           format(field.value, "PPP")
@@ -150,6 +169,7 @@ export const CreateSprintForm: React.FC<{
                           "w-full pl-3 text-left font-normal",
                           !field.value && "text-muted-foreground"
                         )}
+                        disabled={isDisabled}
                       >
                         {field.value ? (
                           format(field.value, "PPP")
@@ -221,7 +241,7 @@ export const CreateSprintForm: React.FC<{
             >
               Cancel
             </Button>
-            <Button type="submit">Create</Button>
+            <Button type="submit">{sprintToEdit ? "Save" : "Create"}</Button>
           </div>
         </form>
       </Form>

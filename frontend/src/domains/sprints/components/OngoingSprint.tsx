@@ -1,7 +1,14 @@
 import { Drag } from "@/components/dnd/drag";
 import { Drop } from "@/components/dnd/drop";
 import { Button } from "@/components/ui/button";
-import { DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useAuth } from "@/domains/auth/providers/auth";
 import { TaskCard } from "@/domains/tasks/components/TaskCard";
 import { TaskStatusIcon } from "@/domains/tasks/components/TaskStatusIcon";
@@ -12,8 +19,9 @@ import { TeamVisibility } from "@/domains/teams/type";
 import { useGetUsers } from "@/domains/users/hooks/useGetUsers";
 import { client } from "@/main";
 import { Reference, gql } from "@apollo/client";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
+import { MdOutlineEdit } from "react-icons/md";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import {
@@ -23,6 +31,7 @@ import {
 } from "../helper";
 import { SprintStatusEnum } from "../type";
 import { CompleteSprintDialog } from "./CompleteSprintDialog";
+import { CreateSprintForm } from "./CreateForm";
 
 export const OngoingSprint: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
   const { organization } = useAuth();
@@ -30,6 +39,8 @@ export const OngoingSprint: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
   const { data: status } = useGetStatus(sprint.team_id);
   const { updateTask } = useUpdateTask();
   const { data: users } = useGetUsers(organization?.id as number);
+
+  const [open, setOpen] = useState(false);
 
   const members = useMemo(
     () =>
@@ -92,7 +103,7 @@ export const OngoingSprint: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
   return (
     <div className="w-full h-full flex flex-col">
       <div className="mb-3  py-3 px-5 flex items-center gap-1 sticky top-0 justify-between">
-        <div className="flex items-center">
+        <div className="flex items-center gap-1">
           <NavLink to={`/ `} className="hover:text-muted-foreground w-auto p-0">
             Sprints
           </NavLink>
@@ -100,6 +111,24 @@ export const OngoingSprint: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
             <RiArrowRightSLine className="mt-0.5" />
             {sprint?.name}
           </p>
+
+          <Dialog open={open} onOpenChange={setOpen} modal={false}>
+            <DialogTrigger asChild>
+              <span className="mr-2 hover:cursor-pointer">
+                <MdOutlineEdit />
+              </span>
+            </DialogTrigger>
+            <DialogContent className="lg:w-[800px] sm:max-w-[625px] top-[45%]">
+              <DialogHeader>
+                <DialogTitle>Create a new sprint</DialogTitle>
+                <DialogDescription>
+                  Create a new team to manage seperate sprints, issues and
+                  documents
+                </DialogDescription>
+              </DialogHeader>
+              <CreateSprintForm onOpenChange={setOpen} sprintToEdit={sprint} />
+            </DialogContent>
+          </Dialog>
         </div>
         {sprint.status === SprintStatusEnum.Ongoing && (
           <div className="flex gap-2 items-center">
