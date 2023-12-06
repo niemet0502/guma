@@ -47,6 +47,7 @@ export interface SprintApi {
 
   tasks: TaskApi[];
   unClosedTasks: TaskApi[];
+  team?: TeamApi;
 }
 
 export interface Activity {

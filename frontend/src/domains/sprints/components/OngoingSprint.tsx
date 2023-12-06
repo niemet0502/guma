@@ -2,13 +2,17 @@ import { Drag } from "@/components/dnd/drag";
 import { Drop } from "@/components/dnd/drop";
 import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
+import { useAuth } from "@/domains/auth/providers/auth";
 import { TaskCard } from "@/domains/tasks/components/TaskCard";
 import { TaskStatusIcon } from "@/domains/tasks/components/TaskStatusIcon";
 import { useGetStatus } from "@/domains/tasks/hooks/useGetStatus";
 import { useUpdateTask } from "@/domains/tasks/hooks/useUpdateTask";
 import { ActivityAction, SprintApi } from "@/domains/tasks/type";
+import { TeamVisibility } from "@/domains/teams/type";
+import { useGetUsers } from "@/domains/users/hooks/useGetUsers";
 import { client } from "@/main";
 import { Reference, gql } from "@apollo/client";
+import { useMemo } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
@@ -21,8 +25,19 @@ import { SprintStatusEnum } from "../type";
 import { CompleteSprintDialog } from "./CompleteSprintDialog";
 
 export const OngoingSprint: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
+  const { organization } = useAuth();
+
   const { data: status } = useGetStatus(sprint.team_id);
   const { updateTask } = useUpdateTask();
+  const { data: users } = useGetUsers(organization?.id as number);
+
+  const members = useMemo(
+    () =>
+      sprint.team?.visibility === TeamVisibility.PUBLIC
+        ? users
+        : sprint.team?.members.map(({ user }) => user),
+    [sprint, users]
+  );
 
   const handleDragEnd = (result: DropResult) => {
     const { draggableId, source, destination } = result;
@@ -132,7 +147,11 @@ export const OngoingSprint: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
                               draggableId={task.id.toString()}
                               isDraggable
                             >
-                              <TaskCard task={task} key={task.id} />
+                              <TaskCard
+                                task={task}
+                                key={task.id}
+                                members={members}
+                              />
                             </Drag>
                           ))}
                       </div>

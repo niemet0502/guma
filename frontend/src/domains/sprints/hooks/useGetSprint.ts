@@ -16,6 +16,19 @@ export const GET_SPRINT_BY_ID = gql`
       totalTasksUponClose
       unCompletedTasksUponClose
 
+      team {
+        id
+        visibility
+
+        members {
+          id
+          user {
+            id
+            username
+          }
+        }
+      }
+
       tasks {
         id
         name

@@ -13,6 +13,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { User } from "@/domains/auth/services/types";
 import { taskPriority } from "@/domains/tasks/constantes";
 import { cn } from "@/lib/utils";
 import { CheckIcon } from "@radix-ui/react-icons";
@@ -21,26 +22,65 @@ import { AiOutlineDash, AiOutlineUser } from "react-icons/ai";
 import { useUpdateTask } from "../hooks/useUpdateTask";
 import { ActivityAction, TaskApi } from "../type";
 
-export const TaskCard: React.FC<{ task: TaskApi }> = ({ task }) => {
+export const TaskCard: React.FC<{ task: TaskApi; members?: User[] }> = ({
+  task,
+  members,
+}) => {
   const [openPriorityPopover, setOpenPriorityPopover] = useState(false);
   const { updateTask } = useUpdateTask();
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="border shadow-lg rounded-sm h-[116px] hover:cursor-pointer p-3 flex flex-col gap-1">
       <div className="flex justify-between items-center">
         <span className="text-xs text-muted-foreground">{task.identifier}</span>
-        <Avatar className="h-7 w-7 bg-transparent hover:cursor-pointer">
-          {/* <AvatarImage src="/avatars/01.png" alt="@shadcn" /> */}
-          <AvatarFallback className="bg-transparent border-2 border-gray-700">
-            {task.assignee ? (
-              <span className="text-muted-foreground text-sm">
-                {task.assignee.username.slice(0, 2).toUpperCase()}
-              </span>
-            ) : (
-              <AiOutlineUser />
-            )}
-          </AvatarFallback>
-        </Avatar>
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <Avatar className="h-7 w-7 bg-transparent hover:cursor-pointer">
+              {/* <AvatarImage src="/avatars/01.png" alt="@shadcn" /> */}
+              <AvatarFallback className="bg-transparent border-2 ">
+                {task.assignee ? (
+                  <span className="text-muted-foreground text-sm">
+                    {task.assignee.username.slice(0, 2).toUpperCase()}
+                  </span>
+                ) : (
+                  <AiOutlineUser />
+                )}
+              </AvatarFallback>
+            </Avatar>
+          </PopoverTrigger>
+          <PopoverContent className="w-[180px] p-0 mr-7">
+            <Command>
+              <CommandInput placeholder="Assignee to..." className="h-9" />
+              <CommandEmpty>No user found.</CommandEmpty>
+              <CommandGroup>
+                {members?.map((member) => (
+                  <CommandItem
+                    key={member.id}
+                    onSelect={() => {
+                      updateTask({
+                        id: +task.id,
+                        assignee_to: +member.id,
+                        action: ActivityAction.ASSIGNED,
+                      });
+                      setOpen(false);
+                    }}
+                  >
+                    {member.username}
+                    <CheckIcon
+                      className={cn(
+                        "ml-auto h-4 w-4",
+                        task.assignee_to === member.id
+                          ? "opacity-100"
+                          : "opacity-0"
+                      )}
+                    />
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </Command>
+          </PopoverContent>
+        </Popover>
       </div>
       <div className="text-ellipsis overflow-hidden ...">{task.name}</div>
       <div className="flex items-center gap-2 overflow-hidden">
