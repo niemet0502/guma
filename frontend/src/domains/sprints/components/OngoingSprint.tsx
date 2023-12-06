@@ -7,6 +7,8 @@ import { TaskStatusIcon } from "@/domains/tasks/components/TaskStatusIcon";
 import { useGetStatus } from "@/domains/tasks/hooks/useGetStatus";
 import { useUpdateTask } from "@/domains/tasks/hooks/useUpdateTask";
 import { ActivityAction, SprintApi } from "@/domains/tasks/type";
+import { client } from "@/main";
+import { Reference, gql } from "@apollo/client";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
@@ -28,6 +30,7 @@ export const OngoingSprint: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
     if (!isPositionChanged(source, destination)) return;
 
     const issueId = Number(draggableId);
+    const status_id = Number(destination?.droppableId);
 
     const position = calculateIssueListPosition(
       sprint.tasks!,
@@ -35,6 +38,33 @@ export const OngoingSprint: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
       source,
       issueId
     );
+
+    client.cache.modify({
+      id: `Sprint:${sprint.id}`,
+      fields: {
+        tasks(exists = [], { readField }) {
+          client.cache.writeFragment({
+            id: `Task:${issueId}`,
+            fragment: gql`
+              fragment UpdateTask on Task {
+                position
+                status_id
+              }
+            `,
+            data: {
+              position: position,
+              status_id: status_id,
+            },
+          });
+
+          return exists.sort(
+            (aRef: any, bRef: Reference) =>
+              (readField("position", aRef) as number) -
+              (readField("position", bRef) as number)
+          );
+        },
+      },
+    });
 
     updateTask({
       id: issueId,
@@ -93,7 +123,7 @@ export const OngoingSprint: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
                     >
                       <div className="flex flex-col gap-3">
                         {sprint.tasks
-                          ?.filter(({ status }) => status.id === statut.id)
+                          ?.filter(({ status_id }) => status_id === +statut.id)
                           .map((task, index) => (
                             <Drag
                               key={task.id}
