@@ -1,3 +1,4 @@
+import { GET_SPRINT_BY_ID } from "@/domains/sprints/hooks/useGetSprint";
 import { gql, useMutation } from "@apollo/client";
 import { UpdateTaskApi } from "../type";
 import { GET_TASK_BY_SLUG_AND_TEAM } from "./useGetTask";
@@ -14,7 +15,11 @@ const UPDATE_TASK = gql`
 
 export const useUpdateTask = () => {
   const [updateTaskMutation, { error }] = useMutation(UPDATE_TASK, {
-    refetchQueries: [GET_TASKS_BY_TEAM, GET_TASK_BY_SLUG_AND_TEAM],
+    refetchQueries: [
+      GET_TASK_BY_SLUG_AND_TEAM,
+      GET_SPRINT_BY_ID,
+      GET_TASKS_BY_TEAM,
+    ],
   });
 
   const updateTask = async (updateTaskInput: UpdateTaskApi) => {

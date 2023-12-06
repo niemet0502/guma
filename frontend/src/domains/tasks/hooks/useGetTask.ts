@@ -22,7 +22,12 @@ export const GET_TASK_BY_SLUG_AND_TEAM = gql`
         username
       }
       parent_task_id
+      position
       sprint_id
+      sprint {
+        id
+        name
+      }
 
       status_id
       status {
@@ -49,7 +54,7 @@ export const GET_TASK_BY_SLUG_AND_TEAM = gql`
         name
         slug
         identifier
-
+        sprint_id
         assignee_to
         assignee {
           id

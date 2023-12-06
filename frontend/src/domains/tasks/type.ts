@@ -1,5 +1,6 @@
 import { User } from "../auth/services/types";
 import { LabelApi } from "../organization/services/type";
+import { SprintStatusEnum } from "../sprints/type";
 import { TeamApi } from "../teams/type";
 
 export enum ActivityAction {
@@ -38,6 +39,15 @@ export interface SprintApi {
   goal?: string;
   end_at: string;
   start_at: string;
+  isCompleted: boolean;
+  team_id: number;
+  status: SprintStatusEnum;
+  totalTasksUponClose: number;
+  unCompletedTasksUponClose: number;
+
+  tasks: TaskApi[];
+  unClosedTasks: TaskApi[];
+  team?: TeamApi;
 }
 
 export interface Activity {
@@ -88,6 +98,7 @@ export interface UpdateTaskApi {
   description?: string;
   type?: number;
   priority?: number;
+  position?: number;
   assignee_to?: number;
   parent_task_id?: number;
   sprint_id?: number;
@@ -124,6 +135,7 @@ export interface TaskApi {
   created_at: string;
   author: User;
   assignee_to: number;
+  position: number;
   assignee: User;
   parent_task_id: number;
   sprint_id: number;

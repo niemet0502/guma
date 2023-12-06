@@ -76,7 +76,7 @@ export const Sidebar: React.FC = () => {
               </>
             )}
             {data?.map((team) => (
-              <TeamCard team={team} />
+              <TeamCard team={team} key={team.id} />
             ))}
           </div>
         </div>

@@ -9,7 +9,7 @@ import { Member } from './entities/member.entity';
 
 @Injectable()
 export class MembersService {
-  private url = 'http://neka-data-access-1:3000/members/';
+  private url = 'http://localhost:5002/members/';
 
   constructor(
     private readonly http: HttpService,

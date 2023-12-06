@@ -22,6 +22,9 @@ export class UpdateTaskInput {
   parent_task_id?: number;
 
   @Field({ nullable: true })
+  position?: number;
+
+  @Field({ nullable: true })
   priority?: number;
 
   @Field({ nullable: true })

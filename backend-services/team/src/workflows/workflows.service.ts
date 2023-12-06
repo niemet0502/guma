@@ -9,7 +9,7 @@ import { Workflow } from './entities/workflow.entity';
 
 @Injectable()
 export class WorkflowsService {
-  private url = 'http://neka-data-access-1:3000/workflow/';
+  private url = 'http://localhost:5002/workflow/';
 
   constructor(
     private readonly http: HttpService,

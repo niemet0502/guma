@@ -1,10 +1,14 @@
 import {
   BadRequestException,
+  Inject,
   Injectable,
   NotFoundException,
+  forwardRef,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { OrganizationsService } from 'src/organizations/organizations.service';
+import { StatusService } from 'src/status/status.service';
+import { WorkflowService } from 'src/workflow/workflow.service';
 import { Repository } from 'typeorm';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
@@ -15,6 +19,10 @@ export class TeamsService {
   constructor(
     @InjectRepository(Team) private repo: Repository<Team>,
     private readonly organizationService: OrganizationsService,
+    @Inject(forwardRef(() => WorkflowService))
+    private readonly workflowService: WorkflowService,
+    @Inject(forwardRef(() => StatusService))
+    private readonly statusService: StatusService,
   ) {}
   async create(createTeamDto: CreateTeamDto): Promise<Team> {
     const { name, organization_id } = createTeamDto;
@@ -30,7 +38,24 @@ export class TeamsService {
     if (team) {
       throw new BadRequestException('The name is already in use');
     }
-    return await this.repo.save(createTeamDto);
+
+    const createdTeam = await this.repo.save(createTeamDto);
+
+    // created the default workflow for the team
+    const statuses = await this.statusService.findAll(
+      createdTeam.id.toString(),
+    );
+
+    statuses.map(
+      async (status, i) =>
+        await this.workflowService.create({
+          team_id: createdTeam.id,
+          status_id: status.id,
+          order_value: i++,
+        }),
+    );
+
+    return createdTeam;
   }
 
   async findAllByOrganization(organization_id: number): Promise<Team[]> {

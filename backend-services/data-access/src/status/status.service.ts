@@ -1,15 +1,22 @@
-import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  HttpException,
+  Inject,
+  Injectable,
+  NotFoundException,
+  forwardRef,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
+import { TeamsService } from '../teams/teams.service';
 import { CreateStatusDto } from './dto/create-status.dto';
 import { UpdateStatusDto } from './dto/update-status.dto';
 import { TaskStatus } from './entities/status.entity';
-import { TeamsService } from './teams.service';
 
 @Injectable()
 export class StatusService {
   constructor(
     @InjectRepository(TaskStatus) private repo: Repository<TaskStatus>,
+    @Inject(forwardRef(() => TeamsService))
     private readonly teamService: TeamsService,
   ) {}
 

@@ -7,7 +7,7 @@ import { Label } from './entities/label.entity';
 
 @Injectable()
 export class LabelsService {
-  private url = 'http://neka-data-access-1:3000/labels/';
+  private url = 'http://localhost:5002/labels/';
 
   constructor(private readonly http: HttpService) {}
 
@@ -22,7 +22,6 @@ export class LabelsService {
     const { data } = await firstValueFrom(
       this.http.get<Label[]>(this.url, { params: { organization_id } }),
     );
-
 
     return data;
   }

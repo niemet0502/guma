@@ -15,7 +15,7 @@ export const getHours = (date?: Date, separator = ":") => {
   return `${addZero(d.getHours())}${separator}${addZero(d.getMinutes())}`;
 };
 
-export const transformDate = (dateStr?: Date, hours = false) => {
+export const transformDate = (dateStr?: string, hours = false) => {
   if (!dateStr) return "";
   const date = new Date(dateStr);
   return `${addZero(date.getDate())}/${addZero(
@@ -23,7 +23,7 @@ export const transformDate = (dateStr?: Date, hours = false) => {
   )}/${date.getFullYear()} ${hours ? getHours(date) : ""}`;
 };
 
-export const transformDateToYYYMMDDFormat = (dateStr?: Date) => {
+export const transformDateToYYYMMDDFormat = (dateStr?: string) => {
   if (!dateStr) return "";
   const date = new Date(dateStr);
   return `${date.getFullYear()}-${addZero(date.getMonth() + 1)}-${addZero(
