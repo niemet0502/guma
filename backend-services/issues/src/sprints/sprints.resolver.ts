@@ -7,6 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { Team } from 'src/shared/team.entity';
 import { CompleteSprintInput } from './dto/complete-sprint.input';
 import { CreateSprintInput } from './dto/create-sprint.input';
 import { UpdateSprintInput } from './dto/update-sprint.input';
@@ -59,7 +60,11 @@ export class SprintsResolver {
   @ResolveField()
   unClosedTasks(@Parent() sprint: Sprint) {
     const { id } = sprint;
-
     return this.sprintsService.getUncompletedTasks(id);
+  }
+
+  @ResolveField(() => Team)
+  team(@Parent() sprint: Sprint): any {
+    return { __typename: 'Team', id: sprint.team_id };
   }
 }

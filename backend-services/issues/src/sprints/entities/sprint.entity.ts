@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Team } from '../../shared/team.entity';
 import { Task } from '../../tasks/entities/task.entity';
 import { SprintStatusEnum } from '../sprint.enum';
 
@@ -27,6 +28,9 @@ export class Sprint {
 
   @Field({ nullable: false })
   team_id: number;
+
+  @Field((type) => Team)
+  team?: Team;
 
   @Field({ nullable: true })
   isCompleted: boolean;
