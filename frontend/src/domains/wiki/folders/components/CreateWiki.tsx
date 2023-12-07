@@ -22,7 +22,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useCreateDocument } from "../../documents/hooks/useCreateDocument";
+import { DocumentApi } from "../../documents/type";
 import { useCreateFolder } from "../hooks/useCreateFolder";
+import { useUpdateFolder } from "../hooks/useUpdateFolder";
+import { FolderApi } from "../type";
 
 const formSchema = z.object({
   type: z.string().min(1).max(1),
@@ -33,17 +36,21 @@ export const CreateWikiForm: React.FC<{
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
   team_id?: number;
   folder_id?: number;
-}> = ({ onOpenChange, team_id, folder_id }) => {
+  wikiToEdit?: FolderApi | DocumentApi;
+}> = ({ onOpenChange, team_id, folder_id, wikiToEdit }) => {
   const { toast } = useToast();
 
   const { createFolder } = useCreateFolder();
   const { createDocument } = useCreateDocument();
+  const { updateFolder } = useUpdateFolder();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      type: "1",
-    },
+    defaultValues: wikiToEdit
+      ? { name: wikiToEdit.name, type: "2" }
+      : {
+          type: "1",
+        },
   });
 
   const selectedType = form.watch("type");
@@ -53,23 +60,34 @@ export const CreateWikiForm: React.FC<{
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     const { type, name } = data;
 
-    if (type === "1") {
-      createDocument({ name, team_id, folder_id }, () => {
+    if (wikiToEdit) {
+      updateFolder({ id: wikiToEdit.id, name }, () => {
         toast({
           title: "Success !",
-          description: "Document successfully created",
+          description: "Folder successfully updated",
         });
 
         onOpenChange(false);
       });
     } else {
-      createFolder({ name, team_id: team_id! }, () => {
-        toast({
-          title: "Success !",
-          description: "Folder successfully created",
+      if (type === "1") {
+        createDocument({ name, team_id, folder_id }, () => {
+          toast({
+            title: "Success !",
+            description: "Document successfully created",
+          });
+
+          onOpenChange(false);
         });
-        onOpenChange(false);
-      });
+      } else {
+        createFolder({ name, team_id: team_id! }, () => {
+          toast({
+            title: "Success !",
+            description: "Folder successfully created",
+          });
+          onOpenChange(false);
+        });
+      }
     }
   };
 
@@ -89,7 +107,7 @@ export const CreateWikiForm: React.FC<{
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
-                  disabled={folder_id !== undefined}
+                  disabled={!!folder_id || !!wikiToEdit}
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -129,11 +147,11 @@ export const CreateWikiForm: React.FC<{
             <Button
               variant="outline"
               type="button"
-              //   onClick={() => onOpenChange(false)}
+              onClick={() => onOpenChange(false)}
             >
               Cancel
             </Button>
-            <Button type="submit">Create </Button>
+            <Button type="submit">{wikiToEdit ? "Save" : "Create"} </Button>
           </div>
         </form>
       </Form>

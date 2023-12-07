@@ -6,15 +6,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { useState } from "react";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
-import { BiDotsHorizontalRounded, BiLink } from "react-icons/bi";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { NavLink, useParams } from "react-router-dom";
@@ -31,6 +24,7 @@ export const FolderDetails: React.FC = () => {
   const { data } = useGetFolder(folderId as string);
 
   const [open, setOpen] = useState(false);
+  const [opent, setOpent] = useState(false);
 
   const { removeFolder } = useRemoveFolder();
 
@@ -49,7 +43,26 @@ export const FolderDetails: React.FC = () => {
             <RiArrowRightSLine className="mt-0.5" />
             {data?.name}
           </p>
-          <DropdownMenu>
+          <div className="ml-2 flex items-center gap-1">
+            <Dialog open={opent} onOpenChange={setOpent} modal={false}>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="icon" className="w-4">
+                  <MdOutlineEdit />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="lg:w-[800px] sm:max-w-[550px]">
+                <DialogHeader>
+                  <DialogTitle>Edit wiki</DialogTitle>
+                </DialogHeader>
+                <CreateWikiForm onOpenChange={setOpent} wikiToEdit={data} />
+              </DialogContent>
+            </Dialog>
+
+            <Button variant="outline" size="icon" className="w-4">
+              <AiOutlineDelete />
+            </Button>
+          </div>
+          {/* <DropdownMenu>
             <DropdownMenuTrigger className="ml-2 mt-1">
               <BiDotsHorizontalRounded className="text-muted-foreground hover:text-white" />
             </DropdownMenuTrigger>
@@ -67,7 +80,7 @@ export const FolderDetails: React.FC = () => {
                 </Button>
               </DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu> */}
         </div>
         <Dialog open={open} onOpenChange={setOpen} modal={false}>
           <DialogTrigger asChild>
