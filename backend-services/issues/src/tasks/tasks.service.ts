@@ -6,6 +6,7 @@ import { ActivitiesService } from 'src/activities/activities.service';
 import { CommentsService } from 'src/comments/comments.service';
 import { LabelsService } from 'src/labels/labels.service';
 import { removeSpacesAndSpecialChars } from 'src/utils/Helper';
+import { SprintsService } from '../sprints/sprints.service';
 import { CreateTaskInput } from './dto/create-task.input';
 import { UpdateTaskInput } from './dto/update-task.input';
 import { Task } from './entities/task.entity';
@@ -20,6 +21,7 @@ export class TasksService {
     @Inject(forwardRef(() => ActivitiesService))
     private readonly activityService: ActivitiesService,
     private readonly labelService: LabelsService,
+    private readonly sprintService: SprintsService,
   ) {}
 
   async create(createTaskInput: CreateTaskInput) {
@@ -55,6 +57,9 @@ export class TasksService {
     status_name: string,
     parent_task_id: number,
     sprint_id: number,
+    sprint_history: number,
+    sortAsc?: boolean,
+    sortBy?: string,
   ): Promise<Task[]> {
     const { data } = await firstValueFrom(
       this.http.get<Task[]>(this.url, {
@@ -64,6 +69,9 @@ export class TasksService {
           status_name,
           parent_task_id,
           sprint_id,
+          sprint_history,
+          sortAsc,
+          sortBy,
         },
       }),
     );
@@ -133,5 +141,9 @@ export class TasksService {
 
   async getLabels(task_id: number) {
     return await this.labelService.findAllByTask(task_id);
+  }
+
+  async getSprint(sprint_id: number) {
+    return await this.sprintService.findOne(sprint_id);
   }
 }

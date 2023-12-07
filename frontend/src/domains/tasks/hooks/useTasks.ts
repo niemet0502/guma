@@ -23,7 +23,7 @@ export const GET_TASKS_BY_TEAM = gql`
       priority
       slug
       parent_task_id
-
+      position
       status {
         id
         name
@@ -53,6 +53,12 @@ export const GET_TASKS_BY_TEAM = gql`
           id
           name
         }
+      }
+
+      sprint_id
+      sprint {
+        id
+        name
       }
     }
   }

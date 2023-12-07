@@ -3,6 +3,8 @@ import { SignIn } from "@/domains/auth/SignIn";
 import { SignUp } from "@/domains/auth/SignUp";
 import { NotificationsList } from "@/domains/notifications/NotificationsList";
 import { OrganizationForm } from "@/domains/organization/OrganizationForm";
+import { SprintDetails } from "@/domains/sprints/pages/Details";
+import { SprintList } from "@/domains/sprints/pages/List";
 import { TaskDetails } from "@/domains/tasks/pages/Details";
 import { TaskList } from "@/domains/tasks/pages/List";
 import { Documents } from "@/domains/wiki/documents/Documents";
@@ -67,6 +69,19 @@ export const router = createBrowserRouter([
                   {
                     path: "/:orgaId/team/:teamId/wiki/doc/:docId",
                     element: <DocumentDetails />,
+                  },
+                ],
+              },
+              {
+                path: "team/:teamId/sprints",
+                children: [
+                  {
+                    index: true,
+                    element: <SprintList />,
+                  },
+                  {
+                    path: "/:orgaId/team/:teamId/sprints/:sprintId",
+                    element: <SprintDetails />,
                   },
                 ],
               },

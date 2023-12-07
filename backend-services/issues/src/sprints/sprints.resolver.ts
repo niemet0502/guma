@@ -7,6 +7,8 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { Team } from 'src/shared/team.entity';
+import { CompleteSprintInput } from './dto/complete-sprint.input';
 import { CreateSprintInput } from './dto/create-sprint.input';
 import { UpdateSprintInput } from './dto/update-sprint.input';
 import { Sprint } from './entities/sprint.entity';
@@ -21,6 +23,14 @@ export class SprintsResolver {
     @Args('createSprintInput') createSprintInput: CreateSprintInput,
   ) {
     return this.sprintsService.create(createSprintInput);
+  }
+
+  @Mutation(() => Sprint)
+  completeSprint(
+    @Args('completeSprintInput') completeSprintInput: CompleteSprintInput,
+  ) {
+    const { id } = completeSprintInput;
+    return this.sprintsService.complete(id, completeSprintInput);
   }
 
   @Query(() => [Sprint], { name: 'sprints' })
@@ -45,5 +55,16 @@ export class SprintsResolver {
     const { id } = sprint;
 
     return this.sprintsService.getTasks(id);
+  }
+
+  @ResolveField()
+  unClosedTasks(@Parent() sprint: Sprint) {
+    const { id } = sprint;
+    return this.sprintsService.getUncompletedTasks(id);
+  }
+
+  @ResolveField(() => Team)
+  team(@Parent() sprint: Sprint): any {
+    return { __typename: 'Team', id: sprint.team_id };
   }
 }

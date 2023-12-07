@@ -19,6 +19,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { User } from "@/domains/auth/services/types";
+import { SprintBadge } from "@/domains/sprints/components/SprintBadge";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { NavLink, useParams } from "react-router-dom";
 import { taskPriority } from "../constantes";
@@ -89,6 +90,13 @@ export const TaskItem: React.FC<{ task: TaskApi; members?: User[] }> = ({
             {label.name}
           </Badge>
         ))}
+
+        {task.sprint && task.sprint.name && (
+          <NavLink to={`/${orgaId}/team/${teamId}/sprints/${task.sprint_id}`}>
+            <SprintBadge name={task.sprint.name} />
+          </NavLink>
+        )}
+
         <span>{transformDateToMonthDay(task.created_at)}.</span>
 
         <Popover open={open} onOpenChange={setOpen}>

@@ -1,4 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
+import { SprintStatusEnum } from '../sprint.enum';
 
 @InputType()
 export class CreateSprintInput {
@@ -16,6 +17,9 @@ export class CreateSprintInput {
 
   @Field({ nullable: true })
   goal: string;
+
+  @Field({ nullable: true })
+  status?: SprintStatusEnum;
 
   @Field({ nullable: false })
   team_id: number;

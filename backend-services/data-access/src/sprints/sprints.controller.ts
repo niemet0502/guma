@@ -9,6 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { CompleteSprintDto } from './dto/complete-sprint.dto';
 import { CreateSprintDto } from './dto/create-sprint.dto';
 import { UpdateSprintDto } from './dto/update-sprint.dto';
 import { Sprint } from './entities/sprint.entity';
@@ -23,6 +24,15 @@ export class SprintsController {
   @ApiCreatedResponse({ type: Sprint })
   create(@Body() createSprintDto: CreateSprintDto): Promise<Sprint> {
     return this.sprintsService.create(createSprintDto);
+  }
+
+  @Post('/complete/:id')
+  @ApiOkResponse({ type: Sprint })
+  complete(
+    @Body() completeSprint: CompleteSprintDto,
+    @Param('id') id: string,
+  ): Promise<Sprint> {
+    return this.sprintsService.complete(+id, completeSprint);
   }
 
   @Get()

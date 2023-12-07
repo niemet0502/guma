@@ -37,6 +37,12 @@ export class Task {
   @Column({ nullable: false })
   assignee_to: number;
 
+  @Column('double precision', { nullable: true })
+  position: number;
+
+  @Column({ nullable: true })
+  sprint_history: number;
+
   @Column({ nullable: true })
   parent_task_id: number;
 

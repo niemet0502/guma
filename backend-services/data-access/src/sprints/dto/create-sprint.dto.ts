@@ -23,7 +23,6 @@ export class CreateSprintDto {
   @ApiProperty({ required: false })
   public end_at: Date;
 
-  @IsNotEmpty()
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: false })
   public duration: number;
 }
