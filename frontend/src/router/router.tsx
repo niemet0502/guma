@@ -7,9 +7,12 @@ import { SprintDetails } from "@/domains/sprints/pages/Details";
 import { SprintList } from "@/domains/sprints/pages/List";
 import { TaskDetails } from "@/domains/tasks/pages/Details";
 import { TaskList } from "@/domains/tasks/pages/List";
+import { Documents } from "@/domains/wiki/documents/Documents";
+import { DocumentDetails } from "@/domains/wiki/documents/pages/Details";
+import { FolderDetails } from "@/domains/wiki/folders/pages/Details";
+import { Wiki } from "@/domains/wiki/pages/List";
 import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "../Layout/Layout";
-import { Documents } from "../domains/documents/Documents";
 import {
   AuthenticationGuard,
   UnAuthenticationGuard,
@@ -21,73 +24,95 @@ const NotFoundPage = () => {
 
 export const router = createBrowserRouter([
   {
-    element: <AuthenticationGuard />,
+    path: "/",
     children: [
       {
-        path: "/:orgaId",
-        element: <Layout />,
+        element: <AuthenticationGuard />,
         children: [
           {
-            index: true,
-            path: "documents",
-            element: <Documents />,
-          },
-          {
-            path: "notifications",
-            element: <NotificationsList />,
-          },
-          {
-            path: "team/:teamId/issues",
+            path: "/:orgaId",
+            element: <Layout />,
             children: [
               {
                 index: true,
-                element: <TaskList />,
+                path: "documents",
+                element: <Documents />,
               },
               {
-                path: "/:orgaId/team/:teamId/issues/:issueId",
-                element: <TaskDetails />,
+                path: "notifications",
+                element: <NotificationsList />,
+              },
+              {
+                path: "team/:teamId/issues",
+                children: [
+                  {
+                    index: true,
+                    element: <TaskList />,
+                  },
+                  {
+                    path: "/:orgaId/team/:teamId/issues/:issueId",
+                    element: <TaskDetails />,
+                  },
+                ],
+              },
+              {
+                path: "team/:teamId/wiki",
+                children: [
+                  {
+                    index: true,
+                    element: <Wiki />,
+                  },
+                  {
+                    path: "/:orgaId/team/:teamId/wiki/folder/:folderId",
+                    element: <FolderDetails />,
+                  },
+                  {
+                    path: "/:orgaId/team/:teamId/wiki/doc/:docId",
+                    element: <DocumentDetails />,
+                  },
+                ],
+              },
+              {
+                path: "team/:teamId/sprints",
+                children: [
+                  {
+                    index: true,
+                    element: <SprintList />,
+                  },
+                  {
+                    path: "/:orgaId/team/:teamId/sprints/:sprintId",
+                    element: <SprintDetails />,
+                  },
+                ],
+              },
+              {
+                path: "*", // Matches any path not covered by previous routes
+                element: <NotFoundPage />, // Display a "Not Found" page or error message
               },
             ],
           },
           {
-            path: "team/:teamId/sprints",
-            children: [
-              {
-                index: true,
-                element: <SprintList />,
-              },
-              {
-                path: "/:orgaId/team/:teamId/sprints/:sprintId",
-                element: <SprintDetails />,
-              },
-            ],
-          },
-          {
-            path: "*", // Matches any path not covered by previous routes
-            element: <NotFoundPage />, // Display a "Not Found" page or error message
+            path: "/create-workspace",
+            element: <OrganizationForm />,
           },
         ],
       },
       {
-        path: "/create-workspace",
-        element: <OrganizationForm />,
-      },
-    ],
-  },
-  {
-    element: <UnAuthenticationGuard />,
-    children: [
-      {
-        path: "/auth",
-        element: <AuthPage />,
+        element: <UnAuthenticationGuard />,
         children: [
           {
-            path: "signin",
-            element: <SignIn />,
-          },
-          {
-            path: "signup",
-            element: <SignUp />,
+            path: "/auth",
+            element: <AuthPage />,
+            children: [
+              {
+                path: "signin",
+                element: <SignIn />,
+              },
+              {
+                path: "signup",
+                element: <SignUp />,
+              },
+            ],
           },
         ],
       },

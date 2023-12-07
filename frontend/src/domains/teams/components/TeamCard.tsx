@@ -69,13 +69,13 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
                   Issues
                 </NavLink>
                 <NavLink
-                  to={`/${orgaId}/team/${team.name.toLowerCase()}/documents`}
+                  to={`/${orgaId}/team/${team.name.toLowerCase()}/wiki`}
                   className={({ isActive, isPending }) =>
                     isActive ? "active" : isPending ? "default" : "default"
                   }
                 >
                   <HiOutlineDocumentDuplicate className="text-base" />
-                  Documents
+                  Wiki
                 </NavLink>
 
                 <NavLink

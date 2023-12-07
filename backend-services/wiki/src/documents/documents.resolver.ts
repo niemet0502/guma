@@ -7,6 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { CurrentUser } from 'src/shared/current-user.decator';
 import { User } from 'src/shared/user.entity';
 import { Team } from '../shared/team.entity';
 import { DocumentsService } from './documents.service';
@@ -21,9 +22,13 @@ export class DocumentsResolver {
   @Mutation(() => Document)
   createDocument(
     @Args('createDocumentInput') createDocumentInput: CreateDocumentInput,
+    @CurrentUser() user: User,
   ) {
     // TODO get the user.id from the context
-    return this.documentsService.create(createDocumentInput);
+    return this.documentsService.create({
+      ...createDocumentInput,
+      created_by: +user.id,
+    });
   }
 
   @Query(() => [Document], { name: 'documents' })

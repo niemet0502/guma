@@ -9,13 +9,12 @@ import { Repository } from 'typeorm';
 import { CreateDocumentDto } from './dto/create-document.dto';
 import { UpdateDocumentDto } from './dto/update-document.dto';
 import { Document } from './entities/document.entity';
-import { FolderService } from './folders.service';
 
 @Injectable()
 export class DocumentsService {
   constructor(
     @InjectRepository(Document) private docRepository: Repository<Document>,
-    private readonly folderService: FolderService,
+    // private readonly folderService: FolderService,
     private readonly teamService: TeamsService,
   ) {}
 
@@ -35,13 +34,14 @@ export class DocumentsService {
       }
     }
 
-    if (folder_id) {
-      const folder = await this.folderService.findOne(folder_id);
+    // if (folder_id) {
+    //   const folder = await this.folderService.findOne(folder_id);
 
-      if (!folder) {
-        throw new NotFoundException('Team not found');
-      }
-    }
+    //   if (!folder) {
+    //     throw new NotFoundException('Folder not found');
+    //   }
+    // }
+
     return await this.docRepository.save({
       ...createDocumentDto,
       created_at: new Date().toLocaleString(),
@@ -90,5 +90,9 @@ export class DocumentsService {
     }
 
     return await this.docRepository.remove(doc);
+  }
+
+  async removeDocuments(folder_id: number) {
+    return await this.docRepository.delete({ folder_id });
   }
 }

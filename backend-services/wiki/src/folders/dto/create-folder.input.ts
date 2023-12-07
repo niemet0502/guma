@@ -7,4 +7,7 @@ export class CreateFolderInput {
 
   @Field({ nullable: false })
   team_id: number;
+
+  @Field({ nullable: true })
+  created_by?: number;
 }

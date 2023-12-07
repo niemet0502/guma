@@ -7,6 +7,8 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { CurrentUser } from 'src/shared/current-user.decator';
+import { User } from 'src/shared/user.entity';
 import { Team } from '../shared/team.entity';
 import { CreateFolderInput } from './dto/create-folder.input';
 import { UpdateFolderInput } from './dto/update-folder.input';
@@ -20,8 +22,12 @@ export class FoldersResolver {
   @Mutation(() => Folder)
   createFolder(
     @Args('createFolderInput') createFolderInput: CreateFolderInput,
+    @CurrentUser() user: User,
   ) {
-    return this.foldersService.create(createFolderInput);
+    return this.foldersService.create({
+      ...createFolderInput,
+      created_by: +user.id,
+    });
   }
 
   @Query(() => [Folder], { name: 'folders' })
@@ -54,5 +60,11 @@ export class FoldersResolver {
   @ResolveField(() => Team)
   team(@Parent() folder: Folder): any {
     return { __typename: 'Team', id: folder.team_id };
+  }
+
+  @ResolveField(() => User)
+  author(@Parent() folder: Folder): any {
+    if (!folder.created_by) return;
+    return { __typename: 'User', id: folder.created_by };
   }
 }

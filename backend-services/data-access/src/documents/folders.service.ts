@@ -2,6 +2,7 @@ import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TeamsService } from '../teams/teams.service';
+import { DocumentsService } from './documents.service';
 import { CreateFolderDto } from './dto/create-folder.dto';
 import { UpdateFolderDto } from './dto/update-folder.dto';
 import { Folder } from './entities/folder.entity';
@@ -11,6 +12,7 @@ export class FolderService {
   constructor(
     @InjectRepository(Folder) private folderRepository: Repository<Folder>,
     private readonly teamService: TeamsService,
+    private readonly docService: DocumentsService,
   ) {}
 
   async create(createFolderDto: CreateFolderDto): Promise<Folder> {
@@ -64,6 +66,9 @@ export class FolderService {
     if (!orga) {
       throw new NotFoundException('Folder not found');
     }
+
+    // remove fodler's documents
+    await this.docService.removeDocuments(id);
 
     return await this.folderRepository.remove(orga);
   }
