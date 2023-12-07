@@ -2,15 +2,18 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiArrowRightSLine } from "react-icons/ri";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { DocumentItem } from "../../documents/components/DocumentItem";
 import { CreateWikiForm } from "../components/CreateWiki";
 import { useGetFolder } from "../hooks/useGetFolder";
@@ -22,13 +25,22 @@ export const FolderDetails: React.FC = () => {
     folderId: string;
   }>();
   const { data } = useGetFolder(folderId as string);
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
   const [open, setOpen] = useState(false);
   const [opent, setOpent] = useState(false);
 
   const { removeFolder } = useRemoveFolder();
 
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    removeFolder({ variables: { id: data?.id } });
+    toast({
+      title: "Success",
+      description: "The folder has been successfully removed",
+    });
+    navigate(-1);
+  };
   return (
     <div className="w-full h-full">
       <div className="bg-secondary py-3 px-5 flex items-center justify-between">
@@ -58,9 +70,30 @@ export const FolderDetails: React.FC = () => {
               </DialogContent>
             </Dialog>
 
-            <Button variant="outline" size="icon" className="w-4">
-              <AiOutlineDelete />
-            </Button>
+            <Dialog>
+              <DialogTrigger>
+                <Button variant="outline" size="icon" className="w-4">
+                  <AiOutlineDelete />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="w-[450px]">
+                <DialogHeader>
+                  <DialogTitle>
+                    You are about to delete {data?.name}
+                  </DialogTitle>
+                  <DialogDescription>
+                    This action cannot be undone all files related to this
+                    folder will be deleted as well. Are you sure you want to
+                    permanently delete this folder ?
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <Button type="button" onClick={handleDelete}>
+                    Confirm
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
           {/* <DropdownMenu>
             <DropdownMenuTrigger className="ml-2 mt-1">
