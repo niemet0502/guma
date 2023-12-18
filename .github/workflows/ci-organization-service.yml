@@ -1,0 +1,15 @@
+name: CI organization service
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "backend-service/organization/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
