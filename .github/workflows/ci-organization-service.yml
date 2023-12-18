@@ -1,9 +1,8 @@
 name: CI organization service
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    branches: [main]
     paths:
       - "backend-service/organization/**"
 
