@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - "backend-service/organization/**"
+      - "backend-services/organization/**"
 
 jobs:
   build:
