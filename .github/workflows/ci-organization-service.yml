@@ -15,12 +15,12 @@ jobs:
 
       - name: Set up Docker
         uses: actions/setup-docker@v2
-        with:
-          context: ./backend-services/organization
-          dockerfile: Dockerfile
+        # with:
+        #   context: ./backend-services/organization
+        #   dockerfile: Dockerfile
 
       - name: Build Docker image for testing
-        run: docker build -t test-image .
+        run: docker build -t test-image ./backend-services/organization
 
         # - name: Run tests inside Docker container
         #   run: docker run test-image npm test
