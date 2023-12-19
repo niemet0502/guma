@@ -12,3 +12,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Set up Docker
+          uses: actions/setup-docker@v2
+          with:
+            context: ./backend-services/organization
+            dockerfile: Dockerfile
+
+        - name: Build Docker image for testing
+          run: docker build -t test-image .
+
+        # - name: Run tests inside Docker container
+        #   run: docker run test-image npm test
