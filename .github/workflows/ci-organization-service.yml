@@ -19,5 +19,5 @@ jobs:
       - name: Build Docker image for testing
         run: docker build --target prod  -t test-image ./backend-services/organization
 
-        # - name: Run tests inside Docker container
-        #   run: docker run test-image npm test
+      - name: Run tests inside Docker container
+        run: docker run test-image npm run test
