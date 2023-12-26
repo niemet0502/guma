@@ -2,11 +2,26 @@ name: CI organization service
 
 on:
   pull_request:
-    branches: [main]
+    branches: ["main"]
     paths:
       - "backend-services/organization/**"
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16.x"
+
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm test
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -18,6 +33,3 @@ jobs:
 
       - name: Build Docker image for testing
         run: docker build --target prod  -t test-image ./backend-services/organization
-
-      - name: Run tests inside Docker container
-        run: docker run test-image npm run test
