@@ -18,12 +18,19 @@ jobs:
         with:
           node-version: "16.x"
 
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test
+      - name: Set working directory
+        run: cd backend-services/organization
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run the tests
+        run: npm run test
 
   build:
+    needs: test
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
