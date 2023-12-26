@@ -9,6 +9,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend-services/organization
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -18,11 +22,8 @@ jobs:
         with:
           node-version: "16.x"
 
-      - name: Set working directory
-        run: cd backend-services/organization
-
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run the tests
         run: npm run test
