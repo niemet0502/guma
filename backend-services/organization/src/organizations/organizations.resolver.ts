@@ -8,9 +8,9 @@ import {
   ResolveReference,
   Resolver,
 } from '@nestjs/graphql';
-import { LabelsService } from 'src/labels/labels.service';
-import { CurrentUser } from 'src/utils/current-user.decorator';
+import { LabelsService } from '../labels/labels.service';
 import { User } from '../shared/user.entity';
+import { CurrentUser } from '../utils/current-user.decorator';
 import { CreateOrganizationInput } from './dto/create-organization.input';
 import { UpdateOrganizationInput } from './dto/update-organization.input';
 import { Organization } from './entities/organization.entity';

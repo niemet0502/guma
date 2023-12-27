@@ -1,12 +1,12 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { TaskLabel } from 'src/labels/entities/label.entity';
-import { TaskType } from 'src/shared/tasks.enum';
-import { Sprint } from 'src/sprints/entities/sprint.entity';
 import { Activity } from '../../activities/entities/activity.entity';
 import { Comment } from '../../comments/entities/comment.entity';
+import { TaskLabel } from '../../labels/entities/label.entity';
 import { Status } from '../../shared/status.entity';
+import { TaskType } from '../../shared/tasks.enum';
 import { Team } from '../../shared/team.entity';
 import { User } from '../../shared/user.entity';
+import { Sprint } from '../../sprints/entities/sprint.entity';
 
 @ObjectType()
 export class Task {
