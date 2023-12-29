@@ -14,14 +14,14 @@ import * as process from 'process';
 const traceExporter = new ConsoleSpanExporter();
 
 const oltpExporter = new OTLPTraceExporter({
-  url: `http://localhost:55680`,
+  url: `http://localhost:62691/`,
 });
 
 export const otelSDK = new NodeSDK({
   resource: new Resource({
     [SemanticResourceAttributes.SERVICE_NAME]: `gateway`,
   }),
-  spanProcessor: new SimpleSpanProcessor(traceExporter),
+  spanProcessor: new SimpleSpanProcessor(oltpExporter),
   instrumentations: [
     new HttpInstrumentation(),
     new ExpressInstrumentation(),
