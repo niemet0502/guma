@@ -2,8 +2,10 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { otelSDK } from './tracing';
 
 async function bootstrap() {
+  await otelSDK.start();
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
