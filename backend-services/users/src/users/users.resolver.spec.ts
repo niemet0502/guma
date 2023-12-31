@@ -5,10 +5,15 @@ import { UsersService } from './users.service';
 describe('UsersResolver', () => {
   let resolver: UsersResolver;
 
+  const userServiceMock = {};
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [UsersResolver, UsersService],
-    }).compile();
+    })
+      .overrideProvider(UsersService)
+      .useValue(userServiceMock)
+      .compile();
 
     resolver = module.get<UsersResolver>(UsersResolver);
   });

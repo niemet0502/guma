@@ -1,7 +1,7 @@
 import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
-import { Member } from 'src/shared/member.entity';
-import { Organization } from 'src/shared/organization.entity';
 import { Profile } from '../../profiles/entities/profile.entity';
+import { Member } from '../../shared/member.entity';
+import { Organization } from '../../shared/organization.entity';
 
 @ObjectType()
 @Directive('@key(fields: "id")')

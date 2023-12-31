@@ -8,8 +8,8 @@ import {
   ResolveReference,
   Resolver,
 } from '@nestjs/graphql';
-import { Member } from 'src/shared/member.entity';
 import { Profile } from '../profiles/entities/profile.entity';
+import { Member } from '../shared/member.entity';
 import { Organization } from '../shared/organization.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
