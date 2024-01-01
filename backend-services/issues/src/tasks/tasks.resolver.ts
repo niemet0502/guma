@@ -7,10 +7,10 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { CurrentUser } from 'src/shared/current-user.decator';
-import { Team } from 'src/shared/team.entity';
-import { User } from 'src/shared/user.entity';
+import { CurrentUser } from '../shared/current-user.decator';
 import { Status } from '../shared/status.entity';
+import { Team } from '../shared/team.entity';
+import { User } from '../shared/user.entity';
 import { CreateTaskInput } from './dto/create-task.input';
 import { UpdateTaskInput } from './dto/update-task.input';
 import { Task } from './entities/task.entity';

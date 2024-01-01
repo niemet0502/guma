@@ -7,8 +7,8 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { CurrentUser } from 'src/shared/current-user.decator';
-import { Status } from 'src/shared/status.entity';
+import { CurrentUser } from '../shared/current-user.decator';
+import { Status } from '../shared/status.entity';
 import { User } from '../shared/user.entity';
 import { Sprint } from '../sprints/entities/sprint.entity';
 import { ActivitiesService } from './activities.service';

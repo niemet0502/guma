@@ -5,10 +5,15 @@ import { TasksService } from './tasks.service';
 describe('TasksResolver', () => {
   let resolver: TasksResolver;
 
+  const taskServiceMock = {};
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [TasksResolver, TasksService],
-    }).compile();
+    })
+      .overrideProvider(TasksService)
+      .useValue(taskServiceMock)
+      .compile();
 
     resolver = module.get<TasksResolver>(TasksResolver);
   });
