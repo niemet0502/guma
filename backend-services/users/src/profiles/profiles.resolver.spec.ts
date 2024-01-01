@@ -5,10 +5,15 @@ import { ProfilesService } from './profiles.service';
 describe('ProfilesResolver', () => {
   let resolver: ProfilesResolver;
 
+  const profileServiceMock = {};
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [ProfilesResolver, ProfilesService],
-    }).compile();
+    })
+      .overrideProvider(ProfilesService)
+      .useValue(profileServiceMock)
+      .compile();
 
     resolver = module.get<ProfilesResolver>(ProfilesResolver);
   });

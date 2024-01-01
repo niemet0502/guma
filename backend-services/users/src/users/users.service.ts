@@ -1,8 +1,8 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
-import { ProfilesService } from 'src/profiles/profiles.service';
 import { Profile } from '../profiles/entities/profile.entity';
+import { ProfilesService } from '../profiles/profiles.service';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
