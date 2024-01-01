@@ -1,7 +1,7 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { User } from 'src/shared/user.entity';
 import { Document } from '../../documents/entities/document.entity';
 import { Team } from '../../shared/team.entity';
+import { User } from '../../shared/user.entity';
 
 @ObjectType()
 export class Folder {
