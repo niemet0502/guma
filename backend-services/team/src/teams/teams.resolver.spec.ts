@@ -5,10 +5,15 @@ import { TeamsService } from './teams.service';
 describe('TeamsResolver', () => {
   let resolver: TeamsResolver;
 
+  const teamServiceMock = {};
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [TeamsResolver, TeamsService],
-    }).compile();
+    })
+      .overrideProvider(TeamsService)
+      .useValue(teamServiceMock)
+      .compile();
 
     resolver = module.get<TeamsResolver>(TeamsResolver);
   });
