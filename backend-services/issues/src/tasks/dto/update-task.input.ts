@@ -1,5 +1,5 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
-import { ActivityAction } from 'src/shared/tasks.enum';
+import { ActivityAction } from '../../shared/tasks.enum';
 
 @InputType()
 export class UpdateTaskInput {

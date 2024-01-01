@@ -1,6 +1,6 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Status } from 'src/shared/status.entity';
-import { ActivityAction } from 'src/shared/tasks.enum';
+import { Status } from '../../shared/status.entity';
+import { ActivityAction } from '../../shared/tasks.enum';
 import { User } from '../../shared/user.entity';
 import { Sprint } from '../../sprints/entities/sprint.entity';
 
