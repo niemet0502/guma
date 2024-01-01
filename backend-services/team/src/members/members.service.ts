@@ -1,8 +1,8 @@
 import { HttpService } from '@nestjs/axios';
 import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
-import { TeamsService } from 'src/teams/teams.service';
 import { Team } from '../teams/entities/team.entity';
+import { TeamsService } from '../teams/teams.service';
 import { CreateMemberInput } from './dto/create-member.input';
 import { UpdateMemberInput } from './dto/update-member.input';
 import { Member } from './entities/member.entity';

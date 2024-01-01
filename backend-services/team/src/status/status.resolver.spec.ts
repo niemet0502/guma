@@ -5,10 +5,15 @@ import { StatusService } from './status.service';
 describe('StatusResolver', () => {
   let resolver: StatusResolver;
 
+  const statusServiceMock = {};
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [StatusResolver, StatusService],
-    }).compile();
+    })
+      .overrideProvider(StatusService)
+      .useValue(statusServiceMock)
+      .compile();
 
     resolver = module.get<StatusResolver>(StatusResolver);
   });
