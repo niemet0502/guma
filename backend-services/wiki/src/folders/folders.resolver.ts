@@ -7,9 +7,9 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { CurrentUser } from 'src/shared/current-user.decator';
-import { User } from 'src/shared/user.entity';
+import { CurrentUser } from '../shared/current-user.decator';
 import { Team } from '../shared/team.entity';
+import { User } from '../shared/user.entity';
 import { CreateFolderInput } from './dto/create-folder.input';
 import { UpdateFolderInput } from './dto/update-folder.input';
 import { Folder } from './entities/folder.entity';

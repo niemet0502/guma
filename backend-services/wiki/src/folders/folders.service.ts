@@ -1,7 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
-import { DocumentsService } from 'src/documents/documents.service';
+import { DocumentsService } from '../documents/documents.service';
 import { CreateFolderInput } from './dto/create-folder.input';
 import { UpdateFolderInput } from './dto/update-folder.input';
 import { Folder } from './entities/folder.entity';
