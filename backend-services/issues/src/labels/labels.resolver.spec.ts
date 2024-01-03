@@ -5,10 +5,15 @@ import { LabelsService } from './labels.service';
 describe('LabelsResolver', () => {
   let resolver: LabelsResolver;
 
+  const labelServiceMock = {};
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [LabelsResolver, LabelsService],
-    }).compile();
+    })
+      .overrideProvider(LabelsService)
+      .useValue(labelServiceMock)
+      .compile();
 
     resolver = module.get<LabelsResolver>(LabelsResolver);
   });

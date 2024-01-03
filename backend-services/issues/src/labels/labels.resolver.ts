@@ -7,7 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { Label } from 'src/shared/label.entity';
+import { Label } from '../shared/label.entity';
 import { CreateTaskLabelInput } from './dto/create-label.input';
 import { TaskLabel } from './entities/label.entity';
 import { LabelsService } from './labels.service';

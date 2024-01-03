@@ -5,10 +5,15 @@ import { SprintsService } from './sprints.service';
 describe('SprintsResolver', () => {
   let resolver: SprintsResolver;
 
+  const sprintServiceMock = {};
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [SprintsResolver, SprintsService],
-    }).compile();
+    })
+      .overrideProvider(SprintsService)
+      .useValue(sprintServiceMock)
+      .compile();
 
     resolver = module.get<SprintsResolver>(SprintsResolver);
   });

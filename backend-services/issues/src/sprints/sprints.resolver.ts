@@ -7,7 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { Team } from 'src/shared/team.entity';
+import { Team } from '../shared/team.entity';
 import { CompleteSprintInput } from './dto/complete-sprint.input';
 import { CreateSprintInput } from './dto/create-sprint.input';
 import { UpdateSprintInput } from './dto/update-sprint.input';

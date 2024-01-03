@@ -1,5 +1,5 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
-import { TaskType } from 'src/shared/tasks.enum';
+import { TaskType } from '../../shared/tasks.enum';
 
 @InputType()
 export class CreateTaskInput {

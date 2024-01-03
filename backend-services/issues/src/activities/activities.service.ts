@@ -1,8 +1,8 @@
 import { HttpService } from '@nestjs/axios';
 import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
-import { SprintsService } from 'src/sprints/sprints.service';
 import { Sprint } from '../sprints/entities/sprint.entity';
+import { SprintsService } from '../sprints/sprints.service';
 import { CreateActivityInput } from './dto/create-activity.input';
 import { Activity } from './entities/activity.entity';
 

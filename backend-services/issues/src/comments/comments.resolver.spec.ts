@@ -5,10 +5,15 @@ import { CommentsService } from './comments.service';
 describe('CommentsResolver', () => {
   let resolver: CommentsResolver;
 
+  const commentsServiceMock = {};
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [CommentsResolver, CommentsService],
-    }).compile();
+    })
+      .overrideProvider(CommentsService)
+      .useValue(commentsServiceMock)
+      .compile();
 
     resolver = module.get<CommentsResolver>(CommentsResolver);
   });
