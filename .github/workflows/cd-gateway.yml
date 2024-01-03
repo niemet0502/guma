@@ -1,4 +1,4 @@
-name: CD wiki service
+name: CD gateway service
 
 on:
   push:
