@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { StatusService } from 'src/status/status.service';
-import { TeamsService } from 'src/teams/teams.service';
 import { Repository } from 'typeorm';
+import { StatusService } from '../status/status.service';
+import { TeamsService } from '../teams/teams.service';
 import { ActivitiesService } from './activities.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
@@ -13,9 +13,9 @@ import { ActivityAction, TaskType } from './tasks.enum';
 export class TasksService {
   constructor(
     @InjectRepository(Task) private taskRepository: Repository<Task>,
+    private readonly activityService: ActivitiesService,
     private readonly statusService: StatusService,
     private readonly teamService: TeamsService,
-    private readonly activityService: ActivitiesService,
   ) {}
   async create(createTaskDto: CreateTaskDto) {
     const { team_id, status_id, parent_task_id, created_by, slug } =

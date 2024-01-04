@@ -8,9 +8,9 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { User } from 'src/users/entities/user.entity';
-import { UserDecorator } from 'src/users/user.decorator';
-import { UsersService } from 'src/users/users.service';
+import { User } from '../users/entities/user.entity';
+import { UserDecorator } from '../users/user.decorator';
+import { UsersService } from '../users/users.service';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 

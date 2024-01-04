@@ -6,10 +6,10 @@ import {
   forwardRef,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { OrganizationsService } from 'src/organizations/organizations.service';
-import { StatusService } from 'src/status/status.service';
-import { WorkflowService } from 'src/workflow/workflow.service';
 import { Repository } from 'typeorm';
+import { OrganizationsService } from '../organizations/organizations.service';
+import { StatusService } from '../status/status.service';
+import { WorkflowService } from '../workflow/workflow.service';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
 import { Team } from './entities/team.entity';
