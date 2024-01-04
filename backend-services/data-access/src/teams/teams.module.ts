@@ -1,9 +1,9 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { OrganizationsModule } from 'src/organizations/organizations.module';
-import { StatusModule } from 'src/status/status.module';
-import { UsersModule } from 'src/users/users.module';
-import { WorkflowModule } from 'src/workflow/workflow.module';
+import { OrganizationsModule } from '../organizations/organizations.module';
+import { StatusModule } from '../status/status.module';
+import { UsersModule } from '../users/users.module';
+import { WorkflowModule } from '../workflow/workflow.module';
 import { Member } from './entities/member.entity';
 import { Team } from './entities/team.entity';
 import { MembersController } from './members.controller';

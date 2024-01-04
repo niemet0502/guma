@@ -1,6 +1,6 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { StatusModule } from 'src/status/status.module';
+import { StatusModule } from '../status/status.module';
 import { TeamsModule } from '../teams/teams.module';
 import { Workflow } from './entities/workflow.entity';
 import { WorkflowController } from './workflow.controller';

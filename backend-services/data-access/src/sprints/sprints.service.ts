@@ -6,10 +6,10 @@ import {
   forwardRef,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { StatusService } from 'src/status/status.service';
-import { Task } from 'src/tasks/entities/task.entity';
-import { TasksService } from 'src/tasks/tasks.service';
 import { In, Repository } from 'typeorm';
+import { StatusService } from '../status/status.service';
+import { Task } from '../tasks/entities/task.entity';
+import { TasksService } from '../tasks/tasks.service';
 import { TeamsService } from '../teams/teams.service';
 import { CompleteSprintDto } from './dto/complete-sprint.dto';
 import { CreateSprintDto } from './dto/create-sprint.dto';

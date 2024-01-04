@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LabelService } from 'src/organizations/label.service';
 import { Repository } from 'typeorm';
+import { LabelService } from '../organizations/label.service';
 import { CreateTaskLabelDto } from './dto/create-tasklabel.dto';
 import { TaskLabel } from './entities/tasklabel.entity';
 import { TasksService } from './tasks.service';

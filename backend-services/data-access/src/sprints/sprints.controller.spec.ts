@@ -5,10 +5,12 @@ import { SprintsService } from './sprints.service';
 describe('SprintsController', () => {
   let controller: SprintsController;
 
+  const sprintServiceMock = {};
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [SprintsController],
-      providers: [SprintsService],
+      providers: [{ provide: SprintsService, useValue: sprintServiceMock }],
     }).compile();
 
     controller = module.get<SprintsController>(SprintsController);

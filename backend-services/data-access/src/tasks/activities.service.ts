@@ -5,9 +5,9 @@ import {
   forwardRef,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { SprintsService } from 'src/sprints/sprints.service';
-import { StatusService } from 'src/status/status.service';
 import { Repository } from 'typeorm';
+import { SprintsService } from '../sprints/sprints.service';
+import { StatusService } from '../status/status.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { Activity } from './entities/activity.entity';
 
