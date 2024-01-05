@@ -6,6 +6,6 @@ async function bootstrap() {
   await otelSDK.start();
   const app = await NestFactory.create(AppModule);
   // testing comment
-  await app.listen(5001);
+  await app.listen(3000);
 }
 bootstrap();
