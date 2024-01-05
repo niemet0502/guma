@@ -7,7 +7,7 @@ import { Profile } from './entities/profile.entity';
 
 @Injectable()
 export class ProfilesService {
-  private url = 'http://localhost:5002/profiles/';
+  private url = 'http://data-access:3000/profiles/';
 
   constructor(private readonly http: HttpService) {}
 

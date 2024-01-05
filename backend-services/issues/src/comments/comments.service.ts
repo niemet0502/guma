@@ -7,7 +7,7 @@ import { Comment } from './entities/comment.entity';
 
 @Injectable()
 export class CommentsService {
-  private url = 'http://localhost:5002/comments/';
+  private url = 'http://data-access:3000/comments/';
 
   constructor(private readonly http: HttpService) {}
 

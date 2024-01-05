@@ -7,7 +7,7 @@ import { Label } from './entities/label.entity';
 
 @Injectable()
 export class LabelsService {
-  private url = 'http://localhost:5002/labels/';
+  private url = 'http://data-access:3000/labels/';
 
   constructor(private readonly http: HttpService) {}
 

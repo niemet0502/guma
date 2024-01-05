@@ -6,7 +6,7 @@ import { TaskLabel } from './entities/label.entity';
 
 @Injectable()
 export class LabelsService {
-  private url = 'http://localhost:5002/tasklabels/';
+  private url = 'http://data-access:3000/tasklabels/';
 
   constructor(private http: HttpService) {}
   //private taskService: TasksService,

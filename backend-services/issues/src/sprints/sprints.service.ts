@@ -10,7 +10,7 @@ import { Sprint } from './entities/sprint.entity';
 
 @Injectable()
 export class SprintsService {
-  private url = 'http://localhost:5002/sprints/';
+  private url = 'http://data-access:3000/sprints/';
 
   constructor(
     private readonly http: HttpService,

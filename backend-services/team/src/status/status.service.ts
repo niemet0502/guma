@@ -8,7 +8,7 @@ import { Status } from './entities/status.entity';
 
 @Injectable()
 export class StatusService {
-  private url = 'http://localhost:5002/status/';
+  private url = 'http://data-access:3000/status/';
 
   constructor(private readonly http: HttpService) {}
 

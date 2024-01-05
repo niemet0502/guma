@@ -12,7 +12,7 @@ import { Team } from './entities/team.entity';
 
 @Injectable()
 export class TeamsService {
-  private url = 'http://localhost:5002/teams/';
+  private url = 'http://data-access:3000/teams/';
 
   constructor(
     private readonly http: HttpService,
