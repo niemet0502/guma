@@ -1,107 +1,167 @@
 services:
-  # organization: 
-  #   build: 
-  #     context: ./backend-services/organization
-  #     dockerfile: Dockerfile
-  #     target: dev
-  #   image: neka-backend-organization
-  #   restart: always
-  #   depends_on:
-  #     - neka-db
-  #   ports:
-  #     - "5001:3000"
-  #   volumes:
-  #     - ./backend-services/organization:/app
+  organization: 
+    build: 
+      context: ./backend-services/organization
+      dockerfile: Dockerfile
+      target: dev   
+    image: neka-backend-organization
+    command: npm run start:dev
+    restart: always
+    depends_on:
+      - neka-db
+    ports:
+      - "5001:3000"
+    develop:
+      watch:
+        - action: sync
+          path: ./backend-services/organization
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
 
-  # wiki: 
-  #   build: 
-  #     context: ./backend-services/wiki
-  #     dockerfile: Dockerfile
-  #     target: dev
-  #   image: neka-backend-wiki
-  #   restart: always
-  #   depends_on:
-  #     - neka-db
-  #   ports:
-  #     - "5004:3000"
-  #   volumes:
-  #     - ./backend-services/wiki:/app
+  wiki: 
+    build: 
+      context: ./backend-services/wiki
+      dockerfile: Dockerfile
+      target: dev
+    image: neka-backend-wiki
+    command: npm run start:dev
+    restart: always
+    depends_on:
+      - neka-db
+    ports:
+      - "5004:3000"
+    develop:
+      watch:
+        - action: sync
+          path: ./backend-services/wiki
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
 
-  # team: 
-  #   build: 
-  #     context: ./backend-services/team
-  #     dockerfile: Dockerfile
-  #     target: dev
-  #   image: neka-backend-team
-  #   restart: always
-  #   depends_on:
-  #     - neka-db
-  #   ports:
-  #     - "5005:3000"
-  #   volumes:
-  #     - ./backend-services/team:/app
+  team: 
+    build: 
+      context: ./backend-services/team
+      dockerfile: Dockerfile
+      target: dev
+    image: neka-backend-team
+    command: npm run start:dev
+    restart: always
+    depends_on:
+      - neka-db
+    ports:
+      - "5005:3000"
+    develop:
+      watch:
+        - action: sync
+          path: ./backend-services/team
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
   
-  # user: 
-  #   build: 
-  #     context: ./backend-services/users
-  #     dockerfile: Dockerfile
-  #     target: dev
-  #   image: neka-backend-users
-  #   restart: always
-  #   depends_on:
-  #     - neka-db
-  #   ports:
-  #     - "5003:3000"
-  #   volumes:
-  #     - ./backend-services/users:/app
+  user: 
+    build: 
+      context: ./backend-services/users
+      dockerfile: Dockerfile
+      target: dev
+    image: neka-backend-users
+    command: npm run start:dev
+    restart: always
+    depends_on:
+      - neka-db
+    ports:
+      - "5003:3000"
+    develop:
+      watch:
+        - action: sync
+          path: ./backend-services/users
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
 
-  # gateway: 
-  #   build: 
-  #     context: ./gateway
-  #     dockerfile: Dockerfile
-  #     target: dev
-  #   image: neka-backend-gateway
-  #   restart: always
-  #   depends_on:
-  #     - neka-db
-  #   ports:
-  #     - "5007:3000"
-  #   volumes:
-  #     - ./gateway:/app
+  gateway: 
+    build: 
+      context: ./gateway
+      dockerfile: Dockerfile
+      target: dev      
+    image: neka-backend-gateway
+    command: npm run start:dev
+    restart: always
+    depends_on:
+      - organization
+      - team
+      - issues
+      - user
+      - wiki
+    ports:
+      - "5007:3000"
+    develop:
+      watch:
+        - action: sync
+          path: ./gateway
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
   
-  # issues: 
-  #   build: 
-  #     context: ./backend-services/issues
-  #     dockerfile: Dockerfile
-  #     target: dev
-  #   image: neka-backend-issues
-  #   restart: always
-  #   depends_on:
-  #     - neka-db
-  #   ports:
-  #     - "5006:3000"
-  #   volumes:
-  #     - ./backend-services/issues:/app
+  issues: 
+    build: 
+      context: ./backend-services/issues
+      dockerfile: Dockerfile
+      target: dev      
+    image: neka-backend-issues
+    command: npm run start:dev
+    restart: always
+    depends_on:
+      - neka-db
+    ports:
+      - "5006:3000"
+    develop:
+      watch:
+        - action: sync
+          path: ./backend-services/issues
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
 
-  # data-access: 
-  #   build: 
-  #     context: ./backend-services/data-access
-  #     dockerfile: Dockerfile
-  #     target: dev
-  #   image: neka-backend-data-access
-  #   restart: always
-  #   depends_on:
-  #     - neka-db
-  #   ports:
-  #     - "5002:3000"
-  #   environment:
-  #     DB_HOST: neka-db
-  #     DB_PORT: 3306
-  #     DB_USERNAME: marius
-  #     DB_PASSWORD: root
-  #     DB_NAME: thot
-  #   volumes:
-  #     - ./backend-services/data-access:/app
+  data-access: 
+    build: 
+      context: ./backend-services/data-access
+      dockerfile: Dockerfile
+      target: dev     
+    image: neka-backend-data-access
+    command: npm run start:dev
+    restart: always
+    depends_on:
+      - neka-db
+    ports:
+      - "5002:3000"
+    environment:
+      DB_HOST: neka-db
+      DB_PORT: 3306
+      DB_USERNAME: marius
+      DB_PASSWORD: root
+      DB_NAME: thot
+    develop:
+      watch:
+        - action: sync
+          path: ./backend-services/data-access
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
   
   neka-db: 
     image: mysql:5.7.41
@@ -150,6 +210,7 @@ services:
       - 14268:14268
       - 14269:14269
       - 9411:9411
+    restart: unless-stopped
 
   neka-grafana:
     image: grafana/grafana-oss:latest
