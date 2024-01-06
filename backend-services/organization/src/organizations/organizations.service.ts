@@ -11,7 +11,7 @@ import { Organization } from './entities/organization.entity';
 
 @Injectable()
 export class OrganizationsService {
-  private url = 'http://localhost:5002/organizations/';
+  private url = 'http://data-access:3000/organizations/';
   private readonly teamGraphQLClient: GraphQLClient;
   private readonly userGraphQLClient: GraphQLClient;
 

@@ -10,7 +10,7 @@ import { Workflow } from './entities/workflow.entity';
 
 @Injectable()
 export class WorkflowsService {
-  private url = 'http://localhost:5002/workflow/';
+  private url = 'http://data-access:3000/workflow/';
 
   constructor(
     private readonly http: HttpService,

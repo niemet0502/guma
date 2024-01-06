@@ -6,7 +6,7 @@ import { UpdateDocumentInput } from './dto/update-document.input';
 
 @Injectable()
 export class DocumentsService {
-  private url = 'http://localhost:5002/documents/';
+  private url = 'http://data-access:3000/documents/';
 
   constructor(private readonly http: HttpService) {}
 

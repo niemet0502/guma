@@ -9,7 +9,7 @@ import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-  private url = 'http://localhost:5002/users/';
+  private url = 'http://data-access:3000/users/';
 
   constructor(
     private readonly http: HttpService,

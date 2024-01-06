@@ -8,7 +8,7 @@ import { Activity } from './entities/activity.entity';
 
 @Injectable()
 export class ActivitiesService {
-  private url = 'http://localhost:5002/activities/';
+  private url = 'http://data-access:3000/activities/';
 
   constructor(
     private readonly http: HttpService,

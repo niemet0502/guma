@@ -6,7 +6,7 @@ import { Auth } from './entities/auth.entity';
 
 @Injectable()
 export class AuthService {
-  private url = 'http://localhost:5002/auth/';
+  private url = 'http://data-access:3000/auth/';
 
   constructor(private readonly http: HttpService) {}
 

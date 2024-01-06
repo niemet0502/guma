@@ -20,7 +20,7 @@ const oltpExporter = new OTLPTraceExporter({
 });
 
 const jaegerExporter = new JaegerExporter({
-  endpoint: 'http://localhost:14268/api/traces',
+  endpoint: 'http://tracing:14268/api/traces',
 });
 
 export const otelSDK = new NodeSDK({

@@ -16,7 +16,7 @@ import * as process from 'process';
 const traceExporter = new ConsoleSpanExporter();
 
 const jaegerExporter = new JaegerExporter({
-  endpoint: 'http://localhost:14268/api/traces',
+  endpoint: 'http://tracing:14268/api/traces',
 });
 
 export const otelSDK = new NodeSDK({

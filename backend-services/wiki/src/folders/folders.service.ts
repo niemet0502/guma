@@ -8,7 +8,7 @@ import { Folder } from './entities/folder.entity';
 
 @Injectable()
 export class FoldersService {
-  private url = 'http://localhost:5002/folders/';
+  private url = 'http://data-access:3000/folders/';
 
   constructor(
     private readonly http: HttpService,

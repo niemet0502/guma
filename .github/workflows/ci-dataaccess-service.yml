@@ -1,4 +1,4 @@
-name: CI identity service
+name: CI data access service
 
 on:
   pull_request:

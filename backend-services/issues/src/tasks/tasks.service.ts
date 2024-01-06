@@ -13,7 +13,7 @@ import { Task } from './entities/task.entity';
 
 @Injectable()
 export class TasksService {
-  private url = 'http://localhost:5002/tasks/';
+  private url = 'http://data-access:3000/tasks/';
 
   constructor(
     private readonly http: HttpService,

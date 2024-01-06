@@ -2,8 +2,8 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 
 export const dataSourceOptions: DataSourceOptions = {
   type: 'mysql',
-  host: 'localhost',
-  port: 5000,
+  host: 'neka-db',
+  port: 3306,
   username: 'marius',
   password: 'root',
   database: 'thot',

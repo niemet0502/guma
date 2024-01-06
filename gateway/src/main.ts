@@ -6,6 +6,6 @@ async function bootstrap() {
   await otelSDK.start();
   const app = await NestFactory.create(AppModule);
   app.enableCors();
-  await app.listen(5007);
+  await app.listen(3000);
 }
 bootstrap();
