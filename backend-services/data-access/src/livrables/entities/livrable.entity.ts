@@ -11,7 +11,7 @@ export class Livrable {
   @Column('text', { nullable: true })
   description: string;
 
-  @Column('number', { default: 0 })
+  @Column('int', { default: 0 })
   status: number;
 
   @Column('text', { nullable: false })

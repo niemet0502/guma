@@ -87,7 +87,7 @@ export class SprintsService {
     const sprint = await this.sprintRepository.findOne({ where: { id } });
 
     if (!sprint) {
-      throw new NotFoundException('task not found');
+      throw new NotFoundException('sprint not found');
     }
 
     return await this.sprintRepository.remove(sprint);
