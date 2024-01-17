@@ -1,10 +1,10 @@
 services:
-  organization: 
+  project: 
     build: 
       context: ./backend-services/organization
       dockerfile: Dockerfile
       target: dev   
-    image: neka-backend-organization
+    image: neka-backend-project
     command: npm run start:dev
     restart: always
     depends_on:
