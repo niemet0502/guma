@@ -34,7 +34,7 @@ export class Sprint {
   @Column('text', { nullable: false })
   end_at: string;
 
-  @Column('longtext', { nullable: true })
+  @Column('text', { nullable: true })
   goal: string;
 
   @Column({ nullable: false })
