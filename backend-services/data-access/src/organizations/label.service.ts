@@ -4,13 +4,13 @@ import { Repository } from 'typeorm';
 import { CreateLabelDto } from './dto/create-label.dto';
 import { UpdateLabelDto } from './dto/update-label.dto';
 import { Label } from './entities/label.entity';
-import { OrganizationsService } from './organizations.service';
+import { ProjectsService } from './organizations.service';
 
 @Injectable()
 export class LabelService {
   constructor(
     @InjectRepository(Label) private repo: Repository<Label>,
-    private readonly organizationService: OrganizationsService,
+    private readonly organizationService: ProjectsService,
   ) {}
 
   async create(createLabelDto: CreateLabelDto): Promise<Label> {
