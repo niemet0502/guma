@@ -13,6 +13,8 @@ import { TeamsModule } from './teams/teams.module';
 import { UsersModule } from './users/users.module';
 import { WorkflowModule } from './workflow/workflow.module';
 import { ActivitiesModule } from './activities/activities.module';
+import { ModulesModule } from './modules/modules.module';
+import { LivrablesModule } from './livrables/livrables.module';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { ActivitiesModule } from './activities/activities.module';
     WorkflowModule,
     StatusModule,
     ActivitiesModule,
+    ModulesModule,
+    LivrablesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
