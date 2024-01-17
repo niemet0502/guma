@@ -28,10 +28,8 @@ export class TeamsResolver {
   }
 
   @Query(() => [Team], { name: 'teams' })
-  findAll(
-    @Args('organization_id', { type: () => Int }) organization_id: number,
-  ) {
-    return this.teamsService.findAllByOrganization(organization_id);
+  findAll(@Args('project_id', { type: () => Int }) project_id: number) {
+    return this.teamsService.findAllByOrganization(project_id);
   }
 
   @Query(() => Team, { name: 'team' })
@@ -42,9 +40,9 @@ export class TeamsResolver {
   @Query(() => Team, { name: 'getTeamByName' })
   findBy(
     @Args('name', { type: () => String }) name: string,
-    @Args('organization_id', { type: () => Int }) organization_id: number,
+    @Args('project_id', { type: () => Int }) project_id: number,
   ) {
-    return this.teamsService.findBy(name, organization_id);
+    return this.teamsService.findBy(name, project_id);
   }
 
   @Mutation(() => Team)

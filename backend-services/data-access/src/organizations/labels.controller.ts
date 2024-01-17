@@ -32,10 +32,8 @@ export class LabelController {
 
   @Get()
   @ApiOkResponse({ type: Label, isArray: true })
-  async findAll(
-    @Query('organization_id') organization_id: string,
-  ): Promise<Label[]> {
-    return await this.labelService.findAll(+organization_id);
+  async findAll(@Query('project_id') project_id: string): Promise<Label[]> {
+    return await this.labelService.findAll(+project_id);
   }
 
   @Get(':id')

@@ -57,8 +57,8 @@ export const CreateTaskForm: React.FC<{
   members?: User[];
   teamId?: number;
 }> = ({ onOpenChange, members, teamId }) => {
-  const { organization } = useAuth();
-  const { data: labels } = useGetLabels(organization?.id as number);
+  const { project } = useAuth();
+  const { data: labels } = useGetLabels(project?.id as number);
   const { toast } = useToast();
 
   const [open, setOpen] = useState(false);
@@ -76,6 +76,8 @@ export const CreateTaskForm: React.FC<{
     });
     onOpenChange(false);
   };
+
+  console.log(teamId);
 
   const { createTask, error } = useCreateTask(onSuccess);
 

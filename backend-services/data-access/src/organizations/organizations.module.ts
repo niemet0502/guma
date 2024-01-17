@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Label } from './entities/label.entity';
-import { Organization } from './entities/organization.entity';
+import { Project } from './entities/project.entity';
 import { LabelService } from './label.service';
 import { LabelController } from './labels.controller';
-import { OrganizationsController } from './organizations.controller';
-import { OrganizationsService } from './organizations.service';
+import { ProjectsController } from './organizations.controller';
+import { ProjectsService } from './organizations.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Organization, Label])],
-  controllers: [OrganizationsController, LabelController],
-  providers: [OrganizationsService, LabelService],
-  exports: [OrganizationsService, LabelService],
+  imports: [TypeOrmModule.forFeature([Project, Label])],
+  controllers: [ProjectsController, LabelController],
+  providers: [ProjectsService, LabelService],
+  exports: [ProjectsService, LabelService],
 })
 export class OrganizationsModule {}

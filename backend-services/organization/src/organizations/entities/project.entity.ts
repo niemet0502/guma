@@ -3,7 +3,7 @@ import { Label } from '../../labels/entities/label.entity';
 
 @ObjectType()
 @Directive('@key(fields: "id")')
-export class Organization {
+export class Project {
   @Field(() => ID)
   id: number;
 

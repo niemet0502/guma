@@ -10,5 +10,5 @@ export class CreateLabelDto {
 
   @IsNotEmpty()
   @ApiProperty({ required: true })
-  public organization_id: number;
+  public project_id: number;
 }

@@ -4,26 +4,26 @@ import { Repository } from 'typeorm';
 import { CreateLabelDto } from './dto/create-label.dto';
 import { UpdateLabelDto } from './dto/update-label.dto';
 import { Label } from './entities/label.entity';
-import { OrganizationsService } from './organizations.service';
+import { ProjectsService } from './organizations.service';
 
 @Injectable()
 export class LabelService {
   constructor(
     @InjectRepository(Label) private repo: Repository<Label>,
-    private readonly organizationService: OrganizationsService,
+    private readonly organizationService: ProjectsService,
   ) {}
 
   async create(createLabelDto: CreateLabelDto): Promise<Label> {
-    const { name, organization_id } = createLabelDto;
+    const { name, project_id } = createLabelDto;
 
-    const orga = await this.organizationService.findOne(+organization_id);
+    const orga = await this.organizationService.findOne(+project_id);
 
     if (!orga) {
       throw new NotFoundException('Organization not found');
     }
 
     const label = await this.repo.findOne({
-      where: { name: name, organization_id: organization_id },
+      where: { name: name, project_id: project_id },
     });
 
     if (label) {
@@ -34,14 +34,14 @@ export class LabelService {
     return await this.repo.save(createLabelDto);
   }
 
-  async findAll(organization_id: number): Promise<Label[]> {
-    const orga = await this.organizationService.findOne(organization_id);
+  async findAll(project_id: number): Promise<Label[]> {
+    const orga = await this.organizationService.findOne(project_id);
 
     if (!orga) {
       throw new NotFoundException('Organization not found');
     }
 
-    return await this.repo.find({ where: { organization_id } });
+    return await this.repo.find({ where: { project_id } });
   }
 
   async findOne(id: number): Promise<Label> {

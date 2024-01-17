@@ -5,13 +5,13 @@ import { firstValueFrom } from 'rxjs';
 import { LabelsService } from '../labels/labels.service';
 import { User } from '../shared/user.entity';
 import { DEFAULT_ORGANIZATION_LABEL } from '../utils/Constant';
-import { CreateOrganizationInput } from './dto/create-organization.input';
-import { UpdateOrganizationInput } from './dto/update-organization.input';
-import { Organization } from './entities/organization.entity';
+import { CreateProjectInput } from './dto/create-organization.input';
+import { UpdateProjectInput } from './dto/update-organization.input';
+import { Project } from './entities/project.entity';
 
 @Injectable()
 export class OrganizationsService {
-  private url = 'http://data-access:3000/organizations/';
+  private url = 'http://data-access:3000/projects/';
   private readonly teamGraphQLClient: GraphQLClient;
   private readonly userGraphQLClient: GraphQLClient;
 
@@ -19,70 +19,67 @@ export class OrganizationsService {
     private readonly http: HttpService,
     private readonly labelService: LabelsService,
   ) {
-    this.teamGraphQLClient = new GraphQLClient('http://localhost:5005/graphql');
-    this.userGraphQLClient = new GraphQLClient('http://localhost:5003/graphql');
+    this.teamGraphQLClient = new GraphQLClient('http://team:3000/graphql');
+    this.userGraphQLClient = new GraphQLClient('http://user:3000/graphql');
   }
 
   async create(
-    createOrganizationInput: CreateOrganizationInput,
+    createOrganizationInput: CreateProjectInput,
     user: User,
-  ): Promise<Organization> {
+  ): Promise<Project> {
     // create the organization
     const { data } = await firstValueFrom(
-      this.http.post<Organization>(this.url, createOrganizationInput),
+      this.http.post<Project>(this.url, createOrganizationInput),
     );
 
-    const { name, id: organization_id } = data;
+    console.log(data);
+
+    const { name, id: project_id } = data;
 
     // create a team with the organization's name
-    await this.createTeam(name, organization_id, user);
+    await this.createTeam(name, project_id, user);
 
     // create organization's labels
     DEFAULT_ORGANIZATION_LABEL.map(async (name) => {
-      await this.labelService.create({ name, organization_id });
+      await this.labelService.create({ name, project_id });
     });
 
-    // update the user by setting the organization_id
-    await this.updateUser(user.id, organization_id);
+    // update the user by setting the project_id
+    await this.updateUser(user.id, project_id);
 
     return data;
   }
 
-  async findAll(): Promise<Organization[]> {
-    const { data } = await firstValueFrom(
-      this.http.get<Organization[]>(this.url),
-    );
+  async findAll(): Promise<Project[]> {
+    const { data } = await firstValueFrom(this.http.get<Project[]>(this.url));
     return data;
   }
 
-  async findOne(id: number): Promise<Organization> {
+  async findOne(id: number): Promise<Project> {
     const { data } = await firstValueFrom(
-      this.http.get<Organization>(this.url + id),
+      this.http.get<Project>(this.url + id),
     );
     return data;
   }
 
   async update(
     id: number,
-    updateOrganizationInput: UpdateOrganizationInput,
-  ): Promise<Organization> {
+    updateOrganizationInput: UpdateProjectInput,
+  ): Promise<Project> {
     const { data } = await firstValueFrom(
-      this.http.patch<Organization>(
-        `${this.url}${id}`,
-        updateOrganizationInput,
-      ),
+      this.http.patch<Project>(`${this.url}${id}`, updateOrganizationInput),
     );
     return data;
   }
 
-  async remove(id: number): Promise<Organization> {
+  async remove(id: number): Promise<Project> {
     const { data } = await firstValueFrom(
-      this.http.delete<Organization>(this.url + id),
+      this.http.delete<Project>(this.url + id),
     );
     return data;
   }
 
-  async createTeam(name: string, organization_id: number, user: User) {
+  async createTeam(name: string, project_id: number, user: User) {
     const mutation = `
     mutation CreateTeam($createTeamInput: CreateTeamInput!) {
       createTeam(
@@ -98,7 +95,7 @@ export class OrganizationsService {
     const variables = {
       createTeamInput: {
         name,
-        organization_id,
+        project_id,
         identifier: name.slice(0, 3).toUpperCase(),
       },
     };
@@ -120,7 +117,7 @@ export class OrganizationsService {
     }
   }
 
-  async updateUser(id: number, organization_id: number) {
+  async updateUser(id: number, project_id: number) {
     const mutation = `
       mutation UpdateUser($updateUserInput: UpdateUserInput!){
         updateUser(updateUserInput: $updateUserInput){
@@ -132,7 +129,7 @@ export class OrganizationsService {
     const variables = {
       updateUserInput: {
         id,
-        organization_id,
+        project_id,
         profile_id: 1,
       },
     };

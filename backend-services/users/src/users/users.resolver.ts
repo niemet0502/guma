@@ -10,7 +10,7 @@ import {
 } from '@nestjs/graphql';
 import { Profile } from '../profiles/entities/profile.entity';
 import { Member } from '../shared/member.entity';
-import { Organization } from '../shared/organization.entity';
+import { Project } from '../shared/project.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
@@ -26,10 +26,8 @@ export class UsersResolver {
   }
 
   @Query(() => [User], { name: 'users' })
-  findAll(
-    @Args('organization_id', { type: () => Int }) organization_id: number,
-  ) {
-    return this.usersService.findAllByTeam(organization_id);
+  findAll(@Args('project_id', { type: () => Int }) project_id: number) {
+    return this.usersService.findAllByTeam(project_id);
   }
 
   @Query(() => User, { name: 'user' })
@@ -66,9 +64,9 @@ export class UsersResolver {
     return { __typename: 'Member', id: user.id };
   }
 
-  @ResolveField((of) => Organization)
-  organization(@Parent() user: User): any {
-    if (!user.organization_id) return null;
-    return { __typename: 'Organization', id: user.organization_id };
+  @ResolveField((of) => Project)
+  project(@Parent() user: User): any {
+    if (!user.project_id) return null;
+    return { __typename: 'Project', id: user.project_id };
   }
 }

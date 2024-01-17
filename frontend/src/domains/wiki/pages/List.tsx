@@ -19,10 +19,10 @@ import { FolderItem } from "../folders/components/FolderItem";
 import { useFolders } from "../folders/hooks/useFolders";
 
 export const Wiki: React.FC = () => {
-  const { organization } = useAuth();
+  const { project } = useAuth();
   const { teamId } = useParams<{ teamId: string }>();
 
-  const { data: team } = useGetTeam(organization?.id as number, teamId);
+  const { data: team } = useGetTeam(project?.id as number, teamId);
 
   const {
     fetchDocuments,

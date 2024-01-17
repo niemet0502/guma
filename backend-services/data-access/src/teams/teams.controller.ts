@@ -28,8 +28,8 @@ export class TeamsController {
 
   @Get()
   @ApiOkResponse({ type: Team, isArray: true })
-  findAll(@Query('organization_id') organization_id: string) {
-    return this.teamsService.findAllByOrganization(+organization_id);
+  findAll(@Query('project_id') project_id: string) {
+    return this.teamsService.findAllByProject(+project_id);
   }
 
   @Get(':id')
@@ -38,13 +38,13 @@ export class TeamsController {
     return this.teamsService.findOne(+id);
   }
 
-  @Get('/byName/:name/:organization_id')
+  @Get('/byName/:name/:project_id')
   @ApiOkResponse({ type: Team })
   findByName(
     @Param('name') name: string,
-    @Param('organization_id') organization_id: string,
+    @Param('project_id') project_id: string,
   ) {
-    return this.teamsService.findByName(name, +organization_id);
+    return this.teamsService.findByName(name, +project_id);
   }
 
   @Patch(':id')

@@ -8,7 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SprintsService } from '../sprints/sprints.service';
 import { StatusService } from '../status/status.service';
-import { CreateActivityDto } from './dto/create-activity.dto';
+import { CreateActivityDto } from '../tasks/dto/create-activity.dto';
 import { Activity } from './entities/activity.entity';
 
 @Injectable()

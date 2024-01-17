@@ -2,8 +2,8 @@ import { User } from "@/domains/auth/services/types";
 import { gql, useQuery } from "@apollo/client";
 
 export const GET_USERS_BY_ORGANIZATION = gql`
-  query GetUsersByOrganization($organization_id: Int!) {
-    users(organization_id: $organization_id) {
+  query GetUsersByOrganization($project_id: Int!) {
+    users(project_id: $project_id) {
       id
       username
       lastname
@@ -13,13 +13,13 @@ export const GET_USERS_BY_ORGANIZATION = gql`
   }
 `;
 
-export const useGetUsers = (organization_id: number) => {
+export const useGetUsers = (project_id: number) => {
   const {
     data,
     loading: isLoading,
     error,
   } = useQuery<{ users: User[] }>(GET_USERS_BY_ORGANIZATION, {
-    variables: { organization_id: +organization_id },
+    variables: { project_id: +project_id },
   });
   return { data: data?.users, isLoading, error };
 };

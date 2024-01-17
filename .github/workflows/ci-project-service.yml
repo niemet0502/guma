@@ -1,4 +1,4 @@
-name: CI organization service
+name: CI project service
 
 on:
   pull_request:

@@ -27,7 +27,7 @@ export class User {
   first_signin: boolean;
 
   @Column({ nullable: true })
-  organization_id: number;
+  project_id: number;
 
   @Column({ nullable: true })
   profile_id: number;

@@ -23,9 +23,9 @@ export class UsersService {
     return data;
   }
 
-  async findAllByTeam(organization_id: number): Promise<User[]> {
+  async findAllByTeam(project_id: number): Promise<User[]> {
     const { data } = await firstValueFrom(
-      this.http.get<User[]>(this.url, { params: { organization_id } }),
+      this.http.get<User[]>(this.url, { params: { project_id } }),
     );
     return data;
   }

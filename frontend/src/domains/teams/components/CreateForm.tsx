@@ -30,7 +30,7 @@ const formSchema = z.object({
 export const CreateForm: React.FC<{
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ onOpenChange }) => {
-  const { organization } = useAuth();
+  const { project } = useAuth();
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -54,7 +54,7 @@ export const CreateForm: React.FC<{
       visibility: data.visibility
         ? TeamVisibility.PRIVATE
         : TeamVisibility.PUBLIC,
-      organization_id: organization ? (+organization?.id as number) : undefined,
+      project_id: project ? (+project?.id as number) : undefined,
     });
   };
 

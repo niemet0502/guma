@@ -7,8 +7,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { CreateActivityDto } from '../tasks/dto/create-activity.dto';
 import { ActivitiesService } from './activities.service';
-import { CreateActivityDto } from './dto/create-activity.dto';
 import { Activity } from './entities/activity.entity';
 
 @Controller('activities')

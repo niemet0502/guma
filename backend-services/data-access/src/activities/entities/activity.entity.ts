@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { ActivityAction } from '../tasks.enum';
+import { ActivityAction } from '../../tasks/tasks.enum';
 
 @Entity()
 export class Activity {

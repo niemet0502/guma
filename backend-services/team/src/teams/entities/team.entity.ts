@@ -9,7 +9,7 @@ export class Team {
   id: number;
 
   @Field({ nullable: false })
-  organization_id: number;
+  project_id: number;
 
   @Field({ nullable: true })
   name: string;

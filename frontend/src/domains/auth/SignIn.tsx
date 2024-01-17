@@ -51,12 +51,12 @@ export function SignIn({ className, ...props }: UserAuthFormProps) {
     if (response && response.data.userAccountAuth) {
       const { user, session } = response.data.userAccountAuth;
 
-      const { organization_id, organization } = user;
+      const { project_id, project } = user;
 
-      login(user, session, organization);
+      login(user, session, project);
 
-      if (organization && organization_id) {
-        navigate(`/${organization.name.toLowerCase()}/documents`, {
+      if (project && project_id) {
+        navigate(`/${project.name.toLowerCase()}/documents`, {
           replace: true,
         });
       } else {

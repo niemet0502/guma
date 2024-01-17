@@ -17,10 +17,10 @@ import { useSprints } from "../hooks/useSprints";
 import { SprintStatusEnum } from "../type";
 
 export const SprintList: React.FC = () => {
-  const { organization } = useAuth();
+  const { project } = useAuth();
   const { teamId } = useParams<{ teamId: string }>();
 
-  const { data: team } = useGetTeam(organization?.id as number, teamId);
+  const { data: team } = useGetTeam(project?.id as number, teamId);
   const { fetchSprints, data: sprints } = useSprints();
 
   const [open, setOpen] = useState(false);

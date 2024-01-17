@@ -24,7 +24,7 @@ export class UpdateUserInput {
   first_signin?: boolean;
 
   @Field({ nullable: true })
-  organization_id?: number;
+  project_id?: number;
 
   @Field({ nullable: true })
   profile_id?: number;
