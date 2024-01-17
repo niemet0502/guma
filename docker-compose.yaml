@@ -103,6 +103,9 @@ services:
       - wiki
     ports:
       - "5007:3000"
+    labels:
+      logging: "promtail"
+      logging_jobname: "containerlogs"
     develop:
       watch:
         - action: sync
@@ -223,7 +226,32 @@ services:
       - ./monitoring/grafana.ini:/etc/grafana/grafana.ini
       - /etc/letsencrypt:/etc/letsencrypt
     restart: unless-stopped
+
+  promtail:
+    image:  grafana/promtail:2.7.4
+    container_name: promtail
+    volumes:
+      - ./monitoring/promtail-config.yaml:/etc/promtail/docker-config.yaml
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: -config.file=/etc/promtail/docker-config.yaml
+    restart: unless-stopped
+
+  
+  loki:
+    image: grafana/loki:2.8.2
+    container_name: loki
+    restart: unless-stopped
+    ports:
+      - 3100:3100
+    user: "10001:10001"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+     - ./monitoring/loki-config.yaml:/etc/loki/local-config.yaml
+     - loki-data:/loki
+
 volumes:
   mysql-data:
   tempo-data:
   grafana-data:
+  loki-data:
