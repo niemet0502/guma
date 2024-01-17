@@ -5,6 +5,7 @@ import {
   Parent,
   Query,
   ResolveField,
+  ResolveReference,
   Resolver,
 } from '@nestjs/graphql';
 import { User } from '../shared/user.entity';
@@ -52,5 +53,13 @@ export class LivrablesResolver {
   @ResolveField(() => User)
   author(@Parent() task: Livrable): any {
     return { __typename: 'User', id: task.created_by };
+  }
+
+  @ResolveReference()
+  async resolveReference(reference: {
+    __typename: string;
+    id: number;
+  }): Promise<Livrable> {
+    return await this.livrablesService.findOne(reference.id);
   }
 }
