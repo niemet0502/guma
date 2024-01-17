@@ -1,16 +1,15 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 
 export const dataSourceOptions: DataSourceOptions = {
-  type: 'mysql',
+  type: 'postgres',
   host: 'neka-db',
-  port: 3306,
+  port: 5432,
   username: 'marius',
   password: 'root',
-  database: 'thot',
-  charset: 'utf8mb4',
+  database: 'neka',
   entities: ['dist/**/*entity.js'],
-  migrations: ['dist/database/migrations/*js'],
-  synchronize: false,
+  // migrations: ['dist/database/migrations/*js'],
+  synchronize: true,
 };
 const dataSource = new DataSource(dataSourceOptions);
 

@@ -15,7 +15,7 @@ export class Document {
   @Column('int', { nullable: true })
   team_id: number;
 
-  @Column('longtext', { nullable: true })
+  @Column('text', { nullable: true })
   content: string;
 
   @Column({
