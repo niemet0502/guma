@@ -30,8 +30,8 @@ export class UsersService {
     return await this.userRepo.save({ ...createUserDto, username });
   }
 
-  async findAllByTeam(organization_id: number): Promise<User[]> {
-    return await this.userRepo.find({ where: { organization_id } });
+  async findAllByTeam(project_id: number): Promise<User[]> {
+    return await this.userRepo.find({ where: { project_id } });
   }
 
   async findOne(id: number): Promise<User> {

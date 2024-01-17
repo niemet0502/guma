@@ -8,46 +8,43 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { CreateOrganizationDto } from './dto/create-organization.dto';
-import { UpdateOrganizationDto } from './dto/update-organization.dto';
-import { Organization } from './entities/organization.entity';
-import { OrganizationsService } from './organizations.service';
+import { CreateProjectDto } from './dto/create-project.dto';
+import { UpdateProjectDto } from './dto/update-project.dto';
+import { Project } from './entities/project.entity';
+import { ProjectsService } from './organizations.service';
 
-@Controller('organizations')
-@ApiTags('organizations')
-export class OrganizationsController {
-  constructor(private readonly organizationsService: OrganizationsService) {}
+@Controller('projects')
+@ApiTags('projects')
+export class ProjectsController {
+  constructor(private readonly ProjectsService: ProjectsService) {}
 
   @Post()
-  @ApiCreatedResponse({ type: Organization })
-  create(@Body() createOrganizationDto: CreateOrganizationDto) {
-    return this.organizationsService.create(createOrganizationDto);
+  @ApiCreatedResponse({ type: Project })
+  create(@Body() CreateProjectDto: CreateProjectDto) {
+    return this.ProjectsService.create(CreateProjectDto);
   }
 
   @Get()
-  @ApiOkResponse({ type: Organization, isArray: true })
+  @ApiOkResponse({ type: Project, isArray: true })
   findAll() {
-    return this.organizationsService.findAll();
+    return this.ProjectsService.findAll();
   }
 
   @Get(':id')
-  @ApiOkResponse({ type: Organization })
+  @ApiOkResponse({ type: Project })
   findOne(@Param('id') id: string) {
-    return this.organizationsService.findOne(+id);
+    return this.ProjectsService.findOne(+id);
   }
 
   @Patch(':id')
-  @ApiOkResponse({ type: Organization })
-  update(
-    @Param('id') id: string,
-    @Body() updateOrganizationDto: UpdateOrganizationDto,
-  ) {
-    return this.organizationsService.update(+id, updateOrganizationDto);
+  @ApiOkResponse({ type: Project })
+  update(@Param('id') id: string, @Body() UpdateProjectDto: UpdateProjectDto) {
+    return this.ProjectsService.update(+id, UpdateProjectDto);
   }
 
   @Delete(':id')
-  @ApiOkResponse({ type: Organization })
+  @ApiOkResponse({ type: Project })
   remove(@Param('id') id: string) {
-    return this.organizationsService.remove(+id);
+    return this.ProjectsService.remove(+id);
   }
 }

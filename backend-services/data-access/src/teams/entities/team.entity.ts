@@ -7,7 +7,7 @@ export class Team {
   id: number;
 
   @Column({ nullable: false })
-  organization_id: number;
+  project_id: number;
 
   @Column('text', { nullable: false })
   name: string;

@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { OrganizationsService } from '../organizations/organizations.service';
+import { ProjectsService } from '../organizations/organizations.service';
 import { StatusService } from '../status/status.service';
 import { WorkflowService } from '../workflow/workflow.service';
 import { CreateTeamDto } from './dto/create-team.dto';
@@ -18,22 +18,22 @@ import { Team } from './entities/team.entity';
 export class TeamsService {
   constructor(
     @InjectRepository(Team) private repo: Repository<Team>,
-    private readonly organizationService: OrganizationsService,
+    private readonly organizationService: ProjectsService,
     @Inject(forwardRef(() => WorkflowService))
     private readonly workflowService: WorkflowService,
     @Inject(forwardRef(() => StatusService))
     private readonly statusService: StatusService,
   ) {}
   async create(createTeamDto: CreateTeamDto): Promise<Team> {
-    const { name, organization_id } = createTeamDto;
+    const { name, project_id } = createTeamDto;
 
-    const orga = await this.organizationService.findOne(+organization_id);
+    const orga = await this.organizationService.findOne(+project_id);
 
     if (!orga) {
       throw new NotFoundException('Organization not found');
     }
 
-    const team = await this.repo.findOne({ where: { name, organization_id } });
+    const team = await this.repo.findOne({ where: { name, project_id } });
 
     if (team) {
       throw new BadRequestException('The name is already in use');
@@ -58,22 +58,22 @@ export class TeamsService {
     return createdTeam;
   }
 
-  async findAllByOrganization(organization_id: number): Promise<Team[]> {
-    const orga = await this.organizationService.findOne(+organization_id);
+  async findAllByProject(project_id: number): Promise<Team[]> {
+    const orga = await this.organizationService.findOne(+project_id);
 
     if (!orga) {
       throw new NotFoundException('Organization not found');
     }
 
-    return await this.repo.find({ where: { organization_id } });
+    return await this.repo.find({ where: { project_id } });
   }
 
   async findOne(id: number): Promise<Team> {
     return await this.repo.findOne({ where: { id } });
   }
 
-  async findByName(name: string, organization_id: number): Promise<Team> {
-    return await this.repo.findOne({ where: { name, organization_id } });
+  async findByName(name: string, project_id: number): Promise<Team> {
+    return await this.repo.findOne({ where: { name, project_id } });
   }
 
   async update(id: number, updateTeamDto: UpdateTeamDto): Promise<Team> {
