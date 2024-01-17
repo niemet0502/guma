@@ -18,9 +18,9 @@ export class LabelsService {
     return data;
   }
 
-  async findAll(organization_id: number): Promise<Label[]> {
+  async findAll(project_id: number): Promise<Label[]> {
     const { data } = await firstValueFrom(
-      this.http.get<Label[]>(this.url, { params: { organization_id } }),
+      this.http.get<Label[]>(this.url, { params: { project_id } }),
     );
 
     return data;

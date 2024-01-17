@@ -1,8 +1,8 @@
-import { CreateOrganizationInput } from './create-organization.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
+import { Field, InputType, Int, PartialType } from '@nestjs/graphql';
+import { CreateProjectInput } from './create-organization.input';
 
 @InputType()
-export class UpdateOrganizationInput extends PartialType(CreateOrganizationInput) {
+export class UpdateProjectInput extends PartialType(CreateProjectInput) {
   @Field(() => Int)
   id: number;
 }

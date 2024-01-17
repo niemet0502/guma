@@ -96,7 +96,7 @@ services:
     command: npm run start:dev
     restart: always
     depends_on:
-      - organization
+      - project
       - team
       - issues
       - user

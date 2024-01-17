@@ -12,7 +12,7 @@ export class Team {
   @Column('text', { nullable: false })
   name: string;
 
-  @Column('text', { nullable: false })
+  @Column('text', { nullable: true })
   icon: string;
 
   @Column('text')

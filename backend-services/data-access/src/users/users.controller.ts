@@ -28,8 +28,8 @@ export class UsersController {
 
   @Get()
   @ApiOkResponse({ type: User, isArray: true })
-  findAll(@Query('organization_id', ParseIntPipe) organization_id: number) {
-    return this.usersService.findAllByTeam(organization_id);
+  findAll(@Query('project_id', ParseIntPipe) project_id: number) {
+    return this.usersService.findAllByTeam(project_id);
   }
 
   @Get(':id')

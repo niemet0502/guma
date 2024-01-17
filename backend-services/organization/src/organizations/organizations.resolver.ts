@@ -11,55 +11,55 @@ import {
 import { LabelsService } from '../labels/labels.service';
 import { User } from '../shared/user.entity';
 import { CurrentUser } from '../utils/current-user.decorator';
-import { CreateOrganizationInput } from './dto/create-organization.input';
-import { UpdateOrganizationInput } from './dto/update-organization.input';
-import { Organization } from './entities/organization.entity';
+import { CreateProjectInput } from './dto/create-organization.input';
+import { UpdateProjectInput } from './dto/update-organization.input';
+import { Project } from './entities/project.entity';
 import { OrganizationsService } from './organizations.service';
 
-@Resolver(() => Organization)
+@Resolver(() => Project)
 export class OrganizationsResolver {
   constructor(
     private readonly organizationsService: OrganizationsService,
     private readonly labelsService: LabelsService,
   ) {}
 
-  @Mutation(() => Organization)
-  createOrganization(
-    @Args('createOrganizationInput')
-    createOrganizationInput: CreateOrganizationInput,
+  @Mutation(() => Project)
+  createProject(
+    @Args('createProjectInput')
+    createProjectInput: CreateProjectInput,
     @CurrentUser() user: User,
   ) {
-    return this.organizationsService.create(createOrganizationInput, user);
+    return this.organizationsService.create(createProjectInput, user);
   }
 
-  @Query(() => [Organization], { name: 'organizations' })
+  @Query(() => [Project], { name: 'projects' })
   findAll() {
     return this.organizationsService.findAll();
   }
 
-  @Query(() => Organization, { name: 'organization' })
+  @Query(() => Project, { name: 'project' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.organizationsService.findOne(id);
   }
 
-  @Mutation(() => Organization)
-  updateOrganization(
-    @Args('updateOrganizationInput')
-    updateOrganizationInput: UpdateOrganizationInput,
+  @Mutation(() => Project)
+  updateProject(
+    @Args('updateProjectInput')
+    updateProjectInput: UpdateProjectInput,
   ) {
     return this.organizationsService.update(
-      updateOrganizationInput.id,
-      updateOrganizationInput,
+      updateProjectInput.id,
+      updateProjectInput,
     );
   }
 
-  @Mutation(() => Organization)
-  removeOrganization(@Args('id', { type: () => Int }) id: number) {
+  @Mutation(() => Project)
+  removeProject(@Args('id', { type: () => Int }) id: number) {
     return this.organizationsService.remove(id);
   }
 
   @ResolveField()
-  async labels(@Parent() organization: Organization) {
+  async labels(@Parent() organization: Project) {
     const { id } = organization;
     return this.labelsService.findAll(id);
   }
@@ -68,7 +68,7 @@ export class OrganizationsResolver {
   resolveReference(reference: {
     __typename: string;
     id: number;
-  }): Promise<Organization> {
+  }): Promise<Project> {
     return this.organizationsService.findOne(reference.id);
   }
 }

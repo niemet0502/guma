@@ -22,14 +22,14 @@ export const UnAuthenticationGuard: React.FC<AuthenticationGuardProps> = ({
   redirectPath = "/org/documents",
   ...props
 }) => {
-  const { user, organization } = useAuth();
+  const { user, project } = useAuth();
   let location = useLocation();
 
   return (
     <ProtectedRoute
       redirectPath={
-        location.state?.from?.pathname || organization
-          ? `${organization?.name.toLowerCase()}/documents`
+        location.state?.from?.pathname || project
+          ? `${project?.name.toLowerCase()}/documents`
           : redirectPath
       }
       isAllowed={!user}

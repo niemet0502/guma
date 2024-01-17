@@ -9,5 +9,5 @@ export class Label {
   name: string;
 
   @Column()
-  organization_id: number;
+  project_id: number;
 }

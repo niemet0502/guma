@@ -4,7 +4,7 @@ import { TeamVisibility } from '../teams.enum';
 @InputType()
 export class CreateTeamInput {
   @Field({ nullable: false })
-  organization_id: number;
+  project_id: number;
 
   @Field({ nullable: false })
   name: string;

@@ -19,8 +19,8 @@ import { AuthenticatedDataSource } from './authenticated-datasource';
         supergraphSdl: new IntrospectAndCompose({
           subgraphs: [
             {
-              name: 'organization',
-              url: 'http://organization:3000/graphql',
+              name: 'project',
+              url: 'http://project:3000/graphql',
             },
             { name: 'user', url: 'http://user:3000/graphql' },
             { name: 'wiki', url: 'http://wiki:3000/graphql' },
