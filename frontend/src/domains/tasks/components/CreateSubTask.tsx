@@ -42,9 +42,9 @@ export const CreateSubTask: React.FC<{
   hide: () => void;
   task: TaskApi;
 }> = ({ hide, isOpen, task }) => {
-  const { organization } = useAuth();
-  const { data: labels } = useGetLabels(organization?.id as number);
-  const { data: users } = useGetUsers(organization?.id as number);
+  const { project } = useAuth();
+  const { data: labels } = useGetLabels(project?.id as number);
+  const { data: users } = useGetUsers(project?.id as number);
 
   const [open, setOpen] = useState(false);
   const [openPriority, setOpenPriority] = useState(false);

@@ -34,11 +34,11 @@ import { CompleteSprintDialog } from "./CompleteSprintDialog";
 import { CreateSprintForm } from "./CreateForm";
 
 export const OngoingSprint: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
-  const { organization } = useAuth();
+  const { project } = useAuth();
 
   const { data: status } = useGetStatus(sprint.team_id);
   const { updateTask } = useUpdateTask();
-  const { data: users } = useGetUsers(organization?.id as number);
+  const { data: users } = useGetUsers(project?.id as number);
 
   const [open, setOpen] = useState(false);
 

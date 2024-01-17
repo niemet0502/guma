@@ -16,7 +16,7 @@ export interface WorkflowApi {
 
 export interface TeamApi {
   id: number;
-  organization_id: number;
+  project_id: number;
   name: string;
   icon?: string;
   identifier?: string;
@@ -34,7 +34,7 @@ export interface MemberApi {
 }
 
 export interface CreateTeamInput {
-  organization_id?: number;
+  project_id?: number;
   name: string;
   identifier: string;
   visibility: number;

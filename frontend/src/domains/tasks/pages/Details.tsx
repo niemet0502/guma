@@ -21,10 +21,10 @@ import { useUpdateTask } from "../hooks/useUpdateTask";
 import { ActivityAction } from "../type";
 
 export const TaskDetails: React.FC = () => {
-  const { organization } = useAuth();
+  const { project } = useAuth();
   const { issueId } = useParams<{ issueId: string }>();
 
-  const { data: users } = useGetUsers(organization?.id as number);
+  const { data: users } = useGetUsers(project?.id as number);
   const { data: task } = useGetTask(issueId as string);
   const { updateTask } = useUpdateTask();
 

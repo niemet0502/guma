@@ -22,8 +22,8 @@ export const USER_ACCOUNT_AUTH = gql`
         firstname
         username
         profile_id
-        organization_id
-        organization {
+        project_id
+        project {
           id
           name
         }

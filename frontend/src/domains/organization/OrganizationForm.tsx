@@ -24,7 +24,7 @@ import { useNavigate } from "react-router-dom";
 import * as z from "zod";
 import { useAuth } from "../auth/providers/auth";
 import { UserProfileEnum } from "../auth/services/types";
-import { CREATE_ORGANIZATION } from "./services/queries";
+import { CREATE_PROJECT } from "./services/queries";
 
 const FormSchema = z.object({
   name: z.string({
@@ -36,10 +36,10 @@ const FormSchema = z.object({
 });
 
 export const OrganizationForm: React.FC = () => {
-  const { updateOrganization, user, updateUser } = useAuth();
+  const { updateProject, user, updateUser } = useAuth();
   const navigate = useNavigate();
 
-  const [createOrganization, { error }] = useMutation(CREATE_ORGANIZATION);
+  const [createProject, { error }] = useMutation(CREATE_PROJECT);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -49,22 +49,23 @@ export const OrganizationForm: React.FC = () => {
     },
   });
 
-  async function onSubmit(createOrganizationInput: z.infer<typeof FormSchema>) {
-    const response = await createOrganization({
-      variables: { createOrganizationInput },
+  async function onSubmit(createProjectInput: z.infer<typeof FormSchema>) {
+    const response = await createProject({
+      variables: { createProjectInput },
     });
 
-    if (response && response.data.createOrganization) {
-      const { createOrganization } = response.data;
+    if (response && response.data.createProject) {
+      const { createProject } = response.data;
 
-      updateOrganization(createOrganization);
+      updateProject(createProject);
       updateUser({
         ...user,
+        username: user?.username as string,
         id: user?.id as string,
         profile_id: UserProfileEnum.ADMIN,
       });
 
-      navigate(`/${createOrganization.name.toLowerCase()}/documents`);
+      navigate(`/${createProject.name.toLowerCase()}/documents`);
     }
   }
   return (

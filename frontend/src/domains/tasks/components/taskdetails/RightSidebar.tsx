@@ -36,9 +36,9 @@ export const RightSidebar: React.FC<{
   users?: User[];
   handleUpdate: (data: any) => void;
 }> = ({ task, users, handleUpdate }) => {
-  const { organization } = useAuth();
+  const { project } = useAuth();
 
-  const { data: labels } = useGetLabels(organization?.id as number);
+  const { data: labels } = useGetLabels(project?.id as number);
   const { data: status } = useGetStatus(task?.team_id as number);
   const { fetchSprints, data: sprints } = useSprints();
 

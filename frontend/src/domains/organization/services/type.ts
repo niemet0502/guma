@@ -4,7 +4,7 @@ export interface CreateOrganizationInput {
   logo: string;
 }
 
-export interface Organization {
+export interface Project {
   id: number;
   name: string;
   size: string;
@@ -14,5 +14,5 @@ export interface Organization {
 export interface LabelApi {
   id: string;
   name: string;
-  organization_id: number;
+  project_id: number;
 }

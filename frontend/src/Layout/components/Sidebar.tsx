@@ -11,15 +11,15 @@ import { NavLink, useParams } from "react-router-dom";
 
 export const Sidebar: React.FC = () => {
   let { orgaId } = useParams<{ orgaId: string }>();
-  const { organization, user } = useAuth();
-  const { data, isLoading } = useTeams(organization?.id as number);
+  const { project, user } = useAuth();
+  const { data, isLoading } = useTeams(project?.id as number);
 
   return (
     <div className="pb-12 h-full w-[250px] flex flex-none sticky top-0">
       <div className="w-full space-y-4 py-4">
         <div className="px-2 py-2">
           <h4 className="mb-3 px-2 text-lg font-semibold tracking-tight">
-            {organization?.name}
+            {project?.name}
           </h4>
           <div className="space-y-1">
             <NavLink
