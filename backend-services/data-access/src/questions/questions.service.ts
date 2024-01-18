@@ -26,7 +26,7 @@ export class QuestionsService {
   async findOne(id: number) {
     const result = await this.repository.findOne({ where: { id } });
 
-    await this.repository.save({ ...result, view: result.view++ });
+    await this.repository.save({ ...result, view: ++result.view });
 
     return result;
   }

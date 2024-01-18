@@ -10,6 +10,7 @@ import { DocumentsModule } from './documents/documents.module';
 import { FoldersModule } from './folders/folders.module';
 import { Team } from './shared/team.entity';
 import { User } from './shared/user.entity';
+import { QuestionsModule } from './questions/questions.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { User } from './shared/user.entity';
     }),
     DocumentsModule,
     FoldersModule,
+    QuestionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
