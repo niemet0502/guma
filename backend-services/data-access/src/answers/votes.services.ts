@@ -27,4 +27,8 @@ export class AnswerVotesService {
   async findByAllAnswer(answer_id: number): Promise<AnswerVote[]> {
     return await this.repository.find({ where: { answer_id } });
   }
+
+  async findOne(id: number) {
+    return await this.repository.findOne({ where: { id } });
+  }
 }

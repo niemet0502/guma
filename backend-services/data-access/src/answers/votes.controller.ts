@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CreateVoteDto } from './dto/create-vote.dto';
 import { AnswerVote } from './entities/vote.entity';
@@ -21,5 +21,11 @@ export class AnswerVotesController {
     @Query('answer_id') answer_id: string,
   ): Promise<AnswerVote[]> {
     return await this.service.findByAllAnswer(+answer_id);
+  }
+
+  @Get(':id')
+  @ApiOkResponse({ type: AnswerVote })
+  findOne(@Param('id') id: string) {
+    return this.service.findOne(+id);
   }
 }

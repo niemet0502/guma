@@ -11,5 +11,5 @@ export class CreateVoteDto {
 
   @IsNotEmpty()
   @ApiProperty({ required: true })
-  isvalidated: boolean;
+  public isvalidated: boolean;
 }

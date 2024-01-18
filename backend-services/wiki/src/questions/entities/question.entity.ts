@@ -1,5 +1,6 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
-import { Answer } from 'src/answers/entities/answer.entity';
+import { Answer } from '../../answers/entities/answer.entity';
+import { User } from '../../shared/user.entity';
 
 @ObjectType()
 export class Question {
@@ -26,4 +27,7 @@ export class Question {
 
   @Field(() => [Answer])
   answers: Answer[];
+
+  @Field(() => User)
+  author?: User;
 }

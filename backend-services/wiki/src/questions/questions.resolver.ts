@@ -7,6 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { User } from '../shared/user.entity';
 import { CreateQuestionInput } from './dto/create-question.input';
 import { UpdateQuestionInput } from './dto/update-question.input';
 import { Question } from './entities/question.entity';
@@ -53,5 +54,10 @@ export class QuestionsResolver {
     const { id } = question;
 
     return this.questionsService.getAnswers(id);
+  }
+
+  @ResolveField(() => User)
+  author(@Parent() doc: Question): any {
+    return { __typename: 'User', id: doc.created_by };
   }
 }
