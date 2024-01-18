@@ -62,4 +62,10 @@ export class LivrablesResolver {
   }): Promise<Livrable> {
     return await this.livrablesService.findOne(reference.id);
   }
+
+  @ResolveField()
+  updates(@Parent() livrable: Livrable) {
+    const { id } = livrable;
+    return this.livrablesService.getUpdates(id);
+  }
 }

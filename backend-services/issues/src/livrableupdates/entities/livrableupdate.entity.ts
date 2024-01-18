@@ -1,4 +1,5 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
+import { Livrable } from 'src/livrables/entities/livrable.entity';
 
 @ObjectType()
 export class Livrableupdate {
@@ -19,4 +20,7 @@ export class Livrableupdate {
 
   @Field({ nullable: false })
   created_at: string;
+
+  @Field((type) => Livrable, { nullable: true })
+  livrable: Livrable;
 }

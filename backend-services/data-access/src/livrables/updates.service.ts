@@ -38,6 +38,10 @@ export class LivrableUpdatesService {
     });
   }
 
+  async findOne(id: number) {
+    return await this.repository.findOne({ where: { id } });
+  }
+
   async update(
     id: number,
     updateLivrableUpdateDto: UpdateLivrableUpdateDto,

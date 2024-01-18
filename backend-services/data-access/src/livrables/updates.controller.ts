@@ -31,6 +31,13 @@ export class LivrableUpdatesController {
     return this.service.findAllByLivrable(+livrable_id);
   }
 
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    console.log(id);
+
+    return this.service.findOne(+id);
+  }
+
   @Patch(':id')
   update(
     @Param('id') id: string,

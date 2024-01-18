@@ -1,7 +1,8 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
+import { LivrableupdatesService } from '../livrableupdates/livrableupdates.service';
 import { CreateLivrableInput } from './dto/create-livrable.input';
 import { UpdateLivrableInput } from './dto/update-livrable.input';
 import { Livrable } from './entities/livrable.entity';
@@ -10,7 +11,11 @@ import { Livrable } from './entities/livrable.entity';
 export class LivrablesService {
   private url = 'http://data-access:3000/livrables/';
 
-  constructor(private readonly http: HttpService) {}
+  constructor(
+    private readonly http: HttpService,
+    @Inject(forwardRef(() => LivrableupdatesService))
+    private readonly updatesService: LivrableupdatesService,
+  ) {}
 
   async create(createLivrableInput: CreateLivrableInput): Promise<Livrable> {
     const { data } = await firstValueFrom(
@@ -64,5 +69,9 @@ export class LivrablesService {
       this.http.delete<Livrable>(`${this.url}${id}`),
     );
     return { id, ...data };
+  }
+
+  async getUpdates(id: number) {
+    return this.updatesService.findAll(id);
   }
 }

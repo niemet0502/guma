@@ -1,4 +1,12 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { CreateLivrableupdateInput } from './dto/create-livrableupdate.input';
 import { UpdateLivrableupdateInput } from './dto/update-livrableupdate.input';
 import { Livrableupdate } from './entities/livrableupdate.entity';
@@ -42,5 +50,11 @@ export class LivrableupdatesResolver {
   @Mutation(() => Livrableupdate)
   removeLivrableupdate(@Args('id', { type: () => Int }) id: number) {
     return this.livrableupdatesService.remove(id);
+  }
+
+  @ResolveField()
+  livrable(@Parent() update: Livrableupdate) {
+    const { livrable_id } = update;
+    return this.livrableupdatesService.getLivrable(livrable_id);
   }
 }
