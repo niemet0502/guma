@@ -1,27 +1,27 @@
 import { HttpModule, HttpService } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
-import { LivrableupdatesService } from '../livrableupdates/livrableupdates.service';
-import { LivrablesService } from './livrables.service';
+import { LivrablesService } from '../livrables/livrables.service';
+import { LivrableupdatesService } from './livrableupdates.service';
 
-describe('LivrablesService', () => {
-  let service: LivrablesService;
+describe('LivrableupdatesService', () => {
+  let service: LivrableupdatesService;
   let http: HttpService;
 
-  const livrableUpdateServiceMock = {};
+  const livrableServiceMock = {};
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [HttpModule],
       providers: [
-        LivrablesService,
+        LivrableupdatesService,
         {
-          provide: LivrableupdatesService,
-          useValue: livrableUpdateServiceMock,
+          provide: LivrablesService,
+          useValue: livrableServiceMock,
         },
       ],
     }).compile();
 
-    service = module.get<LivrablesService>(LivrablesService);
+    service = module.get<LivrableupdatesService>(LivrableupdatesService);
     http = module.get<HttpService>(HttpService);
   });
 

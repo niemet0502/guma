@@ -1,9 +1,11 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
+import { Livrableupdate } from '../../livrableupdates/entities/livrableupdate.entity';
 import { User } from '../../shared/user.entity';
 
 @ObjectType()
+@Directive('@key(fields: "id")')
 export class Livrable {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
+  @Field(() => ID)
   id: number;
 
   @Field()
@@ -29,4 +31,7 @@ export class Livrable {
 
   @Field(() => User)
   author?: User;
+
+  @Field(() => [Livrableupdate], { nullable: true })
+  updates: Livrableupdate[];
 }
