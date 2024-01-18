@@ -11,6 +11,7 @@ import { FoldersModule } from './folders/folders.module';
 import { Team } from './shared/team.entity';
 import { User } from './shared/user.entity';
 import { QuestionsModule } from './questions/questions.module';
+import { AnswersModule } from './answers/answers.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { QuestionsModule } from './questions/questions.module';
     DocumentsModule,
     FoldersModule,
     QuestionsModule,
+    AnswersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
