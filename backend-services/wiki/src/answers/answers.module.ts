@@ -6,5 +6,6 @@ import { AnswersService } from './answers.service';
 @Module({
   imports: [HttpModule],
   providers: [AnswersResolver, AnswersService],
+  exports: [AnswersService],
 })
 export class AnswersModule {}

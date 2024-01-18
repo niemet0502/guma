@@ -2,6 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
+import { AnswersService } from '../answers/answers.service';
 import { CreateQuestionInput } from './dto/create-question.input';
 import { UpdateQuestionInput } from './dto/update-question.input';
 import { Question } from './entities/question.entity';
@@ -10,7 +11,10 @@ import { Question } from './entities/question.entity';
 export class QuestionsService {
   private url = 'http://data-access:3000/questions/';
 
-  constructor(private readonly http: HttpService) {}
+  constructor(
+    private readonly http: HttpService,
+    private readonly answerQuestion: AnswersService,
+  ) {}
 
   async create(createQuestionInput: CreateQuestionInput) {
     const { data } = await firstValueFrom(
@@ -58,5 +62,9 @@ export class QuestionsService {
       this.http.delete<Question>(`${this.url}${id}`),
     );
     return { id, ...data };
+  }
+
+  async getAnswers(question_id: number) {
+    return await this.answerQuestion.findAllByQuestion(question_id);
   }
 }

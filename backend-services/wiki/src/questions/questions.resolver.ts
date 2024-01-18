@@ -1,15 +1,25 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { QuestionsService } from './questions.service';
-import { Question } from './entities/question.entity';
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { CreateQuestionInput } from './dto/create-question.input';
 import { UpdateQuestionInput } from './dto/update-question.input';
+import { Question } from './entities/question.entity';
+import { QuestionsService } from './questions.service';
 
 @Resolver(() => Question)
 export class QuestionsResolver {
   constructor(private readonly questionsService: QuestionsService) {}
 
   @Mutation(() => Question)
-  createQuestion(@Args('createQuestionInput') createQuestionInput: CreateQuestionInput) {
+  createQuestion(
+    @Args('createQuestionInput') createQuestionInput: CreateQuestionInput,
+  ) {
     return this.questionsService.create(createQuestionInput);
   }
 
@@ -24,12 +34,24 @@ export class QuestionsResolver {
   }
 
   @Mutation(() => Question)
-  updateQuestion(@Args('updateQuestionInput') updateQuestionInput: UpdateQuestionInput) {
-    return this.questionsService.update(updateQuestionInput.id, updateQuestionInput);
+  updateQuestion(
+    @Args('updateQuestionInput') updateQuestionInput: UpdateQuestionInput,
+  ) {
+    return this.questionsService.update(
+      updateQuestionInput.id,
+      updateQuestionInput,
+    );
   }
 
   @Mutation(() => Question)
   removeQuestion(@Args('id', { type: () => Int }) id: number) {
     return this.questionsService.remove(id);
+  }
+
+  @ResolveField()
+  answers(@Parent() question: Question) {
+    const { id } = question;
+
+    return this.questionsService.getAnswers(id);
   }
 }
