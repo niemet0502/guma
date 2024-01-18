@@ -1,6 +1,6 @@
 import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
-import { Livrable } from 'src/shared/livrable.entity';
 import { Member } from '../../members/entities/member.entity';
+import { Livrable } from '../../shared/livrable.entity';
 import { TeamVisibility } from '../teams.enum';
 
 @ObjectType()
