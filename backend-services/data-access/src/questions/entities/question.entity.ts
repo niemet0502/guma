@@ -17,6 +17,9 @@ export class Question {
   @Column('int')
   created_by: number;
 
+  @Column('int', { default: 0 })
+  view: number;
+
   @Column('text')
   updated_at: string;
 }

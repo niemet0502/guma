@@ -24,7 +24,11 @@ export class QuestionsService {
   }
 
   async findOne(id: number) {
-    return await this.repository.findOne({ where: { id } });
+    const result = await this.repository.findOne({ where: { id } });
+
+    await this.repository.save({ ...result, view: result.view++ });
+
+    return result;
   }
 
   async update(id: number, updateQuestionDto: UpdateQuestionDto) {
