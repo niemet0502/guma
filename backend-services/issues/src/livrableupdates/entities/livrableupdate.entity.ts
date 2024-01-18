@@ -1,5 +1,5 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
-import { Livrable } from 'src/livrables/entities/livrable.entity';
+import { Livrable } from '../../livrables/entities/livrable.entity';
 
 @ObjectType()
 export class Livrableupdate {

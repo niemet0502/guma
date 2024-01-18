@@ -2,7 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
-import { LivrablesService } from 'src/livrables/livrables.service';
+import { LivrablesService } from '../livrables/livrables.service';
 import { CreateLivrableupdateInput } from './dto/create-livrableupdate.input';
 import { UpdateLivrableupdateInput } from './dto/update-livrableupdate.input';
 import { Livrableupdate } from './entities/livrableupdate.entity';
