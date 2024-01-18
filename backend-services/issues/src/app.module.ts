@@ -15,6 +15,7 @@ import { User } from './shared/user.entity';
 import { SprintsModule } from './sprints/sprints.module';
 import { TasksModule } from './tasks/tasks.module';
 import { LivrablesModule } from './livrables/livrables.module';
+import { LivrableupdatesModule } from './livrableupdates/livrableupdates.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { LivrablesModule } from './livrables/livrables.module';
     SprintsModule,
     TaskLabelsModule,
     LivrablesModule,
+    LivrableupdatesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
