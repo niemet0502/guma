@@ -11,7 +11,7 @@ export class Project {
   @Column('text', { nullable: true })
   description: string;
 
-  @Column('text')
+  @Column('text', { nullable: true })
   size: string;
 
   @Column('text', { nullable: true })
