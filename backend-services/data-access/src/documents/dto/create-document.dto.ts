@@ -15,6 +15,12 @@ export class CreateDocumentDto {
   public folder_id: number;
 
   @ApiProperty({ required: false })
+  public task_id: number;
+
+  @ApiProperty({ required: false })
+  public livrable_id: number;
+
+  @ApiProperty({ required: false })
   public team_id: number;
 
   @IsNotEmpty()
