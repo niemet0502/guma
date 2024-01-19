@@ -5,9 +5,14 @@ import { AnswersService } from './answers.service';
 describe('AnswersResolver', () => {
   let resolver: AnswersResolver;
 
+  const answerServiceMock = {};
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AnswersResolver, AnswersService],
+      providers: [
+        AnswersResolver,
+        { provide: AnswersService, useValue: answerServiceMock },
+      ],
     }).compile();
 
     resolver = module.get<AnswersResolver>(AnswersResolver);
