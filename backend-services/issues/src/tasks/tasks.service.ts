@@ -2,6 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
+import { LivrablesService } from 'src/livrables/livrables.service';
 import { ActivitiesService } from '../activities/activities.service';
 import { CommentsService } from '../comments/comments.service';
 import { LabelsService } from '../labels/labels.service';
@@ -22,6 +23,7 @@ export class TasksService {
     private readonly activityService: ActivitiesService,
     private readonly labelService: LabelsService,
     private readonly sprintService: SprintsService,
+    private readonly livrableService: LivrablesService,
   ) {}
 
   async create(createTaskInput: CreateTaskInput) {
@@ -145,5 +147,9 @@ export class TasksService {
 
   async getSprint(sprint_id: number) {
     return await this.sprintService.findOne(sprint_id);
+  }
+
+  async getLivrable(livrable_id: number) {
+    return await this.livrableService.findOne(livrable_id);
   }
 }

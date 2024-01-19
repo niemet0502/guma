@@ -1,5 +1,6 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module, forwardRef } from '@nestjs/common';
+import { LivrablesModule } from 'src/livrables/livrables.module';
 import { ActivitiesModule } from '../activities/activities.module';
 import { CommentsModule } from '../comments/comments.module';
 import { TaskLabelsModule } from '../labels/labels.module';
@@ -14,6 +15,7 @@ import { TasksService } from './tasks.service';
     HttpModule,
     CommentsModule,
     TaskLabelsModule,
+    LivrablesModule,
   ],
   providers: [TasksResolver, TasksService],
   exports: [TasksService],

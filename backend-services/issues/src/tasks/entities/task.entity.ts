@@ -2,6 +2,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Activity } from '../../activities/entities/activity.entity';
 import { Comment } from '../../comments/entities/comment.entity';
 import { TaskLabel } from '../../labels/entities/label.entity';
+import { Livrable } from '../../livrables/entities/livrable.entity';
 import { Status } from '../../shared/status.entity';
 import { TaskType } from '../../shared/tasks.enum';
 import { Team } from '../../shared/team.entity';
@@ -57,6 +58,12 @@ export class Task {
 
   @Field({ nullable: true })
   sprint_id: number;
+
+  @Field({ nullable: true })
+  livrable_id: number;
+
+  @Field((type) => Livrable, { nullable: true })
+  livrable?: Livrable;
 
   @Field({ nullable: false })
   status_id: number;

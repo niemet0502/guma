@@ -133,4 +133,12 @@ export class TasksResolver {
 
     return this.tasksService.getSprint(sprint_id);
   }
+
+  @ResolveField()
+  livrable(@Parent() task: Task) {
+    const { livrable_id } = task;
+    if (!livrable_id) return;
+
+    return this.tasksService.getLivrable(livrable_id);
+  }
 }
