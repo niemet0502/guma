@@ -58,9 +58,9 @@ export class LivrablesResolver {
   @ResolveReference()
   async resolveReference(reference: {
     __typename: string;
-    id: number;
+    id: string;
   }): Promise<Livrable> {
-    return await this.livrablesService.findOne(reference.id);
+    return await this.livrablesService.findOne(+reference.id);
   }
 
   @ResolveField()

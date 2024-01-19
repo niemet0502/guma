@@ -1,6 +1,5 @@
 import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
 import { Member } from '../../members/entities/member.entity';
-import { Livrable } from '../../shared/livrable.entity';
 import { TeamVisibility } from '../teams.enum';
 
 @ObjectType()
@@ -26,7 +25,4 @@ export class Team {
 
   @Field((type) => [Member])
   members: Member[];
-
-  @Field((type) => [Livrable])
-  livrables: Livrable[];
 }
