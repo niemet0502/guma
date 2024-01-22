@@ -12,6 +12,12 @@ export class Document {
   @Column({ nullable: true })
   folder_id: number;
 
+  @Column({ nullable: true })
+  task_id: number;
+
+  @Column({ nullable: true })
+  livrable_id: number;
+
   @Column('int', { nullable: true })
   team_id: number;
 

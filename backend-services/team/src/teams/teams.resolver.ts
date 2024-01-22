@@ -62,13 +62,6 @@ export class TeamsResolver {
     return await this.teamsService.getMembers(id);
   }
 
-  @ResolveField()
-  async livrables(@Parent() team: Team) {
-    const { id } = team;
-
-    return await this.teamsService.getLivrables(id);
-  }
-
   @ResolveReference()
   resolveReference(reference: {
     __typename: string;

@@ -11,5 +11,8 @@ export class UpdateTaskDto extends PartialType(CreateTaskDto) {
   sprint_id?: number;
 
   @ApiProperty({ required: false })
+  livrable_id?: number;
+
+  @ApiProperty({ required: false })
   assignee_to?: number;
 }

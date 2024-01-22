@@ -1,14 +1,14 @@
 import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
-import { Livrable } from '../livrables/entities/livrable.entity';
+import { Document } from '../documents/entities/document.entity';
 
 @ObjectType()
 @Directive('@extends')
 @Directive('@key(fields: "id")')
-export class Team {
+export class Task {
   @Field((type) => ID)
   @Directive('@external')
   id: string;
 
-  @Field((type) => [Livrable])
-  livrables: Livrable[];
+  @Field((type) => [Document])
+  documents: Document[];
 }

@@ -44,12 +44,17 @@ export class DocumentsService {
 
     return await this.docRepository.save({
       ...createDocumentDto,
-      created_at: new Date().toLocaleString(),
-      updated_at: new Date().toLocaleString(),
+      created_at: new Date().toString(),
+      updated_at: new Date().toString(),
     });
   }
 
-  async findAllByTeam(team_id: number, folder_id: number): Promise<Document[]> {
+  async findAllByTeam(
+    team_id: number,
+    folder_id: number,
+    livrable_id: number,
+    task_id: number,
+  ): Promise<Document[]> {
     let query = this.docRepository.createQueryBuilder('document');
 
     if (team_id) {
@@ -58,6 +63,16 @@ export class DocumentsService {
 
     if (folder_id) {
       query = query.andWhere('document.folder_id = :folder_id', { folder_id });
+    }
+
+    if (livrable_id) {
+      query = query.andWhere('document.folder_id = :livrable_id', {
+        livrable_id,
+      });
+    }
+
+    if (task_id) {
+      query = query.andWhere('document.folder_id = :folder_id', { task_id });
     }
 
     return query.getMany();

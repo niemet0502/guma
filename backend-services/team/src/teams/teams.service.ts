@@ -85,8 +85,4 @@ export class TeamsService {
   async getMembers(team_id: number): Promise<Member[]> {
     return await this.memberService.findAllByTeam(team_id, undefined);
   }
-
-  async getLivrables(team_id: number) {
-    return [];
-  }
 }
