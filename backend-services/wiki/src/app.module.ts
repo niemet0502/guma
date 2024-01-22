@@ -4,14 +4,16 @@ import {
 } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
+import { AnswersModule } from './answers/answers.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DocumentsModule } from './documents/documents.module';
 import { FoldersModule } from './folders/folders.module';
+import { QuestionsModule } from './questions/questions.module';
+import { Livrable } from './shared/livrable.entity';
+import { Task } from './shared/task.entity';
 import { Team } from './shared/team.entity';
 import { User } from './shared/user.entity';
-import { QuestionsModule } from './questions/questions.module';
-import { AnswersModule } from './answers/answers.module';
 import { VotesModule } from './votes/votes.module';
 
 @Module({
@@ -22,7 +24,7 @@ import { VotesModule } from './votes/votes.module';
         federation: 2,
       },
       buildSchemaOptions: {
-        orphanedTypes: [User, Team],
+        orphanedTypes: [User, Team, Task, Livrable],
       },
     }),
     DocumentsModule,

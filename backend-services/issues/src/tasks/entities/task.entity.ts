@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
 import { Activity } from '../../activities/entities/activity.entity';
 import { Comment } from '../../comments/entities/comment.entity';
 import { TaskLabel } from '../../labels/entities/label.entity';
@@ -10,6 +10,7 @@ import { User } from '../../shared/user.entity';
 import { Sprint } from '../../sprints/entities/sprint.entity';
 
 @ObjectType()
+@Directive('@key(fields: "id")')
 export class Task {
   @Field(() => ID)
   id: number;
