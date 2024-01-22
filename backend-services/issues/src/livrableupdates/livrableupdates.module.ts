@@ -1,6 +1,6 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module, forwardRef } from '@nestjs/common';
-import { LivrablesModule } from 'src/livrables/livrables.module';
+import { LivrablesModule } from '../livrables/livrables.module';
 import { LivrableupdatesResolver } from './livrableupdates.resolver';
 import { LivrableupdatesService } from './livrableupdates.service';
 

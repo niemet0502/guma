@@ -4,6 +4,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ActivitiesModule } from '../activities/activities.module';
 import { CommentsModule } from '../comments/comments.module';
 import { TaskLabelsModule } from '../labels/labels.module';
+import { LivrablesService } from '../livrables/livrables.service';
 import { SprintsModule } from '../sprints/sprints.module';
 import { TasksService } from './tasks.service';
 
@@ -25,7 +26,7 @@ describe('TasksService', () => {
         forwardRef(() => CommentsModule),
         forwardRef(() => TaskLabelsModule),
       ],
-      providers: [TasksService],
+      providers: [TasksService, { provide: LivrablesService, useValue: {} }],
     })
       // .overrideProvider(CommentsService)
       // .useValue(commentServiceMock)

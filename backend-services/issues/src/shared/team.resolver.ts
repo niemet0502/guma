@@ -1,6 +1,6 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
-import { LivrablesService } from 'src/livrables/livrables.service';
 import { Livrable } from '../livrables/entities/livrable.entity';
+import { LivrablesService } from '../livrables/livrables.service';
 import { Team } from './team.entity';
 
 @Resolver(() => Team)
