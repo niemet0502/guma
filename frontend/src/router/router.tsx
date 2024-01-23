@@ -3,6 +3,7 @@ import { SignIn } from "@/domains/auth/SignIn";
 import { SignUp } from "@/domains/auth/SignUp";
 import { NotificationsList } from "@/domains/notifications/NotificationsList";
 import { OrganizationForm } from "@/domains/organization/OrganizationForm";
+import { QuestionList } from "@/domains/sharing/pages/List";
 import { SprintDetails } from "@/domains/sprints/pages/Details";
 import { SprintList } from "@/domains/sprints/pages/List";
 import { TaskDetails } from "@/domains/tasks/pages/Details";
@@ -37,6 +38,11 @@ export const router = createBrowserRouter([
                 index: true,
                 path: "documents",
                 element: <Documents />,
+              },
+              {
+                index: true,
+                path: "questions",
+                element: <QuestionList />,
               },
               {
                 path: "notifications",

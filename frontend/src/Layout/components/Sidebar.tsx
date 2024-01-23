@@ -4,6 +4,7 @@ import { UserProfileEnum } from "@/domains/auth/services/types";
 import { CreateDialog } from "@/domains/teams/components/CreateDialog";
 import { TeamCard } from "@/domains/teams/components/TeamCard";
 import { useTeams } from "@/domains/teams/hooks/useTeams";
+import { FaRegQuestionCircle } from "react-icons/fa";
 import { GoIssueDraft } from "react-icons/go";
 import { HiOutlineDocumentDuplicate } from "react-icons/hi";
 import { IoIosNotificationsOutline } from "react-icons/io";
@@ -33,6 +34,16 @@ export const Sidebar: React.FC = () => {
             </NavLink>
 
             <NavLink
+              to={`/${orgaId}/questions`}
+              className={({ isActive, isPending }) =>
+                isActive ? "active" : isPending ? "default" : "default"
+              }
+            >
+              <FaRegQuestionCircle className="text-base" />
+              Questions
+            </NavLink>
+
+            <NavLink
               to={`/${orgaId}/documents`}
               className={({ isActive, isPending }) =>
                 isActive ? "active" : isPending ? "default" : "default"
@@ -41,6 +52,7 @@ export const Sidebar: React.FC = () => {
               <HiOutlineDocumentDuplicate className="text-base" />
               Documents
             </NavLink>
+
             <NavLink
               to="/create-workspace"
               className={({ isActive, isPending }) =>

@@ -124,7 +124,7 @@ export function parseDate(inputDate: string) {
 }
 
 export function getTimeAgoString(inputDate: string) {
-  const date = new Date(parseDate(inputDate));
+  const date = new Date(inputDate);
   const timeDifference = Number(new Date()) - Number(date);
 
   const seconds = Math.floor(timeDifference / 1000);
