@@ -55,8 +55,8 @@ export class ActivitiesService {
 
     return await this.activitiesService.save({
       ...createActivityDto,
-      created_at: new Date().toLocaleString(),
-      updated_at: new Date().toLocaleString(),
+      created_at: new Date().toString(),
+      updated_at: new Date().toString(),
     });
   }
 

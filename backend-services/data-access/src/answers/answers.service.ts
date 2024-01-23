@@ -28,8 +28,8 @@ export class AnswersService {
 
     return await this.repository.save({
       ...createAnswerDto,
-      created_at: new Date().toLocaleString(),
-      updated_at: new Date().toLocaleString(),
+      created_at: new Date().toString(),
+      updated_at: new Date().toString(),
     });
   }
 

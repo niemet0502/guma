@@ -92,7 +92,7 @@ export class DocumentsService {
 
     const updated = Object.assign(toUpdate, updateDocumentDto);
 
-    updated.updated_at = new Date().toLocaleString();
+    updated.updated_at = new Date().toString();
 
     return await this.docRepository.save(updated);
   }
