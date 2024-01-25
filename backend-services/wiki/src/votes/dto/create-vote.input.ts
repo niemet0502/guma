@@ -8,6 +8,6 @@ export class CreateVoteInput {
   @Field(() => Int)
   answer_id: number;
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   created_by: number;
 }

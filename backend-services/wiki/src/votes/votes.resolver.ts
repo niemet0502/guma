@@ -7,6 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { CurrentUser } from 'src/shared/current-user.decator';
 import { User } from '../shared/user.entity';
 import { CreateVoteInput } from './dto/create-vote.input';
 import { UpdateVoteInput } from './dto/update-vote.input';
@@ -18,8 +19,14 @@ export class VotesResolver {
   constructor(private readonly votesService: VotesService) {}
 
   @Mutation(() => Vote)
-  createVote(@Args('createVoteInput') createVoteInput: CreateVoteInput) {
-    return this.votesService.create(createVoteInput);
+  createVote(
+    @Args('createVoteInput') createVoteInput: CreateVoteInput,
+    @CurrentUser() user: User,
+  ) {
+    return this.votesService.create({
+      ...createVoteInput,
+      created_by: +user.id,
+    });
   }
 
   @Query(() => [Vote], { name: 'votes' })
