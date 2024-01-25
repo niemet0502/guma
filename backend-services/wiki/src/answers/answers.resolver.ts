@@ -7,6 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { CurrentUser } from 'src/shared/current-user.decator';
 import { User } from '../shared/user.entity';
 import { AnswersService } from './answers.service';
 import { CreateAnswerInput } from './dto/create-answer.input';
@@ -20,8 +21,12 @@ export class AnswersResolver {
   @Mutation(() => Answer)
   createAnswer(
     @Args('createAnswerInput') createAnswerInput: CreateAnswerInput,
+    @CurrentUser() user: User,
   ) {
-    return this.answersService.create(createAnswerInput);
+    return this.answersService.create({
+      ...createAnswerInput,
+      created_by: +user.id,
+    });
   }
 
   @Query(() => [Answer], { name: 'answers' })

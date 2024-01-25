@@ -8,6 +8,7 @@ import { useRef } from "react";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { useParams } from "react-router-dom";
 import { AnswerItem } from "../components/AnswerItem";
+import { useCreateAnswer } from "../hooks/useCreateAnswer";
 import { useGetQuestion } from "../hooks/useGetQuestion";
 import { useVoteAnswer } from "../hooks/useVoteAnswer";
 import { CreateVoteInput } from "../type";
@@ -21,12 +22,34 @@ export const QuestionDetails: React.FC = () => {
 
   const { data: question } = useGetQuestion(questionId!);
   const { postVote } = useVoteAnswer();
+  const { createAnswer } = useCreateAnswer();
 
   const handleVote = (createVoteInput: CreateVoteInput) => {
     postVote(createVoteInput);
     toast({
       title: "Votre vote a été poster",
     });
+  };
+
+  const handleAnswer = () => {
+    if (textAreaRef.current) {
+      const content = textAreaRef.current.value;
+
+      console.log(content);
+
+      if (content === "") {
+        toast({
+          title: "Content required",
+          description: "Please add a content before submitting",
+        });
+      } else {
+        createAnswer({
+          content: content as string,
+          question_id: +question!.id,
+        });
+        textAreaRef.current.value = "";
+      }
+    }
   };
 
   return (
@@ -80,7 +103,11 @@ export const QuestionDetails: React.FC = () => {
                   className="resize-none border-none"
                 />
 
-                <Button className="self-end m-2" size="sm">
+                <Button
+                  className="self-end m-2"
+                  size="sm"
+                  onClick={handleAnswer}
+                >
                   Répondre
                 </Button>
               </div>

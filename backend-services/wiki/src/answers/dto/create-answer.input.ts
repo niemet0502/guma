@@ -5,7 +5,7 @@ export class CreateAnswerInput {
   @Field({ nullable: false })
   content: string;
 
-  @Field({ nullable: false })
+  @Field({ nullable: true })
   created_by: number;
 
   @Field({ nullable: false })
