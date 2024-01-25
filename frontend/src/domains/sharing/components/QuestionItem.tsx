@@ -1,9 +1,12 @@
 import { getTimeAgoString } from "@/lib/utils";
+import { NavLink, useParams } from "react-router-dom";
 import { QuestionApi } from "../type";
 
 export const QuestionItem: React.FC<{ question: QuestionApi }> = ({
   question,
 }) => {
+  let { orgaId } = useParams<{ orgaId: string }>();
+
   return (
     <div className="border-b">
       <div className="flex w-full">
@@ -12,7 +15,9 @@ export const QuestionItem: React.FC<{ question: QuestionApi }> = ({
           <span>{question.view} vues</span>
         </div>
         <div className="flex-2 w-3/4 p-4">
-          <h1 className="font-medium text-lg">{question.title}</h1>
+          <NavLink to={`/${orgaId}/questions/${question.id}`}>
+            <h1 className="font-medium text-lg">{question.title}</h1>
+          </NavLink>
           <p>{question.content}</p>
         </div>
       </div>
