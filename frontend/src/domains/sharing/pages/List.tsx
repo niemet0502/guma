@@ -4,7 +4,7 @@ import { QuestionItem } from "../components/QuestionItem";
 import { useQuestion } from "../hooks/useQuestion";
 
 export const QuestionList: React.FC = () => {
-  const { data: questions, isLoading, error } = useQuestion();
+  const { data: questions } = useQuestion();
   return (
     <div className="w-full">
       <div className="bg-secondary py-3 px-5 flex items-center justify-between">
