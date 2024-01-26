@@ -1,6 +1,7 @@
 import { AuthPage } from "@/domains/auth/AuthPage";
 import { SignIn } from "@/domains/auth/SignIn";
 import { SignUp } from "@/domains/auth/SignUp";
+import { ModulesList } from "@/domains/modules/pages/ModulesList";
 import { NotificationsList } from "@/domains/notifications/NotificationsList";
 import { OrganizationForm } from "@/domains/organization/OrganizationForm";
 import { AskQuestion } from "@/domains/sharing/pages/CreateQuestion";
@@ -103,6 +104,19 @@ export const router = createBrowserRouter([
                     path: "/:orgaId/team/:teamId/sprints/:sprintId",
                     element: <SprintDetails />,
                   },
+                ],
+              },
+              {
+                path: "team/:teamId/modules",
+                children: [
+                  {
+                    index: true,
+                    element: <ModulesList />,
+                  },
+                  // {
+                  //   path: "/:orgaId/team/:teamId/sprints/:sprintId",
+                  //   element: <SprintDetails />,
+                  // },
                 ],
               },
               {
