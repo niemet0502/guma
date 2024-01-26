@@ -7,7 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { CurrentUser } from 'src/shared/current-user.decator';
+import { CurrentUser } from '../shared/current-user.decator';
 import { User } from '../shared/user.entity';
 import { AnswersService } from './answers.service';
 import { CreateAnswerInput } from './dto/create-answer.input';
