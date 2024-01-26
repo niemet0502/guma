@@ -1,0 +1,107 @@
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
+import { Avatar } from "@radix-ui/react-avatar";
+import { CheckIcon } from "@radix-ui/react-icons";
+import { useState } from "react";
+import { GoProjectRoadmap } from "react-icons/go";
+import { LivrableApi, LivrableStatusEnum } from "../type";
+import { ModuleStatusIcon } from "./ModuleStatusIcon";
+
+const status = [
+  LivrableStatusEnum.Planned,
+  LivrableStatusEnum.InProgress,
+  LivrableStatusEnum.Pause,
+  LivrableStatusEnum.Completed,
+];
+
+const statusLabel = ["Planned", "In Progress", "Paused", "Completed"];
+
+export const ModuleItem: React.FC<{ module: LivrableApi }> = ({ module }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="w-full px-5 py-3 flex justify-between border-b hover:bg-slate-50 hover:cursor-pointer">
+      <div className="flex items-center gap-2">
+        <GoProjectRoadmap className="mt-1" />
+        <span className="font-medium">Livrable 1</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <Avatar className="h-6 w-6 bg-transparent flex rounded-full border-2 items-center  justify-center ">
+          <span className="text-muted-foreground  text-[9px]">
+            {module.author?.username?.slice(0, 2).toUpperCase()}
+          </span>
+        </Avatar>
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger>
+            <div className="hover:cursor-pointer rounded flex gap-2 items-center">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <ModuleStatusIcon status={module.status} />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{statusLabel[module.status]}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+          </PopoverTrigger>
+          <PopoverContent className="w-[160px] p-0 ">
+            <Command>
+              <CommandInput placeholder="Set status..." className="h-9" />
+              <CommandEmpty>No member found.</CommandEmpty>
+              <CommandGroup>
+                {status.map((value) => (
+                  <CommandItem
+                    key={value}
+                    // onSelect={(currentValue) => {
+                    //   const value = currentValue[currentValue.length - 1];
+
+                    //   handleUpdate({
+                    //     priority: +value,
+                    //     action: ActivityAction.SET_PRIORITY,
+                    //   });
+                    //   setOpen(false);
+                    // }}
+                  >
+                    <div className="w-full flex justify-between">
+                      <div className="flex gap-1">
+                        <ModuleStatusIcon status={value} />
+                        <span className="text-muted-foreground">
+                          {statusLabel[value]}
+                        </span>
+                      </div>
+
+                      <CheckIcon
+                        className={cn(
+                          "ml-auto h-4 w-4 mt-0.5",
+                          module.status === value ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                    </div>
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </Command>
+          </PopoverContent>
+        </Popover>
+      </div>
+    </div>
+  );
+};
