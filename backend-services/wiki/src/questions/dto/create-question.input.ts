@@ -8,6 +8,6 @@ export class CreateQuestionInput {
   @Field({ nullable: false })
   content: string;
 
-  @Field({ nullable: false })
+  @Field({ nullable: true })
   created_by: number;
 }

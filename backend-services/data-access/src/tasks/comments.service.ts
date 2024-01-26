@@ -27,8 +27,8 @@ export class CommentsService {
     newComment.created_by = created_by;
     newComment.task_id = task_id;
     newComment.parent_id = parent_id;
-    newComment.created_at = new Date().toLocaleString();
-    newComment.updated_at = new Date().toLocaleString();
+    newComment.created_at = new Date().toString();
+    newComment.updated_at = new Date().toString();
     return await this.commentRepository.save(newComment);
   }
 
@@ -66,7 +66,7 @@ export class CommentsService {
 
     const updated = Object.assign(toUpdate, updateCommentDto);
 
-    updated.updated_at = new Date().toLocaleString();
+    updated.updated_at = new Date().toString();
     return await this.commentRepository.save(updated);
   }
 

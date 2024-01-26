@@ -31,7 +31,7 @@ export class MembersService {
 
     return await this.memberRepository.save({
       ...createMemberDto,
-      created_at: new Date().toLocaleString(),
+      created_at: new Date().toString(),
     });
   }
 

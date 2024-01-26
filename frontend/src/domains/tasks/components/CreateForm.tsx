@@ -77,8 +77,6 @@ export const CreateTaskForm: React.FC<{
     onOpenChange(false);
   };
 
-  console.log(teamId);
-
   const { createTask, error } = useCreateTask(onSuccess);
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
