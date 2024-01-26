@@ -1,13 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/domains/auth/providers/auth";
 import { getTimeAgoString } from "@/lib/utils";
 import { Avatar } from "@radix-ui/react-avatar";
+import { DialogTrigger } from "@radix-ui/react-dialog";
 import { useRef } from "react";
+import { BiTrashAlt } from "react-icons/bi";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { useParams } from "react-router-dom";
 import { AnswerItem } from "../components/AnswerItem";
+import { QuestionRemoveDialog } from "../components/RemoveQuestionDialog";
 import { useCreateAnswer } from "../hooks/useCreateAnswer";
 import { useGetQuestion } from "../hooks/useGetQuestion";
 import { useVoteAnswer } from "../hooks/useVoteAnswer";
@@ -54,11 +63,29 @@ export const QuestionDetails: React.FC = () => {
 
   return (
     <div className="w-full">
-      <div className="bg-secondary py-3 px-5 flex gap-1">
+      <div className="bg-secondary py-3 px-5 flex gap-1 items-center">
         <p>Questions</p>
         <p className="flex gap-1 items-center">
           <RiArrowRightSLine className="mt-0.5" /> {question?.title}
         </p>
+        {question && (
+          <QuestionRemoveDialog questionId={question!.id}>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <DialogTrigger>
+                    <button className="ml-2">
+                      <BiTrashAlt />
+                    </button>
+                  </DialogTrigger>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Delete the question</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </QuestionRemoveDialog>
+        )}
       </div>
       {question && (
         <div>
