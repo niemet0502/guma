@@ -1,4 +1,4 @@
-import { getTimeAgoString } from "@/lib/utils";
+import { getTimeAgoString, truncateString } from "@/lib/utils";
 import { NavLink, useParams } from "react-router-dom";
 import { QuestionApi } from "../type";
 
@@ -18,7 +18,7 @@ export const QuestionItem: React.FC<{ question: QuestionApi }> = ({
           <NavLink to={`/${orgaId}/questions/${question.id}`}>
             <h1 className="font-medium text-lg">{question.title}</h1>
           </NavLink>
-          <p>{question.content}</p>
+          <p>{truncateString(question.content, 200)}</p>
         </div>
       </div>
 

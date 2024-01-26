@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { QuestionApi } from "../type";
 
-const GET_QUESTIONS = gql`
+export const GET_QUESTIONS = gql`
   query GetQuestion {
     questions {
       id
