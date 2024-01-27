@@ -76,32 +76,34 @@ export const RightSidebar: React.FC<{
                 <CommandInput placeholder="Change status..." className="h-9" />
                 <CommandEmpty>No status found.</CommandEmpty>
                 <CommandGroup>
-                  {status?.map(({ id, name }) => (
-                    <CommandItem
-                      key={id}
-                      onSelect={() => {
-                        handleUpdate({
-                          status_id: +id,
-                          action: ActivityAction.CHANGED_STATUS,
-                        });
-                        setOpenStatus(false);
-                      }}
-                    >
-                      <div className="w-full flex justify-between gap-2 items-center">
-                        <TaskStatusIcon status={name} />
-                        <span>{name}</span>
+                  {status
+                    ?.filter(({ state }) => state <= 25)
+                    .map(({ id, name }) => (
+                      <CommandItem
+                        key={id}
+                        onSelect={() => {
+                          handleUpdate({
+                            status_id: +id,
+                            action: ActivityAction.CHANGED_STATUS,
+                          });
+                          setOpenStatus(false);
+                        }}
+                      >
+                        <div className="w-full flex justify-between gap-2 items-center">
+                          <TaskStatusIcon status={name} />
+                          <span>{name}</span>
 
-                        <CheckIcon
-                          className={cn(
-                            "ml-auto h-4 w-4 mt-0.5",
-                            task?.status_id && task?.status_id === +id
-                              ? "opacity-100"
-                              : "opacity-0"
-                          )}
-                        />
-                      </div>
-                    </CommandItem>
-                  ))}
+                          <CheckIcon
+                            className={cn(
+                              "ml-auto h-4 w-4 mt-0.5",
+                              task?.status_id && task?.status_id === +id
+                                ? "opacity-100"
+                                : "opacity-0"
+                            )}
+                          />
+                        </div>
+                      </CommandItem>
+                    ))}
                 </CommandGroup>
               </Command>
             </PopoverContent>

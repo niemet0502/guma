@@ -1,22 +1,19 @@
-import { WorkflowApi } from "@/domains/teams/type";
 import { gql, useQuery } from "@apollo/client";
+import { TaskStatusApi } from "../type";
 
 const GET_STATUS = gql`
   query GetStatus($team_id: Int!) {
-    workflows(team_id: $team_id) {
+    status(team_id: $team_id) {
       id
-      order_value
-      status {
-        id
-        name
-      }
+      name
+      state
     }
   }
 `;
 
 export const useGetStatus = (team_id: number) => {
-  const { data, error } = useQuery<{ workflows: WorkflowApi[] }>(GET_STATUS, {
+  const { data, error } = useQuery<{ status: TaskStatusApi[] }>(GET_STATUS, {
     variables: { team_id },
   });
-  return { data: data?.workflows?.map(({ status }) => status), error };
+  return { data: data?.status, error };
 };

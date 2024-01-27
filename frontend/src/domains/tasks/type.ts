@@ -31,6 +31,7 @@ export interface TaskStatusApi {
   id: number;
   name: string;
   team_id?: number;
+  state: number;
 }
 
 export interface SprintApi {
