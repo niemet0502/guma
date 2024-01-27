@@ -1,6 +1,7 @@
 import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
 import { Livrableupdate } from '../../livrableupdates/entities/livrableupdate.entity';
 import { User } from '../../shared/user.entity';
+import { Task } from '../../tasks/entities/task.entity';
 
 @ObjectType()
 @Directive('@key(fields: "id")')
@@ -34,4 +35,7 @@ export class Livrable {
 
   @Field(() => [Livrableupdate], { nullable: true })
   updates: Livrableupdate[];
+
+  @Field(() => [Task], { nullable: true })
+  tasks: Task[];
 }

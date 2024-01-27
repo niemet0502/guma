@@ -2,6 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
+import { TasksService } from 'src/tasks/tasks.service';
 import { LivrableupdatesService } from '../livrableupdates/livrableupdates.service';
 import { CreateLivrableInput } from './dto/create-livrable.input';
 import { UpdateLivrableInput } from './dto/update-livrable.input';
@@ -15,6 +16,8 @@ export class LivrablesService {
     private readonly http: HttpService,
     @Inject(forwardRef(() => LivrableupdatesService))
     private readonly updatesService: LivrableupdatesService,
+    @Inject(forwardRef(() => TasksService))
+    private readonly taskService: TasksService,
   ) {}
 
   async create(createLivrableInput: CreateLivrableInput): Promise<Livrable> {
@@ -73,5 +76,17 @@ export class LivrablesService {
 
   async getUpdates(id: number) {
     return this.updatesService.findAll(id);
+  }
+
+  async getTasks(id: number, team_id: number) {
+    return await this.taskService.findAll(
+      team_id,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      id,
+    );
   }
 }

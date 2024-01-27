@@ -90,6 +90,7 @@ export class TasksService {
     parent_task_id: number,
     sprint_id: number,
     sprint_history: number,
+    livrable_id: number,
     sort: 'DESC' | 'ASC',
     sortBy?: string,
   ): Promise<Task[]> {
@@ -101,6 +102,10 @@ export class TasksService {
 
     if (team_id) {
       query.andWhere('task.team_id = :team_id', { team_id });
+    }
+
+    if (livrable_id) {
+      query.andWhere('task.livrable_id = :livrable_id', { livrable_id });
     }
 
     if (status && status_name) {

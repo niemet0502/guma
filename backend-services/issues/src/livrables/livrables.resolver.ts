@@ -68,4 +68,10 @@ export class LivrablesResolver {
     const { id } = livrable;
     return this.livrablesService.getUpdates(id);
   }
+
+  @ResolveField()
+  tasks(@Parent() livrable: Livrable) {
+    const { id, team_id } = livrable;
+    return this.livrablesService.getTasks(id, team_id);
+  }
 }

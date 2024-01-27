@@ -11,11 +11,11 @@ import { TasksService } from './tasks.service';
 @Module({
   imports: [
     forwardRef(() => ActivitiesModule),
-    forwardRef(() => SprintsModule),
     HttpModule,
     CommentsModule,
     TaskLabelsModule,
-    LivrablesModule,
+    forwardRef(() => SprintsModule),
+    forwardRef(() => LivrablesModule),
   ],
   providers: [TasksResolver, TasksService],
   exports: [TasksService],
