@@ -157,6 +157,7 @@ export class TasksService {
       status_id: to_status,
       priority,
       assignee_to,
+      livrable_id,
     } = updateTaskDto;
 
     const toUpdate = await this.taskRepository.findOne({
@@ -184,6 +185,8 @@ export class TasksService {
       });
 
       updated = { ...updated, status_id: newStatus.id };
+    } else if (action === ActivityAction.ADDED_PROJECT) {
+      value = { livrable_id };
     } else if (action === ActivityAction.SET_PRIORITY) {
       value = { priority };
     } else if (action === ActivityAction.ASSIGNED) {

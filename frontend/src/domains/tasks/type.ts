@@ -1,4 +1,5 @@
 import { User } from "../auth/services/types";
+import { LivrableApi } from "../modules/type";
 import { LabelApi } from "../organization/services/type";
 import { SprintStatusEnum } from "../sprints/type";
 import { TeamApi } from "../teams/type";
@@ -141,6 +142,7 @@ export interface TaskApi {
   parent_task_id: number;
   sprint_id: number;
   livrable_id?: number;
+  livrable?: LivrableApi;
   sprint: SprintApi;
   status_id: number;
   status: TaskStatusApi;

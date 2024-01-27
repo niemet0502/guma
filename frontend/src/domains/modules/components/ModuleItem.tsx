@@ -35,6 +35,9 @@ const statusLabel = ["Planned", "In Progress", "Paused", "Completed"];
 
 export const ModuleItem: React.FC<{ module: LivrableApi }> = ({ module }) => {
   const [open, setOpen] = useState(false);
+  const completedTasksCount = module.tasks.filter(
+    ({ status }) => status.state >= 25 && status.state <= 30
+  ).length;
   return (
     <div className="w-full px-5 py-3 flex justify-between border-b hover:bg-slate-50 hover:cursor-pointer">
       <div className="flex items-center gap-2">
@@ -42,6 +45,8 @@ export const ModuleItem: React.FC<{ module: LivrableApi }> = ({ module }) => {
         <span className="font-medium">Livrable 1</span>
       </div>
       <div className="flex items-center gap-2">
+        {(completedTasksCount / module.tasks.length) * 100}%
+        {module.tasks.length}
         <Avatar className="h-6 w-6 bg-transparent flex rounded-full border-2 items-center  justify-center ">
           <span className="text-muted-foreground  text-[9px]">
             {module.author?.username?.slice(0, 2).toUpperCase()}
