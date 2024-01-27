@@ -140,6 +140,7 @@ export interface TaskApi {
   assignee: User;
   parent_task_id: number;
   sprint_id: number;
+  livrable_id?: number;
   sprint: SprintApi;
   status_id: number;
   status: TaskStatusApi;
