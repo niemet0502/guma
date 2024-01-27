@@ -20,6 +20,15 @@ export const GET_LIVRABLES = gql`
         id
         status
       }
+
+      tasks {
+        id
+        status {
+          id
+          name
+          state
+        }
+      }
     }
   }
 `;
