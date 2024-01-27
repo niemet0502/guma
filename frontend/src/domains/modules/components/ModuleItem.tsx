@@ -45,8 +45,7 @@ export const ModuleItem: React.FC<{ module: LivrableApi }> = ({ module }) => {
         <span className="font-medium">Livrable 1</span>
       </div>
       <div className="flex items-center gap-2">
-        {(completedTasksCount / module.tasks.length) * 100}%
-        {module.tasks.length}
+        {((completedTasksCount / module.tasks.length) * 100) | 0}%
         <Avatar className="h-6 w-6 bg-transparent flex rounded-full border-2 items-center  justify-center ">
           <span className="text-muted-foreground  text-[9px]">
             {module.author?.username?.slice(0, 2).toUpperCase()}
