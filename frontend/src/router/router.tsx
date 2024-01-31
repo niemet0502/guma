@@ -3,6 +3,7 @@ import { SignIn } from "@/domains/auth/SignIn";
 import { SignUp } from "@/domains/auth/SignUp";
 import { ModuleDetails } from "@/domains/modules/pages/ModuleDetails";
 import { ModulesList } from "@/domains/modules/pages/ModulesList";
+import { Roadmap } from "@/domains/modules/pages/Roadmap";
 import { NotificationsList } from "@/domains/notifications/NotificationsList";
 import { OrganizationForm } from "@/domains/organization/OrganizationForm";
 import { AskQuestion } from "@/domains/sharing/pages/CreateQuestion";
@@ -63,6 +64,10 @@ export const router = createBrowserRouter([
               {
                 path: "notifications",
                 element: <NotificationsList />,
+              },
+              {
+                path: "roadmap",
+                element: <Roadmap />,
               },
               {
                 path: "team/:teamId/issues",
