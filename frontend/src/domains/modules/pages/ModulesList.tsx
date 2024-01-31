@@ -29,7 +29,7 @@ export const ModulesList: React.FC = () => {
       <div className="bg-secondary py-3 px-5 flex items-center justify-between">
         <p>
           Livrables
-          {/* <span className="text-muted-foreground ml-2">{tasks?.length}</span> */}
+          <span className="text-muted-foreground ml-2">{modules?.length}</span>
         </p>
 
         <TooltipProvider>

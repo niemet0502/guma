@@ -1,6 +1,7 @@
 import { AuthPage } from "@/domains/auth/AuthPage";
 import { SignIn } from "@/domains/auth/SignIn";
 import { SignUp } from "@/domains/auth/SignUp";
+import { ModuleDetails } from "@/domains/modules/pages/ModuleDetails";
 import { ModulesList } from "@/domains/modules/pages/ModulesList";
 import { NotificationsList } from "@/domains/notifications/NotificationsList";
 import { OrganizationForm } from "@/domains/organization/OrganizationForm";
@@ -113,10 +114,10 @@ export const router = createBrowserRouter([
                     index: true,
                     element: <ModulesList />,
                   },
-                  // {
-                  //   path: "/:orgaId/team/:teamId/sprints/:sprintId",
-                  //   element: <SprintDetails />,
-                  // },
+                  {
+                    path: "/:orgaId/team/:teamId/modules/:moduleId",
+                    element: <ModuleDetails />,
+                  },
                 ],
               },
               {
