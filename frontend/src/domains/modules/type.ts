@@ -1,5 +1,6 @@
 import { User } from "../auth/services/types";
 import { TaskApi } from "../tasks/type";
+import { TeamApi } from "../teams/type";
 import { DocumentApi } from "../wiki/documents/type";
 
 export enum LivrableStatusEnum {
@@ -17,6 +18,7 @@ export interface LivrableApi {
   start_at: string;
   status: number;
   team_id: number;
+  team?: TeamApi;
   created_by?: number;
   author: User;
   updates: [Livrableupdate];
