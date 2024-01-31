@@ -77,6 +77,11 @@ export const GET_MODULE_BY_ID = gql`
         id
         name
         updated_at
+
+        author {
+          id
+          username
+        }
       }
     }
   }

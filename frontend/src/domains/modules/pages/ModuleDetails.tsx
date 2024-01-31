@@ -11,6 +11,7 @@ import { CiCalendarDate } from "react-icons/ci";
 import { GoProjectRoadmap } from "react-icons/go";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { useParams } from "react-router-dom";
+import { ModuleDocumentItem } from "../components/ModuleDocumentItem";
 import { statusLabel } from "../components/ModuleItem";
 import { ModuleStatusIcon } from "../components/ModuleStatusIcon";
 import { ModuleTasksList } from "../components/ModuleTasksList";
@@ -134,6 +135,22 @@ export const ModuleDetails: React.FC = () => {
                     </span>
                   </div>
                 </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+
+          <Accordion type="single" collapsible defaultValue="item-1">
+            <AccordionItem value="item-1" className="py-3 px-5">
+              <AccordionTrigger className="hover:no-underline">
+                <span>
+                  <span className="text-base"> Documents</span>{" "}
+                  {module?.documents.length}{" "}
+                </span>
+              </AccordionTrigger>
+              <AccordionContent>
+                {module?.documents.map((document) => (
+                  <ModuleDocumentItem key={document.id} document={document} />
+                ))}
               </AccordionContent>
             </AccordionItem>
           </Accordion>

@@ -32,7 +32,7 @@ export const ModuleStatusIcon: React.FC<{ status: LivrableStatusEnum }> = ({
 
     default:
       icon = (
-        <div className="text-muted-foreground p-2 h-6 w-6 rounded-full flex items-center justify-center border-4"></div>
+        <div className="text-muted-foreground p-2 h-5 w-5 rounded-full flex items-center justify-center border-4"></div>
       );
       break;
   }
