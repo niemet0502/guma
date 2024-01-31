@@ -8,6 +8,7 @@ import {
   ResolveReference,
   Resolver,
 } from '@nestjs/graphql';
+import { CurrentUser } from 'src/shared/current-user.decator';
 import { User } from '../shared/user.entity';
 import { CreateLivrableInput } from './dto/create-livrable.input';
 import { UpdateLivrableInput } from './dto/update-livrable.input';
@@ -21,8 +22,12 @@ export class LivrablesResolver {
   @Mutation(() => Livrable)
   createLivrable(
     @Args('createLivrableInput') createLivrableInput: CreateLivrableInput,
+    @CurrentUser() user: User,
   ) {
-    return this.livrablesService.create(createLivrableInput);
+    return this.livrablesService.create({
+      ...createLivrableInput,
+      created_by: +user.id,
+    });
   }
 
   @Query(() => [Livrable], { name: 'livrables' })

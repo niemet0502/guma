@@ -45,7 +45,7 @@ export const ModuleItem: React.FC<{ module: LivrableApi }> = ({ module }) => {
       <div className="w-full px-5 py-3 flex justify-between border-b hover:bg-slate-50 hover:cursor-pointer">
         <div className="flex items-center gap-2">
           <GoProjectRoadmap className="mt-1" />
-          <span className="font-medium">Livrable 1</span>
+          <span className="font-medium">{module.name}</span>
         </div>
         <div className="flex items-center gap-2">
           {((completedTasksCount / module.tasks.length) * 100) | 0}%

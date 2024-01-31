@@ -34,7 +34,7 @@ export const ModuleDetails: React.FC = () => {
     <div className="w-full h-full flex">
       <div className="w-2/3">
         <div className="w-full flex flex-1 ">
-          <div className="w-full py-3 px-5 flex items-center ">
+          <div className="w-full py-3 px-5 flex items-center border-b">
             <p>Livrables</p>
             <p className="flex gap-1 items-center">
               <RiArrowRightSLine className="mt-0.5" />

@@ -1,15 +1,10 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+
 import { useAuth } from "@/domains/auth/providers/auth";
 import { useGetTeam } from "@/domains/teams/hooks/useGetTeam";
 import { useEffect } from "react";
-import { AiOutlinePlus } from "react-icons/ai";
 import { useParams } from "react-router-dom";
+import { CreateModuleDialog } from "../components/CreateModuleDialog";
 import { ModuleItem } from "../components/ModuleItem";
 import { useModules } from "../hooks/useModules";
 
@@ -32,18 +27,7 @@ export const ModulesList: React.FC = () => {
           <span className="text-muted-foreground ml-2">{modules?.length}</span>
         </p>
 
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <button className="mr-2 hover:cursor-pointer text-muted-foreground">
-                <AiOutlinePlus />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Nouveau livrable</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <CreateModuleDialog teamId={team?.id!} />
       </div>
 
       <div className="w-full flex flex-1 ">

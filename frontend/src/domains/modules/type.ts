@@ -45,10 +45,10 @@ export interface CreateLivrableupdateInput {
 
 export interface CreateLivrableInput {
   name: string;
-  description: string;
-  end_at: string;
-  start_at: string;
-  status: number;
+  description?: string;
+  end_at: Date;
+  start_at: Date;
+  status?: number;
   team_id: number;
   created_by?: number;
 }
