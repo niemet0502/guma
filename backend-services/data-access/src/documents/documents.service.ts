@@ -66,7 +66,7 @@ export class DocumentsService {
     }
 
     if (livrable_id) {
-      query = query.andWhere('document.folder_id = :livrable_id', {
+      query = query.andWhere('document.livrable_id = :livrable_id', {
         livrable_id,
       });
     }

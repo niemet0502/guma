@@ -11,6 +11,8 @@ export class DocumentsService {
   constructor(private readonly http: HttpService) {}
 
   async create(createDocumentInput: CreateDocumentInput): Promise<Document> {
+    console.log(createDocumentInput);
+
     const { data } = await firstValueFrom(
       this.http.post<Document>(this.url, createDocumentInput),
     );
