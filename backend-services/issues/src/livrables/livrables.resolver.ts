@@ -9,6 +9,7 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { CurrentUser } from 'src/shared/current-user.decator';
+import { Team } from '../shared/team.entity';
 import { User } from '../shared/user.entity';
 import { CreateLivrableInput } from './dto/create-livrable.input';
 import { UpdateLivrableInput } from './dto/update-livrable.input';
@@ -58,6 +59,11 @@ export class LivrablesResolver {
   @ResolveField(() => User)
   author(@Parent() task: Livrable): any {
     return { __typename: 'User', id: task.created_by };
+  }
+
+  @ResolveField(() => Team)
+  team(@Parent() task: Livrable): any {
+    return { __typename: 'Team', id: task.team_id };
   }
 
   @ResolveReference()

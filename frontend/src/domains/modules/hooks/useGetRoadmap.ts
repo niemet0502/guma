@@ -12,6 +12,12 @@ export const GET_PROJECT_ROADMAP = gql`
         start_at
         status
         team_id
+
+        team {
+          id
+          name
+        }
+
         created_by
         author {
           id

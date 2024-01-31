@@ -35,13 +35,17 @@ const status = [
 export const statusLabel = ["Planned", "In Progress", "Paused", "Completed"];
 
 export const ModuleItem: React.FC<{ module: LivrableApi }> = ({ module }) => {
-  const { orgaId, teamId } = useParams<{ orgaId: string; teamId: string }>();
+  const { orgaId } = useParams<{ orgaId: string }>();
   const [open, setOpen] = useState(false);
   const completedTasksCount = module.tasks.filter(
     ({ status }) => status.state >= 25 && status.state <= 30
   ).length;
   return (
-    <NavLink to={`/${orgaId}/team/${teamId}/modules/${module.id}`}>
+    <NavLink
+      to={`/${orgaId}/team/${module.team?.name.toLowerCase()}/modules/${
+        module.id
+      }`}
+    >
       <div className="w-full px-5 py-3 flex justify-between border-b hover:bg-slate-50 hover:cursor-pointer">
         <div className="flex items-center gap-2">
           <GoProjectRoadmap className="mt-1" />

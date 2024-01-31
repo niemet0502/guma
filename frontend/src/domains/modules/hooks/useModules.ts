@@ -11,6 +11,11 @@ export const GET_LIVRABLES = gql`
       start_at
       status
       team_id
+
+      team {
+        id
+        name
+      }
       created_by
       author {
         id
