@@ -45,7 +45,7 @@ export interface Livrableupdate {
 
 export interface CreateLivrableupdateInput {
   status: number;
-  description: string;
+  description?: string;
   livrable_id: number;
   created_by?: number;
 }
