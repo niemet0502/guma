@@ -7,6 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { User } from '../shared/user.entity';
 import { CreateLivrableupdateInput } from './dto/create-livrableupdate.input';
 import { UpdateLivrableupdateInput } from './dto/update-livrableupdate.input';
 import { Livrableupdate } from './entities/livrableupdate.entity';
@@ -56,5 +57,10 @@ export class LivrableupdatesResolver {
   livrable(@Parent() update: Livrableupdate) {
     const { livrable_id } = update;
     return this.livrableupdatesService.getLivrable(livrable_id);
+  }
+
+  @ResolveField(() => User)
+  author(@Parent() task: Livrableupdate): any {
+    return { __typename: 'User', id: task.created_by };
   }
 }
