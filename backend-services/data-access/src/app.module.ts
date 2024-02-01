@@ -16,6 +16,7 @@ import { UsersModule } from './users/users.module';
 import { WorkflowModule } from './workflow/workflow.module';
 import { QuestionsModule } from './questions/questions.module';
 import { AnswersModule } from './answers/answers.module';
+import { RemindersModule } from './reminders/reminders.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { AnswersModule } from './answers/answers.module';
     WorkflowModule,
     QuestionsModule,
     AnswersModule,
+    RemindersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
