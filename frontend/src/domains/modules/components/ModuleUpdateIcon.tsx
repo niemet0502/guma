@@ -3,15 +3,16 @@ import { LivrableUpdateEnum } from "../type";
 
 const updateStatusLabel = ["On track", "At risk", "Off track"];
 
-export const ModuleUpdateIcon: React.FC<{ status: number }> = ({ status }) => {
+export const ModuleUpdateIcon: React.FC<{
+  status: number;
+  showStatusLabel?: boolean;
+}> = ({ status, showStatusLabel = true }) => {
   const color =
     status != LivrableUpdateEnum.OnTrack
       ? status === LivrableUpdateEnum.OffTrack
         ? "red"
         : "yellow"
       : "green";
-
-  console.log(color);
 
   return (
     <div className={`flex items-center gap-2 text-sm text-${color}-800`}>
@@ -20,7 +21,9 @@ export const ModuleUpdateIcon: React.FC<{ status: number }> = ({ status }) => {
       >
         <LuActivity className="text-[11px]" />
       </div>
-      <div className="font-medium">{updateStatusLabel[status]}</div>
+      {showStatusLabel && (
+        <div className="font-medium">{updateStatusLabel[status]}</div>
+      )}
     </div>
   );
 };
