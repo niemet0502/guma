@@ -31,6 +31,11 @@ export const GET_LIVRABLES = gql`
           id
           username
         }
+
+        livrable {
+          id
+          name
+        }
       }
 
       tasks {

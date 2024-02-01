@@ -11,7 +11,8 @@ import { UpdateItem } from "./UpdateItem";
 export const UpdatesList: React.FC<{
   updates: Livrableupdate[];
   children: React.ReactElement;
-}> = ({ updates, children }) => {
+  showModuleName?: boolean;
+}> = ({ updates, children, showModuleName }) => {
   return (
     <Dialog>
       <DialogTrigger>{children}</DialogTrigger>
@@ -19,9 +20,13 @@ export const UpdatesList: React.FC<{
         <DialogHeader>
           <DialogTitle>Updates</DialogTitle>
         </DialogHeader>
-        <div>
+        <div className="max-h-[520px] overflow-auto">
           {updates.map((update) => (
-            <UpdateItem update={update} key={update.id} />
+            <UpdateItem
+              update={update}
+              key={update.id}
+              showModuleName={showModuleName}
+            />
           ))}
         </div>
       </DialogContent>
