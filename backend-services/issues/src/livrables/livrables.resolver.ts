@@ -8,7 +8,7 @@ import {
   ResolveReference,
   Resolver,
 } from '@nestjs/graphql';
-import { CurrentUser } from 'src/shared/current-user.decator';
+import { CurrentUser } from '../shared/current-user.decator';
 import { Team } from '../shared/team.entity';
 import { User } from '../shared/user.entity';
 import { CreateLivrableInput } from './dto/create-livrable.input';
