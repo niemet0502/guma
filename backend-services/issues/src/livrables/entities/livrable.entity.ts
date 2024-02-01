@@ -1,6 +1,8 @@
 import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
 import { Livrableupdate } from '../../livrableupdates/entities/livrableupdate.entity';
+import { Team } from '../../shared/team.entity';
 import { User } from '../../shared/user.entity';
+import { Task } from '../../tasks/entities/task.entity';
 
 @ObjectType()
 @Directive('@key(fields: "id")')
@@ -26,6 +28,9 @@ export class Livrable {
   @Field({ nullable: false })
   team_id: number;
 
+  @Field(() => Team, { nullable: false })
+  team: Team;
+
   @Field({ nullable: true })
   created_by?: number;
 
@@ -34,4 +39,7 @@ export class Livrable {
 
   @Field(() => [Livrableupdate], { nullable: true })
   updates: Livrableupdate[];
+
+  @Field(() => [Task], { nullable: true })
+  tasks: Task[];
 }

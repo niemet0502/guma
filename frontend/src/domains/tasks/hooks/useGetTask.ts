@@ -133,6 +133,11 @@ export const GET_TASK_BY_SLUG_AND_TEAM = gql`
           name
         }
       }
+      livrable_id
+      livrable {
+        id
+        name
+      }
     }
   }
 `;

@@ -34,6 +34,8 @@ export class DocumentsController {
     @Query('task_id') task_id: string,
     @Query('livrable_id') livrable_id: string,
   ) {
+    console.log(livrable_id);
+
     return this.documentsService.findAllByTeam(
       +team_id,
       +folder_id,

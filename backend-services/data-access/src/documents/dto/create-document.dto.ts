@@ -8,7 +8,7 @@ export class CreateDocumentDto {
   @ApiProperty({ required: true })
   public name: string;
 
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: false })
   public status: DocumentStatus;
 
   @ApiProperty({ required: false })

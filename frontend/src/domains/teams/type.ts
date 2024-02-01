@@ -1,4 +1,5 @@
 import { User } from "../auth/services/types";
+import { LivrableApi } from "../modules/type";
 import { TaskStatusApi } from "../tasks/type";
 
 export enum TeamVisibility {
@@ -22,6 +23,7 @@ export interface TeamApi {
   identifier?: string;
   visibility: TeamVisibility;
   members: MemberApi[];
+  livrables: LivrableApi[];
 }
 
 export interface MemberApi {

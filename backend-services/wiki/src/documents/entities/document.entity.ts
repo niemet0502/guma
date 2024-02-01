@@ -16,6 +16,9 @@ export class Document {
   folder_id?: number;
 
   @Field({ nullable: true })
+  livrable_id?: number;
+
+  @Field({ nullable: true })
   team_id?: number;
 
   @Field((type) => Team)

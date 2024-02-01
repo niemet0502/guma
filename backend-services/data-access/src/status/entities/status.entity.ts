@@ -8,6 +8,9 @@ export class TaskStatus {
   @Column('text')
   name: string;
 
+  @Column('int')
+  state: number;
+
   @Column({ nullable: true })
   team_id?: number;
 }

@@ -14,6 +14,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/domains/auth/providers/auth";
 import { User } from "@/domains/auth/services/types";
+import { useModules } from "@/domains/modules/hooks/useModules";
 import { useGetLabels } from "@/domains/organization/hooks/useGetLabels";
 import { useSprints } from "@/domains/sprints/hooks/useSprints";
 import { TeamVisibility } from "@/domains/teams/type";
@@ -26,6 +27,7 @@ import {
   AiOutlinePlus,
   AiOutlineUser,
 } from "react-icons/ai";
+import { GoProjectRoadmap } from "react-icons/go";
 import { taskPriority } from "../../constantes";
 import { useGetStatus } from "../../hooks/useGetStatus";
 import { ActivityAction, TaskApi } from "../../type";
@@ -41,12 +43,14 @@ export const RightSidebar: React.FC<{
   const { data: labels } = useGetLabels(project?.id as number);
   const { data: status } = useGetStatus(task?.team_id as number);
   const { fetchSprints, data: sprints } = useSprints();
+  const { fetchModules, data: modules } = useModules();
 
   const [open, setOpen] = useState(false);
   const [openStatus, setOpenStatus] = useState(false);
   const [openLabel, setOpenLabel] = useState(false);
   const [openPriorityPopover, setOpenPriorityPopover] = useState(false);
   const [openSprint, setOpenSprint] = useState(false);
+  const [openLivrable, setOpenLivrable] = useState(false);
 
   const members =
     task?.team?.visibility === TeamVisibility.PUBLIC
@@ -55,6 +59,7 @@ export const RightSidebar: React.FC<{
 
   useEffect(() => {
     fetchSprints(task.team_id);
+    fetchModules(task.team_id);
   }, [task]);
 
   return (
@@ -76,32 +81,34 @@ export const RightSidebar: React.FC<{
                 <CommandInput placeholder="Change status..." className="h-9" />
                 <CommandEmpty>No status found.</CommandEmpty>
                 <CommandGroup>
-                  {status?.map(({ id, name }) => (
-                    <CommandItem
-                      key={id}
-                      onSelect={() => {
-                        handleUpdate({
-                          status_id: +id,
-                          action: ActivityAction.CHANGED_STATUS,
-                        });
-                        setOpenStatus(false);
-                      }}
-                    >
-                      <div className="w-full flex justify-between gap-2 items-center">
-                        <TaskStatusIcon status={name} />
-                        <span>{name}</span>
+                  {status
+                    ?.filter(({ state }) => state <= 25)
+                    .map(({ id, name }) => (
+                      <CommandItem
+                        key={id}
+                        onSelect={() => {
+                          handleUpdate({
+                            status_id: +id,
+                            action: ActivityAction.CHANGED_STATUS,
+                          });
+                          setOpenStatus(false);
+                        }}
+                      >
+                        <div className="w-full flex justify-between gap-2 items-center">
+                          <TaskStatusIcon status={name} />
+                          <span>{name}</span>
 
-                        <CheckIcon
-                          className={cn(
-                            "ml-auto h-4 w-4 mt-0.5",
-                            task?.status_id && task?.status_id === +id
-                              ? "opacity-100"
-                              : "opacity-0"
-                          )}
-                        />
-                      </div>
-                    </CommandItem>
-                  ))}
+                          <CheckIcon
+                            className={cn(
+                              "ml-auto h-4 w-4 mt-0.5",
+                              task?.status_id && task?.status_id === +id
+                                ? "opacity-100"
+                                : "opacity-0"
+                            )}
+                          />
+                        </div>
+                      </CommandItem>
+                    ))}
                 </CommandGroup>
               </Command>
             </PopoverContent>
@@ -399,6 +406,83 @@ export const RightSidebar: React.FC<{
                         />
                       </CommandItem>
                     ))}
+                </CommandGroup>
+              </Command>
+            </PopoverContent>
+          </Popover>
+        </div>
+      </div>
+
+      <div className="flex">
+        <div className="w-[100px] flex items-center">Livrable</div>
+        <div className="flex-1">
+          <Popover open={openLivrable} onOpenChange={setOpenLivrable}>
+            <PopoverTrigger>
+              <div className="hover:cursor-pointer hover:bg-secondary p-2 rounded flex gap-2 items-center">
+                {!task?.livrable_id && (
+                  <>
+                    <AiOutlinePlus />
+                    Add to livrable
+                  </>
+                )}
+
+                {task?.livrable_id && (
+                  <>
+                    <GoProjectRoadmap />
+                    {task.livrable?.name}
+                  </>
+                )}
+              </div>
+            </PopoverTrigger>
+            <PopoverContent className="w-[200px] p-0">
+              <Command>
+                <CommandInput placeholder="Add to sprint..." className="h-9" />
+                <CommandEmpty>No livrable found.</CommandEmpty>
+                <CommandGroup className="flex flex-col gap-2">
+                  <CommandItem
+                    onSelect={() => {
+                      handleUpdate({
+                        livrable_id: undefined,
+                        action: ActivityAction.ADDED_PROJECT,
+                      });
+                      setOpenLivrable(false);
+                    }}
+                  >
+                    No livrable
+                    <CheckIcon
+                      className={cn(
+                        "ml-auto h-4 w-4",
+                        !task?.livrable_id ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                  </CommandItem>
+                </CommandGroup>
+                <Separator />
+                <CommandGroup>
+                  {modules?.map((module) => (
+                    <CommandItem
+                      key={module.id}
+                      onSelect={() => {
+                        handleUpdate({
+                          livrable_id: +module.id,
+                          action: ActivityAction.ADDED_PROJECT,
+                        });
+                        setOpenLivrable(false);
+                      }}
+                    >
+                      <div className="flex gap-2 items-center">
+                        <span>{module.name}</span>
+                      </div>
+                      <CheckIcon
+                        className={cn(
+                          "ml-auto h-4 w-4",
+                          task?.livrable_id === +module.id
+                            ? "opacity-100"
+                            : "opacity-0"
+                        )}
+                      />
+                    </CommandItem>
+                  ))}
                 </CommandGroup>
               </Command>
             </PopoverContent>

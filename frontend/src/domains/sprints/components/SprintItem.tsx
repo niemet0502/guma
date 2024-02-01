@@ -38,7 +38,7 @@ export const SprintItem: React.FC<{
   const [open, setOpen] = useState(false);
 
   const completed = sprint.tasks?.filter(
-    ({ status }) => status.name === "Done"
+    ({ status }) => status.state >= 25 && status.state <= 30
   ).length;
 
   const style =
@@ -49,7 +49,9 @@ export const SprintItem: React.FC<{
       : "";
 
   const completedTasks =
-    sprint.tasks?.filter((task) => task.status.name === "Done").length || 0;
+    sprint.tasks?.filter(
+      (task) => task.status.state >= 25 && task.status.state <= 30
+    ).length || 0;
   const totalTasks = sprint.tasks?.length || 0;
 
   const completionPercentage =

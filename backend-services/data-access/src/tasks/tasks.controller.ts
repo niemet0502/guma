@@ -34,6 +34,7 @@ export class TasksController {
     @Query('parent_task_id') parent_task_id?: string,
     @Query('sprint_id') sprint_id?: string,
     @Query('sprint_history') sprint_history?: string,
+    @Query('livrable_id') livrable_id?: string,
     @Query('sortAsc') sortAsc?: boolean,
     @Query('sortBy') sortBy?: string,
   ): Promise<Task[]> {
@@ -46,6 +47,7 @@ export class TasksController {
       +parent_task_id,
       +sprint_id,
       +sprint_history,
+      +livrable_id,
       sortAsc ? 'ASC' : 'DESC',
       sortBy ? sortBy : undefined,
     );

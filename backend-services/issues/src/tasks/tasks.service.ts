@@ -23,6 +23,8 @@ export class TasksService {
     private readonly activityService: ActivitiesService,
     private readonly labelService: LabelsService,
     private readonly sprintService: SprintsService,
+
+    @Inject(forwardRef(() => LivrablesService))
     private readonly livrableService: LivrablesService,
   ) {}
 
@@ -60,6 +62,7 @@ export class TasksService {
     parent_task_id: number,
     sprint_id: number,
     sprint_history: number,
+    livrable_id: number,
     sortAsc?: boolean,
     sortBy?: string,
   ): Promise<Task[]> {
@@ -72,6 +75,7 @@ export class TasksService {
           parent_task_id,
           sprint_id,
           sprint_history,
+          livrable_id,
           sortAsc,
           sortBy,
         },

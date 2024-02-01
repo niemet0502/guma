@@ -18,8 +18,6 @@ export const TaskList: React.FC = () => {
   const { data: users } = useGetUsers(project?.id as number);
   const { data: team, isLoading } = useGetTeam(project?.id as number, teamId);
 
-  console.log(project);
-
   const [members, setMembers] = useState<User[]>();
 
   useEffect(() => {
@@ -31,8 +29,6 @@ export const TaskList: React.FC = () => {
         : team?.members.map(({ user }) => user);
     setMembers(m);
   }, [team]);
-
-  console.log(team);
 
   return (
     <div className="w-full">

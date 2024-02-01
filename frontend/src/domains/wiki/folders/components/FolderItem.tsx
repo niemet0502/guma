@@ -31,7 +31,7 @@ export const FolderItem: React.FC<{ folder: FolderApi }> = ({ folder }) => {
 
   return (
     <NavLink to={`/${orgaId}/team/${teamId}/wiki/folder/${folder.id}`}>
-      <div className="py-3 px-5 border-b flex gap-2 items-center hover:cursor-pointer ">
+      <div className="py-3 px-5 border-b flex gap-2 items-center hover:cursor-pointer hover:bg-slate-50  ">
         <BsFolder2 />
         <span className="flex-1">{folder.name}</span>
         <div className="flex gap-2 items-center">

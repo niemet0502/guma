@@ -5,8 +5,8 @@ import { CreateDialog } from "@/domains/teams/components/CreateDialog";
 import { TeamCard } from "@/domains/teams/components/TeamCard";
 import { useTeams } from "@/domains/teams/hooks/useTeams";
 import { FaRegQuestionCircle } from "react-icons/fa";
+import { FaMap } from "react-icons/fa6";
 import { GoIssueDraft } from "react-icons/go";
-import { HiOutlineDocumentDuplicate } from "react-icons/hi";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { NavLink, useParams } from "react-router-dom";
 
@@ -16,7 +16,7 @@ export const Sidebar: React.FC = () => {
   const { data, isLoading } = useTeams(project?.id as number);
 
   return (
-    <div className="pb-12 h-full w-[250px] flex flex-none sticky top-0">
+    <div className="pb-12 h-full w-[220px] flex flex-none sticky top-0 ">
       <div className="w-full space-y-4 py-4">
         <div className="px-2 py-2">
           <h4 className="mb-3 px-2 text-lg font-semibold tracking-tight">
@@ -44,13 +44,13 @@ export const Sidebar: React.FC = () => {
             </NavLink>
 
             <NavLink
-              to={`/${orgaId}/documents`}
+              to={`/${orgaId}/roadmap`}
               className={({ isActive, isPending }) =>
                 isActive ? "active" : isPending ? "default" : "default"
               }
             >
-              <HiOutlineDocumentDuplicate className="text-base" />
-              Documents
+              <FaMap className="text-base" />
+              Roadmap
             </NavLink>
 
             <NavLink

@@ -8,6 +8,8 @@ import {
   ResolveReference,
   Resolver,
 } from '@nestjs/graphql';
+import { CurrentUser } from '../shared/current-user.decator';
+import { Team } from '../shared/team.entity';
 import { User } from '../shared/user.entity';
 import { CreateLivrableInput } from './dto/create-livrable.input';
 import { UpdateLivrableInput } from './dto/update-livrable.input';
@@ -21,8 +23,12 @@ export class LivrablesResolver {
   @Mutation(() => Livrable)
   createLivrable(
     @Args('createLivrableInput') createLivrableInput: CreateLivrableInput,
+    @CurrentUser() user: User,
   ) {
-    return this.livrablesService.create(createLivrableInput);
+    return this.livrablesService.create({
+      ...createLivrableInput,
+      created_by: +user.id,
+    });
   }
 
   @Query(() => [Livrable], { name: 'livrables' })
@@ -55,6 +61,11 @@ export class LivrablesResolver {
     return { __typename: 'User', id: task.created_by };
   }
 
+  @ResolveField(() => Team)
+  team(@Parent() task: Livrable): any {
+    return { __typename: 'Team', id: task.team_id };
+  }
+
   @ResolveReference()
   async resolveReference(reference: {
     __typename: string;
@@ -67,5 +78,11 @@ export class LivrablesResolver {
   updates(@Parent() livrable: Livrable) {
     const { id } = livrable;
     return this.livrablesService.getUpdates(id);
+  }
+
+  @ResolveField()
+  tasks(@Parent() livrable: Livrable) {
+    const { id, team_id } = livrable;
+    return this.livrablesService.getTasks(id, team_id);
   }
 }

@@ -9,7 +9,7 @@ export const dataSourceOptions: DataSourceOptions = {
   database: 'neka',
   entities: ['dist/**/*entity.js'],
   // migrations: ['dist/database/migrations/*js'],
-  synchronize: true,
+  synchronize: false,
 };
 const dataSource = new DataSource(dataSourceOptions);
 
