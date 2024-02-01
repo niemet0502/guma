@@ -27,7 +27,7 @@ export const ModulesList: React.FC = () => {
           <span className="text-muted-foreground ml-2">{modules?.length}</span>
         </p>
 
-        <CreateModuleDialog teamId={team?.id!} />
+        {team && <CreateModuleDialog teamId={+team.id} />}
       </div>
 
       <div className="w-full flex flex-1 ">

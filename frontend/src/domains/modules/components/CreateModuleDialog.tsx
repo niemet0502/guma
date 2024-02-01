@@ -44,10 +44,11 @@ const formSchema = z.object({
   name: z.string().min(4).max(50),
   start_at: z.date(),
   end_at: z.date(),
+  team_id: z.number(),
   status: z.number().optional(),
   description: z.string().optional(),
 });
-export const CreateModuleDialog: React.FC<{ teamId: number }> = ({
+export const CreateModuleDialog: React.FC<{ teamId?: number }> = ({
   teamId,
 }) => {
   const { toast } = useToast();
@@ -68,13 +69,13 @@ export const CreateModuleDialog: React.FC<{ teamId: number }> = ({
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {},
+    defaultValues: { team_id: teamId },
   });
 
   const startAt = form.watch("start_at");
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    createLivrable({ ...data, team_id: +teamId });
+    createLivrable({ ...data });
   };
   return (
     <Dialog open={open} onOpenChange={setOpen} modal={false}>
