@@ -44,13 +44,14 @@ const formSchema = z.object({
   name: z.string().min(4).max(50),
   start_at: z.date(),
   end_at: z.date(),
-  team_id: z.number(),
+  team_id: z.string(),
   status: z.number().optional(),
   description: z.string().optional(),
 });
-export const CreateModuleDialog: React.FC<{ teamId?: number }> = ({
-  teamId,
-}) => {
+export const CreateModuleDialog: React.FC<{
+  teamId?: number;
+  teamsData?: { id: number; name: string }[];
+}> = ({ teamId, teamsData }) => {
   const { toast } = useToast();
 
   const [open, setOpen] = useState(false);
@@ -69,14 +70,15 @@ export const CreateModuleDialog: React.FC<{ teamId?: number }> = ({
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { team_id: teamId },
+    defaultValues: { team_id: teamId?.toString() },
   });
 
   const startAt = form.watch("start_at");
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    createLivrable({ ...data });
+    createLivrable({ ...data, team_id: +data.team_id });
   };
+
   return (
     <Dialog open={open} onOpenChange={setOpen} modal={false}>
       <DialogTrigger asChild>
@@ -107,7 +109,32 @@ export const CreateModuleDialog: React.FC<{ teamId?: number }> = ({
                   </FormItem>
                 )}
               />
-
+              {teamsData && (
+                <FormField
+                  control={form.control}
+                  name="team_id"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Team</FormLabel>
+                      <Select onValueChange={field.onChange}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a team" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {teamsData?.map(({ id, name }) => (
+                            <SelectItem value={`${id}`} key={id}>
+                              {name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
               <FormField
                 control={form.control}
                 name="start_at"

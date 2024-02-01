@@ -4,6 +4,8 @@ import { gql, useQuery } from "@apollo/client";
 export const GET_PROJECT_ROADMAP = gql`
   query GetProjetRoadmap($project_id: Int!) {
     teams(project_id: $project_id) {
+      id
+      name
       livrables {
         id
         name
@@ -50,7 +52,7 @@ export const useGetRoadmap = (projectId: number) => {
     variables: { project_id: projectId },
   });
   return {
-    data: data?.teams.flatMap(({ livrables }) => livrables),
+    data: data?.teams,
     isLoading,
     error,
   };

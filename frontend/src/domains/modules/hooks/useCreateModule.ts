@@ -1,5 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
 import { CreateLivrableInput } from "../type";
+import { GET_PROJECT_ROADMAP } from "./useGetRoadmap";
 import { GET_LIVRABLES } from "./useModules";
 
 const CREATE_MODULE = gql`
@@ -13,7 +14,7 @@ const CREATE_MODULE = gql`
 
 export const useCreateModule = (onSuccessCallback?: () => void) => {
   const [createModuleMutation, { error }] = useMutation(CREATE_MODULE, {
-    refetchQueries: [GET_LIVRABLES],
+    refetchQueries: [GET_LIVRABLES, GET_PROJECT_ROADMAP],
   });
 
   const createLivrable = async (createLivrableInput: CreateLivrableInput) => {
