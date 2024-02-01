@@ -1,11 +1,14 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
+import { Button } from "@/components/ui/button";
 import { useAuth } from "@/domains/auth/providers/auth";
 import { useGetTeam } from "@/domains/teams/hooks/useGetTeam";
 import { useEffect } from "react";
+import { LuActivity } from "react-icons/lu";
 import { useParams } from "react-router-dom";
 import { CreateModuleDialog } from "../components/CreateModuleDialog";
 import { ModuleItem } from "../components/ModuleItem";
+import { UpdatesList } from "../components/UpdatesList";
 import { useModules } from "../hooks/useModules";
 
 export const ModulesList: React.FC = () => {
@@ -27,7 +30,23 @@ export const ModulesList: React.FC = () => {
           <span className="text-muted-foreground ml-2">{modules?.length}</span>
         </p>
 
-        {team && <CreateModuleDialog teamId={+team.id} />}
+        <div className="flex items-center gap-2">
+          {modules && (
+            <UpdatesList
+              updates={modules?.flatMap(({ updates }) => updates)}
+              showModuleName
+            >
+              <Button
+                size="sm"
+                variant="outline"
+                className="flex gap-1 items-center"
+              >
+                <LuActivity /> Updates
+              </Button>
+            </UpdatesList>
+          )}
+          {team && <CreateModuleDialog teamId={+team.id} />}
+        </div>
       </div>
 
       <div className="w-full flex flex-1 ">

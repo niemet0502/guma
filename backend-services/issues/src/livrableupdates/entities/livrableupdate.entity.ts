@@ -1,5 +1,6 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Livrable } from '../../livrables/entities/livrable.entity';
+import { User } from '../../shared/user.entity';
 
 @ObjectType()
 export class Livrableupdate {
@@ -14,6 +15,9 @@ export class Livrableupdate {
 
   @Field({ nullable: true })
   created_by?: number;
+
+  @Field((type) => User, { nullable: true })
+  author?: User;
 
   @Field({ nullable: false })
   livrable_id: number;

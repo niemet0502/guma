@@ -24,6 +24,18 @@ export const GET_LIVRABLES = gql`
       updates {
         id
         status
+        description
+        created_at
+
+        author {
+          id
+          username
+        }
+
+        livrable {
+          id
+          name
+        }
       }
 
       tasks {

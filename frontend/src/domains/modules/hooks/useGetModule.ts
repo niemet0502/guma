@@ -22,6 +22,17 @@ export const GET_MODULE_BY_ID = gql`
         id
         status
         description
+        created_at
+
+        livrable {
+          id
+          name
+        }
+
+        author {
+          id
+          username
+        }
       }
 
       tasks {

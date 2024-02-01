@@ -5,16 +5,21 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Avatar } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { transformDateFullText } from "@/lib/utils";
 import { BsDot } from "react-icons/bs";
 import { CiCalendarDate } from "react-icons/ci";
 import { GoProjectRoadmap } from "react-icons/go";
+import { LuActivity } from "react-icons/lu";
 import { RiArrowRightSLine } from "react-icons/ri";
+import { TbEdit } from "react-icons/tb";
 import { useParams } from "react-router-dom";
+import { CreateModuleUpdate } from "../components/CreateModuleUpdate";
 import { ModuleDocumentItem } from "../components/ModuleDocumentItem";
 import { statusLabel } from "../components/ModuleItem";
 import { ModuleStatusIcon } from "../components/ModuleStatusIcon";
 import { ModuleTasksList } from "../components/ModuleTasksList";
+import { UpdatesList } from "../components/UpdatesList";
 import { useGetModule } from "../hooks/useGetModule";
 
 export const ModuleDetails: React.FC = () => {
@@ -33,13 +38,35 @@ export const ModuleDetails: React.FC = () => {
   return (
     <div className="w-full h-full flex">
       <div className="w-2/3">
-        <div className="w-full flex flex-1 ">
-          <div className="w-full py-3 px-5 flex items-center border-b">
+        <div className="w-full flex flex-1  border-b">
+          <div className="w-full py-3 px-5 flex items-center">
             <p>Livrables</p>
             <p className="flex gap-1 items-center">
               <RiArrowRightSLine className="mt-0.5" />
               {module?.name}
             </p>
+          </div>
+          <div className="py-3 px-5 flex gap-2 items-center">
+            {module && (
+              <>
+                <UpdatesList updates={module.updates}>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="flex gap-1 items-center"
+                  >
+                    <LuActivity /> Updates
+                  </Button>
+                </UpdatesList>
+                <CreateModuleUpdate moduleId={module.id}>
+                  <Button size="sm" variant="secondary" className="flex gap-1">
+                    <TbEdit />
+                    <span>New</span>
+                    <span>update</span>
+                  </Button>
+                </CreateModuleUpdate>
+              </>
+            )}
           </div>
         </div>
         <div className="w-full">

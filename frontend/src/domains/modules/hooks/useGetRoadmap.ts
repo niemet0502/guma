@@ -28,6 +28,18 @@ export const GET_PROJECT_ROADMAP = gql`
         updates {
           id
           status
+          created_at
+          description
+
+          livrable {
+            id
+            name
+          }
+
+          author {
+            id
+            username
+          }
         }
 
         tasks {

@@ -10,6 +10,12 @@ export enum LivrableStatusEnum {
   Completed = 3,
 }
 
+export enum LivrableUpdateEnum {
+  OnTrack = 0,
+  AtRisk = 1,
+  OffTrack = 2,
+}
+
 export interface LivrableApi {
   id: number;
   name: string;
@@ -34,11 +40,12 @@ export interface Livrableupdate {
   livrable_id: number;
   created_at: string;
   livrable: LivrableApi;
+  author?: User;
 }
 
 export interface CreateLivrableupdateInput {
   status: number;
-  description: string;
+  description?: string;
   livrable_id: number;
   created_by?: number;
 }

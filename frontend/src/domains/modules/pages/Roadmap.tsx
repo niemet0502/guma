@@ -1,7 +1,10 @@
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/domains/auth/providers/auth";
+import { LuActivity } from "react-icons/lu";
 import { CreateModuleDialog } from "../components/CreateModuleDialog";
 import { ModuleItem } from "../components/ModuleItem";
+import { UpdatesList } from "../components/UpdatesList";
 import { useGetRoadmap } from "../hooks/useGetRoadmap";
 
 export const Roadmap: React.FC = () => {
@@ -14,7 +17,25 @@ export const Roadmap: React.FC = () => {
       <div className="bg-secondary py-3 px-5 flex items-center justify-between">
         <p>Roadmap</p>
 
-        {teamsData && <CreateModuleDialog teamsData={teamsData} />}
+        <div className="flex items-center gap-2">
+          {teams && (
+            <UpdatesList
+              updates={teams
+                .flatMap(({ livrables }) => livrables)
+                .flatMap(({ updates }) => updates)}
+              showModuleName
+            >
+              <Button
+                size="sm"
+                variant="outline"
+                className="flex gap-1 items-center"
+              >
+                <LuActivity /> Updates
+              </Button>
+            </UpdatesList>
+          )}
+          {teamsData && <CreateModuleDialog teamsData={teamsData} />}
+        </div>
       </div>
 
       <div className="w-full flex flex-1 ">
