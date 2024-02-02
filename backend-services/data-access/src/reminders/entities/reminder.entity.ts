@@ -8,7 +8,7 @@ export class Reminder {
   @Column('text')
   title: string;
 
-  @Column('text', { nullable: false })
+  @Column('text', { nullable: true })
   message: string;
 
   @Column('int', { nullable: false })

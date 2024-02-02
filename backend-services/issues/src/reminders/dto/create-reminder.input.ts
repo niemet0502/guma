@@ -5,7 +5,7 @@ export class CreateReminderInput {
   @Field({ nullable: false })
   public title: string;
 
-  @Field({ nullable: false })
+  @Field({ nullable: true })
   public message: string;
 
   @Field({ nullable: false })

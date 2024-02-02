@@ -9,8 +9,8 @@ export class Reminder {
   @Field()
   title: string;
 
-  @Field({ nullable: false })
-  message: string;
+  @Field({ nullable: true })
+  message?: string;
 
   @Field({ nullable: false })
   task_id: number;

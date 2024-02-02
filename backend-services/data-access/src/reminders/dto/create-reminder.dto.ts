@@ -6,8 +6,7 @@ export class CreateReminderDto {
   @ApiProperty({ required: true })
   public title: string;
 
-  @IsNotEmpty()
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: false })
   public message: string;
 
   @IsNotEmpty()

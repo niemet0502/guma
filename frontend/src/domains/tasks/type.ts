@@ -18,6 +18,15 @@ export enum ActivityAction {
   ASSIGNED = "assigned to",
 }
 
+export interface CreateReminderInput {
+  title: string;
+  message?: string;
+  task_id: number;
+  send_at: Date;
+  created_by?: number;
+  created_at?: string;
+}
+
 export interface CreateCommentInput {
   content: string;
   task_id?: number;
