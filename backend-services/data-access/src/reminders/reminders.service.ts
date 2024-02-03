@@ -20,8 +20,14 @@ export class RemindersService {
     });
   }
 
-  async findAll(): Promise<Reminder[]> {
-    return await this.repository.find();
+  async findAll(task_id?: number): Promise<Reminder[]> {
+    const query = this.repository.createQueryBuilder('reminder');
+
+    if (task_id) {
+      query.andWhere('reminder.task_id = :task_id', { task_id });
+    }
+
+    return await query.getMany();
   }
 
   async findOne(id: number): Promise<Reminder> {

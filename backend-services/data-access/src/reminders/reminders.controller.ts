@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CreateReminderDto } from './dto/create-reminder.dto';
@@ -26,8 +27,8 @@ export class RemindersController {
 
   @Get()
   @ApiOkResponse({ type: Reminder, isArray: true })
-  findAll() {
-    return this.remindersService.findAll();
+  findAll(@Query('task_id') task_id?: string) {
+    return this.remindersService.findAll(task_id ? +task_id : undefined);
   }
 
   @Get(':id')

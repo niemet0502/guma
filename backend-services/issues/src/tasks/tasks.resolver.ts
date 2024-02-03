@@ -130,6 +130,12 @@ export class TasksResolver {
   }
 
   @ResolveField()
+  reminders(@Parent() task: Task) {
+    const { id } = task;
+    return this.tasksService.getReminders(id);
+  }
+
+  @ResolveField()
   sprint(@Parent() task: Task) {
     const { sprint_id } = task;
     if (!sprint_id) return;

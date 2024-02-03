@@ -22,8 +22,10 @@ export class RemindersResolver {
   }
 
   @Query(() => [Reminder], { name: 'reminders' })
-  findAll() {
-    return this.remindersService.findAll();
+  findAll(
+    @Args('task_id', { type: () => Int, nullable: true }) task_id: number,
+  ) {
+    return this.remindersService.findAll(task_id);
   }
 
   @Query(() => Reminder, { name: 'reminder' })

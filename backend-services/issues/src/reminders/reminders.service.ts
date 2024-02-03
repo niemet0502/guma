@@ -2,8 +2,6 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
-import { Task } from '../tasks/entities/task.entity';
-import { TasksService } from '../tasks/tasks.service';
 import { CreateReminderInput } from './dto/create-reminder.input';
 import { UpdateReminderInput } from './dto/update-reminder.input';
 import { Reminder } from './entities/reminder.entity';
@@ -12,10 +10,7 @@ import { Reminder } from './entities/reminder.entity';
 export class RemindersService {
   private url = 'http://data-access:3000/reminders/';
 
-  constructor(
-    private readonly http: HttpService,
-    private readonly taskService: TasksService,
-  ) {}
+  constructor(private readonly http: HttpService) {}
 
   async create(createReminderInput: CreateReminderInput): Promise<Reminder> {
     const { data } = await firstValueFrom(
@@ -30,8 +25,14 @@ export class RemindersService {
     return data;
   }
 
-  async findAll(): Promise<Reminder[]> {
-    const { data } = await firstValueFrom(this.http.get<Reminder[]>(this.url));
+  async findAll(task_id?: number): Promise<Reminder[]> {
+    const { data } = await firstValueFrom(
+      this.http.get<Reminder[]>(this.url, {
+        params: {
+          task_id,
+        },
+      }),
+    );
     return data;
   }
 
@@ -69,7 +70,7 @@ export class RemindersService {
     return { id, ...data };
   }
 
-  async getTask(id: number): Promise<Task> {
-    return await this.taskService.findOne(id);
+  async getTask(id: number) {
+    return null;
   }
 }
