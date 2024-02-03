@@ -17,6 +17,7 @@ import { WorkflowModule } from './workflow/workflow.module';
 import { QuestionsModule } from './questions/questions.module';
 import { AnswersModule } from './answers/answers.module';
 import { RemindersModule } from './reminders/reminders.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { RemindersModule } from './reminders/reminders.module';
     QuestionsModule,
     AnswersModule,
     RemindersModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

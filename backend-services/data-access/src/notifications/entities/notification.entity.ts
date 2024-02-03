@@ -14,9 +14,9 @@ export class Notification {
   @Column()
   created_at: string;
 
-  @Column('boolean')
+  @Column('boolean', { default: false })
   read: boolean;
 
-  @Column()
+  @Column({ default: 'You asked to be reminded about this issue' })
   content: string;
 }
