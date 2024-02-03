@@ -1,7 +1,8 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
 import { Task } from '../../tasks/entities/task.entity';
 
 @ObjectType()
+@Directive('@key(fields: "id")')
 export class Reminder {
   @Field(() => ID)
   id: number;

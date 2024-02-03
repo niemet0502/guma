@@ -1,4 +1,11 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Query,
+  ResolveReference,
+  Resolver,
+} from '@nestjs/graphql';
 import { CurrentUser } from '../shared/current-user.decator';
 import { User } from '../shared/user.entity';
 import { CreateReminderInput } from './dto/create-reminder.input';
@@ -46,5 +53,13 @@ export class RemindersResolver {
   @Mutation(() => Reminder)
   removeReminder(@Args('id', { type: () => Int }) id: number) {
     return this.remindersService.remove(id);
+  }
+
+  @ResolveReference()
+  resolveReference(reference: {
+    __typename: string;
+    id: number;
+  }): Promise<Reminder> {
+    return this.remindersService.findOne(reference.id);
   }
 }
