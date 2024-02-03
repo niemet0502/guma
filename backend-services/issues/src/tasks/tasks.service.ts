@@ -6,6 +6,7 @@ import { ActivitiesService } from '../activities/activities.service';
 import { CommentsService } from '../comments/comments.service';
 import { LabelsService } from '../labels/labels.service';
 import { LivrablesService } from '../livrables/livrables.service';
+import { RemindersService } from '../reminders/reminders.service';
 import { SprintsService } from '../sprints/sprints.service';
 import { removeSpacesAndSpecialChars } from '../utils/Helper';
 import { CreateTaskInput } from './dto/create-task.input';
@@ -26,6 +27,8 @@ export class TasksService {
 
     @Inject(forwardRef(() => LivrablesService))
     private readonly livrableService: LivrablesService,
+
+    private readonly remindersService: RemindersService,
   ) {}
 
   async create(createTaskInput: CreateTaskInput) {
@@ -155,5 +158,9 @@ export class TasksService {
 
   async getLivrable(livrable_id: number) {
     return await this.livrableService.findOne(livrable_id);
+  }
+
+  async getReminders(taskId: number) {
+    return await this.remindersService.findAll(taskId);
   }
 }
