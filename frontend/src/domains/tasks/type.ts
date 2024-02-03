@@ -27,6 +27,28 @@ export interface CreateReminderInput {
   created_at?: string;
 }
 
+export interface ReminderApi {
+  id: number;
+  title: string;
+  message?: string;
+  task_id?: number;
+  task?: TaskApi;
+  send_at: string;
+  created_by: number;
+  created_at?: string;
+  type?: number;
+}
+
+export interface UpdateReminderInput {
+  title: string;
+  message?: string;
+  task_id: number;
+  send_at: Date;
+  created_by?: number;
+  created_at?: string;
+  id: number;
+}
+
 export interface CreateCommentInput {
   content: string;
   task_id?: number;
@@ -161,4 +183,5 @@ export interface TaskApi {
   comments: [CommentApi];
   activities: [Activity];
   labels: [TaskLabelApi];
+  reminders?: [ReminderApi];
 }

@@ -38,6 +38,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useCreateReminder } from "../../hooks/useCreateReminder";
+import { useUpdateReminder } from "../../hooks/useUpdateReminder";
+import { ReminderApi } from "../../type";
 
 const formSchema = z.object({
   title: z.string().min(4).max(50),
@@ -48,20 +50,30 @@ const formSchema = z.object({
 export const AddReminderDialog: React.FC<{
   taskId: number;
   children: React.ReactElement;
-}> = ({ taskId, children }) => {
+  reminderToEdit?: ReminderApi;
+}> = ({ taskId, children, reminderToEdit }) => {
   const { toast } = useToast();
   const [openEndDate, setOpenEndDate] = useState(false);
   const [open, setOpen] = useState(false);
 
   const onSuccess = () => {
-    toast({ title: "Success !", description: "Your reminder has been set" });
+    toast({
+      title: "Success !",
+      description: `Your reminder has been ${
+        reminderToEdit ? "edited" : "set"
+      }`,
+    });
     setOpen(false);
   };
 
   const { setReminder, error, reset } = useCreateReminder(onSuccess);
+  const { updateReminder } = useUpdateReminder(onSuccess);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: reminderToEdit
+      ? { ...reminderToEdit, send_at: new Date(reminderToEdit.send_at) }
+      : undefined,
   });
 
   useEffect(() => {
@@ -69,16 +81,18 @@ export const AddReminderDialog: React.FC<{
   }, [reset]);
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log(data);
-
-    setReminder({ ...data, task_id: +taskId });
+    reminderToEdit
+      ? updateReminder({ ...data, task_id: +taskId, id: +reminderToEdit.id })
+      : setReminder({ ...data, task_id: +taskId });
   };
   return (
     <Dialog modal={false} open={open} onOpenChange={setOpen}>
       <DialogTrigger>{children}</DialogTrigger>
       <DialogContent className="w-[530px]">
         <DialogHeader>
-          <DialogTitle>Remind me about this issue on</DialogTitle>
+          <DialogTitle>
+            {reminderToEdit ? "Edit reminder" : "Remind me about this issue on"}
+          </DialogTitle>
         </DialogHeader>
         <div>
           <Form {...form}>
@@ -93,7 +107,7 @@ export const AddReminderDialog: React.FC<{
                   <FormItem>
                     <FormLabel>Title</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input placeholder="Your notification title" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -165,7 +179,11 @@ export const AddReminderDialog: React.FC<{
                   <FormItem>
                     <FormLabel>Message</FormLabel>
                     <FormControl>
-                      <Textarea className="resize-none h-[120px]" {...field} />
+                      <Textarea
+                        placeholder="The message you want to receive"
+                        className="resize-none h-[120px]"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -174,7 +192,11 @@ export const AddReminderDialog: React.FC<{
               {error && <div className="text-red-600">{error.message}</div>}
 
               <div className="flex gap-2 items-center justify-end">
-                <Button variant="outline" type="button">
+                <Button
+                  variant="outline"
+                  type="button"
+                  onClick={() => setOpen(false)}
+                >
                   Cancel
                 </Button>
                 <Button type="submit">Apply</Button>

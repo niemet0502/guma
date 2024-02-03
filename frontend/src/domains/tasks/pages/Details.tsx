@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/domains/auth/providers/auth";
 import { TeamVisibility } from "@/domains/teams/type";
 import { useGetUsers } from "@/domains/users/hooks/useGetUsers";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { FaRegClock } from "react-icons/fa6";
 import { RiArrowRightSLine } from "react-icons/ri";
@@ -25,7 +25,7 @@ import { useUpdateTask } from "../hooks/useUpdateTask";
 import { ActivityAction } from "../type";
 
 export const TaskDetails: React.FC = () => {
-  const { project } = useAuth();
+  const { project, user } = useAuth();
   const { issueId } = useParams<{ issueId: string }>();
 
   const { data: users } = useGetUsers(project?.id as number);
@@ -88,6 +88,11 @@ export const TaskDetails: React.FC = () => {
     };
   }, []);
 
+  const hasReminder = useMemo(() => {
+    if (!task) return;
+    return task.reminders?.find(({ created_by }) => +created_by === +user!.id);
+  }, [task]);
+
   return (
     <div className="h-full border-t overflow-hidden">
       {task && (
@@ -101,10 +106,10 @@ export const TaskDetails: React.FC = () => {
                   {task.name}
                 </p>
               </div>
-              <AddReminderDialog taskId={task.id}>
+              <AddReminderDialog taskId={task.id} reminderToEdit={hasReminder}>
                 <Button size="sm" className="ml-2 flex gap-2 items-center">
                   <FaRegClock />
-                  Remind me...
+                  {hasReminder ? "Edit reminder" : "Reminder me..."}
                 </Button>
               </AddReminderDialog>
             </div>
