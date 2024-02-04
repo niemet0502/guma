@@ -22,7 +22,10 @@ export class NotificationsService {
   }
 
   async findAllByUser(user_id: number): Promise<Notification[]> {
-    return await this.repository.find({ where: { receiver_id: user_id } });
+    return await this.repository.find({
+      where: { receiver_id: user_id },
+      order: { id: 'DESC' },
+    });
   }
 
   async findOne(id: number): Promise<Notification> {
