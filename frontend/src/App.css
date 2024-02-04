@@ -82,6 +82,10 @@
   .default {
     @apply h-9 px-4 py-2 text-sm flex flex-wrap rounded  items-center hover:bg-accent hover:text-accent-foreground w-full justify-start  gap-1;
   }
+
+  .activenotification .notification-item {
+    @apply border-l-violet-800 bg-secondary;
+  }
 }
 
 ::-webkit-scrollbar {
