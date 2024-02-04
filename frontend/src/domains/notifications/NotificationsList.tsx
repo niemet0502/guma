@@ -1,3 +1,4 @@
+import { Outlet } from "react-router-dom";
 import { useAuth } from "../auth/providers/auth";
 import { NotificationItem } from "./components/NotificationItem";
 import { useNotifications } from "./hook/useNotifications";
@@ -12,7 +13,9 @@ export const NotificationsList: React.FC = () => {
           <NotificationItem notification={notification} key={notification.id} />
         ))}
       </div>
-      <div className="w-2/3 border"></div>
+      <div className="w-2/3 border">
+        <Outlet />
+      </div>
     </div>
   );
 };

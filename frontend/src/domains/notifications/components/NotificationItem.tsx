@@ -20,7 +20,7 @@ export const NotificationItem: React.FC<{ notification: NotificationApi }> = ({
       }
     >
       <div
-        className={`notification-item border-b flex flex-col w-full px-3 py-4 gap-2  hover:cursor-pointer border-l-[7px] border-l-transparent ${
+        className={`notification-item border-b flex flex-col w-full px-3 py-4 gap-2  hover:cursor-pointer border-l-[4px] border-l-transparent ${
           !notification.read ? "font-medium" : "text-gray-600"
         }`}
       >
