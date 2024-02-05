@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { NotificationApi } from "../type";
 
-const GET_NOTIFICATIONS = gql`
+export const GET_NOTIFICATIONS = gql`
   query GetNotifications($user_id: Int!) {
     notifications(user_id: $user_id) {
       id

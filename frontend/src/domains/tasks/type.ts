@@ -37,6 +37,7 @@ export interface ReminderApi {
   created_by: number;
   created_at?: string;
   type?: number;
+  author?: User;
 }
 
 export interface UpdateReminderInput {

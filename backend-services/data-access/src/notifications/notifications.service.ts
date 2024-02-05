@@ -29,7 +29,10 @@ export class NotificationsService {
   }
 
   async findOne(id: number): Promise<Notification> {
-    return await this.repository.findOne({ where: { id } });
+    const result = await this.repository.findOne({ where: { id } });
+    const updated = await this.repository.save({ ...result, read: true });
+
+    return updated;
   }
 
   async update(

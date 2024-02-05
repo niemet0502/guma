@@ -1,4 +1,5 @@
 import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
+import { User } from '../../shared/user.entity';
 import { Task } from '../../tasks/entities/task.entity';
 
 @ObjectType()
@@ -24,6 +25,9 @@ export class Reminder {
 
   @Field()
   created_by: number;
+
+  @Field((type) => User, { nullable: true })
+  author?: User;
 
   @Field()
   created_at: string;
