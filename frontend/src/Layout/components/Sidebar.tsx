@@ -1,9 +1,11 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/domains/auth/providers/auth";
 import { UserProfileEnum } from "@/domains/auth/services/types";
+import { useNotifications } from "@/domains/notifications/hook/useNotifications";
 import { CreateDialog } from "@/domains/teams/components/CreateDialog";
 import { TeamCard } from "@/domains/teams/components/TeamCard";
 import { useTeams } from "@/domains/teams/hooks/useTeams";
+import { useMemo } from "react";
 import { FaRegQuestionCircle } from "react-icons/fa";
 import { FaMap } from "react-icons/fa6";
 import { GoIssueDraft } from "react-icons/go";
@@ -14,6 +16,13 @@ export const Sidebar: React.FC = () => {
   let { orgaId } = useParams<{ orgaId: string }>();
   const { project, user } = useAuth();
   const { data, isLoading } = useTeams(project?.id as number);
+
+  const { data: notifications } = useNotifications(+user!.id);
+
+  const unreadNotificationsCounter = useMemo(() => {
+    if (!notifications) return -1;
+    return notifications.filter(({ read }) => !read).length;
+  }, [notifications]);
 
   return (
     <div className="pb-12 h-full w-[220px] flex flex-none sticky top-0 ">
@@ -29,8 +38,18 @@ export const Sidebar: React.FC = () => {
                 isActive ? "active" : isPending ? "default" : "default"
               }
             >
-              <IoIosNotificationsOutline className="text-base" />
-              Notifications
+              <div className="flex items-center justify-between w-full">
+                <div className="flex items-center flex-1">
+                  <IoIosNotificationsOutline className="text-base" />
+                  Notifications
+                </div>
+                {unreadNotificationsCounter &&
+                unreadNotificationsCounter > 0 ? (
+                  <div className="text-xs p-1 bg-secondary rounded-sm">
+                    {unreadNotificationsCounter}
+                  </div>
+                ) : undefined}
+              </div>
             </NavLink>
 
             <NavLink
