@@ -73,6 +73,6 @@ export class RemindersResolver {
 
   @ResolveField(() => Task)
   task(@Parent() reminder: Reminder): any {
-    return { __typename: 'Task', id: reminder.task_id };
+    return this.remindersService.getTask(reminder.task_id);
   }
 }
