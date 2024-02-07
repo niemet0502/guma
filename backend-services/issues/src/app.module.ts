@@ -17,6 +17,7 @@ import { TasksModule } from './tasks/tasks.module';
 import { LivrablesModule } from './livrables/livrables.module';
 import { LivrableupdatesModule } from './livrableupdates/livrableupdates.module';
 import { RemindersModule } from './reminders/reminders.module';
+import { ReminderreceiversModule } from './reminderreceivers/reminderreceivers.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { RemindersModule } from './reminders/reminders.module';
     LivrablesModule,
     LivrableupdatesModule,
     RemindersModule,
+    ReminderreceiversModule,
   ],
   controllers: [AppController],
   providers: [AppService],
