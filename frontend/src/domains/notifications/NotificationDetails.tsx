@@ -1,3 +1,4 @@
+import { Avatar } from "@/components/ui/avatar";
 import { getTimeAgoString } from "@/lib/utils";
 import { client } from "@/main";
 import { gql } from "@apollo/client";
@@ -43,13 +44,22 @@ export const NotificationDetails: React.FC = () => {
                   {notification.reminder?.author?.username}{" "}
                 </span>
               </p>
-              <p>
-                Sent{" "}
+              <div className="flex gap-2">
+                Sent to{" "}
+                <div className="flex gap-1">
+                  {notification.reminder?.receivers?.map(({ user }) => (
+                    <Avatar className="h-6 w-6 bg-transparent flex rounded-full border-2 items-center  justify-center mt-0.5">
+                      <span className="text-muted-foreground  text-[9px]">
+                        {user?.username?.slice(0, 2).toUpperCase()}
+                      </span>
+                    </Avatar>
+                  ))}
+                </div>
                 <span className="font-medium">
                   {" "}
                   {getTimeAgoString(notification.created_at)}
                 </span>
-              </p>
+              </div>
             </div>
           </div>
           <div className="p-4">
@@ -61,8 +71,7 @@ export const NotificationDetails: React.FC = () => {
                 }`}
                 className="font-medium"
               >
-                Testing
-                {/* {notification.reminder?.task?.name} */}
+                {notification.reminder?.task?.name}
               </NavLink>
               . <br />
               {notification.reminder?.message}

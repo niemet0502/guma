@@ -14,11 +14,21 @@ export const GET_NOTIFICATION_BY_ID = gql`
 
         task {
           id
+          name
+          slug
         }
 
         author {
           id
           username
+        }
+
+        receivers {
+          id
+          user {
+            id
+            username
+          }
         }
       }
       receiver_id

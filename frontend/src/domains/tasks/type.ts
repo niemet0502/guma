@@ -38,6 +38,15 @@ export interface ReminderApi {
   created_at?: string;
   type?: number;
   author?: User;
+  receivers?: ReminderReceiverAPi[];
+}
+
+export interface ReminderReceiverAPi {
+  id: number;
+  user_id: number;
+  user: User;
+  reminder_id?: number;
+  reminder?: ReminderApi;
 }
 
 export interface UpdateReminderInput {
