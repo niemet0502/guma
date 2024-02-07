@@ -7,7 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { User } from 'src/shared/user.entity';
+import { User } from '../shared/user.entity';
 import { CreateReminderreceiverInput } from './dto/create-reminderreceiver.input';
 import { ReminderReceiver } from './entities/reminderreceiver.entity';
 import { ReminderreceiversService } from './reminderreceivers.service';
