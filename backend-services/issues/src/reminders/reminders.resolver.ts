@@ -75,4 +75,10 @@ export class RemindersResolver {
   task(@Parent() reminder: Reminder): any {
     return this.remindersService.getTask(reminder.task_id);
   }
+
+  @ResolveField()
+  receivers(@Parent() reminder: Reminder) {
+    const { id } = reminder;
+    return this.remindersService.getReceivers(id);
+  }
 }

@@ -1,4 +1,5 @@
 import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
+import { ReminderReceiver } from '../../reminderreceivers/entities/reminderreceiver.entity';
 import { User } from '../../shared/user.entity';
 import { Task } from '../../tasks/entities/task.entity';
 
@@ -34,4 +35,7 @@ export class Reminder {
 
   @Field({ nullable: true })
   type: number;
+
+  @Field(() => [ReminderReceiver], { nullable: true })
+  receivers?: ReminderReceiver[];
 }
