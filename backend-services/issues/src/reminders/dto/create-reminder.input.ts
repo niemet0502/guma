@@ -1,4 +1,4 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
 export class CreateReminderInput {
@@ -11,6 +11,9 @@ export class CreateReminderInput {
   @Field({ nullable: false })
   public task_id: number;
 
+  @Field({ nullable: true })
+  public status_id: number;
+
   @Field({ nullable: false })
   public send_at: Date;
 
@@ -19,4 +22,7 @@ export class CreateReminderInput {
 
   @Field({ nullable: true })
   public created_at: Date;
+
+  @Field(() => [Int], { nullable: false })
+  receivers: number[];
 }

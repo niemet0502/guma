@@ -17,7 +17,7 @@ import { TasksService } from './tasks.service';
     TaskLabelsModule,
     forwardRef(() => SprintsModule),
     forwardRef(() => LivrablesModule),
-    RemindersModule,
+    forwardRef(() => RemindersModule),
   ],
   providers: [TasksResolver, TasksService],
   exports: [TasksService],

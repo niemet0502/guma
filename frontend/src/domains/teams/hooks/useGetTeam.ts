@@ -27,7 +27,5 @@ export const useGetTeam = (organizationId: number, name?: string) => {
     variables: { name, project_id: +organizationId },
   });
 
-  console.log(error);
-
   return { data: data?.getTeamByName, isLoading };
 };

@@ -1,6 +1,16 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  ResolveReference,
+  Resolver,
+} from '@nestjs/graphql';
 import { CurrentUser } from '../shared/current-user.decator';
 import { User } from '../shared/user.entity';
+import { Task } from '../tasks/entities/task.entity';
 import { CreateReminderInput } from './dto/create-reminder.input';
 import { UpdateReminderInput } from './dto/update-reminder.input';
 import { Reminder } from './entities/reminder.entity';
@@ -46,5 +56,29 @@ export class RemindersResolver {
   @Mutation(() => Reminder)
   removeReminder(@Args('id', { type: () => Int }) id: number) {
     return this.remindersService.remove(id);
+  }
+
+  @ResolveReference()
+  resolveReference(reference: {
+    __typename: string;
+    id: number;
+  }): Promise<Reminder> {
+    return this.remindersService.findOne(reference.id);
+  }
+
+  @ResolveField(() => User)
+  author(@Parent() reminder: Reminder): any {
+    return { __typename: 'User', id: reminder.created_by };
+  }
+
+  @ResolveField(() => Task)
+  task(@Parent() reminder: Reminder): any {
+    return this.remindersService.getTask(reminder.task_id);
+  }
+
+  @ResolveField()
+  receivers(@Parent() reminder: Reminder) {
+    const { id } = reminder;
+    return this.remindersService.getReceivers(id);
   }
 }

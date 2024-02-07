@@ -25,6 +25,7 @@ export interface CreateReminderInput {
   send_at: Date;
   created_by?: number;
   created_at?: string;
+  status_id?: number;
 }
 
 export interface ReminderApi {
@@ -37,12 +38,23 @@ export interface ReminderApi {
   created_by: number;
   created_at?: string;
   type?: number;
+  author?: User;
+  receivers?: ReminderReceiverAPi[];
+}
+
+export interface ReminderReceiverAPi {
+  id: number;
+  user_id: number;
+  user: User;
+  reminder_id?: number;
+  reminder?: ReminderApi;
 }
 
 export interface UpdateReminderInput {
   title: string;
   message?: string;
   task_id: number;
+  status_id?: number;
   send_at: Date;
   created_by?: number;
   created_at?: string;

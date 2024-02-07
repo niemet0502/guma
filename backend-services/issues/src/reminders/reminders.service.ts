@@ -1,7 +1,9 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
+import { ReminderreceiversService } from '../reminderreceivers/reminderreceivers.service';
+import { TasksService } from '../tasks/tasks.service';
 import { CreateReminderInput } from './dto/create-reminder.input';
 import { UpdateReminderInput } from './dto/update-reminder.input';
 import { Reminder } from './entities/reminder.entity';
@@ -10,9 +12,15 @@ import { Reminder } from './entities/reminder.entity';
 export class RemindersService {
   private url = 'http://data-access:3000/reminders/';
 
-  constructor(private readonly http: HttpService) {}
+  constructor(
+    private readonly http: HttpService,
+    @Inject(forwardRef(() => TasksService))
+    private readonly tasksService: TasksService,
+    private readonly receiversService: ReminderreceiversService,
+  ) {}
 
   async create(createReminderInput: CreateReminderInput): Promise<Reminder> {
+    const { receivers } = createReminderInput;
     const { data } = await firstValueFrom(
       this.http.post<Reminder>(this.url, createReminderInput).pipe(
         catchError((error: AxiosError) => {
@@ -20,6 +28,14 @@ export class RemindersService {
           throw 'An error happened!';
         }),
       ),
+    );
+
+    receivers.forEach(
+      async (userId) =>
+        await this.receiversService.create({
+          reminder_id: data.id,
+          user_id: userId,
+        }),
     );
 
     return data;
@@ -71,6 +87,10 @@ export class RemindersService {
   }
 
   async getTask(id: number) {
-    return null;
+    return await this.tasksService.findOne(id);
+  }
+
+  async getReceivers(id: number) {
+    return await this.receiversService.findAllByReminder(id);
   }
 }

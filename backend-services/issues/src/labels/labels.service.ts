@@ -9,7 +9,6 @@ export class LabelsService {
   private url = 'http://data-access:3000/tasklabels/';
 
   constructor(private http: HttpService) {}
-  //private taskService: TasksService,
 
   async create(createLabelInput: CreateTaskLabelInput): Promise<TaskLabel> {
     const { data } = await firstValueFrom(
@@ -34,8 +33,4 @@ export class LabelsService {
   remove(id: number) {
     return `This action removes a #${id} label`;
   }
-
-  // async getTask(id: number): Promise<Task> {
-  //   return await this.taskService.findOne(id);
-  // }
 }

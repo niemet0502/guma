@@ -1,5 +1,6 @@
 import { HttpModule, HttpService } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
+import { ReminderreceiversService } from '../reminderreceivers/reminderreceivers.service';
 import { TasksService } from '../tasks/tasks.service';
 import { RemindersService } from './reminders.service';
 
@@ -10,7 +11,11 @@ describe('RemindersService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [HttpModule],
-      providers: [RemindersService, { provide: TasksService, useValue: {} }],
+      providers: [
+        RemindersService,
+        { provide: TasksService, useValue: {} },
+        { provide: ReminderreceiversService, useValue: {} },
+      ],
     }).compile();
 
     service = module.get<RemindersService>(RemindersService);

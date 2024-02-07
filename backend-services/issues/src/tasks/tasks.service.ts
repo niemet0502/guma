@@ -28,6 +28,7 @@ export class TasksService {
     @Inject(forwardRef(() => LivrablesService))
     private readonly livrableService: LivrablesService,
 
+    @Inject(forwardRef(() => RemindersService))
     private readonly remindersService: RemindersService,
   ) {}
 

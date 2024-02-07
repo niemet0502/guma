@@ -106,7 +106,12 @@ export const TaskDetails: React.FC = () => {
                   {task.name}
                 </p>
               </div>
-              <AddReminderDialog taskId={task.id} reminderToEdit={hasReminder}>
+              <AddReminderDialog
+                taskId={task.id}
+                reminderToEdit={hasReminder}
+                members={members}
+                teamId={task.team_id}
+              >
                 <Button size="sm" className="ml-2 flex gap-2 items-center">
                   <FaRegClock />
                   {hasReminder ? "Edit reminder" : "Reminder me..."}

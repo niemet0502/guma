@@ -14,6 +14,9 @@ export class Reminder {
   @Column('int', { nullable: false })
   task_id: number;
 
+  @Column('int', { nullable: true })
+  status_id: number;
+
   @Column('text')
   send_at: string;
 
