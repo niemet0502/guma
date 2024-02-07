@@ -6,7 +6,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { Reminder } from 'src/shared/reminder.entity';
+import { Reminder } from '../shared/reminder.entity';
 import { Notification } from './entities/notification.entity';
 import { NotificationsService } from './notifications.service';
 
