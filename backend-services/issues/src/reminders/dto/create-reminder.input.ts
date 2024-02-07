@@ -11,6 +11,9 @@ export class CreateReminderInput {
   @Field({ nullable: false })
   public task_id: number;
 
+  @Field({ nullable: true })
+  public status_id: number;
+
   @Field({ nullable: false })
   public send_at: Date;
 

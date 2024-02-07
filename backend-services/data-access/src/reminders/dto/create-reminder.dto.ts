@@ -13,6 +13,9 @@ export class CreateReminderDto {
   @ApiProperty({ required: true })
   public task_id: number;
 
+  @ApiProperty({ required: false })
+  public status_id: number;
+
   @IsNotEmpty()
   @ApiProperty({ required: true })
   public send_at: Date;
