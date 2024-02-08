@@ -11,15 +11,12 @@ import { TaskItem } from "../components/TaskItem";
 import { useTasks } from "../hooks/useTasks";
 
 export const TaskList: React.FC = () => {
-  const { organization } = useAuth();
+  const { project } = useAuth();
 
   const { teamId } = useParams<{ teamId: string }>();
   const { fetchTasks, data: tasks } = useTasks();
-  const { data: users } = useGetUsers(organization?.id as number);
-  const { data: team, isLoading } = useGetTeam(
-    organization?.id as number,
-    teamId
-  );
+  const { data: users } = useGetUsers(project?.id as number);
+  const { data: team, isLoading } = useGetTeam(project?.id as number, teamId);
 
   const [members, setMembers] = useState<User[]>();
 

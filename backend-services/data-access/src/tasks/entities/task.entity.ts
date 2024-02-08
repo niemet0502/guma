@@ -12,7 +12,7 @@ export class Task {
   @Column('text', { nullable: false })
   name: string;
 
-  @Column('text', { nullable: false })
+  @Column('text', { nullable: true })
   description: string;
 
   @Column('text', { nullable: true })
@@ -34,7 +34,7 @@ export class Task {
   @Column({ nullable: false })
   created_by: number;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   assignee_to: number;
 
   @Column('double precision', { nullable: true })
@@ -48,6 +48,9 @@ export class Task {
 
   @Column({ nullable: true })
   sprint_id: number;
+
+  @Column({ nullable: true })
+  livrable_id: number;
 
   @Column({ nullable: false })
   status_id: number;

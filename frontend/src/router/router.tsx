@@ -1,8 +1,15 @@
 import { AuthPage } from "@/domains/auth/AuthPage";
 import { SignIn } from "@/domains/auth/SignIn";
 import { SignUp } from "@/domains/auth/SignUp";
+import { ModuleDetails } from "@/domains/modules/pages/ModuleDetails";
+import { ModulesList } from "@/domains/modules/pages/ModulesList";
+import { Roadmap } from "@/domains/modules/pages/Roadmap";
+import { NotificationDetails } from "@/domains/notifications/NotificationDetails";
 import { NotificationsList } from "@/domains/notifications/NotificationsList";
 import { OrganizationForm } from "@/domains/organization/OrganizationForm";
+import { AskQuestion } from "@/domains/sharing/pages/CreateQuestion";
+import { QuestionDetails } from "@/domains/sharing/pages/Details";
+import { QuestionList } from "@/domains/sharing/pages/List";
 import { SprintDetails } from "@/domains/sprints/pages/Details";
 import { SprintList } from "@/domains/sprints/pages/List";
 import { TaskDetails } from "@/domains/tasks/pages/Details";
@@ -39,8 +46,35 @@ export const router = createBrowserRouter([
                 element: <Documents />,
               },
               {
+                path: "questions/new",
+                element: <AskQuestion />,
+              },
+              {
+                path: "questions",
+                children: [
+                  {
+                    index: true,
+                    element: <QuestionList />,
+                  },
+                  {
+                    path: "/:orgaId/questions/:questionId",
+                    element: <QuestionDetails />,
+                  },
+                ],
+              },
+              {
                 path: "notifications",
                 element: <NotificationsList />,
+                children: [
+                  {
+                    path: "/:orgaId/notifications/:notificationId",
+                    element: <NotificationDetails />,
+                  },
+                ],
+              },
+              {
+                path: "roadmap",
+                element: <Roadmap />,
               },
               {
                 path: "team/:teamId/issues",
@@ -82,6 +116,19 @@ export const router = createBrowserRouter([
                   {
                     path: "/:orgaId/team/:teamId/sprints/:sprintId",
                     element: <SprintDetails />,
+                  },
+                ],
+              },
+              {
+                path: "team/:teamId/modules",
+                children: [
+                  {
+                    index: true,
+                    element: <ModulesList />,
+                  },
+                  {
+                    path: "/:orgaId/team/:teamId/modules/:moduleId",
+                    element: <ModuleDetails />,
                   },
                 ],
               },

@@ -29,10 +29,10 @@ export class AuthService {
 
     session.user_id = id;
     session.token = token;
-    session.created_at = new Date().toLocaleString();
+    session.created_at = new Date().toString();
     session.expired_at = new Date(
       today.setMonth(today.getMonth() + 2),
-    ).toLocaleString();
+    ).toString();
 
     return await this.userSessionRepository.save(session);
   }

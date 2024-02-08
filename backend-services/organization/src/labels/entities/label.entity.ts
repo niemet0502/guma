@@ -10,5 +10,5 @@ export class Label {
   name: string;
 
   @Field({ nullable: false })
-  organization_id: number;
+  project_id: number;
 }

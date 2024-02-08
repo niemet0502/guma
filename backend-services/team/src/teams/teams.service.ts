@@ -42,9 +42,9 @@ export class TeamsService {
     return data;
   }
 
-  async findAllByOrganization(organization_id: number): Promise<Team[]> {
+  async findAllByOrganization(project_id: number): Promise<Team[]> {
     const { data } = await firstValueFrom(
-      this.http.get<Team[]>(this.url, { params: { organization_id } }),
+      this.http.get<Team[]>(this.url, { params: { project_id } }),
     );
     return data;
   }
@@ -56,9 +56,9 @@ export class TeamsService {
     return data;
   }
 
-  async findBy(name: string, organization_id: number): Promise<Team> {
+  async findBy(name: string, project_id: number): Promise<Team> {
     const { data } = await firstValueFrom(
-      this.http.get<Team>(`${this.url}byName/${name}/${organization_id}`).pipe(
+      this.http.get<Team>(`${this.url}byName/${name}/${project_id}`).pipe(
         catchError((error: AxiosError) => {
           console.log(error.response.data);
           throw 'An error happened!';

@@ -2,8 +2,8 @@ import { gql, useQuery } from "@apollo/client";
 import { TeamApi } from "../type";
 
 export const GET_TEAM = gql`
-  query getTeamByName($name: String!, $organization_id: Int!) {
-    getTeamByName(name: $name, organization_id: $organization_id) {
+  query getTeamByName($name: String!, $project_id: Int!) {
+    getTeamByName(name: $name, project_id: $project_id) {
       id
       name
       visibility
@@ -19,11 +19,13 @@ export const GET_TEAM = gql`
 `;
 
 export const useGetTeam = (organizationId: number, name?: string) => {
-  const { data, loading: isLoading } = useQuery<{ getTeamByName: TeamApi }>(
-    GET_TEAM,
-    {
-      variables: { name, organization_id: +organizationId },
-    }
-  );
+  const {
+    data,
+    loading: isLoading,
+    error,
+  } = useQuery<{ getTeamByName: TeamApi }>(GET_TEAM, {
+    variables: { name, project_id: +organizationId },
+  });
+
   return { data: data?.getTeamByName, isLoading };
 };

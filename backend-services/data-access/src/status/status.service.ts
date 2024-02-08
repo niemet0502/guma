@@ -50,6 +50,7 @@ export class StatusService {
 
     return await this.repo.find({
       where: [team_id && { team_id: +team_id }, { team_id: IsNull() }],
+      order: { state: 'ASC' },
     });
   }
 

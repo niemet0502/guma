@@ -14,6 +14,10 @@ import { Team } from './shared/team.entity';
 import { User } from './shared/user.entity';
 import { SprintsModule } from './sprints/sprints.module';
 import { TasksModule } from './tasks/tasks.module';
+import { LivrablesModule } from './livrables/livrables.module';
+import { LivrableupdatesModule } from './livrableupdates/livrableupdates.module';
+import { RemindersModule } from './reminders/reminders.module';
+import { ReminderreceiversModule } from './reminderreceivers/reminderreceivers.module';
 
 @Module({
   imports: [
@@ -31,6 +35,10 @@ import { TasksModule } from './tasks/tasks.module';
     ActivitiesModule,
     SprintsModule,
     TaskLabelsModule,
+    LivrablesModule,
+    LivrableupdatesModule,
+    RemindersModule,
+    ReminderreceiversModule,
   ],
   controllers: [AppController],
   providers: [AppService],

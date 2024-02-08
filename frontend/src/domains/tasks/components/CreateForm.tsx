@@ -37,7 +37,7 @@ import { taskPriority } from "../constantes";
 import { useCreateTask } from "../hooks/useCreateTask";
 
 export const formSchema = z.object({
-  name: z.string().min(4).max(50),
+  name: z.string().min(4),
   priority: z.number().optional(),
   labels: z.number().array().optional(),
   assignee_to: z.number().optional(),
@@ -57,8 +57,8 @@ export const CreateTaskForm: React.FC<{
   members?: User[];
   teamId?: number;
 }> = ({ onOpenChange, members, teamId }) => {
-  const { organization } = useAuth();
-  const { data: labels } = useGetLabels(organization?.id as number);
+  const { project } = useAuth();
+  const { data: labels } = useGetLabels(project?.id as number);
   const { toast } = useToast();
 
   const [open, setOpen] = useState(false);

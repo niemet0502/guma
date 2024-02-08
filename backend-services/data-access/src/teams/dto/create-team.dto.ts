@@ -4,7 +4,7 @@ import { TeamVisibility } from '../teams.enum';
 
 export class CreateTeamDto {
   @ApiProperty({ required: true })
-  public organization_id: number;
+  public project_id: number;
 
   @IsString()
   @IsNotEmpty()

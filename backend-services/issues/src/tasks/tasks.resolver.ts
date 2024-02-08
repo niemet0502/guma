@@ -40,7 +40,9 @@ export class TasksResolver {
     @Args('parent_task_id', { type: () => Int, nullable: true })
     parent_task_id: number,
     @Args('sprint_id', { type: () => Int, nullable: true }) sprint_id: number,
-    @Args('sprint_id', { type: () => Int, nullable: true })
+    @Args('livrable_id', { type: () => Int, nullable: true })
+    livrable_id: number,
+    @Args('sprint_history', { type: () => Int, nullable: true })
     sprint_history: number,
   ) {
     return this.tasksService.findAll(
@@ -50,6 +52,7 @@ export class TasksResolver {
       parent_task_id,
       sprint_id,
       sprint_history,
+      livrable_id,
     );
   }
 
@@ -127,10 +130,24 @@ export class TasksResolver {
   }
 
   @ResolveField()
+  reminders(@Parent() task: Task) {
+    const { id } = task;
+    return this.tasksService.getReminders(id);
+  }
+
+  @ResolveField()
   sprint(@Parent() task: Task) {
     const { sprint_id } = task;
     if (!sprint_id) return;
 
     return this.tasksService.getSprint(sprint_id);
+  }
+
+  @ResolveField()
+  livrable(@Parent() task: Task) {
+    const { livrable_id } = task;
+    if (!livrable_id) return;
+
+    return this.tasksService.getLivrable(livrable_id);
   }
 }

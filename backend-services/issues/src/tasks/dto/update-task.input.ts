@@ -10,6 +10,9 @@ export class UpdateTaskInput {
   sprint_id?: number;
 
   @Field({ nullable: true })
+  livrable_id: number;
+
+  @Field({ nullable: true })
   created_by?: number;
 
   @Field({ nullable: true })

@@ -1,25 +1,35 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/domains/auth/providers/auth";
 import { UserProfileEnum } from "@/domains/auth/services/types";
+import { useNotifications } from "@/domains/notifications/hook/useNotifications";
 import { CreateDialog } from "@/domains/teams/components/CreateDialog";
 import { TeamCard } from "@/domains/teams/components/TeamCard";
 import { useTeams } from "@/domains/teams/hooks/useTeams";
+import { useMemo } from "react";
+import { FaRegQuestionCircle } from "react-icons/fa";
+import { FaMap } from "react-icons/fa6";
 import { GoIssueDraft } from "react-icons/go";
-import { HiOutlineDocumentDuplicate } from "react-icons/hi";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { NavLink, useParams } from "react-router-dom";
 
 export const Sidebar: React.FC = () => {
   let { orgaId } = useParams<{ orgaId: string }>();
-  const { organization, user } = useAuth();
-  const { data, isLoading } = useTeams(organization?.id as number);
+  const { project, user } = useAuth();
+  const { data, isLoading } = useTeams(project?.id as number);
+
+  const { data: notifications } = useNotifications(+user!.id);
+
+  const unreadNotificationsCounter = useMemo(() => {
+    if (!notifications) return -1;
+    return notifications.filter(({ read }) => !read).length;
+  }, [notifications]);
 
   return (
-    <div className="pb-12 h-full w-[250px] flex flex-none sticky top-0">
+    <div className="pb-12 h-full w-[220px] flex flex-none sticky top-0 ">
       <div className="w-full space-y-4 py-4">
         <div className="px-2 py-2">
           <h4 className="mb-3 px-2 text-lg font-semibold tracking-tight">
-            {organization?.name}
+            {project?.name}
           </h4>
           <div className="space-y-1">
             <NavLink
@@ -28,19 +38,40 @@ export const Sidebar: React.FC = () => {
                 isActive ? "active" : isPending ? "default" : "default"
               }
             >
-              <IoIosNotificationsOutline className="text-base" />
-              Notifications
+              <div className="flex items-center justify-between w-full">
+                <div className="flex items-center flex-1">
+                  <IoIosNotificationsOutline className="text-base" />
+                  Notifications
+                </div>
+                {unreadNotificationsCounter &&
+                unreadNotificationsCounter > 0 ? (
+                  <div className="text-xs p-1 bg-secondary rounded-sm">
+                    {unreadNotificationsCounter}
+                  </div>
+                ) : undefined}
+              </div>
             </NavLink>
 
             <NavLink
-              to={`/${orgaId}/documents`}
+              to={`/${orgaId}/questions`}
               className={({ isActive, isPending }) =>
                 isActive ? "active" : isPending ? "default" : "default"
               }
             >
-              <HiOutlineDocumentDuplicate className="text-base" />
-              Documents
+              <FaRegQuestionCircle className="text-base" />
+              Questions
             </NavLink>
+
+            <NavLink
+              to={`/${orgaId}/roadmap`}
+              className={({ isActive, isPending }) =>
+                isActive ? "active" : isPending ? "default" : "default"
+              }
+            >
+              <FaMap className="text-base" />
+              Roadmap
+            </NavLink>
+
             <NavLink
               to="/create-workspace"
               className={({ isActive, isPending }) =>

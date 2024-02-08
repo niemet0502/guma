@@ -1,7 +1,7 @@
 import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
 import { Profile } from '../../profiles/entities/profile.entity';
 import { Member } from '../../shared/member.entity';
-import { Organization } from '../../shared/organization.entity';
+import { Project } from '../../shared/project.entity';
 
 @ObjectType()
 @Directive('@key(fields: "id")')
@@ -31,10 +31,10 @@ export class User {
   first_signin: boolean;
 
   @Field({ nullable: true })
-  organization_id?: number;
+  project_id?: number;
 
   @Field({ nullable: true })
-  organization?: Organization;
+  project?: Project;
 
   @Field({ nullable: true })
   profile_id?: number;

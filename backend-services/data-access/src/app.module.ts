@@ -1,20 +1,43 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ActivitiesModule } from './activities/activities.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { dataSourceOptions } from './database/data-source';
-import { OrganizationsModule } from './organizations/organizations.module';
-import { UsersModule } from './users/users.module';
-import { TeamsModule } from './teams/teams.module';
-import { TasksModule } from './tasks/tasks.module';
-import { DocumentsModule } from './documents/documents.module';
 import { AuthModule } from './auth/auth.module';
+import { dataSourceOptions } from './database/data-source';
+import { DocumentsModule } from './documents/documents.module';
+import { LivrablesModule } from './livrables/livrables.module';
+import { OrganizationsModule } from './organizations/organizations.module';
 import { SprintsModule } from './sprints/sprints.module';
-import { WorkflowModule } from './workflow/workflow.module';
 import { StatusModule } from './status/status.module';
+import { TasksModule } from './tasks/tasks.module';
+import { TeamsModule } from './teams/teams.module';
+import { UsersModule } from './users/users.module';
+import { WorkflowModule } from './workflow/workflow.module';
+import { QuestionsModule } from './questions/questions.module';
+import { AnswersModule } from './answers/answers.module';
+import { RemindersModule } from './reminders/reminders.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(dataSourceOptions), OrganizationsModule, UsersModule, TeamsModule, TasksModule, DocumentsModule, AuthModule, SprintsModule, WorkflowModule, StatusModule],
+  imports: [
+    TypeOrmModule.forRoot(dataSourceOptions),
+    OrganizationsModule,
+    UsersModule,
+    TeamsModule,
+    TasksModule,
+    DocumentsModule,
+    AuthModule,
+    SprintsModule,
+    StatusModule,
+    ActivitiesModule,
+    LivrablesModule,
+    WorkflowModule,
+    QuestionsModule,
+    AnswersModule,
+    RemindersModule,
+    NotificationsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

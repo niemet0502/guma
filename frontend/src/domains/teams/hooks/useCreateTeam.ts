@@ -1,6 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
 import { CreateTeamInput } from "../type";
-import { GET_TEAMS_BY_ORGANIZATION_ID } from "./useTeams";
+import { GET_TEAMS_BY_PROJECT_ID } from "./useTeams";
 
 const CREATE_TEAM = gql`
   mutation CreateTeam($createTeamInput: CreateTeamInput!) {
@@ -14,7 +14,7 @@ const CREATE_TEAM = gql`
 export const useCreateTeam = (onSuccessCallback: () => void) => {
   const [createTeamMutation, { error }] = useMutation(CREATE_TEAM, {
     refetchQueries: [
-      GET_TEAMS_BY_ORGANIZATION_ID, // DocumentNode object parsed with gql
+      GET_TEAMS_BY_PROJECT_ID, // DocumentNode object parsed with gql
     ],
   });
 

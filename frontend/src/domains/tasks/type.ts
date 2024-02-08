@@ -1,4 +1,5 @@
 import { User } from "../auth/services/types";
+import { LivrableApi } from "../modules/type";
 import { LabelApi } from "../organization/services/type";
 import { SprintStatusEnum } from "../sprints/type";
 import { TeamApi } from "../teams/type";
@@ -17,6 +18,49 @@ export enum ActivityAction {
   ASSIGNED = "assigned to",
 }
 
+export interface CreateReminderInput {
+  title: string;
+  message?: string;
+  task_id: number;
+  send_at: Date;
+  created_by?: number;
+  created_at?: string;
+  status_id?: number;
+}
+
+export interface ReminderApi {
+  id: number;
+  title: string;
+  message?: string;
+  task_id?: number;
+  task?: TaskApi;
+  send_at: string;
+  created_by: number;
+  created_at?: string;
+  type?: number;
+  author?: User;
+  receivers?: ReminderReceiverAPi[];
+}
+
+export interface ReminderReceiverAPi {
+  id: number;
+  user_id: number;
+  user: User;
+  reminder_id?: number;
+  reminder?: ReminderApi;
+}
+
+export interface UpdateReminderInput {
+  title: string;
+  message?: string;
+  task_id: number;
+  status_id?: number;
+  send_at: Date;
+  created_by?: number;
+  created_at?: string;
+  id: number;
+}
+
 export interface CreateCommentInput {
   content: string;
   task_id?: number;
@@ -31,6 +75,7 @@ export interface TaskStatusApi {
   id: number;
   name: string;
   team_id?: number;
+  state: number;
 }
 
 export interface SprintApi {
@@ -139,6 +184,8 @@ export interface TaskApi {
   assignee: User;
   parent_task_id: number;
   sprint_id: number;
+  livrable_id?: number;
+  livrable?: LivrableApi;
   sprint: SprintApi;
   status_id: number;
   status: TaskStatusApi;
@@ -148,4 +195,5 @@ export interface TaskApi {
   comments: [CommentApi];
   activities: [Activity];
   labels: [TaskLabelApi];
+  reminders?: [ReminderApi];
 }

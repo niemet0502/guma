@@ -1,3 +1,5 @@
+import { GET_MODULE_BY_ID } from "@/domains/modules/hooks/useGetModule";
+import { GET_LIVRABLES } from "@/domains/modules/hooks/useModules";
 import { GET_SPRINT_BY_ID } from "@/domains/sprints/hooks/useGetSprint";
 import { gql, useMutation } from "@apollo/client";
 import { UpdateTaskApi } from "../type";
@@ -19,6 +21,8 @@ export const useUpdateTask = () => {
       GET_TASK_BY_SLUG_AND_TEAM,
       GET_SPRINT_BY_ID,
       GET_TASKS_BY_TEAM,
+      GET_LIVRABLES,
+      GET_MODULE_BY_ID,
     ],
   });
 

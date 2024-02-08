@@ -81,6 +81,7 @@ export class SprintsService {
       undefined,
       sprintId,
       undefined,
+      undefined,
       false,
       'position',
     );
@@ -94,6 +95,7 @@ export class SprintsService {
       undefined,
       undefined,
       sprintId,
+      undefined,
     );
   }
 }

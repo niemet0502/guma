@@ -5,6 +5,8 @@ import { catchError, firstValueFrom } from 'rxjs';
 import { ActivitiesService } from '../activities/activities.service';
 import { CommentsService } from '../comments/comments.service';
 import { LabelsService } from '../labels/labels.service';
+import { LivrablesService } from '../livrables/livrables.service';
+import { RemindersService } from '../reminders/reminders.service';
 import { SprintsService } from '../sprints/sprints.service';
 import { removeSpacesAndSpecialChars } from '../utils/Helper';
 import { CreateTaskInput } from './dto/create-task.input';
@@ -22,6 +24,12 @@ export class TasksService {
     private readonly activityService: ActivitiesService,
     private readonly labelService: LabelsService,
     private readonly sprintService: SprintsService,
+
+    @Inject(forwardRef(() => LivrablesService))
+    private readonly livrableService: LivrablesService,
+
+    @Inject(forwardRef(() => RemindersService))
+    private readonly remindersService: RemindersService,
   ) {}
 
   async create(createTaskInput: CreateTaskInput) {
@@ -58,6 +66,7 @@ export class TasksService {
     parent_task_id: number,
     sprint_id: number,
     sprint_history: number,
+    livrable_id: number,
     sortAsc?: boolean,
     sortBy?: string,
   ): Promise<Task[]> {
@@ -70,6 +79,7 @@ export class TasksService {
           parent_task_id,
           sprint_id,
           sprint_history,
+          livrable_id,
           sortAsc,
           sortBy,
         },
@@ -145,5 +155,13 @@ export class TasksService {
 
   async getSprint(sprint_id: number) {
     return await this.sprintService.findOne(sprint_id);
+  }
+
+  async getLivrable(livrable_id: number) {
+    return await this.livrableService.findOne(livrable_id);
+  }
+
+  async getReminders(taskId: number) {
+    return await this.remindersService.findAll(taskId);
   }
 }

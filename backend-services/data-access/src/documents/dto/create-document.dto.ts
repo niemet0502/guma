@@ -8,11 +8,17 @@ export class CreateDocumentDto {
   @ApiProperty({ required: true })
   public name: string;
 
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: false })
   public status: DocumentStatus;
 
   @ApiProperty({ required: false })
   public folder_id: number;
+
+  @ApiProperty({ required: false })
+  public task_id: number;
+
+  @ApiProperty({ required: false })
+  public livrable_id: number;
 
   @ApiProperty({ required: false })
   public team_id: number;

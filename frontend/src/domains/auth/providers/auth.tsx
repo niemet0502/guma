@@ -1,17 +1,13 @@
-import { Organization } from "@/domains/organization/services/type";
+import { Project } from "@/domains/organization/services/type";
 import * as React from "react";
 import { User, UserSession } from "../services/types";
 
 interface AuthContextValue {
   user: User | null;
-  login: (
-    user: User,
-    session: UserSession,
-    organization: Organization | null
-  ) => void;
+  login: (user: User, session: UserSession, project: Project | null) => void;
   logout: () => void;
-  organization: Organization | null;
-  updateOrganization: (organization: Organization) => void;
+  project: Project | null;
+  updateProject: (project: Project) => void;
   updateUser: (user: User) => void;
 }
 
@@ -19,8 +15,8 @@ export const AuthContext = React.createContext<AuthContextValue>({
   user: null,
   login: () => {},
   logout: () => {},
-  organization: null,
-  updateOrganization: () => {},
+  project: null,
+  updateProject: () => {},
   updateUser: () => {},
 } as AuthContextValue);
 
@@ -28,32 +24,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = React.useState<User | null>(null);
-  const [organization, setOrganization] = React.useState<Organization | null>(
-    null
-  );
+  const [project, setProject] = React.useState<Project | null>(null);
 
-  const login = (
-    user: User,
-    session: UserSession,
-    organization: Organization | null
-  ) => {
+  const login = (user: User, session: UserSession, project: Project | null) => {
     setUser(user);
-    setOrganization(organization);
+    setProject(project);
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("session", JSON.stringify(session));
-    localStorage.setItem("organization", JSON.stringify(organization));
+    localStorage.setItem("project", JSON.stringify(project));
   };
 
   React.useEffect(() => {
     const user = localStorage.getItem("user");
-    const organization = localStorage.getItem("organization");
+    const project = localStorage.getItem("project");
 
     if (user) {
       setUser(JSON.parse(user));
     }
 
-    if (organization) {
-      setOrganization(JSON.parse(organization));
+    if (project) {
+      setProject(JSON.parse(project));
     }
   }, []);
 
@@ -61,12 +51,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setUser(null);
     localStorage.removeItem("user");
     localStorage.removeItem("session");
-    localStorage.removeItem("organization");
+    localStorage.removeItem("project");
   };
 
-  const updateOrganization = (organization: Organization) => {
-    localStorage.setItem("organization", JSON.stringify(organization));
-    setOrganization(organization);
+  const updateProject = (project: Project) => {
+    localStorage.setItem("project", JSON.stringify(project));
+    setProject(project);
   };
 
   const updateUser = (user: User) => {
@@ -80,8 +70,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         user,
         login,
         logout,
-        organization,
-        updateOrganization,
+        project,
+        updateProject,
         updateUser,
       }}
     >

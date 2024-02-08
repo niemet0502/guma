@@ -31,8 +31,17 @@ export class DocumentsController {
   findAll(
     @Query('team_id') team_id: string,
     @Query('folder_id') folder_id: string,
+    @Query('task_id') task_id: string,
+    @Query('livrable_id') livrable_id: string,
   ) {
-    return this.documentsService.findAllByTeam(+team_id, +folder_id);
+    console.log(livrable_id);
+
+    return this.documentsService.findAllByTeam(
+      +team_id,
+      +folder_id,
+      +livrable_id,
+      +task_id,
+    );
   }
 
   @Get(':id')

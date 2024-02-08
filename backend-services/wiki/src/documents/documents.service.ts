@@ -11,15 +11,24 @@ export class DocumentsService {
   constructor(private readonly http: HttpService) {}
 
   async create(createDocumentInput: CreateDocumentInput): Promise<Document> {
+    console.log(createDocumentInput);
+
     const { data } = await firstValueFrom(
       this.http.post<Document>(this.url, createDocumentInput),
     );
     return data;
   }
 
-  async findAllByTeam(team_id: number): Promise<Document[]> {
+  async findAllByTeam(
+    team_id: number,
+    folder_id: number,
+    livrable_id: number,
+    task_id: number,
+  ): Promise<Document[]> {
     const { data } = await firstValueFrom(
-      this.http.get<Document[]>(this.url, { params: { team_id } }),
+      this.http.get<Document[]>(this.url, {
+        params: { team_id, folder_id, livrable_id, task_id },
+      }),
     );
 
     return data;

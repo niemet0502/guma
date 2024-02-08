@@ -124,7 +124,7 @@ export function parseDate(inputDate: string) {
 }
 
 export function getTimeAgoString(inputDate: string) {
-  const date = new Date(parseDate(inputDate));
+  const date = new Date(inputDate);
   const timeDifference = Number(new Date()) - Number(date);
 
   const seconds = Math.floor(timeDifference / 1000);
@@ -148,3 +148,11 @@ export function getTimeAgoString(inputDate: string) {
     return `${months} ${months === 1 ? "month" : "months"} ago`;
   }
 }
+
+export const truncateString = (str: string, maxLength: number) => {
+  if (str.length > maxLength) {
+    return str.substring(0, maxLength) + "...";
+  } else {
+    return str;
+  }
+};

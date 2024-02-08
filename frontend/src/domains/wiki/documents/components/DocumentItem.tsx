@@ -19,7 +19,7 @@ export const DocumentItem: React.FC<{ document: DocumentApi }> = ({
 
   return (
     <NavLink to={`/${orgaId}/team/${teamId}/wiki/doc/${document.id}`}>
-      <div className="py-3 px-5 border-b flex gap-2 items-center hover:cursor-pointer ">
+      <div className="py-3 px-5 border-b flex gap-2 items-center hover:cursor-pointer hover:bg-slate-50 ">
         <AiOutlineFileText className="text-muted-foreground" />
         <span className="flex-1">{document.name}</span>
         <div className="flex gap-2 items-center">

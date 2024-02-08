@@ -1,9 +1,10 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Directive, Field, Int, ObjectType } from '@nestjs/graphql';
 import { Team } from '../../shared/team.entity';
 import { User } from '../../shared/user.entity';
 import { DocumentStatus } from '../documents.enum';
 
 @ObjectType()
+@Directive('@key(fields: "id")')
 export class Document {
   @Field(() => Int)
   id: number;
@@ -13,6 +14,9 @@ export class Document {
 
   @Field({ nullable: true })
   folder_id?: number;
+
+  @Field({ nullable: true })
+  livrable_id?: number;
 
   @Field({ nullable: true })
   team_id?: number;

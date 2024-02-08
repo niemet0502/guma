@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { OrganizationsService } from '../organizations/organizations.service';
+import { ProjectsService } from '../organizations/organizations.service';
 import { StatusService } from '../status/status.service';
 import { WorkflowService } from '../workflow/workflow.service';
 import { Team } from './entities/team.entity';
@@ -23,7 +23,7 @@ describe('TeamsService', () => {
           useValue: mockRepository,
         },
         {
-          provide: OrganizationsService,
+          provide: ProjectsService,
           useValue: organizationServiceMock,
         },
         {

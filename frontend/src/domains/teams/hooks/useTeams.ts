@@ -1,9 +1,9 @@
 import { gql, useQuery } from "@apollo/client";
 import { TeamApi } from "../type";
 
-export const GET_TEAMS_BY_ORGANIZATION_ID = gql`
-  query GetTeamsByOrganizaionId($organization_id: Int!) {
-    teams(organization_id: $organization_id) {
+export const GET_TEAMS_BY_PROJECT_ID = gql`
+  query GetTeamsByOrganizaionId($project_id: Int!) {
+    teams(project_id: $project_id) {
       id
       name
       visibility
@@ -22,8 +22,8 @@ export const useTeams = (organizationId: number) => {
     error,
   } = useQuery<{
     teams: TeamApi[];
-  }>(GET_TEAMS_BY_ORGANIZATION_ID, {
-    variables: { organization_id: +organizationId },
+  }>(GET_TEAMS_BY_PROJECT_ID, {
+    variables: { project_id: +organizationId },
   });
 
   return { data: data?.teams, isLoading, error };

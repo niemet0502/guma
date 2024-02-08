@@ -7,4 +7,7 @@ export class CreateStatusInput {
 
   @Field({ nullable: true })
   team_id?: number;
+
+  @Field({ nullable: true })
+  state?: number;
 }

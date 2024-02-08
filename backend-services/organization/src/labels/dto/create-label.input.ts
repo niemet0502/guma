@@ -6,5 +6,5 @@ export class CreateLabelInput {
   name: string;
 
   @Field()
-  organization_id: number;
+  project_id: number;
 }
