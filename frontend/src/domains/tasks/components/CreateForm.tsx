@@ -95,7 +95,7 @@ export const CreateTaskForm: React.FC<{
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Title</FormLabel>
+                <FormLabel>Titre</FormLabel>
                 <FormControl>
                   <Input placeholder="Issue title" {...field} />
                 </FormControl>
@@ -322,9 +322,9 @@ export const CreateTaskForm: React.FC<{
               type="button"
               onClick={() => onOpenChange(false)}
             >
-              Cancel
+              Annuler
             </Button>
-            <Button type="submit">Create issue</Button>
+            <Button type="submit">Valider</Button>
           </div>
         </form>
       </Form>

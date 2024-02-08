@@ -29,7 +29,6 @@ import {
   isPositionChanged,
   remainingWorkingDays,
 } from "../helper";
-import { SprintStatusEnum } from "../type";
 import { CompleteSprintDialog } from "./CompleteSprintDialog";
 import { CreateSprintForm } from "./CreateForm";
 
@@ -105,7 +104,7 @@ export const OngoingSprint: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
       <div className="mb-3  py-3 px-5 flex items-center gap-1 sticky top-0 justify-between">
         <div className="flex items-center gap-1">
           <NavLink to={`/ `} className="hover:text-muted-foreground w-auto p-0">
-            Sprints
+            Itérations
           </NavLink>
           <p className="flex gap-1 items-center">
             <RiArrowRightSLine className="mt-0.5" />
@@ -130,27 +129,27 @@ export const OngoingSprint: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
             </DialogContent>
           </Dialog>
         </div>
-        {sprint.status === SprintStatusEnum.Ongoing && (
-          <div className="flex gap-2 items-center">
-            <span className="text-muted-foreground">
-              {remainingWorkingDays(sprint.end_at)} work days
-            </span>
-            <CompleteSprintDialog sprint={sprint}>
-              <DialogTrigger className="w-full">
-                <Button size="sm" variant="secondary">
-                  Complete sprint
-                </Button>
-              </DialogTrigger>
-            </CompleteSprintDialog>
-          </div>
-        )}
+        <div className="flex gap-2 items-center">
+          <span className="text-muted-foreground">
+            {remainingWorkingDays(sprint.end_at)} jour restant
+          </span>
+          <CompleteSprintDialog sprint={sprint}>
+            <DialogTrigger className="w-full">
+              <Button size="sm" variant="secondary">
+                Cloturer le sprint
+              </Button>
+            </DialogTrigger>
+          </CompleteSprintDialog>
+        </div>
+        {/* {sprint.status === SprintStatusEnum.Ongoing && (
+        )} */}
       </div>
 
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className="w-full h-full flex overflow-x-auto">
           <Drop id="droppable" type="droppable-category" className="flex">
             {status
-              ?.filter(({ name }) => name !== "Backlog")
+              ?.filter(({ state }) => state > 5 && state <= 25)
               .map((statut, index) => (
                 <Drag key={statut.id} id={statut.id} index={index} isDraggable>
                   <div className="w-[330px] p-2 flex flex-col gap-3 h-full ">

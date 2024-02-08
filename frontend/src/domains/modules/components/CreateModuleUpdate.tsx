@@ -100,6 +100,7 @@ export const CreateModuleUpdate: React.FC<{
                           <Button
                             variant="outline"
                             className="flex gap-2 border-none"
+                            type="button"
                           >
                             <ModuleUpdateIcon status={+field.value} />
                           </Button>
@@ -108,7 +109,7 @@ export const CreateModuleUpdate: React.FC<{
                       <PopoverContent className="w-[180px] p-0 mr-7">
                         <Command>
                           <CommandInput
-                            placeholder="Assignee to..."
+                            placeholder="status..."
                             className="h-9"
                           />
                           <CommandEmpty>No framework found.</CommandEmpty>
@@ -160,9 +161,9 @@ export const CreateModuleUpdate: React.FC<{
                   type="button"
                   onClick={() => setOpen(false)}
                 >
-                  Cancel
+                  Annuler
                 </Button>
-                <Button type="submit">Create</Button>
+                <Button type="submit">Valider</Button>
               </div>
             </form>
           </Form>

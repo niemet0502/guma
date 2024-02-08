@@ -135,13 +135,13 @@ export function getTimeAgoString(inputDate: string) {
   const months = Math.floor(weeks / 4); // Approximation
 
   if (seconds < 60) {
-    return "just now";
+    return "maintenant";
   } else if (minutes < 60) {
-    return `${minutes} ${minutes === 1 ? "minute" : "minutes"} ago`;
+    return ` ${minutes} ${minutes === 1 ? "minute" : "minutes"} `;
   } else if (hours < 24) {
     return `${hours} ${hours === 1 ? "hour" : "hours"} ago`;
   } else if (days < 7) {
-    return `${days} ${days === 1 ? "day" : "days"} ago`;
+    return `Il y'a ${days} ${days === 1 ? "jour" : "jours"}`;
   } else if (weeks < 4) {
     return `${weeks} ${weeks === 1 ? "week" : "weeks"} ago`;
   } else {

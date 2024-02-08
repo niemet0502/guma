@@ -116,7 +116,7 @@ export const RightSidebar: React.FC<{
         </div>
       </div>
       <div className="flex">
-        <div className="w-[100px] flex items-center">Priority</div>
+        <div className="w-[100px] flex items-center">Priorité</div>
         <div className="flex-1">
           <Popover
             open={openPriorityPopover}
@@ -177,7 +177,7 @@ export const RightSidebar: React.FC<{
         </div>
       </div>
       <div className="flex">
-        <div className="w-[100px]  flex items-center">Assignee</div>
+        <div className="w-[100px]  flex items-center">Responsable</div>
         <div className="flex-1 items-center mr-10">
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
@@ -306,7 +306,7 @@ export const RightSidebar: React.FC<{
       <Separator />
 
       <div className="flex">
-        <div className="w-[100px] flex items-center">Sprint</div>
+        <div className="w-[100px] flex items-center">Itération</div>
         <div className="flex-1">
           <Popover open={openSprint} onOpenChange={setOpenSprint}>
             <PopoverTrigger>
@@ -314,7 +314,7 @@ export const RightSidebar: React.FC<{
                 {!task?.sprint_id && (
                   <>
                     <AiOutlinePlus />
-                    Add to sprint
+                    Ajouter a l'itération
                   </>
                 )}
 
@@ -422,7 +422,7 @@ export const RightSidebar: React.FC<{
                 {!task?.livrable_id && (
                   <>
                     <AiOutlinePlus />
-                    Add to livrable
+                    Ajouter au livrable
                   </>
                 )}
 

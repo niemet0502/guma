@@ -78,7 +78,7 @@ export const SprintItem: React.FC<{
       >
         <span>{sprint.name}</span>
         <div className="flex gap-4 items-center">
-          {sprint.isCompleted && <Badge>completed</Badge>}
+          {sprint.isCompleted && <Badge>cloturée</Badge>}
 
           <div className="flex items-center gap-2">
             <Progress value={completionPercentage} className="w-[100px]" />
@@ -137,7 +137,7 @@ export const SprintItem: React.FC<{
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter>
-                <Button variant="outline">Cancel</Button>
+                <Button variant="outline">Annuler</Button>
                 <Button type="button" onClick={onConfirm}>
                   Confirm
                 </Button>

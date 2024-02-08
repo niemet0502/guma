@@ -32,7 +32,7 @@ export const CommentSection: React.FC<{ task: TaskApi }> = ({ task }) => {
   };
   return (
     <div className="w-full px-3 pt-4 flex flex-col gap-3 mb-12">
-      <h5>Comments</h5>
+      <h5>Commentaires</h5>
 
       {task?.comments.map((comment) => (
         <CommentItem comment={comment} key={comment.id} />
@@ -48,11 +48,11 @@ export const CommentSection: React.FC<{ task: TaskApi }> = ({ task }) => {
           <Textarea
             ref={textAreaRef}
             className="resize-none border-none"
-            placeholder="Leave a comment..."
+            placeholder="Laisser un commentaire..."
           />
 
           <Button className="self-end m-2" size="sm" onClick={onSubmit}>
-            Comment
+            Commenter
           </Button>
         </div>
       </div>

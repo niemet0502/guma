@@ -116,7 +116,7 @@ export const CreateWikiForm: React.FC<{
                   </FormControl>
                   <SelectContent>
                     <SelectItem value="1">Document</SelectItem>
-                    <SelectItem value="2">Folder</SelectItem>
+                    <SelectItem value="2">Dossier</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -129,7 +129,7 @@ export const CreateWikiForm: React.FC<{
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Title</FormLabel>
+                <FormLabel>Titre</FormLabel>
                 <FormControl>
                   <Input placeholder={`${nameLabel} title`} {...field} />
                 </FormControl>
@@ -140,7 +140,7 @@ export const CreateWikiForm: React.FC<{
 
           <div className="flex items-center space-x-2 ">
             <Switch id="airplane-mode" />
-            <Label htmlFor="airplane-mode">Redirect after the creation</Label>
+            <Label htmlFor="airplane-mode">Rediriger apres la création</Label>
           </div>
 
           <div className="flex justify-end gap-2 mt-3">
@@ -149,9 +149,9 @@ export const CreateWikiForm: React.FC<{
               type="button"
               onClick={() => onOpenChange(false)}
             >
-              Cancel
+              Annuler
             </Button>
-            <Button type="submit">{wikiToEdit ? "Save" : "Create"} </Button>
+            <Button type="submit">{wikiToEdit ? "Save" : "Valider"} </Button>
           </div>
         </form>
       </Form>

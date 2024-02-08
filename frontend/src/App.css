@@ -107,3 +107,15 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.on-track-status {
+  color: green !important;
+}
+
+.off-track-status {
+  color: red !important;
+}
+
+.at-risk-status {
+  color: yellow !important;
+}

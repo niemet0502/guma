@@ -64,7 +64,7 @@ export const NotificationDetails: React.FC = () => {
           </div>
           <div className="p-4">
             <p>
-              {notification.content}{" "}
+              {"Vous avez demandé qu'on vous rappelle cette tache"}{" "}
               <NavLink
                 to={`/${orgaId}/team/${notification.reminder?.task?.team?.name.toLowerCase()}/issues/${
                   notification.reminder?.task?.slug

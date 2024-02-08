@@ -102,7 +102,7 @@ export const CreateSprintForm: React.FC<{
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Titre</FormLabel>
                 <FormControl>
                   <Input placeholder="Sprint name" {...field} />
                 </FormControl>
@@ -116,7 +116,7 @@ export const CreateSprintForm: React.FC<{
             name="start_at"
             render={({ field }) => (
               <FormItem className="flex flex-col w-full ">
-                <FormLabel>Start date</FormLabel>
+                <FormLabel>Date de début</FormLabel>
                 <Popover open={open} onOpenChange={setOpen}>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -159,7 +159,7 @@ export const CreateSprintForm: React.FC<{
             name="end_at"
             render={({ field }) => (
               <FormItem className="flex flex-col w-full ">
-                <FormLabel>End date</FormLabel>
+                <FormLabel>Date de fin</FormLabel>
                 <Popover open={openEndDate} onOpenChange={setOpenEndDate}>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -220,10 +220,10 @@ export const CreateSprintForm: React.FC<{
             name="goal"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Goal</FormLabel>
+                <FormLabel>Objectif</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Sprint goal"
+                    // placeholder="Sprint goal"
                     className="resize-none h-[120px]"
                     {...field}
                   />
@@ -239,9 +239,9 @@ export const CreateSprintForm: React.FC<{
               type="button"
               onClick={() => onOpenChange(false)}
             >
-              Cancel
+              Annuler
             </Button>
-            <Button type="submit">{sprintToEdit ? "Save" : "Create"}</Button>
+            <Button type="submit">{sprintToEdit ? "Save" : "Valider"}</Button>
           </div>
         </form>
       </Form>

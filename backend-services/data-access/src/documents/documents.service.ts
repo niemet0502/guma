@@ -19,10 +19,10 @@ export class DocumentsService {
   ) {}
 
   async create(createDocumentDto: CreateDocumentDto): Promise<Document> {
-    const { team_id, folder_id } = createDocumentDto;
+    const { team_id, folder_id, livrable_id } = createDocumentDto;
 
-    if (!team_id && !folder_id) {
-      const errors = { message: 'Either team_id or folder_id must be defined' };
+    if (!team_id && !folder_id && !livrable_id) {
+      const errors = { message: 'Either team_id or folder_id or livrable_id must be defined' };
       throw new BadRequestException(errors);
     }
 

@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -47,19 +46,19 @@ export const Wiki: React.FC = () => {
     <div className="w-full">
       <div className="bg-secondary py-3 px-5 flex items-center justify-between sticky top-0 z-40">
         <p>Wiki</p>
-        <Dialog open={open} onOpenChange={setOpen} modal={false}>
+        <Dialog open={open} onOpenChange={setOpen} modal={true}>
           <DialogTrigger asChild>
-            <Button
-              variant="outline"
-              size="sm"
+            <button
+              // variant="outline"
+              // size="sm"
               className="pr-0 hover:cursor-pointer text-muted-foreground"
             >
               <AiOutlinePlus />
-            </Button>
+            </button>
           </DialogTrigger>
           <DialogContent className="lg:w-[800px] sm:max-w-[550px]">
             <DialogHeader>
-              <DialogTitle>New wiki</DialogTitle>
+              <DialogTitle>Nouveau wiki</DialogTitle>
             </DialogHeader>
             <CreateWikiForm
               onOpenChange={setOpen}

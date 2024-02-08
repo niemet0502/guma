@@ -25,7 +25,7 @@ export const CreateTeamDropdown: React.FC<{
       </DialogTrigger>
       <DialogContent className="lg:w-[800px] sm:max-w-[625px]">
         <DialogHeader>
-          <DialogTitle>Create a new task</DialogTitle>
+          <DialogTitle>Nouvelle tache</DialogTitle>
         </DialogHeader>
         <CreateTaskForm
           onOpenChange={setOpen}

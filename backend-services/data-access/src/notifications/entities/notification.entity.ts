@@ -17,6 +17,6 @@ export class Notification {
   @Column('boolean', { default: false })
   read: boolean;
 
-  @Column({ default: 'You asked to be reminded about this issue' })
+  @Column({ default: "Vous avez demandé qu'on vous rappelle cette tache" })
   content: string;
 }

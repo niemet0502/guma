@@ -131,7 +131,7 @@ export const AddReminderDialog: React.FC<{
       <DialogContent className="w-[530px] top-[45%]">
         <DialogHeader>
           <DialogTitle>
-            {reminderToEdit ? "Edit reminder" : "Remind me about this issue on"}
+            {reminderToEdit ? "Modifier le rappel" : "Nouveau rappel"}
           </DialogTitle>
         </DialogHeader>
         <div className="overflow-auto">
@@ -145,9 +145,12 @@ export const AddReminderDialog: React.FC<{
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Title</FormLabel>
+                    <FormLabel>Titre</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your notification title" {...field} />
+                      <Input
+                        placeholder="Tache importante en retard"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -158,7 +161,7 @@ export const AddReminderDialog: React.FC<{
                 name="send_at"
                 render={({ field }) => (
                   <FormItem className="flex flex-col w-full ">
-                    <FormLabel>Remind me at</FormLabel>
+                    <FormLabel>Me rappeler le</FormLabel>
                     <Popover open={openEndDate} onOpenChange={setOpenEndDate}>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -219,7 +222,7 @@ export const AddReminderDialog: React.FC<{
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
                     <div className="flex items-center gap-2">
-                      <FormLabel>Send to</FormLabel>
+                      <FormLabel>Envoyer a : </FormLabel>
                       <Popover
                         open={openAssignee}
                         onOpenChange={setOpenAssignee}
@@ -292,10 +295,10 @@ export const AddReminderDialog: React.FC<{
 
               <div className="flex items-center border p-3 rounded">
                 <div className="space-y-0.5 flex-1">
-                  <FormLabel>Desired status</FormLabel>
+                  <FormLabel>Definir un statut</FormLabel>
                   <FormDescription>
-                    If the status isn't reached at the date a notification will
-                    be sent.
+                    La notification sera envoyée si le statut n'est pas atteint
+                    a la date renseignée.
                   </FormDescription>
                 </div>
                 <FormControl>
@@ -314,7 +317,7 @@ export const AddReminderDialog: React.FC<{
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
                       <div className="flex items-center gap-2  p-2 rounded">
-                        <FormLabel>Status</FormLabel>
+                        <FormLabel>Statut</FormLabel>
                         <Popover open={openStatus} onOpenChange={setOpenStatus}>
                           <PopoverTrigger>
                             <div className="hover:cursor-pointer hover:bg-secondary p-2 rounded flex gap-2 items-center mr-10 border">
@@ -409,7 +412,7 @@ export const AddReminderDialog: React.FC<{
                   type="button"
                   onClick={() => setOpen(false)}
                 >
-                  Cancel
+                  Annuler
                 </Button>
                 <Button type="submit">Apply</Button>
               </div>

@@ -35,7 +35,10 @@ export const NotificationItem: React.FC<{ notification: NotificationApi }> = ({
         <div className="text-base flex gap-2 items-center">
           <IoIosNotifications className="text-lg" />
           <span className="flex-1 overflow-hidden">
-            {truncateString(notification.content || "", 35)}
+            {truncateString(
+              "Vous avez demandé qu'on vous rappelle cette tache" || "",
+              35
+            )}
           </span>
           <span>{getTimeAgoString(notification.created_at)}</span>
         </div>

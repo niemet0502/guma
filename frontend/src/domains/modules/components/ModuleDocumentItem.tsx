@@ -16,7 +16,7 @@ export const ModuleDocumentItem: React.FC<{ document: DocumentApi }> = ({
           <span className="font-medium">{document.name}</span>
         </div>
         <div className="flex gap-2 pl-7">
-          <p>updated {getTimeAgoString(document.updated_at)}</p> by{" "}
+          <p>crée il y'a {getTimeAgoString(document.updated_at)}</p> par{" "}
           {document.author?.username}
         </div>
       </div>

@@ -311,7 +311,7 @@ export const CreateSubTask: React.FC<{
             </div>
             <div className="flex gap-2">
               <Button size="sm" variant="ghost" onClick={hide}>
-                Cancel
+                Annuler
               </Button>
               <Button size="sm" type="submit">
                 Save

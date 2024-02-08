@@ -75,7 +75,7 @@ export const CreateForm: React.FC<{
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Nom</FormLabel>
                 <FormControl>
                   <Input placeholder="e.g Engineering" {...field} />
                 </FormControl>
@@ -88,12 +88,12 @@ export const CreateForm: React.FC<{
             name="identifier"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Identifier</FormLabel>
+                <FormLabel>Identifiant</FormLabel>
                 <FormControl>
                   <Input placeholder="e.g ENG" {...field} />
                 </FormControl>
                 <FormDescription>
-                  This is used as the identifier (e.g. ENG-123)
+                  Il est utilisé comme identifiant (e.g. ENG-123)
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -106,9 +106,10 @@ export const CreateForm: React.FC<{
             render={({ field }) => (
               <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                 <div className="space-y-0.5">
-                  <FormLabel>Private team</FormLabel>
+                  <FormLabel>Equipe privée</FormLabel>
                   <FormDescription>
-                    Private teams are visible only for their members and admin.
+                    Les équipes privées ne sont visibles que par leurs membres
+                    et l'administrateur.
                   </FormDescription>
                 </div>
                 <FormControl>
@@ -123,8 +124,8 @@ export const CreateForm: React.FC<{
 
           {error && <div className="text-red-600">{error.message}</div>}
 
-          <DialogFooter>
-            <Button type="submit">Save changes</Button>
+          <DialogFooter className="mt-3">
+            <Button type="submit">Enregistrer</Button>
           </DialogFooter>
         </form>
       </Form>

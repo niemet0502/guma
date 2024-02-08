@@ -35,7 +35,7 @@ export const SprintDetails: React.FC = () => {
         <>
           <div className="mb-3 bg-secondary py-3 px-5 flex items-center justify-between sticky top-0">
             <div className="flex items-center gap-1">
-              <p>Sprints</p>
+              <p>Itérations</p>
               <RiArrowRightSLine className="mt-0.5" />
               {sprint?.name}
               <Dialog open={open} onOpenChange={setOpen} modal={false}>
@@ -109,9 +109,9 @@ export const SprintDetails: React.FC = () => {
           </div>
 
           <div className="bg-secondary py-3 px-5 flex items-center gap-2">
-            <p>Not Completed During the sprint</p>
+            <p>Taches non terminées durant l'itération</p>
             <span className="text-muted-foreground ">
-              {sprint.unClosedTasks?.length}
+              ({sprint.unClosedTasks?.length})
             </span>
           </div>
 

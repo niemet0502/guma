@@ -10,19 +10,21 @@ export const ModuleUpdateIcon: React.FC<{
   const color =
     status != LivrableUpdateEnum.OnTrack
       ? status === LivrableUpdateEnum.OffTrack
-        ? "red"
-        : "yellow"
-      : "green";
+        ? "off-track-status"
+        : "t-risk-status"
+      : "on-track-status";
 
   return (
-    <div className={`flex items-center gap-2 text-sm text-${color}-800`}>
+    <div className={`flex items-center gap-2 text-sm ${color}`}>
       <div
-        className={`w-5 h-5 rounded-full mt-1 flex items-center justify-center border border-${color}-600 bg-${color}-200`}
+        className={`w-5 h-5 rounded-full mt-1 flex items-center justify-center border`}
       >
         <LuActivity className="text-[11px]" />
       </div>
       {showStatusLabel && (
-        <div className="font-medium">{updateStatusLabel[status]}</div>
+        <div className={`font-medium text-${color}-800`}>
+          {updateStatusLabel[status]}
+        </div>
       )}
     </div>
   );

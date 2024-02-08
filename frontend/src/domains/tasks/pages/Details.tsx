@@ -114,7 +114,7 @@ export const TaskDetails: React.FC = () => {
               >
                 <Button size="sm" className="ml-2 flex gap-2 items-center">
                   <FaRegClock />
-                  {hasReminder ? "Edit reminder" : "Reminder me..."}
+                  {hasReminder ? "Modifier le rappel" : "Définir un rappel..."}
                 </Button>
               </AddReminderDialog>
             </div>

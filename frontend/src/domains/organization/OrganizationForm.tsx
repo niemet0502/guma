@@ -8,7 +8,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useMutation } from "@apollo/client";
+
 import {
   Select,
   SelectContent,
@@ -16,8 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useMutation } from "@apollo/client";
-
+import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -33,6 +33,7 @@ const FormSchema = z.object({
   size: z.string({
     required_error: "Please select a size.",
   }),
+  description: z.string().optional(),
 });
 
 export const OrganizationForm: React.FC = () => {
@@ -76,10 +77,10 @@ export const OrganizationForm: React.FC = () => {
       </div>
       <div className="flex items-center justify-center flex-1">
         <div className="w-[500px] border h-auto p-6 flex items-center gap-3 flex-col rounded-lg shadow-sm pb-12">
-          <h2 className="text-lg">Create a new organization</h2>
+          <h2 className="text-lg font-medium">Nouveau projet</h2>
           <p className="text-center">
-            Organization are shared environments where teams can work on
-            projects, cycles and tasks.
+            Environnements partagés où les équipes peuvent travailler sur des
+            taches, des itérations et documentation.
           </p>
 
           <Form {...form}>
@@ -127,13 +128,27 @@ export const OrganizationForm: React.FC = () => {
                 )}
               />
 
-              <Label htmlFor="picture">Logo</Label>
-              <Input id="picture" type="file" />
+              {/* <Label htmlFor="picture">Logo</Label>
+              <Input id="picture" type="file" /> */}
+
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Textarea className="resize-none h-[80px]" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
               {error && <div className="text-red-600">{error.message}</div>}
 
               <Button type="submit" className="mb-5">
-                Submit
+                Valider
               </Button>
             </form>
           </Form>

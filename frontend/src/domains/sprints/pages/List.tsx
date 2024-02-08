@@ -1,6 +1,5 @@
 import {
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -38,11 +37,11 @@ export const SprintList: React.FC = () => {
     <div className="w-full">
       <div className="mb-3 bg-secondary py-3 px-5 flex items-center justify-between sticky top-0">
         <p>
-          Sprints
+          Itérations
           <span className="text-muted-foreground ml-2">{sprints?.length}</span>
         </p>
 
-        <Dialog open={open} onOpenChange={setOpen} modal={false}>
+        <Dialog open={open} onOpenChange={setOpen} modal={true}>
           <DialogTrigger asChild>
             <span className="mr-2 hover:cursor-pointer">
               <AiOutlinePlus />
@@ -50,11 +49,7 @@ export const SprintList: React.FC = () => {
           </DialogTrigger>
           <DialogContent className="lg:w-[800px] sm:max-w-[625px] top-[45%]">
             <DialogHeader>
-              <DialogTitle>Create a new sprint</DialogTitle>
-              <DialogDescription>
-                Create a new team to manage seperate sprints, issues and
-                documents
-              </DialogDescription>
+              <DialogTitle>Nouveau sprint</DialogTitle>
             </DialogHeader>
             <CreateSprintForm onOpenChange={setOpen} teamId={team?.id} />
           </DialogContent>

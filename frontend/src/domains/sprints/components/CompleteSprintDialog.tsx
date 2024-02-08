@@ -69,7 +69,7 @@ export const CompleteSprintDialog: React.FC<{
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline">Annuler</Button>
             </DialogClose>
             <Button type="button" onClick={onConfirm}>
               Confirm

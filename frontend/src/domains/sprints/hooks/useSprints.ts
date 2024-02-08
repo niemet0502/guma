@@ -21,6 +21,7 @@ export const GET_SPRINTS_BY_TEAM = gql`
         status {
           id
           name
+          state
         }
 
         labels {

@@ -22,9 +22,10 @@ export const CreateDialog: React.FC = () => {
       </DialogTrigger>
       <DialogContent className="lg:w-[800px] sm:max-w-[625px]">
         <DialogHeader>
-          <DialogTitle>Create a new team</DialogTitle>
+          <DialogTitle>Nouvelle équipe</DialogTitle>
           <DialogDescription>
-            Create a new team to manage seperate sprints, issues and documents
+            Créer une nouvelle équipe pour gérer des itérations, des taches et
+            des documents.
           </DialogDescription>
         </DialogHeader>
         <CreateForm onOpenChange={setOpen} />
