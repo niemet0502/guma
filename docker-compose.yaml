@@ -150,6 +150,9 @@ services:
       - neka-db
     ports:
       - "5002:3000"
+    labels:
+      logging: "promtail"
+      logging_jobname: "containerlogs"
     environment:
       DB_HOST: neka-db
       DB_PORT: 3306
