@@ -12,6 +12,7 @@ import { ProfilesModule } from './profiles/profiles.module';
 import { Member } from './shared/member.entity';
 import { Reminder } from './shared/reminder.entity';
 import { UsersModule } from './users/users.module';
+import { LoggerModule } from './logger/logger.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { UsersModule } from './users/users.module';
     ProfilesModule,
     AuthModule,
     NotificationsModule,
+    LoggerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
