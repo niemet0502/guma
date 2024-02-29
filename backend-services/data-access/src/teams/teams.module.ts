@@ -1,5 +1,6 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { LoggerModule } from 'src/logger/logger.module';
 import { OrganizationsModule } from '../organizations/organizations.module';
 import { StatusModule } from '../status/status.module';
 import { UsersModule } from '../users/users.module';
@@ -18,6 +19,7 @@ import { TeamsService } from './teams.service';
     UsersModule,
     forwardRef(() => WorkflowModule),
     forwardRef(() => StatusModule),
+    LoggerModule,
   ],
   controllers: [TeamsController, MembersController],
   providers: [TeamsService, MembersService],
