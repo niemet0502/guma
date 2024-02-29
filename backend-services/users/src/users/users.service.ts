@@ -2,7 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
-import { CustomLogger } from 'src/logger/custom-logger.service';
+import { CustomLogger } from '../logger/custom-logger.service';
 import { Profile } from '../profiles/entities/profile.entity';
 import { ProfilesService } from '../profiles/profiles.service';
 import { CreateUserInput } from './dto/create-user.input';
