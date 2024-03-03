@@ -7,6 +7,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LabelsModule } from './labels/labels.module';
+import { LoggerModule } from './logger/logger.module';
 import { RequestLoggingMiddleware } from './middleware/request-logging.middleware';
 import { OrganizationsModule } from './organizations/organizations.module';
 
@@ -20,6 +21,7 @@ import { OrganizationsModule } from './organizations/organizations.module';
     }),
     LabelsModule,
     OrganizationsModule,
+    LoggerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

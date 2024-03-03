@@ -20,10 +20,10 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@nestjs/cli": "^9.0.0",
     "@apollo/subgraph": "^2.5.4",
     "@nestjs/apollo": "^12.0.7",
     "@nestjs/axios": "^3.0.0",
+    "@nestjs/cli": "^9.0.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/graphql": "^12.0.8",
@@ -41,6 +41,7 @@
     "apollo-server-express": "^3.12.1",
     "axios": "^1.5.0",
     "graphql": "^16.8.0",
+    "pino": "^8.19.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"
   },
