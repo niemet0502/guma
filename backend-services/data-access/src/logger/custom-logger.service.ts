@@ -21,7 +21,7 @@ export class CustomLogger {
   private logAtLevel(
     level: string,
     content: any,
-    methodName: string,
+    methodName?: string,
     ...optionalParams: any[]
   ) {
     const currentSpan = trace.getSpan(context.active());
@@ -41,42 +41,42 @@ export class CustomLogger {
   /**
    * Write a 'log' level log.
    */
-  log(content: any, methodName: string, ...optionalParams: any[]) {
+  log(content: any, methodName?: string, ...optionalParams: any[]) {
     this.logAtLevel('info', content, methodName, ...optionalParams);
   }
 
   /**
    * Write a 'fatal' level log.
    */
-  fatal(content: any, methodName: string, ...optionalParams: any[]) {
+  fatal(content: any, methodName?: string, ...optionalParams: any[]) {
     this.logAtLevel('fatal', content, methodName, ...optionalParams);
   }
 
   /**
    * Write an 'error' level log.
    */
-  error(content: any, methodName: string, ...optionalParams: any[]) {
+  error(content: any, methodName?: string, ...optionalParams: any[]) {
     this.logAtLevel('error', content, methodName, ...optionalParams);
   }
 
   /**
    * Write a 'warn' level log.
    */
-  warn(content: any, methodName: string, ...optionalParams: any[]) {
+  warn(content: any, methodName?: string, ...optionalParams: any[]) {
     this.logAtLevel('warn', content, methodName, ...optionalParams);
   }
 
   /**
    * Write a 'debug' level log.
    */
-  debug?(content: any, methodName: string, ...optionalParams: any[]) {
+  debug?(content: any, methodName?: string, ...optionalParams: any[]) {
     this.logAtLevel('debug', content, methodName, ...optionalParams);
   }
 
   /**
    * Write a 'verbose' level log.
    */
-  verbose?(content: any, methodName: string, ...optionalParams: any[]) {
+  verbose?(content: any, methodName?: string, ...optionalParams: any[]) {
     this.logAtLevel('verbose', content, methodName, ...optionalParams);
   }
 }

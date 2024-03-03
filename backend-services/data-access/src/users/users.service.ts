@@ -27,6 +27,7 @@ export class UsersService {
     const user = await this.userRepo.findOne({ where: { email } });
 
     if (user) {
+      this.logger.error('The email is already in use', 'cretae');
       throw new BadRequestException({ message: 'The email is already in use' });
     }
 
