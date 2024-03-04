@@ -47,6 +47,7 @@
     "mysql2": "^3.6.0",
     "opentelemetry-instrumentation-typeorm": "^0.40.0",
     "pg": "^8.11.3",
+    "pino": "^8.19.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
     "swagger-ui-express": "^5.0.0",

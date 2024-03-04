@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CustomLogger } from '../logger/custom-logger.service';
 import { ProjectsService } from '../organizations/organizations.service';
 import { StatusService } from '../status/status.service';
 import { WorkflowService } from '../workflow/workflow.service';
@@ -23,23 +24,40 @@ export class TeamsService {
     private readonly workflowService: WorkflowService,
     @Inject(forwardRef(() => StatusService))
     private readonly statusService: StatusService,
-  ) {}
+    private logger: CustomLogger,
+  ) {
+    this.logger.setContext('TeamsService');
+  }
   async create(createTeamDto: CreateTeamDto): Promise<Team> {
     const { name, project_id } = createTeamDto;
+
+    this.logger.log(
+      { message: 'Creating team', data: { name, project_id } },
+      'create',
+    );
 
     const orga = await this.organizationService.findOne(+project_id);
 
     if (!orga) {
+      this.logger.error(
+        `Organization not found for id: ${project_id}`,
+        'create',
+      );
       throw new NotFoundException('Organization not found');
     }
 
     const team = await this.repo.findOne({ where: { name, project_id } });
 
     if (team) {
+      this.logger.error(`Team name already in use: ${name}`, 'create');
       throw new BadRequestException('The name is already in use');
     }
 
     const createdTeam = await this.repo.save(createTeamDto);
+    this.logger.log(
+      { message: 'Team successfully created', data: createdTeam },
+      'create',
+    );
 
     // created the default workflow for the team
     const statuses = await this.statusService.findAll(
@@ -61,11 +79,28 @@ export class TeamsService {
   async findAllByProject(project_id: number): Promise<Team[]> {
     const orga = await this.organizationService.findOne(+project_id);
 
+    this.logger.log(`Find teams by project ${project_id}`, 'findAllByProject');
+
     if (!orga) {
+      this.logger.error(
+        `Organization not found for id: ${project_id}`,
+        'create',
+      );
       throw new NotFoundException('Organization not found');
     }
 
-    return await this.repo.find({ where: { project_id } });
+    try {
+      return await this.repo.find({ where: { project_id } });
+    } catch (e) {
+      this.logger.error(
+        {
+          message: `Error fetching teams by project_id: ${project_id}`,
+          data: e.stack,
+        },
+        'findOne',
+      );
+      throw e;
+    }
   }
 
   async findOne(id: number): Promise<Team> {

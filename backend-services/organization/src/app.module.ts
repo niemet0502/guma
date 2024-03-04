@@ -2,11 +2,13 @@ import {
   ApolloFederationDriver,
   ApolloFederationDriverConfig,
 } from '@nestjs/apollo';
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LabelsModule } from './labels/labels.module';
+import { LoggerModule } from './logger/logger.module';
+import { RequestLoggingMiddleware } from './middleware/request-logging.middleware';
 import { OrganizationsModule } from './organizations/organizations.module';
 
 @Module({
@@ -19,8 +21,13 @@ import { OrganizationsModule } from './organizations/organizations.module';
     }),
     LabelsModule,
     OrganizationsModule,
+    LoggerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RequestLoggingMiddleware).forRoutes('*');
+  }
+}

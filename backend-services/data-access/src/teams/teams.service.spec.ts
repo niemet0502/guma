@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { CustomLogger } from '../logger/custom-logger.service';
 import { ProjectsService } from '../organizations/organizations.service';
 import { StatusService } from '../status/status.service';
 import { WorkflowService } from '../workflow/workflow.service';
@@ -33,6 +34,15 @@ describe('TeamsService', () => {
         {
           provide: StatusService,
           useValue: statusServiceMock,
+        },
+        {
+          provide: CustomLogger,
+          useValue: {
+            setContext: jest.fn(),
+            log: jest.fn(),
+            error: jest.fn(),
+            warn: jest.fn(),
+          },
         },
       ],
     }).compile();

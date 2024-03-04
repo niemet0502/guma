@@ -7,13 +7,19 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcryptjs';
 import { Repository } from 'typeorm';
 import { LoginDto } from '../auth/dto/login.dto';
+import { CustomLogger } from '../logger/custom-logger.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
+  constructor(
+    @InjectRepository(User) private userRepo: Repository<User>,
+    private logger: CustomLogger,
+  ) {
+    this.logger.setContext('UsersService');
+  }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const { email, password } = createUserDto;
@@ -21,6 +27,7 @@ export class UsersService {
     const user = await this.userRepo.findOne({ where: { email } });
 
     if (user) {
+      this.logger.error('The email is already in use', 'cretae');
       throw new BadRequestException({ message: 'The email is already in use' });
     }
 
@@ -35,7 +42,25 @@ export class UsersService {
   }
 
   async findOne(id: number): Promise<User> {
-    return await this.userRepo.findOne({ where: { id } });
+    try {
+      this.logger.log(`Fetching user by ID: ${id}`, 'findOne');
+      const user = await this.userRepo.findOne({ where: { id } });
+
+      if (!user) {
+        this.logger.warn(`User with ID ${id} not found`, 'findOne');
+      }
+
+      return user;
+    } catch (e) {
+      this.logger.error(
+        {
+          message: `Error fetching user by ID: ${id}`,
+          data: e.stack,
+        },
+        'findOne',
+      );
+      throw e;
+    }
   }
 
   async find({ email, password }: LoginDto): Promise<User | null> {

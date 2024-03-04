@@ -1,14 +1,17 @@
 import { IntrospectAndCompose } from '@apollo/gateway';
 import { ApolloGatewayDriver, ApolloGatewayDriverConfig } from '@nestjs/apollo';
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { authContext } from './auth.context';
 import { AuthenticatedDataSource } from './authenticated-datasource';
+import { RequestLoggingMiddleware } from './middleware/request-logger.middleware';
+import { LoggerModule } from './modules/logger/logger.module';
 
 @Module({
   imports: [
+    LoggerModule,
     GraphQLModule.forRoot<ApolloGatewayDriverConfig>({
       driver: ApolloGatewayDriver,
       server: {
@@ -37,4 +40,8 @@ import { AuthenticatedDataSource } from './authenticated-datasource';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RequestLoggingMiddleware).forRoutes('*');
+  }
+}

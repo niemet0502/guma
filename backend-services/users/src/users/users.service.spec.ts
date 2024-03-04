@@ -1,5 +1,6 @@
 import { HttpModule, HttpService } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
+import { CustomLogger } from '../logger/custom-logger.service';
 import { ProfilesService } from '../profiles/profiles.service';
 import { UsersService } from './users.service';
 
@@ -12,7 +13,19 @@ describe('UsersService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [HttpModule],
-      providers: [UsersService, ProfilesService],
+      providers: [
+        UsersService,
+        ProfilesService,
+        {
+          provide: CustomLogger,
+          useValue: {
+            setContext: jest.fn(),
+            log: jest.fn(),
+            error: jest.fn(),
+            warn: jest.fn(),
+          },
+        },
+      ],
     })
       .overrideProvider(ProfilesService)
       .useValue(ProfileServiceMock)
