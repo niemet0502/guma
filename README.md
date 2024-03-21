@@ -14,10 +14,13 @@ Guma is a Lightweight and Self Hosted project management app that allows to mana
 
 ### Services
 
-| Name     | Path                | Description                                                 |
-| -------- | ------------------- | ----------------------------------------------------------- | --- |
-| Gateway  | /accounts/{account} | Gateway built with GraphQL Federeration                     |     |
-| Project  | /accounts/current   | Service responsible for project handling                    |
-| Team     | /accounts/demo      | Service responsible for team, workflow and members handling |
-| Identity | /accounts/current   | Save current account data                                   |
-| Wiki     | /accounts/          | Register new account                                        |
+Name	| Path	| Stack	|  Description  |
+------------- | -------------------- | ------------- | ----------- |
+Gateway	| /accounts/{account}	| Nestjs  |  Gateway built with GraphQL Federeration	|  | 	
+Identity	| /accounts/	| Spring Boot |  Register new account	|
+Project	| /accounts/current	| Spring Boot | Service responsible for project handling	|
+Team	| /accounts/demo	| NestJS|  Service responsible for team, workflow and members     handling	|
+Notification	| /accounts/current	| Go  | Save current account data	| 
+Data-Access	| /accounts/	| Go |  Register new account	|
+Issues	| /accounts/	| NestJS |  Register new account	|
+Wiki	| /accounts/	| NestJS |  Register new account	|
