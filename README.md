@@ -14,6 +14,8 @@ Guma is a Lightweight and Self Hosted project management app that allows to mana
 
 ### Services
 
+> **Note: Each project in the monorepo contains its own architecture details which you can refer to.**
+
 Name	| Path	| Stack	|  Description  |
 ------------- | -------------------- | ------------- | ----------- |
 Frontend	| [/frontend](/frontend)	| [React](https://react.dev/)  |  The frontend app	|  |
@@ -27,3 +29,6 @@ Notification	| [/backend-services/notifications](/backend-services)	| [Go](https
 Data-Access	| [/backend-services/data-access/](/backend-services/data-access)	| [Go](https://go.dev/) |  Service connected to the database and responsible of exposing a REST api	|
 
 ## Deployment
+
+## License 
+The tool is available as open source under the terms of the [MIT License](https://opensource.org/license/MIT)
