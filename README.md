@@ -2,13 +2,22 @@
 
 // screenshots
 
-## What is Guma ?
+## 🖖 What is Guma ?
 
 If you are a League of legends fan you already know [Gumayusi](https://en.wikipedia.org/wiki/Gumayusi) but if you don't He is a League of Legends esports player, currently bot laner for T1 and 2023 LOL world champion. My fav player.
 
 ### In this context
 
-Guma is a Lightweight and Self Hosted project management app that allows to manage multiple projects.
+Guma is a Lightweight and Self Hosted project management app highly inspired by [Linear](https://linear.app/), [Plane](https://plane.so/) and [Jira](https://www.atlassian.com/fr/software/jira) that allows to manage multiple projects.
+
+### 🚀 Features 
+Guma provides the modules below: 
+
+- **Issues:**
+- **Sprint:**
+- **Documents:**
+- **Modules:**
+- **Dashbord:**
 
 ## Overall architecture
 
