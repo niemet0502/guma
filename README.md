@@ -28,7 +28,14 @@ Wiki	| [/backend-services/wiki](/backend-services/wiki/)	| [NestJS](https://nest
 Notification	| [/backend-services/notifications](/backend-services)	| [Go](https://go.dev/)  | Service responsible for sending notifications (Push and email)	| 
 Data-Access	| [/backend-services/data-access/](/backend-services/data-access)	| [Go](https://go.dev/) |  Service connected to the database and responsible of exposing a REST api	|
 
+## Observability 
+
 ## Deployment
 
 ## License 
 The tool is available as open source under the terms of the [MIT License](https://opensource.org/license/MIT)
+
+## Built by
+
+- Marius Vincent NIEMET [Twitter](https://twitter.com/mariusniemet05) [LinkedIn](https://www.linkedin.com/in/marius-vincent-niemet-928b48182/) 
+
