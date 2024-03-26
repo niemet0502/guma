@@ -10,11 +10,14 @@ If you are a League of legends fan you already know [Gumayusi](https://en.wikipe
 
 Guma is a Lightweight and Self Hosted project management app highly inspired by [Linear](https://linear.app/), [Plane](https://plane.so/) and [Jira](https://www.atlassian.com/fr/software/jira) that allows to manage multiple projects.
 
+### 🚨Warning 🚨
+I built Guma to apply things i have learned about building microservices. I will use it for my own needs if you trust me enough you can use the version hosted on my server but if you don't you can self-host the project on your own infrastructure.  
+
 ## 🚀 Features 
 Guma provides the modules below: 
 
 - **Issues:**
-- **Sprint:**
+- **Sprints:**
 - **Documents:**
 - **Modules:**
 - **Dashbord:**
@@ -40,6 +43,8 @@ Data-Access	| [/backend-services/data-access/](/backend-services/data-access)	| 
 ## 👀 Observability 
 
 ## Deployment
+
+<img src="screenshots/deployment-workflow.png">
 
 ## License 
 The tool is available as open source under the terms of the [MIT License](https://opensource.org/license/MIT)
