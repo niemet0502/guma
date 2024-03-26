@@ -10,7 +10,7 @@ If you are a League of legends fan you already know [Gumayusi](https://en.wikipe
 
 Guma is a Lightweight and Self Hosted project management app highly inspired by [Linear](https://linear.app/), [Plane](https://plane.so/) and [Jira](https://www.atlassian.com/fr/software/jira) that allows to manage multiple projects.
 
-### 🚀 Features 
+## 🚀 Features 
 Guma provides the modules below: 
 
 - **Issues:**
@@ -19,7 +19,7 @@ Guma provides the modules below:
 - **Modules:**
 - **Dashbord:**
 
-## Overall architecture
+## 🛠️ Overall architecture
 
 ### Services
 
@@ -37,7 +37,7 @@ Wiki	| [/backend-services/wiki](/backend-services/wiki/)	| [NestJS](https://nest
 Notification	| [/backend-services/notifications](/backend-services)	| [Go](https://go.dev/)  | Service responsible for sending notifications (Push and email)	| 
 Data-Access	| [/backend-services/data-access/](/backend-services/data-access)	| [Go](https://go.dev/) |  Service connected to the database and responsible of exposing a REST api	|
 
-## Observability 
+## 👀 Observability 
 
 ## Deployment
 
