@@ -16,9 +16,10 @@ import { useForm } from "react-hook-form";
 
 import { useAuth } from "@/domains/auth/providers/auth";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as z from "zod";
 import { useGetTeam } from "../hooks/useGetTeam";
+import { useRemoveTeam } from "../hooks/useRemoveTeam";
 import { useUpdateTeam } from "../hooks/useUpdateTeam";
 import { TeamVisibility } from "../type";
 
@@ -30,9 +31,12 @@ const formSchema = z.object({
 
 export const TeamGeneralSettings: React.FC = () => {
   const { project } = useAuth();
-  const { teamId } = useParams<{ teamId: string }>();
+  const { orgaId, teamId } = useParams<{ orgaId: string; teamId: string }>();
   const { data: team } = useGetTeam(project?.id as number, teamId);
   const { updateTeam, error } = useUpdateTeam();
+  const { removeTeam } = useRemoveTeam();
+
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -56,6 +60,12 @@ export const TeamGeneralSettings: React.FC = () => {
     });
   };
 
+  const onDelete = () => {
+    if (!team) return;
+    removeTeam({ variables: { id: +team.id } });
+    navigate(`/${orgaId}/notifications`);
+  };
+
   return (
     <div className="w-full flex justify-center">
       <div className="w-full max-w-xl">
@@ -64,7 +74,7 @@ export const TeamGeneralSettings: React.FC = () => {
           <p className="mt-1">Manage team settings</p>
         </div>
 
-        <div className=" p-2">
+        <div className=" p-2 flex flex-col gap-4">
           <div className="grid gap-4 py-4 border-b">
             <Form {...form}>
               <form
@@ -125,11 +135,29 @@ export const TeamGeneralSettings: React.FC = () => {
 
                 {error && <div className="text-red-600">{error.message}</div>}
 
-                <DialogFooter>
+                <DialogFooter className="mt-2">
                   <Button type="submit">Save changes</Button>
                 </DialogFooter>
               </form>
             </Form>
+          </div>
+
+          <div className="my-4">
+            <h4 className="text-lg mb-2 font-medium">Delete team</h4>
+            <p>
+              <span className="font-medium">Warning:</span> Deleting the team
+              will also permanently delete any issues associated with it. This
+              can't be undone and your data cannot be recovered
+            </p>
+
+            <Button
+              type="button"
+              variant="destructive"
+              className=" mt-5"
+              onClick={onDelete}
+            >
+              Delete team
+            </Button>
           </div>
         </div>
       </div>
