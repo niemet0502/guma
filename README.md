@@ -11,10 +11,12 @@ If you are a League of legends fan you already know [Gumayusi](https://en.wikipe
 Guma is a Lightweight and Self Hosted project management app highly inspired by [Linear](https://linear.app/), [Plane](https://plane.so/) and [Jira](https://www.atlassian.com/fr/software/jira) that allows to manage multiple projects.
 
 ### 🚨Warning 🚨
-I built Guma to apply things i have learned about building microservices. I will use it for my own needs if you trust me enough you can use the version hosted on my server but if you don't you can self-host the project on your own infrastructure.  
+I built Guma to apply things i have learned about building microservices. I will use it for my own  (to track my projects) so if you trust me enough you can use the version hosted on my server but if you don't you can self-host the project on your own infrastructure.  
+
+I will keep improving the code base by adding new features or new practices i will learn in the feature. 
 
 ## 🚀 Features 
-Guma provides the modules below: 
+Guma provides the features below: 
 
 - **Issues:**
 - **Sprints:**
@@ -40,7 +42,19 @@ Wiki	| [/backend-services/wiki](/backend-services/wiki/)	| [NestJS](https://nest
 Notification	| [/backend-services/notifications](/backend-services)	| [Go](https://go.dev/)  | Service responsible for sending notifications (Push and email)	| 
 Data-Access	| [/backend-services/data-access/](/backend-services/data-access)	| [Go](https://go.dev/) |  Service connected to the database and responsible of exposing a REST api	|
 
+### External services
+The system uses external services
+
+Name	| Role	|  Description  |
+------------- | ------------ | ----------- |
+PostgreSQL	| Database |  The frontend app	|
+Redis	| Cache	|   The frontend app	|
+
 ## 👀 Observability 
+Observability refers to the ability to understand, measure, and gain insights into the internal state and behavior of a system based on its external outputs. 
+For this project we have setup traces, logs and metrics by using the service above
+
+
 
 ## Deployment
 
