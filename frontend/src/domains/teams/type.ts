@@ -42,3 +42,12 @@ export interface CreateTeamInput {
   visibility: number;
   icon?: string;
 }
+
+export interface UpdateTeamInput {
+  project_id?: number;
+  name?: string;
+  identifier?: string;
+  visibility?: number;
+  icon?: string;
+  id: number;
+}

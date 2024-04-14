@@ -7,6 +7,7 @@ export const GET_TEAM = gql`
       id
       name
       visibility
+      identifier
       members {
         id
         user {
@@ -27,5 +28,5 @@ export const useGetTeam = (organizationId: number, name?: string) => {
     variables: { name, project_id: +organizationId },
   });
 
-  return { data: data?.getTeamByName, isLoading };
+  return { data: data?.getTeamByName, isLoading, error };
 };
