@@ -6,14 +6,14 @@ export const TeamSettings: React.FC = () => {
 
   return (
     <div className="w-full h-full">
-      <div className="bg-secondary py-3 px-5 flex items-center">
+      <div className="bg-secondary py-3 px-5 flex items-center sticky top-0 z-10">
         <p>Guma</p>
         <RiArrowRightSLine className="mt-0.5" />
         <p>Settings</p>
       </div>
 
       <div className="w-full h-full flex">
-        <div className=" w-80 border-r px-3 py-3 ">
+        <div className=" w-80 border-r px-3 py-3  sticky left-0">
           <NavLink
             to={`/${orgaId}/team/${teamId}/settings/general`}
             className={({ isActive, isPending }) =>

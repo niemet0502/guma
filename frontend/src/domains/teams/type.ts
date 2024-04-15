@@ -51,3 +51,8 @@ export interface UpdateTeamInput {
   icon?: string;
   id: number;
 }
+
+export interface CreateMemberInput {
+  user_id: number;
+  team_id: number;
+}

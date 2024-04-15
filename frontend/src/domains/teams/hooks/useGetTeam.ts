@@ -13,6 +13,12 @@ export const GET_TEAM = gql`
         user {
           id
           username
+          email
+
+          profile {
+            id
+            name
+          }
         }
       }
     }
