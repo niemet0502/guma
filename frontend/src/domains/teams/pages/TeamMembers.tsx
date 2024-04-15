@@ -89,7 +89,11 @@ export const TeamMembers: React.FC = () => {
             <span className="text-sm">{team?.members.length} members</span>
 
             {(team?.members || []).map((member) => (
-              <TeamMemberItem key={member.id} user={member.user} />
+              <TeamMemberItem
+                key={member.id}
+                user={member.user}
+                memberId={+member.id}
+              />
             ))}
           </div>
         </div>

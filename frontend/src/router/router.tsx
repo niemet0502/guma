@@ -16,6 +16,7 @@ import { TaskDetails } from "@/domains/tasks/pages/Details";
 import { TaskList } from "@/domains/tasks/pages/List";
 import { TeamGeneralSettings } from "@/domains/teams/pages/TeamGeneralSettings";
 import { TeamLabels } from "@/domains/teams/pages/TeamLabels";
+import { TeamMembers } from "@/domains/teams/pages/TeamMembers";
 import { TeamSettings } from "@/domains/teams/pages/TeamSettings";
 import { Documents } from "@/domains/wiki/documents/Documents";
 import { DocumentDetails } from "@/domains/wiki/documents/pages/Details";
@@ -146,6 +147,10 @@ export const router = createBrowserRouter([
                   {
                     path: "/:orgaId/team/:teamId/settings/labels",
                     element: <TeamLabels />,
+                  },
+                  {
+                    path: "/:orgaId/team/:teamId/settings/members",
+                    element: <TeamMembers />,
                   },
                 ],
               },
