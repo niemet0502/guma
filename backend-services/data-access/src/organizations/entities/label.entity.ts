@@ -8,6 +8,9 @@ export class Label {
   @Column('text')
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   project_id: number;
+
+  @Column({ nullable: true })
+  team_id: number;
 }
