@@ -1,7 +1,9 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
+import { AxiosError } from 'axios';
 import { GraphQLClient } from 'graphql-request';
-import { firstValueFrom } from 'rxjs';
+import { catchError, firstValueFrom } from 'rxjs';
+import { CustomLogger } from 'src/logger/custom-logger.service';
 import { LabelsService } from '../labels/labels.service';
 import { User } from '../shared/user.entity';
 import { DEFAULT_ORGANIZATION_LABEL } from '../utils/Constant';
@@ -18,34 +20,61 @@ export class OrganizationsService {
   constructor(
     private readonly http: HttpService,
     private readonly labelService: LabelsService,
+    private logger: CustomLogger,
   ) {
     this.teamGraphQLClient = new GraphQLClient('http://team:3000/graphql');
     this.userGraphQLClient = new GraphQLClient('http://user:3000/graphql');
+    this.logger.setContext('ProjectService');
   }
 
   async create(
     createOrganizationInput: CreateProjectInput,
     user: User,
   ): Promise<Project> {
+    this.logger.log(
+      { message: 'Creating Project', data: createOrganizationInput },
+      'create',
+    );
     // create the organization
     const { data } = await firstValueFrom(
-      this.http.post<Project>(this.url, createOrganizationInput),
+      this.http.post<Project>(this.url, createOrganizationInput).pipe(
+        catchError((error: AxiosError) => {
+          this.logger.error(error.response.data);
+          throw 'An error happened!';
+        }),
+      ),
     );
-
-    console.log(data);
 
     const { name, id: project_id } = data;
 
     // create a team with the organization's name
-    await this.createTeam(name, project_id, user);
+    try {
+      await this.createTeam(name, project_id, user);
+    } catch (error) {
+      this.logger.error(error.response.data);
+    }
 
     // create organization's labels
     DEFAULT_ORGANIZATION_LABEL.map(async (name) => {
-      await this.labelService.create({ name, project_id });
+      try {
+        await this.labelService.create({
+          name,
+          project_id,
+          team_id: undefined,
+        });
+      } catch (error: any) {
+        console.log(error);
+
+        // this.logger.error(error.response.data);
+      }
     });
 
     // update the user by setting the project_id
-    await this.updateUser(user.id, project_id);
+    try {
+      await this.updateUser(user.id, project_id);
+    } catch (error) {
+      this.logger.error(error.response.data);
+    }
 
     return data;
   }
