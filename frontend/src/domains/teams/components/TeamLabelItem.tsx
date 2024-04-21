@@ -10,6 +10,7 @@ import { LabelApi } from "@/domains/organization/services/type";
 import { useState } from "react";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
+import { useRemoveTeamLabel } from "../hooks/useRemoveTeamLabel";
 import { useUpdateTeamLabel } from "../hooks/useUpdateTeamLabel";
 
 export const TeamLabelItem: React.FC<{ label: LabelApi }> = ({ label }) => {
@@ -17,11 +18,16 @@ export const TeamLabelItem: React.FC<{ label: LabelApi }> = ({ label }) => {
   const [name, setName] = useState(label.name);
 
   const { updateLabel } = useUpdateTeamLabel();
+  const { removeLabel } = useRemoveTeamLabel();
 
   const submit = () => {
     if (!name) return;
     updateLabel({ id: +label.id, name });
     setEditing(false);
+  };
+
+  const onDelete = () => {
+    removeLabel({ variables: { id: +label.id } });
   };
   return (
     <div className="border p-2 rounded flex items-center justify-between">
@@ -59,7 +65,7 @@ export const TeamLabelItem: React.FC<{ label: LabelApi }> = ({ label }) => {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
-                  <Button size="sm" variant="ghost">
+                  <Button size="sm" variant="ghost" onClick={onDelete}>
                     <FaRegTrashCan />
                   </Button>
                 </TooltipTrigger>
