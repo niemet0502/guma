@@ -56,3 +56,16 @@ export interface CreateMemberInput {
   user_id: number;
   team_id: number;
 }
+
+export interface CreateLabelInput {
+  name: string;
+  team_id?: number;
+  project_id?: number;
+}
+
+export interface UpdateLabelInput {
+  name: string;
+  team_id?: number;
+  project_id?: number;
+  id: number;
+}
