@@ -13,7 +13,7 @@ import java.util.List;
 
 @DgsComponent
 public class LabelsResolver {
-    private final LabelsService service;
+    private LabelsService service;
 
     public LabelsResolver(LabelsService service) {
         this.service = service;
@@ -21,7 +21,8 @@ public class LabelsResolver {
 
     @DgsQuery
     public List<Label> labels(@InputArgument Integer project_id, @InputArgument Integer team_id){
-        return this.service.findAll(project_id, team_id);
+        System.out.println(team_id);
+        return this.service.findAll(project_id, null);
     }
 
     @DgsQuery

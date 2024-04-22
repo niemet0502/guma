@@ -27,10 +27,17 @@ public class LabelsService {
     }
 
 
-    public List<Label> findAll(int project_id, int team_id) {
+    public List<Label> findAll(Integer project_id, Integer team_id) {
         Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("project_id", String.valueOf(project_id));
-        queryParams.put("team_id", String.valueOf(team_id));
+
+        if(project_id != null){
+            queryParams.put("project_id", String.valueOf(project_id));
+
+        }
+
+        if(team_id != null){
+            queryParams.put("team_id", String.valueOf(team_id));
+        }
 
         return  this.client.getList(url, queryParams);
     }

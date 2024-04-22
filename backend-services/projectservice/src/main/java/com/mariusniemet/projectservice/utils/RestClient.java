@@ -51,6 +51,13 @@ public class RestClient {
         return restTemplate.exchange(url, HttpMethod.PUT, request, responseType);
     }
 
+    public <T> ResponseEntity<T> patch(String url, Object requestBody, Class<T> responseType) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Object> request = new HttpEntity<>(requestBody, headers);
+        return restTemplate.exchange(url, HttpMethod.PATCH, request, responseType);
+    }
+
 //    public <T> ResponseEntity<T> delete(String url, Class<T> responseType) {
 //        return restTemplate.delete(url, responseType);
 //    }
