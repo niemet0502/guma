@@ -4,8 +4,10 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class RestClient {
@@ -14,9 +16,16 @@ public class RestClient {
     public RestClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
-    public <T> List<T> getList(String url) {
+    public <T> List<T> getList(String url, Map<String, String> queryParams) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url);
+
+        // Add query parameters if present
+        if (queryParams != null) {
+            queryParams.forEach(builder::queryParam);
+        }
+
         ResponseEntity<List<T>> response = restTemplate.exchange(
-                url,
+                builder.toUriString(),
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<T>>() {}
