@@ -8,6 +8,8 @@ type Project {
 type Query {
     projects: [Project]
     project(id: Int!): Project
+    label(id: Int!): Label
+    labels(project_id: Int, team_id: Int): [Label]
 }
 
 input CreateProjectInput {
@@ -27,4 +29,6 @@ type Mutation {
     createProject(createProjectInput: CreateProjectInput!): Project
     updateProject(updateProjectInput: UpdateProjectInput!): Project
     removeProject(id: Int!): Project
+    createLabel(createLabelInput: CreateLabelInput): Label
+    updateLabel(updateLabelInput: UpdateLabelInput): Label
 }

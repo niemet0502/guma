@@ -1,0 +1,19 @@
+type Label {
+    id: ID!
+    name: String!
+    project_id: Int
+    team_id: Int
+}
+
+input CreateLabelInput {
+    name: String!
+    project_id: Int
+    team_id: Int
+}
+
+input UpdateLabelInput {
+    id: ID!
+    name: String!
+    project_id: Int
+    team_id: Int
+}
