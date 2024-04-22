@@ -7,6 +7,10 @@ public class Project {
     private String size;
     private String logo;
 
+    public Project(){
+
+    }
+
     public Project(String name, String size, String logo) {
         this.name = name;
         this.size = size;
