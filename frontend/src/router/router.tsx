@@ -14,6 +14,10 @@ import { SprintDetails } from "@/domains/sprints/pages/Details";
 import { SprintList } from "@/domains/sprints/pages/List";
 import { TaskDetails } from "@/domains/tasks/pages/Details";
 import { TaskList } from "@/domains/tasks/pages/List";
+import { TeamGeneralSettings } from "@/domains/teams/pages/TeamGeneralSettings";
+import { TeamLabels } from "@/domains/teams/pages/TeamLabels";
+import { TeamMembers } from "@/domains/teams/pages/TeamMembers";
+import { TeamSettings } from "@/domains/teams/pages/TeamSettings";
 import { Documents } from "@/domains/wiki/documents/Documents";
 import { DocumentDetails } from "@/domains/wiki/documents/pages/Details";
 import { FolderDetails } from "@/domains/wiki/folders/pages/Details";
@@ -129,6 +133,24 @@ export const router = createBrowserRouter([
                   {
                     path: "/:orgaId/team/:teamId/modules/:moduleId",
                     element: <ModuleDetails />,
+                  },
+                ],
+              },
+              {
+                path: "team/:teamId/settings",
+                element: <TeamSettings />,
+                children: [
+                  {
+                    path: "/:orgaId/team/:teamId/settings/general",
+                    element: <TeamGeneralSettings />,
+                  },
+                  {
+                    path: "/:orgaId/team/:teamId/settings/labels",
+                    element: <TeamLabels />,
+                  },
+                  {
+                    path: "/:orgaId/team/:teamId/settings/members",
+                    element: <TeamMembers />,
                   },
                 ],
               },

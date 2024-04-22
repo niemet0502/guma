@@ -48,7 +48,14 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
                     <BiDotsHorizontalRounded />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
-                    <DropdownMenuItem>Team settings</DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <NavLink
+                        to={`/${orgaId}/team/${team.name.toLowerCase()}/settings/general`}
+                        className="default"
+                      >
+                        Team settings
+                      </NavLink>
+                    </DropdownMenuItem>
                     <DropdownMenuItem>Copy the link</DropdownMenuItem>
                     <DropdownMenuItem disabled={isPublic}>
                       Leave the team
