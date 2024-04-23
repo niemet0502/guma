@@ -3,13 +3,12 @@ package com.mariusniemet.projectservice.resolvers;
 import com.mariusniemet.projectservice.dto.CreateLabelInput;
 import com.mariusniemet.projectservice.dto.UpdateLabelInput;
 import com.mariusniemet.projectservice.models.Label;
+import com.mariusniemet.projectservice.models.Project;
 import com.mariusniemet.projectservice.services.LabelsService;
-import com.netflix.graphql.dgs.DgsComponent;
-import com.netflix.graphql.dgs.DgsMutation;
-import com.netflix.graphql.dgs.DgsQuery;
-import com.netflix.graphql.dgs.InputArgument;
+import com.netflix.graphql.dgs.*;
 
 import java.util.List;
+import java.util.Map;
 
 @DgsComponent
 public class LabelsResolver {
@@ -38,5 +37,10 @@ public class LabelsResolver {
     @DgsMutation
     public Label updateLabel(@InputArgument UpdateLabelInput updateLabelInput){
         return this.service.update(updateLabelInput);
+    }
+
+    @DgsEntityFetcher(name = "Label")
+    public Label label(Map<String, Object> values) {
+        return this.service.findOne((Integer) values.get("id"));
     }
 }

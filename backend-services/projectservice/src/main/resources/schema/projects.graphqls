@@ -1,8 +1,9 @@
-type Project {
+type Project @key(fields: "id") {
     id: ID!
     name: String!
     size: String
     logo: String
+    labels: [Label]
 }
 
 type Query {

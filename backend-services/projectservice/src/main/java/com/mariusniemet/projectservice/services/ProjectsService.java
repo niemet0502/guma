@@ -1,6 +1,7 @@
 package com.mariusniemet.projectservice.services;
 
 import com.mariusniemet.projectservice.dto.UpdateProjectInput;
+import com.mariusniemet.projectservice.models.Label;
 import com.mariusniemet.projectservice.models.Project;
 import com.mariusniemet.projectservice.utils.RestClient;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +12,13 @@ import java.util.List;
 @Service
 public class ProjectsService {
     private final RestClient client;
+    private final LabelsService labelsService;
 
-    public ProjectsService(RestClient client){
+
+    public ProjectsService(RestClient client, LabelsService labelsService){
         this.client = client;
+        this.labelsService = labelsService;
+
     }
 
     public List<Project> findAll(){
@@ -32,5 +37,9 @@ public class ProjectsService {
 
     public Project remove(int id){
         return new Project();
+    }
+
+    public List<Label> getLabels(int projectId){
+        return this.labelsService.findAll(projectId, null);
     }
 }
