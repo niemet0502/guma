@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import {
@@ -50,6 +51,12 @@ export class LabelController {
   @Patch(':id')
   @ApiOkResponse({ type: Label })
   update(@Param('id') id: string, @Body() updateLabelDto: UpdateLabelDto) {
+    return this.labelService.update(+id, updateLabelDto);
+  }
+
+  @Put(':id')
+  @ApiOkResponse({ type: Label })
+  updateLabel(@Param('id') id: string, @Body() updateLabelDto: UpdateLabelDto) {
     return this.labelService.update(+id, updateLabelDto);
   }
 

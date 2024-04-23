@@ -24,10 +24,12 @@ export class LabelService {
     );
     const { name, project_id, team_id } = createLabelDto;
 
-    const orga = await this.organizationService.findOne(project_id);
+    if (project_id) {
+      const orga = await this.organizationService.findOne(project_id);
 
-    if (!orga) {
-      throw new NotFoundException('Organization not found');
+      if (!orga) {
+        throw new NotFoundException('Organization not found');
+      }
     }
 
     const label = await this.repo.findOne({
