@@ -1,5 +1,6 @@
 import { HttpModule, HttpService } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
+import { CustomLogger } from '../logger/custom-logger.service';
 import { LabelsService } from './labels.service';
 
 describe('LabelsService', () => {
@@ -9,7 +10,18 @@ describe('LabelsService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [HttpModule],
-      providers: [LabelsService],
+      providers: [
+        LabelsService,
+        {
+          provide: CustomLogger,
+          useValue: {
+            setContext: jest.fn(),
+            log: jest.fn(),
+            error: jest.fn(),
+            warn: jest.fn(),
+          },
+        },
+      ],
     }).compile();
 
     service = module.get<LabelsService>(LabelsService);
