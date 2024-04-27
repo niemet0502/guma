@@ -69,3 +69,9 @@ export interface UpdateLabelInput {
   project_id?: number;
   id: number;
 }
+
+export interface CreateStatusInput {
+  name: string;
+  team_id: number;
+  state: number;
+}

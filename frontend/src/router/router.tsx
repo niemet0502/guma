@@ -18,6 +18,7 @@ import { TeamGeneralSettings } from "@/domains/teams/pages/TeamGeneralSettings";
 import { TeamLabels } from "@/domains/teams/pages/TeamLabels";
 import { TeamMembers } from "@/domains/teams/pages/TeamMembers";
 import { TeamSettings } from "@/domains/teams/pages/TeamSettings";
+import { TeamWorkflow } from "@/domains/teams/pages/TeamWorkflow";
 import { Documents } from "@/domains/wiki/documents/Documents";
 import { DocumentDetails } from "@/domains/wiki/documents/pages/Details";
 import { FolderDetails } from "@/domains/wiki/folders/pages/Details";
@@ -151,6 +152,10 @@ export const router = createBrowserRouter([
                   {
                     path: "/:orgaId/team/:teamId/settings/members",
                     element: <TeamMembers />,
+                  },
+                  {
+                    path: "/:orgaId/team/:teamId/settings/workflow",
+                    element: <TeamWorkflow />,
                   },
                 ],
               },
