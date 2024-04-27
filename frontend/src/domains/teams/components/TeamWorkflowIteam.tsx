@@ -11,6 +11,7 @@ import { TaskStatusApi } from "@/domains/tasks/type";
 import { useState } from "react";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
+import { useRemoveStatus } from "../hooks/useRemoveStatus";
 import { useUpdateStatus } from "../hooks/useUpdateStatus";
 
 export const TeamWorkflowIteam: React.FC<{
@@ -21,11 +22,16 @@ export const TeamWorkflowIteam: React.FC<{
   const [name, setName] = useState(status.name);
 
   const { updateTaskStatus } = useUpdateStatus();
+  const { removeStatus } = useRemoveStatus();
 
   const submit = () => {
     if (!name) return;
     updateTaskStatus({ id: +status.id, name });
     setEditing(false);
+  };
+
+  const onDelete = () => {
+    removeStatus({ variables: { id: +status.id } });
   };
 
   return (
@@ -66,11 +72,7 @@ export const TeamWorkflowIteam: React.FC<{
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    // onClick={onDelete}
-                  >
+                  <Button size="sm" variant="ghost" onClick={onDelete}>
                     <FaRegTrashCan />
                   </Button>
                 </TooltipTrigger>
