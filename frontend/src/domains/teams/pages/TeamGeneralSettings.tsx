@@ -68,7 +68,7 @@ export const TeamGeneralSettings: React.FC = () => {
 
   return (
     <div className="w-full flex justify-center">
-      <div className="w-full max-w-xl">
+      <div className="w-full max-w-2xl">
         <div className="border-b p-2">
           <h1 className="text-2xl">Testing</h1>
           <p className="mt-1">Manage team settings</p>

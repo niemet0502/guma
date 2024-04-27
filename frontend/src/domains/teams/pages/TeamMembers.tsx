@@ -33,7 +33,7 @@ export const TeamMembers: React.FC = () => {
 
   return (
     <div className="w-full flex justify-center">
-      <div className="w-full max-w-xl ">
+      <div className="w-full max-w-2xl ">
         <div className="border-b p-2 mb-4">
           <h1 className="text-2xl">Team members</h1>
           <p className="mt-1">Manage who is a member of the team</p>

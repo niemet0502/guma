@@ -40,14 +40,14 @@ export const TeamSettings: React.FC = () => {
             Workflow
           </NavLink>
 
-          <NavLink
+          {/* <NavLink
             to={`/${orgaId}/team/${teamId}/settings/sprints`}
             className={({ isActive, isPending }) =>
               isActive ? "active" : isPending ? "default" : "default"
             }
           >
             Sprint
-          </NavLink>
+          </NavLink> */}
 
           <NavLink
             to={`/${orgaId}/team/${teamId}/settings/labels`}

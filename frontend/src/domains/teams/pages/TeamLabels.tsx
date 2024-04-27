@@ -26,9 +26,6 @@ export const TeamLabels: React.FC = () => {
   }, [team]);
 
   const submit = () => {
-    console.log(team);
-    console.log(label);
-
     if (!label || !team) return;
 
     createLabel({ team_id: +team.id, name: label });
@@ -37,7 +34,7 @@ export const TeamLabels: React.FC = () => {
   };
   return (
     <div className="w-full flex justify-center">
-      <div className="w-full max-w-xl flex flex-col gap-4">
+      <div className="w-full max-w-2xl flex flex-col gap-4">
         <div className="border-b p-2">
           <h1 className="text-2xl">Labels</h1>
           <p className="mt-1">Manage team specific labels</p>
