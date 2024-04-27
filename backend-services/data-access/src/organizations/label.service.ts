@@ -1,6 +1,7 @@
 import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CustomLogger } from '../logger/custom-logger.service';
 import { CreateLabelDto } from './dto/create-label.dto';
 import { UpdateLabelDto } from './dto/update-label.dto';
 import { Label } from './entities/label.entity';
@@ -11,19 +12,28 @@ export class LabelService {
   constructor(
     @InjectRepository(Label) private repo: Repository<Label>,
     private readonly organizationService: ProjectsService,
-  ) {}
+    private logger: CustomLogger,
+  ) {
+    this.logger.setContext('LabelService');
+  }
 
   async create(createLabelDto: CreateLabelDto): Promise<Label> {
-    const { name, project_id } = createLabelDto;
+    this.logger.log(
+      { message: 'Creating label', data: createLabelDto },
+      'create',
+    );
+    const { name, project_id, team_id } = createLabelDto;
 
-    const orga = await this.organizationService.findOne(+project_id);
+    if (project_id) {
+      const orga = await this.organizationService.findOne(project_id);
 
-    if (!orga) {
-      throw new NotFoundException('Organization not found');
+      if (!orga) {
+        throw new NotFoundException('Organization not found');
+      }
     }
 
     const label = await this.repo.findOne({
-      where: { name: name, project_id: project_id },
+      where: { name: name, project_id: project_id, team_id: team_id },
     });
 
     if (label) {
@@ -31,17 +41,38 @@ export class LabelService {
       throw new HttpException({ errors }, 404);
     }
 
-    return await this.repo.save(createLabelDto);
+    try {
+      return await this.repo.save(createLabelDto);
+    } catch (e: any) {
+      this.logger.error(
+        {
+          message: `Error creating project`,
+          data: e.stack,
+        },
+        'create',
+      );
+      throw e;
+    }
   }
 
-  async findAll(project_id: number): Promise<Label[]> {
-    const orga = await this.organizationService.findOne(project_id);
-
-    if (!orga) {
-      throw new NotFoundException('Organization not found');
+  async findAll(projectId?: number, teamId?: number): Promise<Label[]> {
+    if (projectId) {
+      // If project_id is defined, fetch labels with project_id and team_id undefined
+      // Also fetch labels with the given team_id
+      return this.repo.find({
+        where: [
+          { project_id: projectId, team_id: null },
+          { project_id: null, team_id: teamId },
+        ],
+        order: { id: 'DESC' },
+      });
+    } else {
+      // If project_id is not defined, fetch labels with the given team_id
+      return this.repo.find({
+        where: { team_id: teamId },
+        order: { id: 'DESC' },
+      });
     }
-
-    return await this.repo.find({ where: { project_id } });
   }
 
   async findOne(id: number): Promise<Label> {

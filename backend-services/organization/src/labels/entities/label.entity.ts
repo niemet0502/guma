@@ -9,6 +9,9 @@ export class Label {
   @Field({ nullable: false })
   name: string;
 
-  @Field({ nullable: false })
+  @Field({ nullable: true })
   project_id: number;
+
+  @Field({ nullable: true })
+  team_id: number;
 }

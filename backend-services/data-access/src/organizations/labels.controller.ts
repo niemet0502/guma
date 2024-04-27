@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import {
@@ -32,8 +33,13 @@ export class LabelController {
 
   @Get()
   @ApiOkResponse({ type: Label, isArray: true })
-  async findAll(@Query('project_id') project_id: string): Promise<Label[]> {
-    return await this.labelService.findAll(+project_id);
+  async findAll(
+    @Query('project_id') project_id: string,
+    @Query('team_id') team_id: string,
+  ): Promise<Label[]> {
+    const projectId = project_id ? +project_id : undefined;
+    const teamId = team_id ? +team_id : undefined;
+    return await this.labelService.findAll(projectId, teamId);
   }
 
   @Get(':id')
@@ -45,6 +51,12 @@ export class LabelController {
   @Patch(':id')
   @ApiOkResponse({ type: Label })
   update(@Param('id') id: string, @Body() updateLabelDto: UpdateLabelDto) {
+    return this.labelService.update(+id, updateLabelDto);
+  }
+
+  @Put(':id')
+  @ApiOkResponse({ type: Label })
+  updateLabel(@Param('id') id: string, @Body() updateLabelDto: UpdateLabelDto) {
     return this.labelService.update(+id, updateLabelDto);
   }
 

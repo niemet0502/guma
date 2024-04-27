@@ -21,8 +21,11 @@ export class LabelsResolver {
   }
 
   @Query(() => [Label], { name: 'labels' })
-  findAll(@Args('project_id', { type: () => Int }) project_id: number) {
-    return this.labelsService.findAll(project_id);
+  findAll(
+    @Args('project_id', { type: () => Int, nullable: true }) project_id: number,
+    @Args('team_id', { type: () => Int, nullable: true }) team_id: number,
+  ) {
+    return this.labelsService.findAll(project_id, team_id);
   }
 
   @Query(() => Label, { name: 'label' })

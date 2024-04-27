@@ -45,7 +45,7 @@ export class StatusService {
     const team = team_id ? await this.teamService.findOne(+team_id) : undefined;
 
     if (!team && team_id) {
-      throw new NotFoundException('Organization not found');
+      throw new NotFoundException('Team not found');
     }
 
     return await this.repo.find({

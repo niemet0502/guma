@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CreateProjectDto } from './dto/create-project.dto';
@@ -39,6 +40,15 @@ export class ProjectsController {
   @Patch(':id')
   @ApiOkResponse({ type: Project })
   update(@Param('id') id: string, @Body() UpdateProjectDto: UpdateProjectDto) {
+    return this.ProjectsService.update(+id, UpdateProjectDto);
+  }
+
+  @Put(':id')
+  @ApiOkResponse({ type: Project })
+  updateProject(
+    @Param('id') id: string,
+    @Body() UpdateProjectDto: UpdateProjectDto,
+  ) {
     return this.ProjectsService.update(+id, UpdateProjectDto);
   }
 

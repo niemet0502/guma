@@ -42,3 +42,43 @@ export interface CreateTeamInput {
   visibility: number;
   icon?: string;
 }
+
+export interface UpdateTeamInput {
+  project_id?: number;
+  name?: string;
+  identifier?: string;
+  visibility?: number;
+  icon?: string;
+  id: number;
+}
+
+export interface CreateMemberInput {
+  user_id: number;
+  team_id: number;
+}
+
+export interface CreateLabelInput {
+  name: string;
+  team_id?: number;
+  project_id?: number;
+}
+
+export interface UpdateLabelInput {
+  name: string;
+  team_id?: number;
+  project_id?: number;
+  id: number;
+}
+
+export interface CreateStatusInput {
+  name: string;
+  team_id: number;
+  state: number;
+}
+
+export interface UpdateStatusInput {
+  name: string;
+  team_id?: number;
+  state?: number;
+  id: number;
+}

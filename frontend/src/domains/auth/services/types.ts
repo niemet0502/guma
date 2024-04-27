@@ -8,6 +8,12 @@ export interface User {
   is_suspended?: boolean;
   first_signin?: boolean;
   profile_id?: number;
+  profile?: ProfileApi;
+}
+
+interface ProfileApi {
+  id: number;
+  name: string;
 }
 
 export interface CreateUserInput {
