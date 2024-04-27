@@ -75,3 +75,10 @@ export interface CreateStatusInput {
   team_id: number;
   state: number;
 }
+
+export interface UpdateStatusInput {
+  name: string;
+  team_id?: number;
+  state?: number;
+  id: number;
+}
