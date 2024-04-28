@@ -36,7 +36,6 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import { addDays, format } from "date-fns";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { AiOutlinePlus } from "react-icons/ai";
 import { z } from "zod";
 import { useCreateModule } from "../hooks/useCreateModule";
 
@@ -51,7 +50,8 @@ const formSchema = z.object({
 export const CreateModuleDialog: React.FC<{
   teamId?: number;
   teamsData?: { id: number; name: string }[];
-}> = ({ teamId, teamsData }) => {
+  children: React.ReactNode;
+}> = ({ teamId, teamsData, children }) => {
   const { toast } = useToast();
 
   const [open, setOpen] = useState(false);
@@ -81,11 +81,7 @@ export const CreateModuleDialog: React.FC<{
 
   return (
     <Dialog open={open} onOpenChange={setOpen} modal={false}>
-      <DialogTrigger asChild>
-        <button className="mr-2 hover:cursor-pointer text-muted-foreground">
-          <AiOutlinePlus />
-        </button>
-      </DialogTrigger>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="top-[45%] lg:w-[800px] sm:max-w-[625px]">
         <DialogHeader>
           <DialogTitle>Create a new module</DialogTitle>

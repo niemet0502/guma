@@ -1,3 +1,4 @@
+import { GoInbox } from "react-icons/go";
 import { Outlet } from "react-router-dom";
 import { useAuth } from "../auth/providers/auth";
 import { NotificationItem } from "./components/NotificationItem";
@@ -13,8 +14,17 @@ export const NotificationsList: React.FC = () => {
           <NotificationItem notification={notification} key={notification.id} />
         ))}
       </div>
-      <div className="w-2/3 border">
+      <div className="w-2/3">
         <Outlet />
+
+        {notifications && notifications.length === 0 && (
+          <div className="h-full flex flex-col gap-2 items-center justify-center">
+            <GoInbox className="text-6xl" />
+            <span>Inbox</span>
+
+            <p>No notifications</p>
+          </div>
+        )}
       </div>
     </div>
   );

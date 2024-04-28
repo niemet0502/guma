@@ -102,7 +102,7 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
                   }
                 >
                   <GoProjectRoadmap />
-                  Livrables
+                  Modules
                 </NavLink>
               </div>
             </AccordionContent>
