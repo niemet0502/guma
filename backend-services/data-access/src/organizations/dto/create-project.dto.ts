@@ -9,9 +9,6 @@ export class CreateProjectDto {
   public name: string;
 
   @IsString()
-  @ApiProperty()
-  public size: string;
-
   @ApiProperty({ required: false })
-  public logo: string;
+  public description: string;
 }
