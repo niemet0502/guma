@@ -8,16 +8,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { useMutation } from "@apollo/client";
+import { useApolloClient, useMutation } from "@apollo/client";
 
+import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -30,22 +23,25 @@ const FormSchema = z.object({
   name: z.string({
     required_error: "Please enter a name.",
   }),
-  size: z.string({
-    required_error: "Please select a size.",
-  }),
+  description: z.string().optional(),
 });
 
 export const OrganizationForm: React.FC = () => {
-  const { updateProject, user, updateUser } = useAuth();
   const navigate = useNavigate();
+  const client = useApolloClient();
+  const { updateProject, user, updateUser, logout, project } = useAuth();
 
   const [createProject, { error }] = useMutation(CREATE_PROJECT);
+
+  const signOut = async () => {
+    client.resetStore();
+    logout();
+  };
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       name: "",
-      size: "",
     },
   });
 
@@ -71,15 +67,24 @@ export const OrganizationForm: React.FC = () => {
   return (
     <div className="w-full flex h-screen flex-col">
       <div className="flex items-center justify-between p-6">
-        <p>{user?.email}</p>
-        <p>logout</p>
+        {!project && <p>{user?.email}</p>}
+        {project && (
+          <Button variant="outline" onClick={() => navigate(-1)}>
+            Back to the app
+          </Button>
+        )}
+        <div>
+          <Button onClick={signOut} variant="secondary">
+            logout
+          </Button>
+        </div>
       </div>
       <div className="flex items-center justify-center flex-1">
         <div className="w-[500px] border h-auto p-6 flex items-center gap-3 flex-col rounded-lg shadow-sm pb-12">
-          <h2 className="text-lg">Create a new organization</h2>
+          <h2 className="text-lg">Create a new project</h2>
           <p className="text-center">
-            Organization are shared environments where teams can work on
-            projects, cycles and tasks.
+            Projects are shared environments where you can work on tasks,
+            sprints and modules.
           </p>
 
           <Form {...form}>
@@ -102,33 +107,21 @@ export const OrganizationForm: React.FC = () => {
               />
               <FormField
                 control={form.control}
-                name="size"
+                name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>How large is your organization ?</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select company size" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="just me">just me</SelectItem>
-                        <SelectItem value="1-5">1-5</SelectItem>
-                        <SelectItem value="5-25">5-25</SelectItem>
-                        <SelectItem value="25-100">25-100</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Add description"
+                        className="resize-none h-[120px]"
+                        {...field}
+                      />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-
-              <Label htmlFor="picture">Logo</Label>
-              <Input id="picture" type="file" />
 
               {error && <div className="text-red-600">{error.message}</div>}
 

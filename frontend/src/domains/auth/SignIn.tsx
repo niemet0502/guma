@@ -56,11 +56,11 @@ export function SignIn({ className, ...props }: UserAuthFormProps) {
       login(user, session, project);
 
       if (project && project_id) {
-        navigate(`/${project.name.toLowerCase()}/documents`, {
+        navigate(`/${project.name.toLowerCase()}/notifications`, {
           replace: true,
         });
       } else {
-        navigate("/create-workspace");
+        navigate("/create-project");
       }
     }
   }

@@ -166,7 +166,7 @@ export const router = createBrowserRouter([
             ],
           },
           {
-            path: "/create-workspace",
+            path: "/create-project",
             element: <OrganizationForm />,
           },
         ],
