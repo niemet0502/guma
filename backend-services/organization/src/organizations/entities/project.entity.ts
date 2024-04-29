@@ -1,5 +1,6 @@
 import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
 import { Label } from '../../labels/entities/label.entity';
+import { ProjectMember } from '../../members/entities/member.entity';
 
 @ObjectType()
 @Directive('@key(fields: "id")')
@@ -10,7 +11,7 @@ export class Project {
   @Field()
   name: string;
 
-  @Field()
+  @Field({ nullable: true })
   size: string;
 
   @Field({ nullable: true })
@@ -18,4 +19,7 @@ export class Project {
 
   @Field((type) => [Label])
   labels?: Label[];
+
+  @Field((type) => [ProjectMember])
+  members?: ProjectMember[];
 }

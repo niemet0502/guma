@@ -1,10 +1,11 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { AxiosError } from 'axios';
 import { GraphQLClient } from 'graphql-request';
 import { catchError, firstValueFrom } from 'rxjs';
 import { LabelsService } from '../labels/labels.service';
 import { CustomLogger } from '../logger/custom-logger.service';
+import { MembersService } from '../members/members.service';
 import { User } from '../shared/user.entity';
 import { DEFAULT_ORGANIZATION_LABEL } from '../utils/Constant';
 import { CreateProjectInput } from './dto/create-organization.input';
@@ -20,6 +21,8 @@ export class OrganizationsService {
   constructor(
     private readonly http: HttpService,
     private readonly labelService: LabelsService,
+    @Inject(forwardRef(() => MembersService))
+    private readonly membersService: MembersService,
     private logger: CustomLogger,
   ) {
     this.teamGraphQLClient = new GraphQLClient('http://team:3000/graphql');
@@ -173,5 +176,9 @@ export class OrganizationsService {
       console.error('GraphQL mutation error:', error);
       throw error;
     }
+  }
+
+  async getMembers(projectId?: number) {
+    return await this.membersService.findAll(projectId, undefined);
   }
 }

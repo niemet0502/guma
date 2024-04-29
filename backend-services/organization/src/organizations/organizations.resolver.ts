@@ -64,6 +64,12 @@ export class OrganizationsResolver {
     return this.labelsService.findAll(id);
   }
 
+  @ResolveField()
+  async members(@Parent() organization: Project) {
+    const { id } = organization;
+    return this.organizationsService.getMembers(id);
+  }
+
   @ResolveReference()
   resolveReference(reference: {
     __typename: string;
