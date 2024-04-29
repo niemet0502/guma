@@ -5,7 +5,10 @@ export class CreateProjectInput {
   @Field()
   name: string;
 
-  @Field()
+  @Field({ nullable: true })
+  description: string;
+
+  @Field({ nullable: true })
   size: string;
 
   @Field({ nullable: true })

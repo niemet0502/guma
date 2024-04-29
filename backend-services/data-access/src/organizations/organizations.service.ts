@@ -1,8 +1,9 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CustomLogger } from '../logger/custom-logger.service';
 import { CreateProjectDto } from './dto/create-project.dto';
+import { CreateProjectMemberDto } from './dto/create-projectmember.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { Project } from './entities/project.entity';
 import { ProjectMember } from './entities/projectmember.entity';
@@ -93,5 +94,28 @@ export class ProjectsService {
     } catch (error) {
       this.logger.debug({ message: 'Failed to fetch members', data: error });
     }
+  }
+
+  async createProjectMember(createProjectMemberDto: CreateProjectMemberDto) {
+    const { project_id, user_id } = createProjectMemberDto;
+
+    this.logger.log(
+      { message: 'Creatin a new member ...', data: { project_id, user_id } },
+      'findMembers',
+    );
+
+    const member = await this.memberRepository.find({
+      where: { project_id, user_id },
+    });
+
+    if (member) {
+      this.logger.error({
+        message: 'The user is already part of this project',
+        data: createProjectMemberDto,
+      });
+      throw new BadRequestException('The user is already part of this project');
+    }
+
+    return this.memberRepository.save(createProjectMemberDto);
   }
 }

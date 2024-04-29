@@ -17,8 +17,25 @@ export class MembersService {
     this.logger.setContext('ProjectMemberService');
   }
 
-  create(createMemberInput: CreateMemberProjectInput) {
-    return 'This action adds a new member';
+  async create(createMemberInput: CreateMemberProjectInput) {
+    this.logger.log(
+      {
+        message: 'Starting to assign a user to a project...',
+        data: createMemberInput,
+      },
+      'create',
+    );
+
+    const { data } = await firstValueFrom(
+      this.http.post<ProjectMember>(this.url, createMemberInput).pipe(
+        catchError((error: AxiosError) => {
+          this.logger.error(error.response.data);
+          const e: any = error.response.data;
+          throw e.message;
+        }),
+      ),
+    );
+    return data;
   }
 
   async findAll(projecId?: number, userId?: number) {
