@@ -10,6 +10,7 @@ import { LabelsModule } from './labels/labels.module';
 import { LoggerModule } from './logger/logger.module';
 import { RequestLoggingMiddleware } from './middleware/request-logging.middleware';
 import { OrganizationsModule } from './organizations/organizations.module';
+import { MembersModule } from './members/members.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { OrganizationsModule } from './organizations/organizations.module';
     LabelsModule,
     OrganizationsModule,
     LoggerModule,
+    MembersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
