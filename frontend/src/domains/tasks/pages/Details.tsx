@@ -4,6 +4,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/domains/auth/providers/auth";
@@ -12,8 +20,7 @@ import { useGetUsers } from "@/domains/users/hooks/useGetUsers";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { FaRegClock } from "react-icons/fa6";
-import { RiArrowRightSLine } from "react-icons/ri";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { CommentSection } from "../components/CommentSection";
 import { CreateSubTask } from "../components/CreateSubTask";
 import { SubTaskItem } from "../components/SubTaskItem";
@@ -26,7 +33,7 @@ import { ActivityAction } from "../type";
 
 export const TaskDetails: React.FC = () => {
   const { project, user } = useAuth();
-  const { issueId } = useParams<{ issueId: string }>();
+  const { orgaId, issueId } = useParams<{ orgaId: string; issueId: string }>();
 
   const { data: users } = useGetUsers(project?.id as number);
   const { data: task } = useGetTask(issueId as string);
@@ -99,13 +106,31 @@ export const TaskDetails: React.FC = () => {
         <div className="h-full w-full flex">
           <div className="flex flex-1 flex-col">
             <div className="bg-secondary py-3 px-5 flex items-center justify-between">
-              <div className="flex items-center gap-1">
-                <div>Backlog</div>
-                <p className="flex gap-1 items-center">
-                  <RiArrowRightSLine className="mt-0.5" />
-                  {task.name}
-                </p>
-              </div>
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem>
+                    <BreadcrumbLink>
+                      <NavLink
+                        to={`/${orgaId}/team/${task.team?.name.toLowerCase()}/issues`}
+                        className={({ isActive, isPending }) =>
+                          isActive
+                            ? "default p-1"
+                            : isPending
+                            ? "default p-1"
+                            : "default p-1"
+                        }
+                      >
+                        Backlog
+                      </NavLink>
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage> {task.name}</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+
               <AddReminderDialog
                 taskId={task.id}
                 reminderToEdit={hasReminder}

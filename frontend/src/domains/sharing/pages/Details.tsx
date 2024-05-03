@@ -1,3 +1,11 @@
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -13,8 +21,7 @@ import { Avatar } from "@radix-ui/react-avatar";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { useRef } from "react";
 import { BiTrashAlt } from "react-icons/bi";
-import { RiArrowRightSLine } from "react-icons/ri";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { AnswerItem } from "../components/AnswerItem";
 import { QuestionRemoveDialog } from "../components/RemoveQuestionDialog";
 import { useCreateAnswer } from "../hooks/useCreateAnswer";
@@ -25,7 +32,10 @@ import { CreateVoteInput } from "../type";
 export const QuestionDetails: React.FC = () => {
   const { user } = useAuth();
   const { toast } = useToast();
-  const { questionId } = useParams<{ questionId: string }>();
+  const { orgaId, questionId } = useParams<{
+    orgaId: string;
+    questionId: string;
+  }>();
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -64,10 +74,32 @@ export const QuestionDetails: React.FC = () => {
   return (
     <div className="w-full">
       <div className="bg-secondary py-3 px-5 flex gap-1 items-center">
-        <p>Questions</p>
-        <p className="flex gap-1 items-center">
-          <RiArrowRightSLine className="mt-0.5" /> {question?.title}
-        </p>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink>
+                <NavLink
+                  to={`/${orgaId}/questions`}
+                  className={({ isActive, isPending }) =>
+                    isActive
+                      ? "default p-1"
+                      : isPending
+                      ? "default p-1"
+                      : "default p-1"
+                  }
+                >
+                  Questions
+                </NavLink>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage> {question?.title}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+
         {question && (
           <QuestionRemoveDialog questionId={question!.id}>
             <TooltipProvider>

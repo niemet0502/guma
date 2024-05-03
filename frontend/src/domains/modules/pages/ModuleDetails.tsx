@@ -5,15 +5,22 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Avatar } from "@/components/ui/avatar";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { transformDateFullText } from "@/lib/utils";
 import { BsDot } from "react-icons/bs";
 import { CiCalendarDate } from "react-icons/ci";
 import { GoProjectRoadmap } from "react-icons/go";
 import { LuActivity } from "react-icons/lu";
-import { RiArrowRightSLine } from "react-icons/ri";
 import { TbEdit } from "react-icons/tb";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { CreateModuleUpdate } from "../components/CreateModuleUpdate";
 import { ModuleDocumentItem } from "../components/ModuleDocumentItem";
 import { statusLabel } from "../components/ModuleItem";
@@ -23,7 +30,11 @@ import { UpdatesList } from "../components/UpdatesList";
 import { useGetModule } from "../hooks/useGetModule";
 
 export const ModuleDetails: React.FC = () => {
-  const { moduleId } = useParams<{ moduleId: string }>();
+  const { orgaId, teamId, moduleId } = useParams<{
+    orgaId: string;
+    teamId: string;
+    moduleId: string;
+  }>();
 
   const { data: module } = useGetModule(+moduleId!);
 
@@ -38,15 +49,34 @@ export const ModuleDetails: React.FC = () => {
   return (
     <div className="w-full h-full flex">
       <div className="w-2/3">
-        <div className="w-full flex flex-1  border-b">
-          <div className="w-full py-3 px-5 flex items-center">
-            <p>Livrables</p>
-            <p className="flex gap-1 items-center">
-              <RiArrowRightSLine className="mt-0.5" />
-              {module?.name}
-            </p>
-          </div>
-          <div className="py-3 px-5 flex gap-2 items-center">
+        <div className="bg-secondary w-full py-3 px-5  items-center justify-between flex flex-1  border-b">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink>
+                  <NavLink
+                    to={`/${orgaId}/team/${teamId}/modules`}
+                    className={({ isActive, isPending }) =>
+                      isActive
+                        ? "default p-1"
+                        : isPending
+                        ? "default p-1"
+                        : "default p-1"
+                    }
+                  >
+                    Livrables
+                  </NavLink>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage> {module?.name}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+
+          <div className=" flex gap-2 items-center">
             {module && (
               <>
                 <UpdatesList updates={module.updates}>
@@ -59,7 +89,7 @@ export const ModuleDetails: React.FC = () => {
                   </Button>
                 </UpdatesList>
                 <CreateModuleUpdate moduleId={module.id}>
-                  <Button size="sm" variant="secondary" className="flex gap-1">
+                  <Button size="sm" className="flex gap-1">
                     <TbEdit />
                     <span>New</span>
                     <span>update</span>
