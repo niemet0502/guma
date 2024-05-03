@@ -1,5 +1,13 @@
 import { Drag } from "@/components/dnd/drag";
 import { Drop } from "@/components/dnd/drop";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,8 +30,7 @@ import { Reference, gql } from "@apollo/client";
 import { useMemo, useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { MdOutlineEdit } from "react-icons/md";
-import { RiArrowRightSLine } from "react-icons/ri";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import {
   calculateIssueListPosition,
   isPositionChanged,
@@ -35,6 +42,7 @@ import { CreateSprintForm } from "./CreateForm";
 
 export const OngoingSprint: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
   const { project } = useAuth();
+  const { orgaId, teamId } = useParams<{ orgaId: string; teamId: string }>();
 
   const { data: status } = useGetStatus(sprint.team_id);
   const { updateTask } = useUpdateTask();
@@ -102,19 +110,36 @@ export const OngoingSprint: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
 
   return (
     <div className="w-full h-full flex flex-col">
-      <div className="mb-3  py-3 px-5 flex items-center gap-1 sticky top-0 justify-between">
+      <div className="mb-3 bg-secondary py-3 px-5 flex items-center gap-1 sticky top-0 justify-between">
         <div className="flex items-center gap-1">
-          <NavLink to={`/ `} className="hover:text-muted-foreground w-auto p-0">
-            Sprints
-          </NavLink>
-          <p className="flex gap-1 items-center">
-            <RiArrowRightSLine className="mt-0.5" />
-            {sprint?.name}
-          </p>
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink>
+                  <NavLink
+                    to={`/${orgaId}/team/${teamId}/sprints`}
+                    className={({ isActive, isPending }) =>
+                      isActive
+                        ? "default p-1"
+                        : isPending
+                        ? "default p-1"
+                        : "default p-1"
+                    }
+                  >
+                    Sprints
+                  </NavLink>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
 
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage> {sprint?.name}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
           <Dialog open={open} onOpenChange={setOpen} modal={false}>
             <DialogTrigger asChild>
-              <span className="mr-2 hover:cursor-pointer">
+              <span className="mr-2 ml-2 hover:cursor-pointer">
                 <MdOutlineEdit />
               </span>
             </DialogTrigger>
@@ -130,6 +155,7 @@ export const OngoingSprint: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
             </DialogContent>
           </Dialog>
         </div>
+
         {sprint.status === SprintStatusEnum.Ongoing && (
           <div className="flex gap-2 items-center">
             <span className="text-muted-foreground">
@@ -137,9 +163,7 @@ export const OngoingSprint: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
             </span>
             <CompleteSprintDialog sprint={sprint}>
               <DialogTrigger className="w-full">
-                <Button size="sm" variant="secondary">
-                  Complete sprint
-                </Button>
+                <Button size="sm">Complete sprint</Button>
               </DialogTrigger>
             </CompleteSprintDialog>
           </div>

@@ -1,3 +1,11 @@
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,7 +20,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import { MdOutlineEdit } from "react-icons/md";
-import { RiArrowRightSLine } from "react-icons/ri";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { DocumentItem } from "../../documents/components/DocumentItem";
 import { CreateWikiForm } from "../components/CreateWiki";
@@ -45,20 +52,36 @@ export const FolderDetails: React.FC = () => {
     <div className="w-full h-full">
       <div className="bg-secondary py-3 px-5 flex items-center justify-between">
         <div className="flex items-center gap-1">
-          <NavLink
-            to={`/${orgaId}/team/${data?.team?.name.toLowerCase()}/wiki`}
-            className="hover:text-muted-foreground w-auto p-0"
-          >
-            Wiki
-          </NavLink>
-          <p className="flex gap-1 items-center">
-            <RiArrowRightSLine className="mt-0.5" />
-            {data?.name}
-          </p>
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink>
+                  <NavLink
+                    to={`/${orgaId}/team/${data?.team?.name.toLowerCase()}/wiki`}
+                    className={({ isActive, isPending }) =>
+                      isActive
+                        ? "default p-1"
+                        : isPending
+                        ? "default p-1"
+                        : "default p-1"
+                    }
+                  >
+                    Wiki
+                  </NavLink>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage> {data?.name}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+
           <div className="ml-2 flex items-center gap-1">
             <Dialog open={opent} onOpenChange={setOpent} modal={false}>
               <DialogTrigger asChild>
-                <Button variant="outline" size="icon" className="w-4">
+                <Button variant="ghost" size="icon" className="w-4">
                   <MdOutlineEdit />
                 </Button>
               </DialogTrigger>
@@ -72,7 +95,7 @@ export const FolderDetails: React.FC = () => {
 
             <Dialog>
               <DialogTrigger>
-                <Button variant="outline" size="icon" className="w-4">
+                <Button variant="ghost" size="icon" className="w-4">
                   <AiOutlineDelete />
                 </Button>
               </DialogTrigger>
