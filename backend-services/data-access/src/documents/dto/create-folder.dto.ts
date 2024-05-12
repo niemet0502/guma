@@ -11,4 +11,6 @@ export class CreateFolderDto {
   @IsNotEmpty()
   @ApiProperty({ required: true })
   public team_id: number;
+
+  public create_by: number;
 }

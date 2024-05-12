@@ -1,6 +1,7 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TeamsModule } from 'src/teams/teams.module';
+import { AuthMiddleware } from 'src/middleware/auth.middleware';
+import { TeamsModule } from '../teams/teams.module';
 import { Livrable } from './entities/livrable.entity';
 import { LivrableUpdate } from './entities/update.entity';
 import { LivrablesController } from './livrables.controller';
@@ -13,4 +14,10 @@ import { LivrableUpdatesService } from './updates.service';
   controllers: [LivrablesController, LivrableUpdatesController],
   providers: [LivrablesService, LivrableUpdatesService],
 })
-export class LivrablesModule {}
+export class LivrablesModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .forRoutes(LivrableUpdatesController, LivrablesController);
+  }
+}

@@ -9,6 +9,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { User } from '../users/entities/user.entity';
+import { UserDecorator } from '../users/user.decorator';
 import { CreateLivrableUpdateDto } from './dto/create-update.dto';
 import { UpdateLivrableUpdateDto } from './dto/update-updatelivrable.dto';
 import { LivrableUpdate } from './entities/update.entity';
@@ -21,8 +23,14 @@ export class LivrableUpdatesController {
 
   @Post()
   @ApiCreatedResponse({ type: LivrableUpdate })
-  create(@Body() createLivrableUpdateDto: CreateLivrableUpdateDto) {
-    return this.service.create(createLivrableUpdateDto);
+  create(
+    @UserDecorator() user: User,
+    @Body() createLivrableUpdateDto: CreateLivrableUpdateDto,
+  ) {
+    return this.service.create({
+      ...createLivrableUpdateDto,
+      created_by: user.id,
+    });
   }
 
   @Get()
