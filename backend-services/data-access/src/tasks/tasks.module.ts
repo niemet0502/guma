@@ -1,6 +1,13 @@
-import { Module, forwardRef } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  forwardRef,
+} from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ActivitiesModule } from 'src/activities/activities.module';
+import { AuthMiddleware } from 'src/middleware/auth.middleware';
+import { UsersModule } from 'src/users/users.module';
 import { OrganizationsModule } from '../organizations/organizations.module';
 import { SprintsModule } from '../sprints/sprints.module';
 import { StatusModule } from '../status/status.module';
@@ -23,9 +30,16 @@ import { TasksService } from './tasks.service';
     OrganizationsModule,
     forwardRef(() => SprintsModule),
     StatusModule,
+    UsersModule,
   ],
   controllers: [TasksController, CommentsController, TaskLabelController],
   providers: [TasksService, CommentsService, TaskLabelService],
   exports: [TasksService],
 })
-export class TasksModule {}
+export class TasksModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .forRoutes(TasksController, CommentsController, TaskLabelController);
+  }
+}

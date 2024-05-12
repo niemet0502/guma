@@ -9,6 +9,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { User } from '../users/entities/user.entity';
+import { UserDecorator } from '../users/user.decorator';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from './entities/task.entity';
@@ -21,8 +23,8 @@ export class TasksController {
 
   @Post()
   @ApiCreatedResponse({ type: Task })
-  create(@Body() createTaskDto: CreateTaskDto) {
-    return this.tasksService.create(createTaskDto);
+  create(@UserDecorator() user: User, @Body() createTaskDto: CreateTaskDto) {
+    return this.tasksService.create({ ...createTaskDto, created_by: user.id });
   }
 
   @Get()

@@ -3,8 +3,7 @@ import { IsNotEmpty } from 'class-validator';
 import { ActivityAction } from '../tasks.enum';
 
 export class CreateActivityDto {
-  @IsNotEmpty()
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: false })
   public created_by: number;
 
   @IsNotEmpty()
