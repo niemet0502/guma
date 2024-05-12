@@ -9,6 +9,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { User } from '../users/entities/user.entity';
+import { UserDecorator } from '../users/user.decorator';
 import { CreateReminderDto } from './dto/create-reminder.dto';
 import { UpdateReminderDto } from './dto/update-reminder.dto';
 import { Reminder } from './entities/reminder.entity';
@@ -21,8 +23,14 @@ export class RemindersController {
 
   @Post()
   @ApiCreatedResponse({ type: Reminder })
-  create(@Body() createReminderDto: CreateReminderDto) {
-    return this.remindersService.create(createReminderDto);
+  create(
+    @UserDecorator() user: User,
+    @Body() createReminderDto: CreateReminderDto,
+  ) {
+    return this.remindersService.create({
+      ...createReminderDto,
+      created_by: user.id,
+    });
   }
 
   @Get()

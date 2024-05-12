@@ -20,8 +20,7 @@ export class CreateReminderDto {
   @ApiProperty({ required: true })
   public send_at: Date;
 
-  @IsNotEmpty()
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: false })
   public created_by: number;
 
   @ApiProperty({ required: false })
