@@ -23,7 +23,6 @@ export class CreateDocumentDto {
   @ApiProperty({ required: false })
   public team_id: number;
 
-  @IsNotEmpty()
   @ApiProperty({ required: false })
   public created_by: number;
 }

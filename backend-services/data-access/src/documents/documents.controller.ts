@@ -9,6 +9,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { User } from '../users/entities/user.entity';
+import { UserDecorator } from '../users/user.decorator';
 import { DocumentsService } from './documents.service';
 import { CreateDocumentDto } from './dto/create-document.dto';
 import { UpdateDocumentDto } from './dto/update-document.dto';
@@ -21,9 +23,14 @@ export class DocumentsController {
 
   @Post()
   @ApiCreatedResponse({ type: Document })
-  create(@Body() createDocumentDto: CreateDocumentDto) {
-    // TODO get the user.id from the header
-    return this.documentsService.create(createDocumentDto);
+  create(
+    @UserDecorator() user: User,
+    @Body() createDocumentDto: CreateDocumentDto,
+  ) {
+    return this.documentsService.create({
+      ...createDocumentDto,
+      created_by: user.id,
+    });
   }
 
   @Get()

@@ -9,6 +9,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { User } from '../users/entities/user.entity';
+import { UserDecorator } from '../users/user.decorator';
 import { CreateFolderDto } from './dto/create-folder.dto';
 import { UpdateFolderDto } from './dto/update-folder.dto';
 import { Folder } from './entities/folder.entity';
@@ -20,8 +22,14 @@ export class FolderController {
   constructor(private readonly folderService: FolderService) {}
   @Post()
   @ApiCreatedResponse({ type: Folder })
-  create(@Body() createFolderDto: CreateFolderDto): Promise<Folder> {
-    return this.folderService.create(createFolderDto);
+  create(
+    @UserDecorator() user: User,
+    @Body() createFolderDto: CreateFolderDto,
+  ): Promise<Folder> {
+    return this.folderService.create({
+      ...createFolderDto,
+      create_by: user.id,
+    });
   }
 
   @Get()
