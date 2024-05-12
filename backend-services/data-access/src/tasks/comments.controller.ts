@@ -1,3 +1,4 @@
+import { UserDecorator } from '../users/user.decorator';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
@@ -14,6 +15,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { User } from '../users/entities/user.entity';
 
 @Controller('comments')
 @ApiTags('comments')
@@ -22,8 +24,14 @@ export class CommentsController {
 
   @Post()
   @ApiCreatedResponse({ type: Comment })
-  async create(@Body() createCommentDto: CreateCommentDto): Promise<Comment> {
-    return await this.commentsService.create(createCommentDto);
+  async create(
+    @UserDecorator() user: User,
+    @Body() createCommentDto: CreateCommentDto,
+  ): Promise<Comment> {
+    return await this.commentsService.create({
+      ...createCommentDto,
+      created_by: user.id,
+    });
   }
 
   @Get()

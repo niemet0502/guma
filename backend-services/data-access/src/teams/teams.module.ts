@@ -1,6 +1,12 @@
-import { Module, forwardRef } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  forwardRef,
+} from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'src/logger/logger.module';
+import { AuthMiddleware } from 'src/middleware/auth.middleware';
 import { OrganizationsModule } from '../organizations/organizations.module';
 import { StatusModule } from '../status/status.module';
 import { UsersModule } from '../users/users.module';
@@ -20,9 +26,16 @@ import { TeamsService } from './teams.service';
     forwardRef(() => WorkflowModule),
     forwardRef(() => StatusModule),
     LoggerModule,
+    UsersModule,
   ],
   controllers: [TeamsController, MembersController],
   providers: [TeamsService, MembersService],
   exports: [TeamsService],
 })
-export class TeamsModule {}
+export class TeamsModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .forRoutes(TeamsController, MembersController);
+  }
+}
