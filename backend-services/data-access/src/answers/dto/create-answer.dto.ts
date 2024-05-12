@@ -8,7 +8,7 @@ export class CreateAnswerDto {
   @ApiProperty({ required: true })
   public content: string;
 
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: false })
   public created_by: number;
 
   @IsNotEmpty()

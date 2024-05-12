@@ -9,6 +9,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { User } from '../users/entities/user.entity';
+import { UserDecorator } from '../users/user.decorator';
 import { AnswersService } from './answers.service';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
@@ -21,8 +23,14 @@ export class AnswersController {
 
   @Post()
   @ApiCreatedResponse({ type: Answer })
-  create(@Body() createAnswerDto: CreateAnswerDto) {
-    return this.answersService.create(createAnswerDto);
+  create(
+    @UserDecorator() user: User,
+    @Body() createAnswerDto: CreateAnswerDto,
+  ) {
+    return this.answersService.create({
+      ...createAnswerDto,
+      created_by: user.id,
+    });
   }
 
   @Get()

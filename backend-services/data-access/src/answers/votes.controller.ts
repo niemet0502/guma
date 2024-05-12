@@ -1,5 +1,7 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { User } from '../users/entities/user.entity';
+import { UserDecorator } from '../users/user.decorator';
 import { CreateVoteDto } from './dto/create-vote.dto';
 import { AnswerVote } from './entities/vote.entity';
 import { AnswerVotesService } from './votes.services';
@@ -11,8 +13,11 @@ export class AnswerVotesController {
 
   @Post()
   @ApiCreatedResponse({ type: AnswerVote })
-  async create(@Body() createVoteDto: CreateVoteDto): Promise<AnswerVote> {
-    return await this.service.create(createVoteDto);
+  async create(
+    @UserDecorator() user: User,
+    @Body() createVoteDto: CreateVoteDto,
+  ): Promise<AnswerVote> {
+    return await this.service.create({ ...createVoteDto, created_by: user.id });
   }
 
   @Get()

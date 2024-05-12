@@ -1,6 +1,8 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { QuestionsModule } from 'src/questions/questions.module';
+import { AuthMiddleware } from 'src/middleware/auth.middleware';
+import { UsersModule } from 'src/users/users.module';
+import { QuestionsModule } from '../questions/questions.module';
 import { AnswersController } from './answers.controller';
 import { AnswersService } from './answers.service';
 import { Answer } from './entities/answer.entity';
@@ -9,8 +11,18 @@ import { AnswerVotesController } from './votes.controller';
 import { AnswerVotesService } from './votes.services';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Answer, AnswerVote]), QuestionsModule],
+  imports: [
+    TypeOrmModule.forFeature([Answer, AnswerVote]),
+    QuestionsModule,
+    UsersModule,
+  ],
   controllers: [AnswersController, AnswerVotesController],
   providers: [AnswersService, AnswerVotesService],
 })
-export class AnswersModule {}
+export class AnswersModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .forRoutes(AnswerVotesController, AnswersController);
+  }
+}
