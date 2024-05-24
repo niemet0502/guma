@@ -18,6 +18,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { MdOutlineAnalytics } from "react-icons/md";
 
 export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
   let { orgaId } = useParams<{ orgaId: string }>();
@@ -66,6 +67,15 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
             </AccordionTrigger>
             <AccordionContent>
               <div className="space-y-1 pl-4 pr-3">
+                <NavLink
+                  to={`/${orgaId}/team/${team.name.toLowerCase()}/overview`}
+                  className={({ isActive, isPending }) =>
+                    isActive ? "active" : isPending ? "default" : "default"
+                  }
+                >
+                  <MdOutlineAnalytics className="text-base" />
+                  Analytics
+                </NavLink>
                 <NavLink
                   to={`/${orgaId}/team/${team.name.toLowerCase()}/issues`}
                   className={({ isActive, isPending }) =>
