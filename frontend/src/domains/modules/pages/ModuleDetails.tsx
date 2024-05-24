@@ -43,7 +43,7 @@ export const ModuleDetails: React.FC = () => {
   ).length;
 
   const startedTasksCount = module?.tasks.filter(
-    ({ status }) => status.state >= 5 && status.state <= 20
+    ({ status }) => status.state > 10 && status.state <= 20
   ).length;
 
   return (

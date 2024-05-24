@@ -10,7 +10,13 @@ import {
   chartdata2,
   dataFormatter2,
 } from "@/domains/analytics/pages/Dashboard";
-import { Card, DonutChart, LineChart, ProgressBar } from "@tremor/react";
+import {
+  BarChart,
+  Card,
+  DonutChart,
+  LineChart,
+  ProgressBar,
+} from "@tremor/react";
 import { membersData } from "../data/data";
 
 const dataFormatter = (number: number) =>
@@ -64,8 +70,8 @@ export const TeamOverview: React.FC = () => {
         </div>
       </Card>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 bg-transparent">
-        <Card className="col-span-4">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6 bg-transparent">
+        <Card className="col-span-3">
           <CardHeader>
             <CardTitle>Team progress</CardTitle>
           </CardHeader>
@@ -112,34 +118,15 @@ export const TeamOverview: React.FC = () => {
             <CardTitle>Charge de travail</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="w-full pr-5 py-3 flex justify-between border-b hover:bg-slate-50 hover:cursor-pointer">
-              <div className="flex-1">Membre</div>
-              <div className="flex-1 pr-4">Pourcentage</div>
-              <div className="flex-1 pl-12">Total</div>
-            </div>
-            {membersData.map((member) => (
-              <div className="flex w-full  py-2 border-b">
-                <div className="flex-1">{member.name}</div>
-                <div className="flex-1 flex justify-between pr-4">
-                  <div className="w-3/5 ">
-                    <ProgressBar
-                      value={Math.floor(
-                        (member.completedTask / member.totalTask) * 100
-                      )}
-                      color="teal"
-                      className="mt-3"
-                    />
-                  </div>
-                  {Math.floor((member.completedTask / member.totalTask) * 100)}{" "}
-                  %
-                </div>
-                <div className="flex-1">
-                  <div className=" text-blue-400 font-bold w-6 rounded-full h-6 flex items-center justify-center">
-                    {member.totalTask}
-                  </div>
-                </div>
-              </div>
-            ))}
+            <BarChart
+              className="mt-6"
+              data={membersData}
+              index="name"
+              categories={["completedTask", "totalTask"]}
+              colors={["blue", "teal", "amber", "rose", "indigo", "emerald"]}
+              valueFormatter={dataFormatter}
+              yAxisWidth={48}
+            />
           </CardContent>
         </Card>
       </div>

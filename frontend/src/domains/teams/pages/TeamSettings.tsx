@@ -7,7 +7,7 @@ export const TeamSettings: React.FC = () => {
   return (
     <div className="w-full h-full">
       <div className="bg-secondary py-3 px-5 flex items-center sticky top-0 z-10">
-        <p>Guma</p>
+        <p>Backend</p>
         <RiArrowRightSLine className="mt-0.5" />
         <p>Settings</p>
       </div>
@@ -28,7 +28,7 @@ export const TeamSettings: React.FC = () => {
               isActive ? "active" : isPending ? "default" : "default"
             }
           >
-            Members
+            Membres
           </NavLink>
 
           <NavLink

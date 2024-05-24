@@ -84,7 +84,7 @@ export const Sidebar: React.FC = () => {
         <div className="">
           <div className="flex items-center justify-between">
             <h6 className="my-2 px-4 text-lg font-semibold tracking-tight">
-              Teams
+              Equipes
             </h6>
 
             {user?.profile_id === UserProfileEnum.ADMIN && <CreateDialog />}

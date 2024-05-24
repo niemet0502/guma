@@ -35,17 +35,17 @@ export const TeamMembers: React.FC = () => {
     <div className="w-full flex justify-center">
       <div className="w-full max-w-2xl ">
         <div className="border-b p-2 mb-4">
-          <h1 className="text-2xl">Team members</h1>
+          <h1 className="text-2xl">Membres de l'équipe</h1>
           <p className="mt-1">Manage who is a member of the team</p>
         </div>
         <div className="p-1 flex flex-col gap-2">
-          Manage members
+          Gérer les membres de l'equipe
           <div className="mt-1 flex justify-between">
-            <Input placeholder="Search by name or email" className="w-80" />
+            <Input placeholder="Recherchez par nom ou email" className="w-80" />
 
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger>
-                <Button type="submit">Add a member</Button>
+                <Button type="submit">Ajouter un membre</Button>
               </PopoverTrigger>
               <PopoverContent className="p-1 w-60">
                 <Command>
@@ -86,7 +86,7 @@ export const TeamMembers: React.FC = () => {
             </Popover>
           </div>
           <div className="flex flex-col gap-2">
-            <span className="text-sm">{team?.members.length} members</span>
+            <span className="text-sm">{team?.members.length} listes</span>
 
             {(team?.members || []).map((member) => (
               <TeamMemberItem

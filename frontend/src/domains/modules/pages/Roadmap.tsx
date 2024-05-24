@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/domains/auth/providers/auth";
+import { AiOutlinePlus } from "react-icons/ai";
 import { LuActivity } from "react-icons/lu";
 import { CreateModuleDialog } from "../components/CreateModuleDialog";
 import { ModuleItem } from "../components/ModuleItem";
@@ -34,7 +35,13 @@ export const Roadmap: React.FC = () => {
               </Button>
             </UpdatesList>
           )}
-          {teamsData && <CreateModuleDialog teamsData={teamsData} />}
+          {teamsData && (
+            <CreateModuleDialog teamsData={teamsData}>
+              <span className="mr-2 hover:cursor-pointer text-muted-foreground">
+                <AiOutlinePlus />
+              </span>
+            </CreateModuleDialog>
+          )}
         </div>
       </div>
 

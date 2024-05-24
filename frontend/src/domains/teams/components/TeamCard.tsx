@@ -83,7 +83,7 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
                   }
                 >
                   <GoIssueDraft className="text-base" />
-                  Issues
+                  Backlog
                 </NavLink>
                 <NavLink
                   to={`/${orgaId}/team/${team.name.toLowerCase()}/wiki`}
@@ -92,7 +92,7 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
                   }
                 >
                   <HiOutlineDocumentDuplicate className="text-base" />
-                  Wiki
+                  Documentation
                 </NavLink>
 
                 <NavLink
@@ -112,7 +112,7 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
                   }
                 >
                   <GoProjectRoadmap />
-                  Modules
+                  Livrables
                 </NavLink>
               </div>
             </AccordionContent>

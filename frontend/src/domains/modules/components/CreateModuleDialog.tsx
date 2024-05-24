@@ -84,7 +84,7 @@ export const CreateModuleDialog: React.FC<{
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="top-[45%] lg:w-[800px] sm:max-w-[625px]">
         <DialogHeader>
-          <DialogTitle>Create a new module</DialogTitle>
+          <DialogTitle>Nouveau livrable</DialogTitle>
         </DialogHeader>
         <div>
           <Form {...form}>
@@ -97,7 +97,7 @@ export const CreateModuleDialog: React.FC<{
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>Nom</FormLabel>
                     <FormControl>
                       <Input placeholder="Module name" {...field} />
                     </FormControl>
@@ -111,7 +111,7 @@ export const CreateModuleDialog: React.FC<{
                   name="team_id"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Team</FormLabel>
+                      <FormLabel>Equipe</FormLabel>
                       <Select onValueChange={field.onChange}>
                         <FormControl>
                           <SelectTrigger>
@@ -136,7 +136,7 @@ export const CreateModuleDialog: React.FC<{
                 name="start_at"
                 render={({ field }) => (
                   <FormItem className="flex flex-col w-full ">
-                    <FormLabel>Start date</FormLabel>
+                    <FormLabel>Date de début</FormLabel>
                     <Popover
                       open={openStartDate}
                       onOpenChange={setOpenStartDate}
@@ -181,7 +181,7 @@ export const CreateModuleDialog: React.FC<{
                 name="end_at"
                 render={({ field }) => (
                   <FormItem className="flex flex-col w-full ">
-                    <FormLabel>End date</FormLabel>
+                    <FormLabel>Date de fin</FormLabel>
                     <Popover open={openEndDate} onOpenChange={setOpenEndDate}>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -264,7 +264,7 @@ export const CreateModuleDialog: React.FC<{
                 </Button>
                 <Button type="submit">
                   {/* {sprintToEdit ? "Save" : "Create"} */}
-                  Create module
+                  Enregistrer
                 </Button>
               </div>
             </form>

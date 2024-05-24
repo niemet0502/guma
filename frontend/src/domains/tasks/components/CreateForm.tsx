@@ -95,7 +95,7 @@ export const CreateTaskForm: React.FC<{
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Title</FormLabel>
+                <FormLabel>Titre</FormLabel>
                 <FormControl>
                   <Input placeholder="Issue title" {...field} />
                 </FormControl>

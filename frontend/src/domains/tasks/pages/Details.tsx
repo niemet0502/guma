@@ -101,9 +101,9 @@ export const TaskDetails: React.FC = () => {
   }, [task]);
 
   return (
-    <div className="h-full border-t overflow-hidden">
+    <div className="h-full border-t overflow-hidden pb-10">
       {task && (
-        <div className="h-full w-full flex">
+        <div className="min-h-full w-full flex">
           <div className="flex flex-1 flex-col">
             <div className="bg-secondary py-3 px-5 flex items-center justify-between">
               <Breadcrumb>
