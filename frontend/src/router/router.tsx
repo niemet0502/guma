@@ -1,3 +1,4 @@
+import { Dashboard } from "@/domains/analytics/pages/Dashboard";
 import { AuthPage } from "@/domains/auth/AuthPage";
 import { SignIn } from "@/domains/auth/SignIn";
 import { SignUp } from "@/domains/auth/SignUp";
@@ -14,6 +15,7 @@ import { SprintDetails } from "@/domains/sprints/pages/Details";
 import { SprintList } from "@/domains/sprints/pages/List";
 import { TaskDetails } from "@/domains/tasks/pages/Details";
 import { TaskList } from "@/domains/tasks/pages/List";
+import { TeamOverview } from "@/domains/teams/pages/Overview";
 import { TeamGeneralSettings } from "@/domains/teams/pages/TeamGeneralSettings";
 import { TeamLabels } from "@/domains/teams/pages/TeamLabels";
 import { TeamMembers } from "@/domains/teams/pages/TeamMembers";
@@ -49,6 +51,11 @@ export const router = createBrowserRouter([
                 index: true,
                 path: "documents",
                 element: <Documents />,
+              },
+              {
+                index: true,
+                path: "analytics",
+                element: <Dashboard />,
               },
               {
                 path: "questions/new",
@@ -158,6 +165,11 @@ export const router = createBrowserRouter([
                     element: <TeamWorkflow />,
                   },
                 ],
+              },
+
+              {
+                path: "team/:teamId/overview",
+                element: <TeamOverview />,
               },
               {
                 path: "*", // Matches any path not covered by previous routes

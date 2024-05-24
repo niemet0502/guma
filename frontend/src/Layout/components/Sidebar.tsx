@@ -8,8 +8,8 @@ import { useTeams } from "@/domains/teams/hooks/useTeams";
 import { useMemo } from "react";
 import { FaRegQuestionCircle } from "react-icons/fa";
 import { FaMap } from "react-icons/fa6";
-import { GoIssueDraft } from "react-icons/go";
 import { IoIosNotificationsOutline } from "react-icons/io";
+import { MdOutlineAnalytics } from "react-icons/md";
 import { NavLink, useParams } from "react-router-dom";
 
 export const Sidebar: React.FC = () => {
@@ -33,6 +33,15 @@ export const Sidebar: React.FC = () => {
           </h4>
           <div className="space-y-1">
             <NavLink
+              to={`/${orgaId}/analytics`}
+              className={({ isActive, isPending }) =>
+                isActive ? "active" : isPending ? "default" : "default"
+              }
+            >
+              <MdOutlineAnalytics className="text-base" />
+              Analytics
+            </NavLink>
+            <NavLink
               to={`/${orgaId}/notifications`}
               className={({ isActive, isPending }) =>
                 isActive ? "active" : isPending ? "default" : "default"
@@ -53,16 +62,6 @@ export const Sidebar: React.FC = () => {
             </NavLink>
 
             <NavLink
-              to={`/${orgaId}/questions`}
-              className={({ isActive, isPending }) =>
-                isActive ? "active" : isPending ? "default" : "default"
-              }
-            >
-              <FaRegQuestionCircle className="text-base" />
-              Questions
-            </NavLink>
-
-            <NavLink
               to={`/${orgaId}/roadmap`}
               className={({ isActive, isPending }) =>
                 isActive ? "active" : isPending ? "default" : "default"
@@ -71,15 +70,14 @@ export const Sidebar: React.FC = () => {
               <FaMap className="text-base" />
               Roadmap
             </NavLink>
-
             <NavLink
-              to="/create-workspace"
+              to={`/${orgaId}/questions`}
               className={({ isActive, isPending }) =>
                 isActive ? "active" : isPending ? "default" : "default"
               }
             >
-              <GoIssueDraft className="text-base" />
-              Issues
+              <FaRegQuestionCircle className="text-base" />
+              Forum
             </NavLink>
           </div>
         </div>
