@@ -75,8 +75,17 @@ Name	| Role	|
 
 
 ## Deployment
+Deploying microservices, with their interdependence, is much more complex process than deploying a monolithic application. It is really important to have a fully automated infrastructure. We can achieve following benefits with Continuous Delivery approach:
 
+- The ability to release software anytime
+- Any build could end up being a release
+- Build artifacts once - deploy as needed
+
+Here is a simple Continuous Delivery workflow, implemented in this project:
 <img src="screenshots/deployment-workflow.png">
+
+In this [configuration](/.github/workflows/), Github Actions builds tagged images for each successful git push in the main branch. So, there are always the latest images for each microservice on [Docker Hub](https://hub.docker.com/) and older images, tagged with git commit hash. It's easy to deploy any of them and quickly rollback, if needed. 
+Once the image has been built and deployed to the registry the job will connect to the server to update the image version used by the [Kubernetes Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/). 
 
 ## License 
 The tool is available as open source under the terms of the [MIT License](https://opensource.org/license/MIT)
