@@ -72,7 +72,16 @@ Name	| Role	|
 | [Grafana](https://grafana.com/grafana/dashboards/) | Dashboard to visualize all logs, traces and metrics |
 
 ## Infrastructure
+Our application infrastructure leverages [Kubernetes](https://kubernetes.io/) to manage and orchestrate all microservices within the same repository. Kubernetes (K8s) is an open-source platform designed to automate deploying, scaling, and operating application containers. By utilizing Kubernetes, we ensure that our microservices are highly available, scalable, and resilient.
 
+All Kubernetes manifests required to deploy and manage our services are located in the k8s directory of this repository. This directory contains the necessary YAML files to define the desired state of our application components, including:
+
+- Deployments
+- Services
+- ConfigMaps
+- Ingress
+
+For now each resource is manually created, infra automation will be added using tools like [Terraform](https://www.terraform.io/) or [Pulumni](https://www.pulumi.com/). 
 
 ## Deployment
 Deploying microservices, with their interdependence, is much more complex process than deploying a monolithic application. It is really important to have a fully automated infrastructure. We can achieve following benefits with Continuous Delivery approach:
@@ -85,7 +94,7 @@ Here is a simple Continuous Delivery workflow, implemented in this project:
 <img src="screenshots/deployment-workflow.png">
 
 In this [configuration](/.github/workflows/), Github Actions builds tagged images for each successful git push in the main branch. So, there are always the latest images for each microservice on [Docker Hub](https://hub.docker.com/) and older images, tagged with git commit hash. It's easy to deploy any of them and quickly rollback, if needed. 
-Once the image has been built and deployed to the registry the job will connect to the server to update the image version used by the [Kubernetes Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/). 
+Once the image has been built and deployed to the registry the job will connect to the server to update the image version used by the [Kubernetes Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/). I know there is no [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) here but i will definitely add it at some point. 
 
 ## License 
 The tool is available as open source under the terms of the [MIT License](https://opensource.org/license/MIT)
