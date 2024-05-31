@@ -58,8 +58,18 @@ Name	| Role	|  Description  |
 
 ## 👀 Observability 
 Observability refers to the ability to understand, measure, and gain insights into the internal state and behavior of a system based on its external outputs. 
-For this project we have setup traces, logs and metrics. 
+For this project we have setup traces, logs and metrics. The schema below shows the tools we have used. 
 
+<img src="/screenshots/observability.png" alt="observability stack">
+
+Name	| Role	|
+------------- | ------------ |
+[Promtail](https://grafana.com/docs/loki/latest/send-data/promtail/)	| The agent responsible for collecting the logs from the service |
+[Loki](https://grafana.com/oss/loki/)	| Store the logs forwarded by Promtail	| 
+| [OpenTelemetry](https://opentelemetry.io/) | Responsible for collecting traces and metrics |
+| [Tempo](https://grafana.com/oss/tempo/) | Store the traces |
+| [Prometheus](https://prometheus.io/) | Store the metrics | 
+| [Grafana](https://grafana.com/grafana/dashboards/) | Dashboard to visualize all logs, traces and metrics |
 
 ## Infrastructure
 
