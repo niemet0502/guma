@@ -18,11 +18,11 @@ I will keep improving the code base by adding new features or new practices i wi
 ## 🚀 Features 
 Guma provides the features below: 
 
-- **Issues:**
-- **Sprints:**
+- **Issues:** Track and manage all tasks, bugs, and feature requests. Create, assign, prioritize, and monitor issues. 
+- **Sprints:** Implement Agile methodologies by organizing work into time-boxed sprints. Plan, track, and review sprint progress. 
 - **Documents:**
-- **Modules:**
-- **Dashboard:**
+- **Modules:** Organize and manage different project components or functional areas. Break down projects into manageable parts to maintain focus and alignment.
+- **Dashboard:** Get a comprehensive overview of project status and key metrics.
 
 ## 🛠️ Overall architecture
 
@@ -71,7 +71,7 @@ Name	| Role	|
 | [Prometheus](https://prometheus.io/) | Store the metrics | 
 | [Grafana](https://grafana.com/grafana/dashboards/) | Dashboard to visualize all logs, traces and metrics |
 
-## Infrastructure
+## 👨‍🔧Infrastructure
 Our application infrastructure leverages [Kubernetes](https://kubernetes.io/) to manage and orchestrate all microservices within the same repository. Kubernetes (K8s) is an open-source platform designed to automate deploying, scaling, and operating application containers. By utilizing Kubernetes, we ensure that our microservices are highly available, scalable, and resilient.
 
 All Kubernetes manifests required to deploy and manage our services are located in the k8s directory of this repository. This directory contains the necessary YAML files to define the desired state of our application components, including:
