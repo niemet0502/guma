@@ -22,9 +22,11 @@ Guma provides the features below:
 - **Sprints:**
 - **Documents:**
 - **Modules:**
-- **Dashbord:**
+- **Dashboard:**
 
 ## 🛠️ Overall architecture
+
+<img src="/screenshots/architecture.png" alt="overall architecture">
 
 ### Services
 
@@ -42,18 +44,23 @@ Wiki	| [/backend-services/wiki](/backend-services/wiki/)	| [NestJS](https://nest
 Notification	| [/backend-services/notifications](/backend-services)	| [Go](https://go.dev/)  | Service responsible for sending notifications (Push and email)	| 
 Data-Access	| [/backend-services/data-access/](/backend-services/data-access)	| [Go](https://go.dev/) |  Service connected to the database and responsible of exposing a REST api	|
 
+>We have implemented an anti-pattern here by having only one service connected to the database, all the services need to communicate with that data-access service in order to retrieve the data they need, it has created a [single point of failure](https://www.techtarget.com/searchdatacenter/definition/Single-point-of-failure-SPOF#:~:text=A%20single%20point%20of%20failure%20(SPOF)%20is%20a%20potential%20risk,entire%20system%20to%20stop%20operating.) that we need to fix. 
+
+
 ### External services
 The system uses external services
 
 Name	| Role	|  Description  |
 ------------- | ------------ | ----------- |
-PostgreSQL	| Database |  The frontend app	|
-Redis	| Cache	|   The frontend app	|
+[PostgreSQL](https://www.postgresql.org/)	| Database |  The database for the app	|
+[Redis](https://redis.io/fr/)	| Cache	|   Caching system (in progress)	|
 
 ## 👀 Observability 
 Observability refers to the ability to understand, measure, and gain insights into the internal state and behavior of a system based on its external outputs. 
 For this project we have setup traces, logs and metrics by using the service above
 
+
+## Infrastructure
 
 
 ## Deployment
