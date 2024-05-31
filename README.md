@@ -54,10 +54,11 @@ Name	| Role	|  Description  |
 ------------- | ------------ | ----------- |
 [PostgreSQL](https://www.postgresql.org/)	| Database |  The database for the app	|
 [Redis](https://redis.io/fr/)	| Cache	|   Caching system (in progress)	|
+| [RabbitMQ](https://www.rabbitmq.com/) | Messaging | For messaging between services
 
 ## 👀 Observability 
 Observability refers to the ability to understand, measure, and gain insights into the internal state and behavior of a system based on its external outputs. 
-For this project we have setup traces, logs and metrics by using the service above
+For this project we have setup traces, logs and metrics. 
 
 
 ## Infrastructure
