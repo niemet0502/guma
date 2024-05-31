@@ -96,6 +96,9 @@ Here is a simple Continuous Delivery workflow, implemented in this project:
 In this [configuration](/.github/workflows/), Github Actions builds tagged images for each successful git push in the main branch. So, there are always the latest images for each microservice on [Docker Hub](https://hub.docker.com/) and older images, tagged with git commit hash. It's easy to deploy any of them and quickly rollback, if needed. 
 Once the image has been built and deployed to the registry the job will connect to the server to update the image version used by the [Kubernetes Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/). I know there is no [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) here but i will definitely add it at some point. 
 
+
+## Demo
+
 ## License 
 The tool is available as open source under the terms of the [MIT License](https://opensource.org/license/MIT)
 
