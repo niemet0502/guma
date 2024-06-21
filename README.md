@@ -36,13 +36,13 @@ Name	| Path	| Stack	|  Description  |
 ------------- | -------------------- | ------------- | ----------- |
 Frontend	| [/frontend](/frontend)	| [React](https://react.dev/)  |  The frontend app	|  |
 Gateway	| [/gateway](/gateway)	| [Nestjs](https://nestjs.com/)  |  Gateway built with GraphQL Federeration	|  | 	
-Identity	| [/backend-services/users](/backend-services/users)	| [Spring Boot](https://spring.io/projects/spring-boot) |  Service responsible of auth and users handling	|
-Project	| [/backend-services/project](/backend-services/organization)	| [Spring Boot](https://spring.io/projects/spring-boot) | Service responsible for project handling	|
+Identity	| [/backend-services/users](/backend-services/users)	| [NestJS](https://nestjs.com/) |  Service responsible of auth and users handling	|
+Project	| [/backend-services/project](/backend-services/organization)	| [NestJS](https://nestjs.com/) | Service responsible for project handling	|
 Team	| [/backend-services/team](/backend-services/team)	| [NestJS](https://nestjs.com/) |  Service responsible for team, workflow and members     handling	|
 Issues	| [/backend-services/issues](/backend-services/issues)	| [NestJS](https://nestjs.com/) |  Service responsible for handling everything related to tasks, sprints, reminders etc.	|
 Wiki	| [/backend-services/wiki](/backend-services/wiki/)	| [NestJS](https://nestjs.com/) |  Service responsible of the wiki part document handling	|
-Notification	| [/backend-services/notifications](/backend-services)	| [Go](https://go.dev/)  | Service responsible for sending notifications (Push and email)	| 
-Data-Access	| [/backend-services/data-access/](/backend-services/data-access)	| [Go](https://go.dev/) |  Service connected to the database and responsible of exposing a REST api	|
+Notification	| [/backend-services/notifications](/backend-services)	| [NestJS](https://nestjs.com/)  | Service responsible for sending notifications (Push and email)	| 
+Data-Access	| [/backend-services/data-access/](/backend-services/data-access)	| [NestJS](https://nestjs.com/) |  Service connected to the database and responsible of exposing a REST api	|
 
 >We have implemented an anti-pattern here by having only one service connected to the database, all the services need to communicate with that data-access service in order to retrieve the data they need, it has created a [single point of failure](https://www.techtarget.com/searchdatacenter/definition/Single-point-of-failure-SPOF#:~:text=A%20single%20point%20of%20failure%20(SPOF)%20is%20a%20potential%20risk,entire%20system%20to%20stop%20operating.) that we need to fix. 
 
@@ -94,7 +94,7 @@ Here is a simple Continuous Delivery workflow, implemented in this project:
 <img src="screenshots/deployment-workflow.png">
 
 In this [configuration](/.github/workflows/), Github Actions builds tagged images for each successful git push in the main branch. So, there are always the latest images for each microservice on [Docker Hub](https://hub.docker.com/) and older images, tagged with git commit hash. It's easy to deploy any of them and quickly rollback, if needed. 
-Once the image has been built and deployed to the registry the job will connect to the server to update the image version used by the [Kubernetes Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/). I know there is no [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) here but i will definitely add it at some point. 
+Once the image has been built and deployed to the registry the job will connect to the server to update the image version used by the [Kubernetes Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/). I know there is no [ArNestJSCD](https://arNestJS-cd.readthedocs.io/en/stable/) here but i will definitely add it at some point. 
 
 
 ## Demo
