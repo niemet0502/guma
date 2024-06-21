@@ -182,6 +182,8 @@ services:
       - POSTGRES_DB=neka
     volumes:
       - postgres_data:/var/lib/pgsql/data
+    restart: unless-stopped
+    
   
   # neka-otel-collector:
   #   image: otel/opentelemetry-collector:0.86.0
