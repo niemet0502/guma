@@ -50,7 +50,7 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
                   <DropdownMenuContent>
                     <DropdownMenuItem>
                       <NavLink
-                        to={`/${orgaId}/team/${team.name.toLowerCase()}/settings/general`}
+                        to={`/${orgaId}/team/${team.slug}/settings/general`}
                         className="default"
                       >
                         Team settings
@@ -67,7 +67,7 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
             <AccordionContent>
               <div className="space-y-1 pl-4 pr-3">
                 <NavLink
-                  to={`/${orgaId}/team/${team.name.toLowerCase()}/issues`}
+                  to={`/${orgaId}/team/${team.slug}/issues`}
                   className={({ isActive, isPending }) =>
                     isActive ? "active" : isPending ? "default" : "default"
                   }
@@ -76,7 +76,7 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
                   Issues
                 </NavLink>
                 <NavLink
-                  to={`/${orgaId}/team/${team.name.toLowerCase()}/wiki`}
+                  to={`/${orgaId}/team/${team.slug}/wiki`}
                   className={({ isActive, isPending }) =>
                     isActive ? "active" : isPending ? "default" : "default"
                   }
@@ -86,7 +86,7 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
                 </NavLink>
 
                 <NavLink
-                  to={`/${orgaId}/team/${team.name.toLowerCase()}/sprints`}
+                  to={`/${orgaId}/team/${team.slug}/sprints`}
                   className={({ isActive, isPending }) =>
                     isActive ? "active" : isPending ? "default" : "default"
                   }
@@ -96,7 +96,7 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
                 </NavLink>
 
                 <NavLink
-                  to={`/${orgaId}/team/${team.name.toLowerCase()}/modules`}
+                  to={`/${orgaId}/team/${team.slug}/modules`}
                   className={({ isActive, isPending }) =>
                     isActive ? "active" : isPending ? "default" : "default"
                   }

@@ -19,6 +19,7 @@ export interface TeamApi {
   id: number;
   project_id: number;
   name: string;
+  slug: string;
   icon?: string;
   identifier?: string;
   visibility: TeamVisibility;

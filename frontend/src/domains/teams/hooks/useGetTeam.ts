@@ -6,6 +6,7 @@ export const GET_TEAM = gql`
     getTeamByName(name: $name, project_id: $project_id) {
       id
       name
+      slug
       visibility
       identifier
       members {
