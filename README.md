@@ -1,19 +1,5 @@
 # Guma
 
-<div align="center">
-  <figure>
-    <a href="#!" target="_blank" rel="noopener">
-      <img src="/screenshots/preview.png" alt="Product showcase" />
-    </a>
-    <figcaption>
-      <br />
-      <p align="center">
-        Project management app
-      </p>
-    </figcaption>
-  </figure>
-</div>
-
 ## 🖖 What is Guma ?
 
 If you are a League of legends fan you already know [Gumayusi](https://en.wikipedia.org/wiki/Gumayusi) but if you don't He is a League of Legends esports player, currently bot laner for T1 and 2023 LOL world champion. My fav player.
