@@ -1,7 +1,5 @@
 # Guma
 
-// screenshots
-
 ## 🖖 What is Guma ?
 
 If you are a League of legends fan you already know [Gumayusi](https://en.wikipedia.org/wiki/Gumayusi) but if you don't He is a League of Legends esports player, currently bot laner for T1 and 2023 LOL world champion. My fav player.
