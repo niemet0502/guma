@@ -6,9 +6,7 @@ import { CreateDialog } from "@/domains/teams/components/CreateDialog";
 import { TeamCard } from "@/domains/teams/components/TeamCard";
 import { useTeams } from "@/domains/teams/hooks/useTeams";
 import { useMemo } from "react";
-import { FaRegQuestionCircle } from "react-icons/fa";
 import { FaMap } from "react-icons/fa6";
-import { GoIssueDraft } from "react-icons/go";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { NavLink, useParams } from "react-router-dom";
 
@@ -53,16 +51,6 @@ export const Sidebar: React.FC = () => {
             </NavLink>
 
             <NavLink
-              to={`/${orgaId}/questions`}
-              className={({ isActive, isPending }) =>
-                isActive ? "active" : isPending ? "default" : "default"
-              }
-            >
-              <FaRegQuestionCircle className="text-base" />
-              Questions
-            </NavLink>
-
-            <NavLink
               to={`/${orgaId}/roadmap`}
               className={({ isActive, isPending }) =>
                 isActive ? "active" : isPending ? "default" : "default"
@@ -70,16 +58,6 @@ export const Sidebar: React.FC = () => {
             >
               <FaMap className="text-base" />
               Roadmap
-            </NavLink>
-
-            <NavLink
-              to="/create-workspace"
-              className={({ isActive, isPending }) =>
-                isActive ? "active" : isPending ? "default" : "default"
-              }
-            >
-              <GoIssueDraft className="text-base" />
-              Issues
             </NavLink>
           </div>
         </div>
