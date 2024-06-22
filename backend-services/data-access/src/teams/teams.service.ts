@@ -53,7 +53,10 @@ export class TeamsService {
       throw new BadRequestException('The name is already in use');
     }
 
-    const createdTeam = await this.repo.save(createTeamDto);
+    const createdTeam = await this.repo.save({
+      ...createTeamDto,
+      slug: createTeamDto.name.toLowerCase().replace(' ', ''),
+    });
     this.logger.log(
       { message: 'Team successfully created', data: createdTeam },
       'create',
@@ -107,8 +110,8 @@ export class TeamsService {
     return await this.repo.findOne({ where: { id } });
   }
 
-  async findByName(name: string, project_id: number): Promise<Team> {
-    return await this.repo.findOne({ where: { name, project_id } });
+  async findByName(slug: string, project_id: number): Promise<Team> {
+    return await this.repo.findOne({ where: { slug, project_id } });
   }
 
   async update(id: number, updateTeamDto: UpdateTeamDto): Promise<Team> {

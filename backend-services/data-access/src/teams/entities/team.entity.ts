@@ -12,6 +12,9 @@ export class Team {
   @Column('text', { nullable: false })
   name: string;
 
+  @Column('text', { nullable: false })
+  slug: string;
+
   @Column('text', { nullable: true })
   icon: string;
 

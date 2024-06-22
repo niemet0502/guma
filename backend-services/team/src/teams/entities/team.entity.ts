@@ -15,6 +15,9 @@ export class Team {
   name: string;
 
   @Field({ nullable: true })
+  slug: string;
+
+  @Field({ nullable: true })
   icon: string;
 
   @Field({ nullable: true })
