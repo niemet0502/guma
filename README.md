@@ -1,6 +1,18 @@
 # Guma
 
-// screenshots
+<div align="center">
+  <figure>
+    <a href="#!" target="_blank" rel="noopener">
+      <img src="/screenshots/preview.png" alt="Product showcase" />
+    </a>
+    <figcaption>
+      <br />
+      <p align="center">
+        Project management app
+      </p>
+    </figcaption>
+  </figure>
+</div>
 
 ## 🖖 What is Guma ?
 
