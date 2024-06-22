@@ -19,7 +19,7 @@ export const AuthenticationGuard: React.FC<AuthenticationGuardProps> = ({
 };
 
 export const UnAuthenticationGuard: React.FC<AuthenticationGuardProps> = ({
-  redirectPath = "/org/documents",
+  redirectPath = "/org/notifications",
   ...props
 }) => {
   const { user, project } = useAuth();
@@ -29,7 +29,7 @@ export const UnAuthenticationGuard: React.FC<AuthenticationGuardProps> = ({
     <ProtectedRoute
       redirectPath={
         location.state?.from?.pathname || project
-          ? `${project?.name.toLowerCase()}/documents`
+          ? `${project?.name.toLowerCase()}/notifications`
           : redirectPath
       }
       isAllowed={!user}

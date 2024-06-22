@@ -5,12 +5,14 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
@@ -56,7 +58,7 @@ export function SignIn({ className, ...props }: UserAuthFormProps) {
       login(user, session, project);
 
       if (project && project_id) {
-        navigate(`/${project.name.toLowerCase()}/documents`, {
+        navigate(`/${project.name.toLowerCase()}/notifications`, {
           replace: true,
         });
       } else {
@@ -104,6 +106,21 @@ export function SignIn({ className, ...props }: UserAuthFormProps) {
               </FormItem>
             )}
           />
+
+          <div className="flex items-center">
+            <div>
+              <FormLabel>Demo account</FormLabel>
+              <FormDescription>
+                This is an experimental project, check the switch you will be
+                connected with a demo account that has some data or create a new
+                account.
+              </FormDescription>
+            </div>
+            <Switch
+            // checked={field.value}
+            // onCheckedChange={field.onChange}
+            />
+          </div>
 
           {error && <div className="text-red-600">{error.message}</div>}
           <Button type="submit" className="w-full">
