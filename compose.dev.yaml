@@ -1,0 +1,111 @@
+services:
+  project: 
+    build: 
+      context: ./backend-services/organization
+      dockerfile: Dockerfile
+      target: dev   
+    command: npm run start:dev
+    develop:
+      watch:
+        - action: sync
+          path: ./backend-services/organization
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+
+  wiki: 
+    build: 
+      context: ./backend-services/wiki
+      dockerfile: Dockerfile
+      target: dev
+    command: npm run start:dev
+    develop:
+      watch:
+        - action: sync
+          path: ./backend-services/wiki
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+
+  team: 
+    build: 
+      context: ./backend-services/team
+      dockerfile: Dockerfile
+      target: dev
+    command: npm run start:dev
+    develop:
+      watch:
+        - action: sync
+          path: ./backend-services/team
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+  
+  user: 
+    build: 
+      context: ./backend-services/users
+      dockerfile: Dockerfile
+      target: dev
+    command: npm run start:dev
+    develop:
+      watch:
+        - action: sync
+          path: ./backend-services/users
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+
+  gateway: 
+    build: 
+      context: ./gateway
+      dockerfile: Dockerfile
+      target: dev      
+    command: npm run start:dev
+    develop:
+      watch:
+        - action: sync
+          path: ./gateway
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+  
+  issues: 
+    build: 
+      context: ./backend-services/issues
+      dockerfile: Dockerfile
+      target: dev      
+    develop:
+      watch:
+        - action: sync
+          path: ./backend-services/issues
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+
+  data-access: 
+    build: 
+      context: ./backend-services/data-access
+      dockerfile: Dockerfile
+      target: dev     
+    command: npm run start:dev
+    develop:
+      watch:
+        - action: sync
+          path: ./backend-services/data-access
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
