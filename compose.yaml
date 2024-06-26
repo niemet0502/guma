@@ -1,0 +1,143 @@
+services:
+  project:   
+    image: mariusniemet/neka-project-service
+    restart: always
+    depends_on:
+      - data-access
+
+  wiki: 
+    image: mariusniemet/neka-wiki-service
+    restart: always
+    depends_on:
+      - data-access
+    ports:
+      - "5004:3000"
+   
+  team: 
+    image: mariusniemet/neka-team-service
+    restart: always
+    depends_on:
+      - data-access
+    ports:
+      - "5005:3000"
+   
+  user: 
+    image: mariusniemet/neka-identity-service
+    restart: always
+    depends_on:
+      - data-access
+    ports:
+      - "5003:3000"
+    labels:
+      logging: "promtail"
+      logging_jobname: "containerlogs"
+  
+
+  gateway:     
+    image: mariusniemet/neka-gateway
+    restart: always
+    depends_on:
+      - project
+      - team
+      - issues
+      - user
+      - wiki
+    ports:
+      - "5007:3000"
+    labels:
+      logging: "promtail"
+      logging_jobname: "containerlogs"
+  
+  
+  issues:      
+    image: mariusniemet/neka-issues-service
+    restart: always
+    depends_on:
+      - data-access
+    ports:
+      - "5006:3000"
+  
+
+  data-access:     
+    image: mariusniemet/neka-dataaccess-service
+    restart: always
+    depends_on:
+      - neka-db
+    labels:
+      logging: "promtail"
+      logging_jobname: "containerlogs"
+    environment:
+      DB_HOST: neka-db
+      DB_PORT: 3306
+      DB_USERNAME: marius
+      DB_PASSWORD: root
+      DB_NAME: thot
+   
+  
+  neka-db: 
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=marius
+      - POSTGRES_DB=neka
+    volumes:
+      - postgres_data:/var/lib/pgsql/data
+    restart: unless-stopped
+
+  tracing:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - 6831:6831/udp
+      - 6832:6832/udp
+      - 5778:5778
+      - 16686:16686
+      - 4317:4317
+      - 4318:4318
+      - 14250:14250
+      - 14268:14268
+      - 14269:14269
+      - 9411:9411
+    restart: unless-stopped
+
+  neka-grafana:
+    image: grafana/grafana-oss:latest
+    user: "0:0"
+    container_name: neka-grafana
+    ports:
+      - "4000:4000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./monitoring/grafana.ini:/etc/grafana/grafana.ini
+      - /etc/letsencrypt:/etc/letsencrypt
+    restart: unless-stopped
+
+  promtail:
+    image:  grafana/promtail:2.7.4
+    container_name: promtail
+    volumes:
+      - ./monitoring/promtail-config.yaml:/etc/promtail/docker-config.yaml
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: -config.file=/etc/promtail/docker-config.yaml
+    restart: unless-stopped
+
+  
+  loki:
+    image: grafana/loki:2.8.2
+    container_name: loki
+    restart: unless-stopped
+    ports:
+      - 3100:3100
+    user: "10001:10001"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+     - ./monitoring/loki-config.yaml:/etc/loki/local-config.yaml
+     - loki-data:/loki
+
+volumes:
+  postgres_data:
+  tempo-data:
+  grafana-data:
+  loki-data:
