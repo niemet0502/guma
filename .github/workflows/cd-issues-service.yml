@@ -32,6 +32,6 @@ jobs:
           context: ./backend-services/issues
           file: ./backend-services/issues/Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: mariusniemet/neka-issues-service:latest
           labels: ${{ steps.meta.outputs.labels }}
           target: prod

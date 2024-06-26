@@ -32,6 +32,6 @@ jobs:
           context: ./backend-services/team
           file: ./backend-services/team/Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: mariusniemet/neka-team-service:latest
           labels: ${{ steps.meta.outputs.labels }}
           target: prod

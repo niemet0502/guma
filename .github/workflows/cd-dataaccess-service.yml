@@ -32,6 +32,6 @@ jobs:
           context: ./backend-services/data-access
           file: ./backend-services/data-access/Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: mariusniemet/neka-dataaccess-service:latest
           labels: ${{ steps.meta.outputs.labels }}
           target: prod

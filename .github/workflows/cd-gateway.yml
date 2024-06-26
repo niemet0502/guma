@@ -32,6 +32,6 @@ jobs:
           context: ./gateway
           file: ./gateway/Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: mariusniemet/neka-gateway:latest
           labels: ${{ steps.meta.outputs.labels }}
           target: prod

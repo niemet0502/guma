@@ -32,6 +32,6 @@ jobs:
           context: ./backend-services/users
           file: ./backend-services/users/Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: mariusniemet/neka-identity-service:latest
           labels: ${{ steps.meta.outputs.labels }}
           target: prod

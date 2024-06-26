@@ -32,6 +32,6 @@ jobs:
           context: ./backend-services/wiki
           file: ./backend-services/wiki/Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: mariusniemet/neka-wiki-service:latest
           labels: ${{ steps.meta.outputs.labels }}
           target: prod
