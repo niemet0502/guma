@@ -38,7 +38,7 @@ export const otelSDK = new NodeSDK({
   ],
 });
 
-// gracefully shut down the SDK on process exit
+// gracefully shut down the SDK on process exi
 process.on('SIGTERM', () => {
   otelSDK
     .shutdown()
