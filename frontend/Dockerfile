@@ -16,11 +16,11 @@ COPY . .
 # Development stage
 FROM base AS dev
 
-# Expose port 5173 for development server
+# Expose port 5173 for Vite's development server
 EXPOSE 5173
 
 # Start the Vite development server
-CMD ["npm", "run", "dev", "--", "host"]
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
 
 # Production stage
 FROM base AS build
@@ -35,7 +35,7 @@ FROM nginx:alpine AS prod
 COPY --from=build /app/dist /usr/share/nginx/html
 
 # Copy the custom Nginx configuration file
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY config/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 81
 EXPOSE 81
