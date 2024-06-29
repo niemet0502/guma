@@ -30,7 +30,7 @@ export const CommentItem: React.FC<{
   const { addComment } = useCreateComment();
   const { updateComment, isLoading } = useUpdateComment();
 
-  const [hasFocus, setHasFocus] = useState(false);
+  const [hasFocus] = useState(false);
   const [editing, setEditing] = useState(false);
 
   const inputRef = useRef<HTMLTextAreaElement>(null);

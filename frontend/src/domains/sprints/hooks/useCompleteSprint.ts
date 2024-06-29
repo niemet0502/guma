@@ -33,7 +33,7 @@ export const useCompleteSprint = (onSuccessCallback?: () => void) => {
 
       // Check the response for success and handle accordingly
       if (response.data && response.data.completeSprint) {
-        // onSuccessCallback();
+        onSuccessCallback && onSuccessCallback();
       } else {
         // Handle unexpected response or error
         console.error("Unexpected response:", response);

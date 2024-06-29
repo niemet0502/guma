@@ -1,4 +1,22 @@
 services:
+  frontend: 
+    build: 
+      context: ./frontend
+      target: dev
+    ports:
+      - "5173:5173"
+    depends_on:
+      - gateway
+    develop: 
+      watch: 
+        - action: sync
+          path: .
+          target: /app
+          ignore: 
+            - node_modules/
+        - action: rebuild
+          path: package.json
+
   project: 
     build: 
       context: ./backend-services/organization

@@ -1,4 +1,11 @@
 services:
+  frontend: 
+    image: mariusniemet/neka-frontend
+    ports:
+      - "81:81"
+    depends_on:
+      - gateway
+
   project:   
     image: mariusniemet/neka-project-service
     restart: always
