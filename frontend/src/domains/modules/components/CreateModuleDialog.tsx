@@ -50,7 +50,7 @@ const formSchema = z.object({
 export const CreateModuleDialog: React.FC<{
   teamId?: number;
   teamsData?: { id: number; name: string }[];
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }> = ({ teamId, teamsData, children }) => {
   const { toast } = useToast();
 
