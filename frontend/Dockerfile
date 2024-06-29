@@ -16,7 +16,7 @@ COPY . .
 # Development stage
 FROM base AS dev
 
-# Expose port 5173 for Vite's development server
+# Expose port 5173 for development server
 EXPOSE 5173
 
 # Start the Vite development server
