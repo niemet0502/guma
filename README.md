@@ -82,7 +82,7 @@ All Kubernetes manifests required to deploy and manage our services are located 
 For now each resource is manually created, infra automation will be added using tools like [Terraform](https://www.terraform.io/) or [Pulumni](https://www.pulumi.com/). 
 
 ## Deployment
-Deploying microservices, with their interdependence, is much more complex process than deploying a monolithic application. It is really important to have a fully automated infrastructure. We can achieve following benefits with Continuous Delivery approach:
+Deploying microservices, with their interdependence, is a much more complex process than deploying a monolithic application. It is really important to have a fully automated infrastructure. We can achieve the following benefits with the Continuous Delivery approach:
 
 - The ability to release software anytime
 - Any build could end up being a release
