@@ -100,10 +100,10 @@ Once the image has been built and deployed to the registry the job will connect 
 <!-- <div style="position: relative; padding-bottom: 46.458333333333336%; height: 0;"><iframe src="https://www.loom.com/embed/67a3a7c00b894e0888702f5da0222a66?sid=b1ee2c48-eadf-48a6-aff5-2a2b87a75304" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div> -->
 
 <div >
-    <a href="https://www.loom.com/share/67a3a7c00b894e0888702f5da0222a66">
+    <a href="https://www.loom.com/share/67a3a7c00b894e0888702f5da0222a66" target="_blank">
       <p>Guma - Project management solution - demo - Watch Video</p>
     </a>
-    <a href="https://www.loom.com/share/67a3a7c00b894e0888702f5da0222a66" >
+    <a href="https://www.loom.com/share/67a3a7c00b894e0888702f5da0222a66" target="_blank">
       <img style="width: 70%; margin-left: 15%" src="https://cdn.loom.com/sessions/thumbnails/67a3a7c00b894e0888702f5da0222a66-with-play.gif">
     </a>
   </div>
