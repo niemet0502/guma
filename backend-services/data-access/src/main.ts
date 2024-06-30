@@ -14,15 +14,15 @@ async function bootstrap() {
   app.useLogger(new CustomLogger());
 
   const config = new DocumentBuilder()
-    .setTitle('Neka')
-    .setDescription('The Neka documentation')
+    .setTitle('Guma')
+    .setDescription('The Guma documentation')
     .setVersion('0.1')
     .build();
 
   app.useGlobalPipes(new ValidationPipe());
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('docs', app, document);
 
   await app.listen(3000);
 }
