@@ -7,7 +7,7 @@ on:
       - "backend-services/data-access/**"
 
 jobs:
-  deploy:
+  build:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
@@ -35,3 +35,10 @@ jobs:
           tags: mariusniemet/neka-dataaccess-service:latest
           labels: ${{ steps.meta.outputs.labels }}
           target: prod
+  deploy:
+    needs: build
+    name: Kubernetes Deployment update
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
