@@ -172,10 +172,14 @@ export const OngoingSprint: React.FC<{ sprint: SprintApi }> = ({ sprint }) => {
 
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className="w-full h-full flex overflow-x-auto">
-          <Drop id="droppable" type="droppable-category" className="flex">
+          <Drop
+            id="droppable"
+            type="droppable-category"
+            className="flex overflow-x-auto"
+          >
             {status
-              ?.filter(({ name }) => name !== "Backlog")
-              .map((statut, index) => (
+              ?.filter(({ name }) => name !== "Backlog" && name !== "Canceled")
+              ?.map((statut, index) => (
                 <Drag key={statut.id} id={statut.id} index={index} isDraggable>
                   <div className="w-[330px] p-2 flex flex-col gap-3 h-full ">
                     <div className="flex gap-2 items-center">

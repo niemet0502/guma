@@ -28,7 +28,7 @@ export const ModulesList: React.FC = () => {
     <div className="w-full h-full flex flex-col">
       <div className="bg-secondary py-3 px-5 flex items-center justify-between">
         <p>
-          Livrables
+          Modules
           <span className="text-muted-foreground ml-2">{modules?.length}</span>
         </p>
 

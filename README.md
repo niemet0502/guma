@@ -82,7 +82,7 @@ All Kubernetes manifests required to deploy and manage our services are located 
 For now each resource is manually created, infra automation will be added using tools like [Terraform](https://www.terraform.io/) or [Pulumni](https://www.pulumi.com/). 
 
 ## Deployment
-Deploying microservices, with their interdependence, is much more complex process than deploying a monolithic application. It is really important to have a fully automated infrastructure. We can achieve following benefits with Continuous Delivery approach:
+Deploying microservices, with their interdependence, is a much more complex process than deploying a monolithic application. It is really important to have a fully automated infrastructure. We can achieve the following benefits with the Continuous Delivery approach:
 
 - The ability to release software anytime
 - Any build could end up being a release
@@ -96,6 +96,8 @@ Once the image has been built and deployed to the registry the job will connect 
 
 
 ## Demo
+
+<div style="position: relative; padding-bottom: 46.458333333333336%; height: 0;"><iframe src="https://www.loom.com/embed/67a3a7c00b894e0888702f5da0222a66?sid=b1ee2c48-eadf-48a6-aff5-2a2b87a75304" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
 ## License 
 The tool is available as open source under the terms of the [MIT License](https://opensource.org/license/MIT)

@@ -414,7 +414,7 @@ export const RightSidebar: React.FC<{
       </div>
 
       <div className="flex">
-        <div className="w-[100px] flex items-center">Livrable</div>
+        <div className="w-[100px] flex items-center">Module</div>
         <div className="flex-1">
           <Popover open={openLivrable} onOpenChange={setOpenLivrable}>
             <PopoverTrigger>
@@ -422,7 +422,7 @@ export const RightSidebar: React.FC<{
                 {!task?.livrable_id && (
                   <>
                     <AiOutlinePlus />
-                    Add to livrable
+                    Add to module
                   </>
                 )}
 
@@ -437,7 +437,7 @@ export const RightSidebar: React.FC<{
             <PopoverContent className="w-[200px] p-0">
               <Command>
                 <CommandInput placeholder="Add to sprint..." className="h-9" />
-                <CommandEmpty>No livrable found.</CommandEmpty>
+                <CommandEmpty>No module found.</CommandEmpty>
                 <CommandGroup className="flex flex-col gap-2">
                   <CommandItem
                     onSelect={() => {
@@ -448,7 +448,7 @@ export const RightSidebar: React.FC<{
                       setOpenLivrable(false);
                     }}
                   >
-                    No livrable
+                    No module
                     <CheckIcon
                       className={cn(
                         "ml-auto h-4 w-4",

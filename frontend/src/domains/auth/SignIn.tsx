@@ -15,8 +15,9 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { useMutation } from "@apollo/client";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "./providers/auth";
 import { USER_ACCOUNT_AUTH } from "./services/queries";
 
@@ -33,15 +34,17 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function SignIn({ className, ...props }: UserAuthFormProps) {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
 
   const [userAccountAuth, { error }] = useMutation(USER_ACCOUNT_AUTH);
+  const [checked, setChecked] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "mariusniemet@gmail.com",
-      password: "passer",
+      email: "",
+      password: "",
     },
   });
 
@@ -58,14 +61,32 @@ export function SignIn({ className, ...props }: UserAuthFormProps) {
       login(user, session, project);
 
       if (project && project_id) {
-        navigate(`/${project.name.toLowerCase()}/notifications`, {
-          replace: true,
-        });
+        navigate(
+          location.state?.from?.pathname ||
+            `/${project.name.toLowerCase()}/notifications`,
+          {
+            replace: true,
+          }
+        );
       } else {
         navigate("/create-workspace");
       }
     }
   }
+
+  useEffect(() => {
+    if (checked) {
+      form.reset({
+        email: "demo@guma.com",
+        password: "password",
+      });
+    } else {
+      form.reset({
+        email: "",
+        password: "",
+      });
+    }
+  }, [checked]);
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
@@ -117,8 +138,8 @@ export function SignIn({ className, ...props }: UserAuthFormProps) {
               </FormDescription>
             </div>
             <Switch
-            // checked={field.value}
-            // onCheckedChange={field.onChange}
+              checked={checked}
+              onCheckedChange={() => setChecked((prev) => !prev)}
             />
           </div>
 

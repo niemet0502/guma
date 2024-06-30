@@ -15,10 +15,11 @@ import {
 } from "@/components/ui/popover";
 import { User } from "@/domains/auth/services/types";
 import { taskPriority } from "@/domains/tasks/constantes";
-import { cn } from "@/lib/utils";
+import { cn, truncateString } from "@/lib/utils";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { AiOutlineDash, AiOutlineUser } from "react-icons/ai";
+import { NavLink, useParams } from "react-router-dom";
 import { useUpdateTask } from "../hooks/useUpdateTask";
 import { ActivityAction, TaskApi } from "../type";
 
@@ -26,18 +27,18 @@ export const TaskCard: React.FC<{ task: TaskApi; members?: User[] }> = ({
   task,
   members,
 }) => {
+  const { orgaId, teamId } = useParams<{ orgaId: string; teamId: string }>();
   const [openPriorityPopover, setOpenPriorityPopover] = useState(false);
   const { updateTask } = useUpdateTask();
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border shadow-lg rounded-sm h-[116px] hover:cursor-pointer p-3 flex flex-col gap-1">
+    <div className="border shadow-lg rounded-sm h-[130px] hover:cursor-pointer p-3 flex flex-col gap-1">
       <div className="flex justify-between items-center">
         <span className="text-xs text-muted-foreground">{task.identifier}</span>
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <Avatar className="h-7 w-7 bg-transparent hover:cursor-pointer">
-              {/* <AvatarImage src="/avatars/01.png" alt="@shadcn" /> */}
               <AvatarFallback className="bg-transparent border-2 ">
                 {task.assignee ? (
                   <span className="text-muted-foreground text-sm">
@@ -82,7 +83,11 @@ export const TaskCard: React.FC<{ task: TaskApi; members?: User[] }> = ({
           </PopoverContent>
         </Popover>
       </div>
-      <div className="text-ellipsis overflow-hidden ...">{task.name}</div>
+      <NavLink to={`/${orgaId}/team/${teamId}/issues/${task.slug}`}>
+        <div className="text-ellipsis my-2 overflow-hidden ...">
+          {truncateString(task.name, 30)}
+        </div>
+      </NavLink>
       <div className="flex items-center gap-2 overflow-hidden">
         <Popover
           open={openPriorityPopover}
