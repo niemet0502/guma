@@ -1,9 +1,5 @@
 # Guma
 
-
-<img src="/screenshots/testing.png" height="490px" width="100%">
-
-
 ## 🖖 What is Guma ?
 
 If you are a League of legends fan you already know [Gumayusi](https://en.wikipedia.org/wiki/Gumayusi) but if you don't He is a League of Legends esports player, currently bot laner for T1 and 2023 LOL world champion. My fav player.
@@ -100,6 +96,8 @@ Once the image has been built and deployed to the registry the job will connect 
 
 
 ## Demo
+
+<div style="position: relative; padding-bottom: 46.458333333333336%; height: 0;"><iframe src="https://www.loom.com/embed/67a3a7c00b894e0888702f5da0222a66?sid=b1ee2c48-eadf-48a6-aff5-2a2b87a75304" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
 ## License 
 The tool is available as open source under the terms of the [MIT License](https://opensource.org/license/MIT)
