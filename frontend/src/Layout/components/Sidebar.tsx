@@ -11,7 +11,7 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import { NavLink, useParams } from "react-router-dom";
 
 export const Sidebar: React.FC = () => {
-  let { orgaId } = useParams<{ orgaId: string }>();
+  const { orgaId } = useParams<{ orgaId: string }>();
   const { project, user } = useAuth();
   const { data, isLoading } = useTeams(project?.id as number);
 

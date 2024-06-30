@@ -64,7 +64,7 @@ export const ModuleDetails: React.FC = () => {
                         : "default p-1"
                     }
                   >
-                    Livrables
+                    Modules
                   </NavLink>
                 </BreadcrumbLink>
               </BreadcrumbItem>

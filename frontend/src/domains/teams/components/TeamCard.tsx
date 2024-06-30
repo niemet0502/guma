@@ -8,7 +8,6 @@ import { useAuth } from "@/domains/auth/providers/auth";
 import { AiOutlinePlayCircle } from "react-icons/ai";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { GoIssueDraft, GoProjectRoadmap } from "react-icons/go";
-import { HiOutlineDocumentDuplicate } from "react-icons/hi";
 import { NavLink, useParams } from "react-router-dom";
 import { TeamApi, TeamVisibility } from "../type";
 
@@ -75,7 +74,7 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
                   <GoIssueDraft className="text-base" />
                   Issues
                 </NavLink>
-                <NavLink
+                {/* <NavLink
                   to={`/${orgaId}/team/${team.slug}/wiki`}
                   className={({ isActive, isPending }) =>
                     isActive ? "active" : isPending ? "default" : "default"
@@ -83,7 +82,7 @@ export const TeamCard: React.FC<{ team: TeamApi }> = ({ team }) => {
                 >
                   <HiOutlineDocumentDuplicate className="text-base" />
                   Wiki
-                </NavLink>
+                </NavLink> */}
 
                 <NavLink
                   to={`/${orgaId}/team/${team.slug}/sprints`}
