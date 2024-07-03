@@ -11,7 +11,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "^/api": {
+      "^/graphql": {
         target: process.env.REACT_APP_GATEWAY_URL,
         changeOrigin: true,
       },
