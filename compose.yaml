@@ -5,7 +5,9 @@ services:
       - "81:81"
     depends_on:
       - gateway
-
+    environment:
+      - REACT_APP_GATEWAY_URL=http://gateway:3000/graphql
+      
   project:   
     image: mariusniemet/neka-project-service
     restart: always

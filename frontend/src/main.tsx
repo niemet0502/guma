@@ -14,7 +14,7 @@ import "./index.css";
 import { ThemeProvider } from "./providers/theme-provider.tsx";
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:5007/graphql",
+  uri: "/api",
 });
 
 const authLink = setContext((_, { headers }) => {
