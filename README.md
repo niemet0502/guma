@@ -69,6 +69,10 @@ Name	| Role	|
 | [Prometheus](https://prometheus.io/) | Store the metrics | 
 | [Grafana](https://grafana.com/grafana/dashboards/) | Dashboard to visualize all logs, traces and metrics |
 
+An example of traces: 
+
+<img src="/screenshots/traces-exemple.png" />
+
 ## 👨‍🔧Infrastructure
 Our application infrastructure leverages [Kubernetes](https://kubernetes.io/) to manage and orchestrate all microservices within the same repository. Kubernetes (K8s) is an open-source platform designed to automate deploying, scaling, and operating application containers. By utilizing Kubernetes, we ensure that our microservices are highly available, scalable, and resilient.
 

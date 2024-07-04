@@ -84,7 +84,7 @@ services:
    
   
   neka-db: 
-    image: postgres
+    image: postgres:12
     ports:
       - 5432:5432
     environment:
@@ -92,7 +92,7 @@ services:
       - POSTGRES_USER=marius
       - POSTGRES_DB=neka
     volumes:
-      - postgres_data:/var/lib/pgsql/data
+      - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
 
   tracing:
