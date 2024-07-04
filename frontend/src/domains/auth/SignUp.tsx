@@ -83,7 +83,7 @@ export function SignUp({ className, ...props }: UserAuthFormProps) {
         <h1 className="text-2xl font-semibold tracking-tight">Sign Up</h1>
         <p className="text-sm text-muted-foreground">
           Already have an account?{" "}
-          <NavLink to="/auth/signin" className="text-primary">
+          <NavLink to="/auth" className="text-primary">
             Sign in
           </NavLink>
         </p>

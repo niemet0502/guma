@@ -65,7 +65,7 @@ export const OrganizationForm: React.FC = () => {
         profile_id: UserProfileEnum.ADMIN,
       });
 
-      navigate(`/${createProject.name.toLowerCase()}/documents`);
+      navigate(`/${createProject.name.toLowerCase()}`);
     }
   }
   return (

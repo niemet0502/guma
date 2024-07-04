@@ -9,6 +9,7 @@ interface AuthContextValue {
   project: Project | null;
   updateProject: (project: Project) => void;
   updateUser: (user: User) => void;
+  isInitialized: boolean;
 }
 
 export const AuthContext = React.createContext<AuthContextValue>({
@@ -18,6 +19,7 @@ export const AuthContext = React.createContext<AuthContextValue>({
   project: null,
   updateProject: () => {},
   updateUser: () => {},
+  isInitialized: false,
 } as AuthContextValue);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -25,6 +27,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [user, setUser] = React.useState<User | null>(null);
   const [project, setProject] = React.useState<Project | null>(null);
+  const [isInitialized, setIsInitialized] = React.useState(false);
 
   const login = (user: User, session: UserSession, project: Project | null) => {
     setUser(user);
@@ -45,6 +48,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     if (project) {
       setProject(JSON.parse(project));
     }
+
+    setIsInitialized(true);
   }, []);
 
   const logout = () => {
@@ -73,6 +78,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         project,
         updateProject,
         updateUser,
+        isInitialized,
       }}
     >
       {children}

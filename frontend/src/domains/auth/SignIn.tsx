@@ -69,7 +69,7 @@ export function SignIn({ className, ...props }: UserAuthFormProps) {
           }
         );
       } else {
-        navigate("/create-workspace");
+        navigate("/create-project");
       }
     }
   }
